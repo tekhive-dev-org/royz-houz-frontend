@@ -1,0 +1,32 @@
+export const LATEST_BLOG_POSTS = [
+  {
+    id: "1",
+    category: "COMMUNITY IMPACT",
+    readTime: "10 min read",
+    title: "How we Empower Youth through Education",
+    date: "May 8, 2026",
+    image: "/assets/img/blog/blog1.jpg",
+    slug: "how-we-empower-youth-through-education",
+    link: "/blog/how-we-empower-youth-through-education",
+  },
+  {
+    id: "2",
+    category: "TALENT DEVELOPMENT",
+    readTime: "10 min read",
+    title: "5 Ways to Build a Successful Creative Career",
+    date: "May 8, 2026",
+    image: "/assets/img/blog/blog2.jpg",
+    slug: "5-ways-to-build-a-successful-creative-career",
+    link: "/blog/5-ways-to-build-a-successful-creative-career",
+  },
+  {
+    id: "3",
+    category: "ENTERTAINMENT",
+    readTime: "10 min read",
+    title: "The Rise of African Storytelling",
+    date: "May 8, 2026",
+    image: "/assets/img/blog/blog3.jpg",
+    slug: "the-rise-of-african-storytelling",
+    link: "/blog/the-rise-of-african-storytelling",
+  },
+];

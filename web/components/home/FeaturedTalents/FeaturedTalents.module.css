@@ -1,0 +1,33 @@
+@reference "../../../styles/globals.css";
+
+.section {
+  @apply w-full bg-white text-slate-900 py-16 sm:py-20;
+}
+
+.container {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8;
+}
+
+.headerRow {
+  @apply flex flex-row items-center justify-between gap-4;
+}
+
+.titleGroup {
+  @apply flex items-center gap-3;
+}
+
+.titleBar {
+  @apply w-[5px] h-[25px] rounded-[2.5px] bg-[#DCA43E] shrink-0;
+}
+
+.title {
+  @apply text-xl sm:text-2xl font-medium text-[#0A0D14] tracking-tight;
+}
+
+.viewAllLink {
+  @apply text-xs sm:text-sm font-medium text-[#B46A2C] hover:text-[#995222] transition-colors inline-flex items-center gap-1 shrink-0;
+}
+
+.grid {
+  @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 justify-items-center sm:justify-items-stretch;
+}

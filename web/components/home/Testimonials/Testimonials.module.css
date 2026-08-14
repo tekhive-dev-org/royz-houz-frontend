@@ -1,0 +1,95 @@
+@reference "../../../styles/globals.css";
+
+/* ══════════════════════════════════════════════════════
+   Testimonials / Impact-changing Stories Section
+   ══════════════════════════════════════════════════════ */
+.section {
+  @apply w-full bg-white text-slate-900 py-16 sm:py-20 md:py-24 overflow-hidden;
+}
+
+.container {
+  @apply max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center text-center space-y-10;
+}
+
+/* ── Section Header ──────────────────────────────────── */
+.header {
+  @apply flex flex-col items-center text-center space-y-3 max-w-2xl mx-auto;
+}
+
+.badgeRow {
+  @apply inline-flex items-center gap-3 text-xs font-semibold text-[#B46A2C] tracking-widest uppercase;
+}
+
+.badgeLine {
+  @apply w-[32px] h-[1px] bg-[#B46A2C] shrink-0;
+}
+
+.title {
+  @apply text-2xl sm:text-3xl md:text-4xl font-semibold text-[#0A0D14] tracking-tight;
+}
+
+.description {
+  @apply text-sm sm:text-base text-slate-500 font-normal leading-relaxed max-w-xl;
+}
+
+/* ── Carousel Container & Splide Overrides ───────────── */
+.carouselWrapper {
+  @apply w-full max-w-3xl mx-auto;
+}
+
+.carouselWrapper :global(.splide__track) {
+  @apply !overflow-y-visible;
+  padding-bottom: 10px;
+}
+
+.pagination {
+  @apply flex items-center justify-center gap-2.5 pt-8 pb-0;
+}
+
+.paginationDot {
+  @apply w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full border-none p-0 cursor-pointer transition-all duration-300 ease-out;
+  background: #E5E7EB;
+}
+
+.paginationDot:hover {
+  background: rgba(180, 106, 44, 0.5);
+}
+
+.paginationDot[class*="is-active"] {
+  @apply w-8 sm:w-9 cursor-default;
+  background: #B46A2C;
+  border-radius: 9999px;
+}
+
+/* ── Testimonial Card ────────────────────────────────── */
+.card {
+  @apply flex flex-col items-center text-center px-4 py-2 space-y-6 max-w-3xl mx-auto select-none;
+}
+
+.quoteIcon {
+  @apply w-[30px] h-[25px] shrink-0 mb-1;
+}
+
+.quoteText {
+  @apply text-base sm:text-lg md:text-xl text-[#374151] font-normal leading-relaxed max-w-2xl mx-auto;
+}
+
+.authorRow {
+  @apply flex items-center justify-center gap-3.5 pt-2;
+}
+
+.avatar {
+  @apply relative w-12 h-12 rounded-full overflow-hidden shrink-0 border border-slate-200 shadow-sm;
+}
+
+.authorInfo {
+  @apply flex flex-col text-left;
+}
+
+.authorName {
+  @apply text-sm sm:text-base font-bold text-[#0A0D14] leading-tight;
+}
+
+.authorRole {
+  @apply text-xs sm:text-sm text-slate-500 font-normal leading-tight;
+}

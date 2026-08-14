@@ -1,0 +1,121 @@
+@reference "../../../styles/globals.css";
+
+.footer {
+  @apply w-full bg-[#050505] text-[#FAF4EF] pt-16 pb-6 border-t border-[#141414];
+}
+
+.container {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+}
+
+.columnsGrid {
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-12 pb-12 md:pb-16 text-center md:text-left;
+}
+
+.brandCol {
+  @apply space-y-5 flex flex-col items-center md:items-start text-center md:text-left;
+}
+
+.logoLink {
+  @apply flex items-center gap-2 font-semibold text-xl focus:outline-none;
+}
+
+.logoImage {
+  @apply h-16 w-auto object-contain;
+}
+
+.brandDesc {
+  @apply text-xs text-[#8E8E8E] leading-relaxed max-w-sm mx-auto md:mx-0;
+}
+
+.socialSquareGroup {
+  @apply flex items-center justify-center md:justify-start gap-3 pt-2;
+}
+
+.socialSquareLink {
+  @apply w-9 h-9 rounded-lg border border-[#2B2B2B] bg-[#0A0A0A] flex items-center justify-center text-[#A3A3A3] hover:text-[#B46A2C] hover:border-[#B46A2C] transition-all;
+}
+
+.navCol {
+  @apply space-y-4 flex flex-col items-center md:items-start text-center md:text-left;
+}
+
+.colHeader {
+  @apply text-sm font-semibold text-white tracking-wide;
+}
+
+.navList {
+  @apply space-y-3 text-xs text-[#8E8E8E] flex flex-col items-center md:items-start;
+}
+
+.navLink {
+  @apply hover:text-[#B46A2C] transition-colors;
+}
+
+.contactList {
+  @apply space-y-3.5 text-xs text-[#8E8E8E] flex flex-col items-center md:items-start;
+}
+
+.contactItem {
+  @apply flex items-start justify-center md:justify-start gap-3 text-center md:text-left;
+}
+
+.contactItemCenter {
+  @apply flex items-center justify-center md:justify-start gap-3 text-center md:text-left;
+}
+
+.contactIcon {
+  @apply w-4 h-4 text-[#8E8E8E] shrink-0 mt-0.5;
+}
+
+.contactIconCenter {
+  @apply w-4 h-4 text-[#8E8E8E] shrink-0;
+}
+
+.newsletterBox {
+  @apply mb-12 md:mb-14 p-6 sm:p-8 md:p-10 rounded-2xl bg-[#121212] border border-[#1F1F1F] flex flex-col lg:flex-row items-center lg:items-center justify-between gap-6 text-center lg:text-left;
+}
+
+.newsletterTextGroup {
+  @apply space-y-2 max-w-xl text-center lg:text-left;
+}
+
+.newsletterTitle {
+  @apply text-xl md:text-2xl font-semibold text-white tracking-tight;
+}
+
+.newsletterSubtitle {
+  @apply text-xs md:text-sm text-[#8E8E8E] leading-relaxed;
+}
+
+.newsletterForm {
+  @apply w-full lg:w-auto flex justify-center;
+}
+
+.newsletterInputWrapper {
+  @apply bg-white p-1.5 rounded-2xl flex items-center justify-between gap-2 max-w-md w-full;
+}
+
+.newsletterInput {
+  @apply flex-1 text-slate-800 text-xs px-4 py-2 bg-transparent outline-none placeholder:text-slate-400;
+}
+
+.newsletterSubmitBtn {
+  @apply px-6 py-2.5 rounded-xl bg-[#B46A2C] hover:bg-[#995222] text-white font-medium text-xs transition-all shadow-md shadow-[#B46A2C]/20 active:scale-95 shrink-0;
+}
+
+.successText {
+  @apply text-xs text-emerald-400 font-medium mt-2 pl-2 text-center lg:text-left;
+}
+
+.copyrightBar {
+  @apply pt-6 border-t border-[#141414] flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-[#737373] text-center md:text-left;
+}
+
+.legalLinksGroup {
+  @apply flex items-center justify-center gap-4;
+}
+
+.legalLink {
+  @apply hover:text-[#B46A2C] transition-colors;
+}

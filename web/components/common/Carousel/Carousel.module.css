@@ -1,0 +1,32 @@
+@reference "../../../styles/globals.css";
+
+/* ══════════════════════════════════════════════════════
+   Reusable Splide Carousel Styles & Pagination
+   ══════════════════════════════════════════════════════ */
+.carousel {
+  @apply overflow-visible;
+}
+
+.carousel :global(.splide__track) {
+  @apply !overflow-y-visible;
+  padding-bottom: 10px;
+}
+/* ── Custom Brand Pagination Dots ─────────────────────── */
+.pagination {
+  @apply flex items-center justify-center gap-2.5 pt-8 pb-0;
+}
+
+.paginationDot {
+  @apply w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full border-none p-0 cursor-pointer transition-all duration-300 ease-out;
+  background: #E5E7EB;
+}
+
+.paginationDot:hover {
+  background: rgba(180, 106, 44, 0.5);
+}
+
+.paginationDot[class*="is-active"] {
+  @apply w-8 sm:w-9 cursor-default;
+  background: #B46A2C;
+  border-radius: 9999px;
+}

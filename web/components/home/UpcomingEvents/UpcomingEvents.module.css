@@ -1,0 +1,184 @@
+@reference "../../../styles/globals.css";
+
+/* ══════════════════════════════════════════════════════
+   Section & Container
+   ══════════════════════════════════════════════════════ */
+.section {
+  @apply w-full bg-white text-slate-900 py-12 sm:pt-0 pb-20 overflow-hidden;
+}
+
+.container {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8;
+}
+
+/* ══════════════════════════════════════════════════════
+   Section Header
+   ══════════════════════════════════════════════════════ */
+.headerRow {
+  @apply flex flex-row items-center justify-between gap-4;
+}
+
+.titleGroup {
+  @apply flex items-center gap-3;
+}
+
+.titleBar {
+  @apply w-[5px] h-[25px] rounded-[2.5px] bg-[#DCA43E] shrink-0;
+}
+
+.title {
+  @apply text-xl sm:text-2xl font-medium text-[#0A0D14] tracking-tight;
+}
+
+.viewAllLink {
+  @apply text-xs sm:text-sm font-medium text-[#B46A2C] hover:text-[#995222] transition-colors inline-flex items-center gap-1 shrink-0;
+}
+
+.viewAllIcon {
+  @apply w-4 h-4;
+}
+
+
+/* ══════════════════════════════════════════════════════
+   Event Card
+   Figma: 464×298, border-radius: 10px
+   ══════════════════════════════════════════════════════ */
+.card {
+  @apply relative w-[464px] overflow-hidden cursor-pointer transition-all duration-300;
+  height: 298px;
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+
+.cardImage {
+  @apply object-cover object-center transition-transform duration-700;
+}
+
+.card:hover .cardImage {
+  @apply scale-105;
+}
+
+/* Gradient overlay for text legibility */
+.overlay {
+  @apply absolute inset-0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.05) 0%,
+    rgba(0, 0, 0, 0.12) 30%,
+    rgba(0, 0, 0, 0.50) 65%,
+    rgba(0, 0, 0, 0.80) 100%
+  );
+}
+
+/* ══════════════════════════════════════════════════════
+   Date Badge
+   Figma: 61×83, left: 17, top: 20, padding: 12px 14px 10px
+   background: #B46A2C, border-radius: 8px
+   ══════════════════════════════════════════════════════ */
+.dateBadge {
+  @apply absolute z-10 flex flex-col justify-center items-center rounded-lg;
+  top: 20px;
+  left: 17px;
+  width: 61px;
+  height: 83px;
+  padding: 12px 14px 10px;
+  background: #B46A2C;
+  box-sizing: border-box;
+}
+
+/* Shared date text style (day, month, year) */
+.dateText {
+  @apply text-center text-white;
+  font-family: 'Lato', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+}
+
+/* ══════════════════════════════════════════════════════
+   Bottom Card Content
+   Figma: flex column, gap: 12px, left: 15
+   ══════════════════════════════════════════════════════ */
+.cardContent {
+  @apply absolute bottom-0 left-0 z-10 flex flex-col items-start;
+  left: 15px;
+  padding-bottom: 16px;
+  gap: 12px;
+}
+
+/* Figma: font-size: 20px, weight: 800, line-height: 28px,
+   letter-spacing: -0.02em, white */
+.eventTitle {
+  @apply text-white transition-colors duration-300;
+  font-family: 'Lato', sans-serif;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 28px;
+  letter-spacing: -0.02em;
+}
+
+.card:hover .eventTitle {
+  color: #EAA144;
+}
+
+/* Figma: flex row, center items, gap: 6px */
+.locationRow {
+  @apply flex flex-row items-center;
+  gap: 6px;
+}
+
+/* Figma: 24×24, white */
+.locationIcon {
+  @apply shrink-0 text-white;
+  width: 24px;
+  height: 24px;
+}
+
+/* Figma: font-size: 14px, weight: 700, line-height: 20px, white */
+.locationText {
+  @apply text-white;
+  font-family: 'Lato', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+/* ══════════════════════════════════════════════════════
+   Get Ticket Button
+   Figma: padding: 14px 32px, border: 2px solid white,
+   border-radius: 8px, drop-shadow
+   ══════════════════════════════════════════════════════ */
+.ticketBtn {
+  @apply inline-flex flex-row justify-center items-center rounded-lg no-underline transition-all duration-300;
+  padding: 14px 32px;
+  border: 1px solid #FFFFFF;
+  background: transparent;
+  filter: drop-shadow(0px 1px 2px rgba(82, 88, 102, 0.06));
+}
+
+.ticketBtn:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.ticketBtn:active {
+  @apply scale-95;
+}
+
+/* Figma: font-size: 14px, weight: 800, line-height: 20px, white */
+.ticketBtnText {
+  @apply text-center text-white;
+  font-family: 'Lato', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+/* ══════════════════════════════════════════════════════
+   Responsive — Mobile (<768px)
+   ══════════════════════════════════════════════════════ */
+@media (max-width: 767px) {
+  .card {
+    @apply w-full;
+  }
+}

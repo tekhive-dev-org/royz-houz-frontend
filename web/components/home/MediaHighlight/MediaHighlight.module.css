@@ -1,0 +1,155 @@
+@reference "../../../styles/globals.css";
+
+/* ══════════════════════════════════════════════════════
+   Section & Container
+   ══════════════════════════════════════════════════════ */
+.section {
+  @apply w-full bg-white text-slate-900 py-10 sm:pt-0 sm:pb-14 overflow-hidden;
+}
+
+.container {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 sm:space-y-8;
+}
+
+/* ══════════════════════════════════════════════════════
+   Section Header
+   ══════════════════════════════════════════════════════ */
+.headerRow {
+  @apply flex flex-row items-center justify-between gap-4;
+}
+
+.titleGroup {
+  @apply flex items-center gap-3;
+}
+
+.titleBar {
+  @apply w-[5px] h-[25px] rounded-[2.5px] bg-[#DCA43E] shrink-0;
+}
+
+.title {
+  @apply text-xl sm:text-2xl font-medium text-[#0A0D14] tracking-tight;
+}
+
+.viewAllLink {
+  @apply text-xs sm:text-sm font-medium text-[#B46A2C] hover:text-[#995222] transition-colors inline-flex items-center gap-1 shrink-0;
+}
+
+.viewAllIcon {
+  @apply w-4 h-4;
+}
+
+/* ══════════════════════════════════════════════════════
+   Featured Media Card (Top Banner)
+   ══════════════════════════════════════════════════════ */
+.featuredCard {
+  @apply relative w-full h-[380px] sm:h-[440px] md:h-[460px] rounded-2xl overflow-hidden cursor-pointer shadow-xl transition-all duration-300 border border-slate-100;
+}
+
+.featuredImage {
+  @apply object-cover object-center transition-transform duration-700 group-hover:scale-105;
+}
+
+.featuredOverlay {
+  @apply absolute inset-0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.1) 0%,
+    rgba(0, 0, 0, 0.4) 40%,
+    rgba(0, 0, 0, 0.85) 100%
+  );
+}
+
+.featuredContent {
+  @apply absolute bottom-0 left-0 w-full p-6 sm:p-10 text-white z-10 flex flex-col items-start gap-3 max-w-3xl;
+}
+
+.badge {
+  @apply inline-block px-3 py-1 text-[11px] font-semibold tracking-wider text-[#DCA43E] border border-[#DCA43E]/60 rounded uppercase bg-black/40 backdrop-blur-sm;
+}
+
+.featuredTitle {
+  @apply text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight leading-tight;
+}
+
+.metaRow {
+  @apply flex flex-wrap items-center gap-4 text-xs sm:text-sm text-white/80 font-normal;
+}
+
+.metaAuthor {
+  @apply flex items-center gap-2 text-white font-medium;
+}
+
+.authorAvatar {
+  @apply relative w-6 h-6 rounded-full overflow-hidden border border-white/40 shrink-0;
+}
+
+.watchBtn {
+  @apply inline-flex items-center gap-2.5 px-5 py-2.5 rounded-lg bg-[#B46A2C] hover:bg-[#995222] text-white font-semibold text-sm transition-all duration-200 shadow-md active:scale-95 mt-1;
+}
+
+.playIcon {
+  @apply w-4 h-4 fill-white text-white;
+}
+
+/* ══════════════════════════════════════════════════════
+   Bottom Grid & Cards
+   ══════════════════════════════════════════════════════ */
+.grid {
+  @apply grid grid-cols-1 md:grid-cols-3 gap-6;
+}
+
+.mediaCard {
+  @apply relative flex flex-col w-full rounded-2xl overflow-hidden bg-white border border-slate-100/90 shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer;
+}
+
+.thumbnailWrapper {
+  @apply relative w-full aspect-video overflow-hidden rounded-t-2xl bg-slate-900;
+}
+
+.thumbnail {
+  @apply object-cover object-center transition-transform duration-500;
+}
+
+.mediaCard:hover .thumbnail {
+  @apply scale-105;
+}
+
+.playOverlay {
+  @apply absolute inset-0 flex items-center justify-center bg-black/10 transition-all duration-300 pointer-events-none;
+}
+
+.mediaCard:hover .playOverlay {
+  @apply bg-black/30;
+}
+
+.playCircle {
+  @apply w-11 h-11 rounded-full bg-[#DCA43E] text-white flex items-center justify-center shadow-lg transition-all duration-300 scale-90 opacity-0;
+}
+
+.mediaCard:hover .playCircle {
+  @apply opacity-100 scale-100 bg-[#B46A2C];
+}
+
+.playIconCircle {
+  @apply w-5 h-5 fill-white text-white ml-0.5;
+}
+
+.durationBadge {
+  @apply absolute bottom-2.5 right-2.5 z-10 px-2 py-0.5 text-[11px] font-medium tracking-wide text-white bg-black/80 rounded backdrop-blur-sm;
+}
+
+.cardBody {
+  @apply p-4 flex flex-col gap-1 bg-white transition-colors duration-200;
+}
+
+.cardTitle {
+  @apply text-sm sm:text-base font-semibold text-[#0A0D14] transition-colors duration-200 line-clamp-1;
+}
+
+.mediaCard:hover .cardTitle {
+  @apply text-[#B46A2C];
+}
+
+.cardAuthor {
+  @apply text-xs text-slate-500 font-normal;
+}

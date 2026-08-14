@@ -1,0 +1,102 @@
+@reference "../../../styles/globals.css";
+
+/* ══════════════════════════════════════════════════════
+   Section & Container
+   ══════════════════════════════════════════════════════ */
+.section {
+  @apply w-full bg-white text-slate-900 py-12 sm:pt-4 pb-20 overflow-hidden;
+}
+
+.container {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8;
+}
+
+/* ══════════════════════════════════════════════════════
+   Section Header
+   ══════════════════════════════════════════════════════ */
+.headerRow {
+  @apply flex flex-row items-center justify-between gap-4;
+}
+
+.titleGroup {
+  @apply flex items-center gap-3;
+}
+
+.titleBar {
+  @apply w-[5px] h-[25px] rounded-[2.5px] bg-[#DCA43E] shrink-0;
+}
+
+.title {
+  @apply text-xl sm:text-2xl font-medium text-[#0A0D14] tracking-tight;
+}
+
+.viewAllLink {
+  @apply text-xs sm:text-sm font-medium text-[#B46A2C] hover:text-[#995222] transition-colors inline-flex items-center gap-1 shrink-0;
+}
+
+.viewAllIcon {
+  @apply w-4 h-4;
+}
+
+
+/* ══════════════════════════════════════════════════════
+   Blog Card
+   ══════════════════════════════════════════════════════ */
+.card {
+  @apply relative w-[464px] h-full flex flex-col rounded-2xl overflow-hidden bg-white cursor-pointer transition-all duration-300 border border-slate-100/90 shadow-sm hover:shadow-md;
+}
+
+.imageWrapper {
+  @apply relative w-full h-[200px] sm:h-[260px] overflow-hidden rounded-t-2xl bg-slate-100 shrink-0;
+}
+
+.cardImage {
+  @apply object-cover object-center transition-transform duration-700;
+}
+
+.card:hover .cardImage {
+  @apply scale-105;
+}
+
+.cardBody {
+  @apply p-4 sm:p-5 flex flex-col gap-2 sm:gap-3 flex-1 justify-between bg-white;
+}
+
+.metaRow {
+  @apply flex items-center justify-between gap-2;
+}
+
+.category {
+  @apply text-xs font-bold text-[#B46A2C] uppercase tracking-wider;
+}
+
+.readTime {
+  @apply text-xs text-slate-500 font-normal;
+}
+
+.postTitle {
+  @apply text-base sm:text-xl font-bold text-[#0A0D14] tracking-tight leading-snug transition-colors duration-200 line-clamp-1 sm:line-clamp-2;
+}
+
+.card:hover .postTitle {
+  @apply text-[#B46A2C];
+}
+
+.date {
+  @apply text-xs sm:text-sm text-slate-500 font-normal pt-1;
+}
+
+/* ══════════════════════════════════════════════════════
+   Responsive
+   ══════════════════════════════════════════════════════ */
+@media (max-width: 767px) {
+  .card {
+    @apply w-full;
+  }
+
+  .postTitle {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

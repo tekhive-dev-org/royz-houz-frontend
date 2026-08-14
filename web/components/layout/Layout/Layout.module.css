@@ -1,0 +1,9 @@
+@reference "../../../styles/globals.css";
+
+.layoutWrapper {
+  @apply min-h-screen flex flex-col bg-white text-slate-900 font-sans;
+}
+
+.mainContent {
+  @apply flex-1 w-full;
+}

@@ -1,0 +1,117 @@
+@reference "../../../styles/globals.css";
+
+.header {
+  @apply sticky top-0 z-50 w-full bg-[#050505] border-b border-[#1A1A1A];
+}
+
+.container {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between;
+}
+
+.logoLink {
+  @apply flex items-center focus:outline-none py-2;
+}
+
+.logoImage {
+  @apply h-16 w-auto object-contain transition-transform group-hover:scale-105;
+}
+
+.desktopNav {
+  @apply hidden lg:flex items-center gap-8;
+}
+
+.navLink {
+  @apply text-sm font-medium transition-colors text-[#A3A3A3] hover:text-[#B46A2C] relative py-1;
+}
+
+.navLinkActive {
+  @apply text-[#B46A2C] font-semibold;
+}
+
+.activeIndicator {
+  @apply absolute bottom-0 left-0 w-full h-[2px] bg-[#B46A2C] rounded-full;
+}
+
+.actionsGroup {
+  @apply hidden lg:flex items-center gap-5;
+}
+
+.searchContainer {
+  @apply relative;
+}
+
+.searchForm {
+  @apply flex items-center;
+}
+
+.searchInput {
+  @apply bg-[#141414] text-white text-xs px-3 py-1.5 rounded-lg border border-[#333] focus:border-[#B46A2C] outline-none w-48 transition-all;
+}
+
+.closeSearchBtn {
+  @apply ml-1.5 text-slate-400 hover:text-white;
+}
+
+.openSearchBtn {
+  @apply text-[#E2E4E9] hover:text-[#B46A2C] transition-colors p-1.5;
+}
+
+.socialGroup {
+  @apply flex items-center gap-3 border-l border-r border-[#262626] px-4 py-1;
+}
+
+.socialLink {
+  @apply text-[#E2E4E9] hover:text-[#B46A2C] transition-colors p-1;
+}
+
+.donateBtn {
+  @apply px-6 py-2.5 rounded-xl bg-[#B46A2C] hover:bg-[#995222] text-white font-semibold text-sm transition-all shadow-md shadow-[#B46A2C]/20 active:scale-95;
+}
+
+.mobileActions {
+  @apply flex items-center gap-3 lg:hidden;
+}
+
+.mobileDonateBtn {
+  @apply px-4 py-1.5 rounded-lg bg-[#B46A2C] text-white text-xs font-semibold;
+}
+
+.mobileToggleBtn {
+  @apply text-white p-2 focus:outline-none;
+}
+
+.mobileDrawer {
+  @apply absolute top-full left-0 w-full z-50 lg:hidden bg-[#0A0A0A]/95 backdrop-blur-xl border-b border-[#262626] px-4 pt-3 pb-6 space-y-4 shadow-2xl;
+}
+
+.mobileNav {
+  @apply flex flex-col space-y-2;
+}
+
+.mobileNavLink {
+  @apply px-3 py-2 rounded-lg text-sm font-medium text-[#A3A3A3] hover:text-white hover:bg-[#141414];
+}
+
+.mobileNavLinkActive {
+  @apply bg-[#1C1713] text-[#B46A2C] font-semibold;
+}
+
+.mobileDrawerFooter {
+  @apply pt-3 border-t border-[#262626] flex items-center justify-between px-3;
+}
+
+.mobileSocialGroup {
+  @apply flex items-center gap-4 text-[#A3A3A3] hover:text-[#B46A2C];
+}
+
+.mobileSearchForm {
+  @apply flex items-center gap-2 mt-3 pt-3 border-t border-[#262626];
+}
+
+.mobileSearchInput {
+  @apply flex-1 bg-[#141414] text-white text-xs px-3 py-2 rounded-lg border border-[#333] focus:border-[#B46A2C] outline-none transition-all;
+}
+
+.mobileSearchSubmitBtn {
+  @apply px-4 py-2 bg-[#B46A2C] text-white text-xs font-semibold rounded-lg hover:bg-[#995222] transition-colors;
+}

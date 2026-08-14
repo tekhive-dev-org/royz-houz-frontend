@@ -1,0 +1,113 @@
+@reference "../../../styles/globals.css";
+
+/* ══════════════════════════════════════════════════════
+   About Us — Moments That Matters Section
+   ══════════════════════════════════════════════════════ */
+.section {
+  @apply w-full bg-white text-slate-900 py-16 sm:py-20 md:py-24 overflow-hidden;
+}
+
+.container {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 sm:space-y-16;
+}
+
+/* ── Section Header ──────────────────────────────────── */
+.header {
+  @apply flex flex-col items-center text-center max-w-2xl mx-auto space-y-3;
+}
+
+.badgeRow {
+  @apply inline-flex items-center gap-3 text-xs font-semibold text-[#B46A2C] tracking-widest uppercase;
+}
+
+.badgeLine {
+  @apply w-[28px] h-[1.5px] bg-[#B46A2C] shrink-0;
+}
+
+.headline {
+  @apply text-3xl sm:text-4xl md:text-[42px] font-bold text-[#0A0D14] tracking-tight leading-tight;
+}
+
+.subtitle {
+  @apply text-xs sm:text-sm md:text-base text-slate-500 font-normal leading-relaxed;
+}
+
+/* ── Main 2-Column Layout ────────────────────────────── */
+.mainGrid {
+  @apply flex flex-wrap lg:flex-nowrap gap-10 lg:gap-14 items-center;
+}
+
+.leftCol {
+  @apply  max-w-[550px] flex flex-col space-y-6 sm:space-y-7;
+}
+
+.featuresList {
+  @apply flex flex-col space-y-5 sm:space-y-6;
+}
+
+/* ── Feature Item ────────────────────────────────────── */
+.featureItem {
+  @apply flex items-start gap-4 sm:gap-5;
+}
+
+.iconBadge {
+  @apply w-12 h-12 rounded-xl flex items-center justify-center shrink-0 transition-transform duration-300;
+}
+
+.iconBadgeLight {
+  @apply bg-slate-100 text-[#0A0D14];
+}
+
+.iconBadgeDark {
+  @apply bg-[#0A0D14] text-white;
+}
+
+.featureIcon {
+  @apply w-5 h-5;
+}
+
+.featureContent {
+  @apply flex flex-col pt-0.5;
+}
+
+.featureTitle {
+  @apply text-base sm:text-lg font-bold text-[#0A0D14] tracking-tight;
+}
+
+.featureDescription {
+  @apply text-xs sm:text-sm text-slate-500 font-normal leading-relaxed mt-1;
+}
+
+/* ── Social Proof / Reviews Footer ───────────────────── */
+.proofFooter {
+  @apply pt-5 border-t border-slate-100 flex flex-col space-y-1.5;
+}
+
+.proofTitle {
+  @apply text-sm sm:text-base font-bold text-[#0A0D14] tracking-tight;
+}
+
+.ratingRow {
+  @apply flex items-center gap-2.5 text-xs sm:text-sm text-[#858585] font-normal;
+}
+
+.ratingScore {
+  @apply text-[#858585] font-medium;
+}
+
+.reviewsCount {
+  @apply text-[#858585] font-normal;
+}
+
+/* ── Right Column: Showcase Image ────────────────────── */
+.rightCol {
+  @apply  w-[504px];
+}
+
+.imageWrapper {
+  @apply relative w-full h-[551px] max-sm:h-[300px] rounded-2xl md:rounded-3xl overflow-hidden shadow-md bg-slate-100 border border-slate-100;
+}
+
+.showcaseImage {
+  @apply object-cover object-center transition-transform duration-700 hover:scale-105;
+}

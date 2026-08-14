@@ -1,0 +1,74 @@
+@reference "../../../styles/globals.css";
+
+/* ══════════════════════════════════════════════════════
+   Talent Hub — Hero Section
+   ══════════════════════════════════════════════════════ */
+.hero {
+  @apply relative w-full min-h-[580px] sm:min-h-[640px] md:min-h-[700px] lg:min-h-[760px] flex items-center bg-[#050505] overflow-hidden;
+}
+
+.bgImageWrapper {
+  @apply absolute inset-0 z-0 select-none;
+}
+
+.bgImage {
+  @apply object-cover object-right md:object-[85%_center] lg:object-right brightness-100;
+}
+
+/* ── Deep Gradient Overlay for High Contrast Text ───── */
+.overlay {
+  @apply absolute inset-0 z-10 bg-gradient-to-r from-black via-black/80 to-transparent;
+}
+
+.bottomFade {
+  @apply absolute inset-x-0 bottom-0 h-24 z-10 bg-gradient-to-t from-[#050505] to-transparent pointer-events-none;
+}
+
+/* ── Content Container ───────────────────────────────── */
+.container {
+  @apply relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-28 md:py-32 w-full;
+}
+
+.content {
+  @apply max-w-2xl lg:max-w-3xl flex flex-col items-start space-y-6 sm:space-y-7;
+}
+
+/* ── Welcome Pill Badge ──────────────────────────────── */
+.badge {
+  @apply inline-flex items-center px-5 py-1.5 rounded-full bg-white text-[#B46A2C] text-xs sm:text-sm font-semibold tracking-wide shadow-md select-none;
+}
+
+/* ── Headline ────────────────────────────────────────── */
+.headline {
+  @apply text-3xl sm:text-4xl md:text-5xl lg:text-[56px] font-black uppercase text-white tracking-tight leading-[1.1];
+}
+
+.accentText {
+  @apply block text-[#C77935] mt-1 sm:mt-2;
+}
+
+/* ── Subtitle ────────────────────────────────────────── */
+.subtitle {
+  @apply text-xs sm:text-sm md:text-base text-slate-300 font-normal leading-relaxed max-w-xl;
+}
+
+/* ── Search Bar Component (Figma Spec: 768px total width, 54px height, 6px radius) ── */
+.searchForm {
+  @apply flex flex-col sm:flex-row items-stretch sm:items-center gap-4 w-full max-w-[768px] pt-3;
+}
+
+.searchInputWrapper {
+  @apply relative flex-1 w-full max-w-full sm:max-w-[603px] h-[54px];
+}
+
+.searchIconPosition {
+  @apply absolute left-4 top-1/2 -translate-y-1/2 text-[#6A7282] pointer-events-none flex items-center justify-center;
+}
+
+.searchInput {
+  @apply w-full h-[54px] bg-[#1A1A1A] border border-white/10 text-white placeholder-[#7D7D7D] text-xs sm:text-sm rounded-[6px] pl-11 pr-4 focus:outline-none focus:border-[#C8781A] focus:ring-1 focus:ring-[#C8781A] transition-all;
+}
+
+.searchButton {
+  @apply bg-[#C8781A] hover:bg-[#B46A2C] active:scale-[0.98] text-white font-bold uppercase tracking-wider h-[54px] w-full sm:w-[149px] rounded-[6px] text-xs sm:text-sm transition-all shadow-md shrink-0 flex items-center justify-center cursor-pointer select-none;
+}
