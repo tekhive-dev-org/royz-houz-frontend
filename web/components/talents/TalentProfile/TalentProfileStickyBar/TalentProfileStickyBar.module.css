@@ -1,0 +1,28 @@
+@reference "../../../../styles/globals.css";
+
+/* ══════════════════════════════════════════════════════
+   Talent Profile Detail — Sticky Action Bar
+   ══════════════════════════════════════════════════════ */
+.bar {
+  @apply w-full bg-[#141414] border-b border-white/10 text-white py-3 sm:py-3.5 sticky top-[72px] z-30 shadow-md;
+}
+
+.container {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4;
+}
+
+.signature {
+  @apply text-base sm:text-lg font-serif italic text-slate-200 tracking-wide font-medium;
+}
+
+.actions {
+  @apply flex items-center gap-2 sm:gap-3 shrink-0;
+}
+
+.btnSecondary {
+  @apply px-3 sm:px-4 py-1.5 sm:py-2 rounded-md bg-[#222222] hover:bg-[#2e2e2e] border border-white/15 text-white text-xs sm:text-sm font-medium transition-all cursor-pointer;
+}
+
+.btnPrimary {
+  @apply px-4 sm:px-5 py-1.5 sm:py-2 rounded-md bg-[#B46A2C] hover:bg-[#9E5820] active:scale-95 text-white text-xs sm:text-sm font-bold uppercase tracking-wider transition-all shadow-sm cursor-pointer;
+}

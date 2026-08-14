@@ -1,0 +1,36 @@
+@reference "../../../styles/globals.css";
+
+/* ══════════════════════════════════════════════════════
+   Talent Hub — "Are you a talented Individual?" CTA Banner
+   ══════════════════════════════════════════════════════ */
+.section {
+  @apply w-full bg-white ;
+}
+
+.container {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+}
+
+.card {
+  @apply relative w-full bg-[#FAF5EE] border border-[#C8781A]/35 rounded-xl sm:rounded-2xl p-6 sm:p-8 md:p-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 shadow-sm;
+}
+
+.content {
+  @apply flex flex-col items-start max-w-2xl;
+}
+
+.title {
+  @apply text-xl sm:text-2xl md:text-[28px] font-bold text-slate-900 tracking-tight leading-snug;
+}
+
+.subtitle {
+  @apply text-sm sm:text-base text-slate-600 font-normal mt-1.5 leading-relaxed;
+}
+
+.action {
+  @apply shrink-0 w-full sm:w-auto;
+}
+
+.applyBtn {
+  @apply w-full sm:w-auto inline-flex items-center justify-center px-6 sm:px-7 py-2.5 sm:py-3 rounded-lg bg-[#A85B20] hover:bg-[#8F4B16] active:scale-95 text-white font-medium text-sm sm:text-base shadow-sm transition-all duration-200 cursor-pointer select-none text-center;
+}

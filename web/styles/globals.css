@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: 'Lato', sans-serif;
+  --font-sans: var(--font-lato), 'Lato', sans-serif;
   --color-brand-50: #FAF4EF;
   --color-brand-100: #F2E4D6;
   --color-brand-200: #E5C7AC;
@@ -17,7 +17,7 @@
 }
 
 :root {
-  --font-sans: 'Lato', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-sans: var(--font-lato), 'Lato', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --bg-primary: #FFFFFF;
   --bg-card: #F9FAFB;
   --text-primary: #111827;
@@ -26,6 +26,10 @@
   --brand-hover: #995222;
   --brand-light: #FAF4EF;
   --brand-dark: #532C19;
+}
+
+*, *::before, *::after {
+  font-family: var(--font-sans);
 }
 
 body {

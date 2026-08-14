@@ -1,11 +1,13 @@
 import Head from "next/head";
-import { AboutHero } from "@/components/about/AboutHero";
-import { Breadcrumb } from "@/components/common/Breadcrumb";
-import { AboutStory } from "@/components/about/AboutStory";
-import { WhyChooseUs } from "@/components/about/WhyChooseUs";
-import { Moments } from "@/components/about/Moments";
-import { Gallery } from "@/components/about/Gallery";
-import { Testimonials } from "@/components/home/Testimonials";
+import {
+  AboutHero,
+  AboutStory,
+  WhyChooseUs,
+  Moments,
+  Gallery,
+} from "@/components/about";
+import { Breadcrumb } from "@/components/common";
+import { Testimonials } from "@/components/home";
 
 export default function AboutPage() {
   return (

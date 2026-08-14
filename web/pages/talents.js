@@ -1,11 +1,26 @@
+import { useState } from "react";
 import Head from "next/head";
-import { TalentHero } from "@/components/talents/TalentHero";
-import { Breadcrumb } from "@/components/common/Breadcrumb";
-import { TrendingTalents } from "@/components/talents/TrendingTalents";
+import {
+  TalentHero,
+  TrendingTalents,
+  TalentDirectory,
+  TalentCTA,
+} from "@/components/talents";
+import { Breadcrumb } from "@/components/common";
+import { Testimonials } from "@/components/home";
 
 export default function TalentsPage() {
-  const handleSearch = (_query) => {
-    // Will connect to directory filtering state
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+    // Smooth scroll down to the directory section when searching
+    if (typeof window !== "undefined") {
+      const element = document.getElementById("talent-directory");
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }
   };
 
   return (
@@ -31,6 +46,14 @@ export default function TalentsPage() {
 
       {/* Trending Now Section */}
       <TrendingTalents />
+
+      {/* Talent Hub Catalog & Directory Section */}
+      <TalentDirectory searchQuery={searchQuery} />
+
+      {/* Talent Call to Action Section */}
+      <TalentCTA />
+      <Testimonials />
     </>
   );
 }
+

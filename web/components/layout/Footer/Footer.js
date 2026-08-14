@@ -94,7 +94,7 @@ export function Footer() {
               </li>
               <li>
                 <Link href="/about" className={styles.navLink}>
-                  About Royz House
+                  About Royz Houz
                 </Link>
               </li>
               <li>

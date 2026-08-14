@@ -1,0 +1,68 @@
+@reference "../../../../styles/globals.css";
+
+/* ══════════════════════════════════════════════════════
+   Talent Profile Detail — Hero Header Section
+   ══════════════════════════════════════════════════════ */
+.heroSection {
+  @apply relative w-full min-h-[380px] sm:min-h-[440px] md:min-h-[480px] flex items-end overflow-hidden bg-slate-950 text-white;
+}
+
+.heroImage {
+  @apply object-cover object-center opacity-85 transition-transform duration-700;
+}
+
+.heroOverlay {
+  @apply absolute inset-0 bg-gradient-to-t from-black via-black/50 to-black/30 pointer-events-none;
+}
+
+.container {
+  @apply relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-10 sm:pb-14 pt-28 sm:pt-36 w-full;
+}
+
+/* ── Breadcrumb ──────────────────────────────────────── */
+.breadcrumb {
+  @apply flex items-center gap-2 text-xs sm:text-sm text-slate-300 font-medium mb-3 sm:mb-4;
+}
+
+.breadcrumbLink {
+  @apply hover:text-white transition-colors cursor-pointer;
+}
+
+.breadcrumbCurrent {
+  @apply text-slate-400 font-normal;
+}
+
+/* ── Category Pill Badge ─────────────────────────────── */
+.categoryBadgeWrapper {
+  @apply mb-3 sm:mb-4 w-full;
+}
+
+.categoryBadge {
+  @apply inline-flex items-center px-4 py-1.5 rounded-[4px] bg-[#C8781A]/20 border border-[#C8781A]/40 text-[#C8781A] text-xs font-bold uppercase tracking-widest backdrop-blur-md;
+}
+
+/* ── Name & Subtitle ─────────────────────────────────── */
+.talentName {
+  @apply text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-extrabold text-white tracking-tight leading-tight mb-2 sm:mb-3;
+}
+
+.talentSubtitle {
+  @apply text-xs sm:text-sm md:text-base text-slate-300 font-normal mb-3 sm:mb-4;
+}
+
+/* ── Rating & Followers ──────────────────────────────── */
+.metaRow {
+  @apply flex items-center gap-4 text-xs sm:text-sm font-medium text-slate-300;
+}
+
+.ratingGroup {
+  @apply inline-flex items-center gap-1 text-white font-semibold;
+}
+
+.starFilled {
+  @apply text-[#C8781A] text-sm sm:text-base;
+}
+
+.followersCount {
+  @apply text-slate-300 text-xs sm:text-sm border-l border-white/20 pl-4;
+}

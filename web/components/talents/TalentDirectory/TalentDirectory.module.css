@@ -1,0 +1,162 @@
+@reference "../../../styles/globals.css";
+
+/* ══════════════════════════════════════════════════════
+   Talent Hub — Directory & Catalog Section
+   ══════════════════════════════════════════════════════ */
+.section {
+  @apply w-full bg-white text-slate-900 py-10 sm:py-14 md:py-16 overflow-hidden;
+}
+
+.container {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+}
+
+/* ── Mobile-Responsive Filter Pills Row ──────────────── */
+.filterRow {
+  @apply flex items-center gap-2 sm:gap-3 mb-6 sm:mb-8 overflow-x-auto sm:flex-wrap pb-2 sm:pb-0 -mx-4 px-4 sm:mx-0 sm:px-0;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+
+.filterRow::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
+
+.filterPill {
+  @apply px-4 sm:px-6 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all duration-200 border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 cursor-pointer select-none whitespace-nowrap shrink-0;
+}
+
+.filterPillActive {
+  @apply bg-[#B46A2C] text-white border-[#B46A2C] shadow-sm hover:bg-[#9E5820];
+}
+
+/* ── Meta Sub-header Bar (Count & Sort) ──────────────── */
+.metaBar {
+  @apply flex items-center justify-between gap-3 mb-6 sm:mb-8 text-xs sm:text-sm text-slate-500 font-medium;
+}
+
+.foundCount {
+  @apply text-slate-600 text-xs sm:text-sm font-medium whitespace-nowrap;
+}
+
+.sortWrapper {
+  @apply relative inline-flex items-center;
+}
+
+.sortSelect {
+  @apply appearance-none bg-white border border-slate-200 rounded-lg pl-3 pr-7 sm:pl-3.5 sm:pr-8 py-1.5 text-xs sm:text-sm text-slate-700 focus:outline-none focus:border-[#B46A2C] cursor-pointer shadow-sm;
+}
+
+.sortChevron {
+  @apply absolute right-2 sm:right-2.5 pointer-events-none text-slate-400 w-3.5 h-3.5;
+}
+
+/* ── 2-Column Mobile & 4-Column Desktop Directory Grid ─ */
+.grid {
+  @apply grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5 md:gap-6;
+}
+
+/* ── Talent Directory Card Item (Exact Figma Spec: 306x332px, rx-10px) ── */
+.card {
+  @apply relative w-full h-[290px] sm:h-[332px] sm:max-w-[306px] rounded-[10px] overflow-hidden bg-slate-950 shadow-md border border-slate-100/10 transition-all duration-300 hover:shadow-xl select-none flex flex-col justify-between p-2.5 sm:p-3.5 md:p-4;
+}
+
+.cardImage {
+  @apply object-cover object-center transition-transform duration-700 ease-out;
+}
+
+.card:hover .cardImage {
+  @apply scale-105;
+}
+
+.cardGradient {
+  @apply absolute inset-0 bg-gradient-to-t from-black via-black/20 to-black/25 pointer-events-none;
+}
+
+/* ── Card Top Badges ─────────────────────────────────── */
+.topBadges {
+  @apply relative z-10 flex items-center gap-1 sm:gap-1.5;
+}
+
+.categoryBadge {
+  @apply inline-flex items-center px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded-[4px] bg-[#C8781A]/20 border border-[#C8781A]/30 text-[#C8781A] text-[9px] sm:text-[10px] md:text-[11px] font-bold uppercase tracking-wider backdrop-blur-sm h-[20px] sm:h-[25px];
+}
+
+.hotBadge {
+  @apply inline-flex items-center justify-center w-[26px] sm:w-[33px] h-[20px] sm:h-[25px] rounded-[4px] bg-[#0A0A0A]/70 border border-white/15 text-[10px] sm:text-xs backdrop-blur-sm;
+}
+
+/* ── Card Bottom Content ─────────────────────────────── */
+.bottomContent {
+  @apply relative z-10 flex flex-col items-start w-full space-y-0.5 sm:space-y-1;
+}
+
+.name {
+  @apply text-sm sm:text-base md:text-lg font-bold text-white tracking-tight leading-snug line-clamp-1 sm:line-clamp-none;
+}
+
+.subtitle {
+  @apply text-[10px] sm:text-[11px] md:text-xs text-[#E2E4E9] font-normal line-clamp-1;
+}
+
+.bio {
+  @apply text-[10px] sm:text-[11px] md:text-xs text-white/90 leading-tight pt-0.5 sm:pt-1 line-clamp-2;
+}
+
+/* ── Card Footer (Rating + Book CTA: 73x28px, rx-4px) ── */
+.footerRow {
+  @apply flex items-center justify-between w-full pt-1.5 sm:pt-2.5;
+}
+
+.ratingGroup {
+  @apply inline-flex items-center gap-0.5 sm:gap-1 text-[11px] sm:text-xs font-semibold text-white;
+}
+
+.starIcon {
+  @apply text-[#C8781A] text-xs sm:text-sm leading-none;
+}
+
+.ratingNumber {
+  @apply text-slate-300 text-[10px] sm:text-xs font-medium;
+}
+
+.bookBtn {
+  @apply w-[54px] sm:w-[73px] h-[24px] sm:h-[28px] rounded-[4px] bg-[#B46A2C] hover:bg-[#9E5820] active:scale-95 text-white font-bold text-[10px] sm:text-xs tracking-wide shadow-sm transition-all flex items-center justify-center cursor-pointer select-none;
+}
+
+/* ── Fully Responsive Pagination Controls ────────────── */
+.paginationBar {
+  @apply flex flex-col md:flex-row items-center justify-between gap-4 sm:gap-6 mt-10 sm:mt-14 pt-6 sm:pt-8 border-t border-slate-100 text-xs sm:text-sm text-slate-500 w-full;
+}
+
+.paginationMeta {
+  @apply flex items-center justify-between w-full md:w-auto gap-4 order-2 md:order-1;
+}
+
+.paginationInfo {
+  @apply text-slate-500 font-medium text-xs sm:text-sm whitespace-nowrap;
+}
+
+.pageNumberGroup {
+  @apply flex items-center justify-center gap-1 sm:gap-1.5 order-1 md:order-2 flex-wrap;
+}
+
+.pageBtn {
+  @apply w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 transition-all font-medium text-xs sm:text-sm cursor-pointer shrink-0;
+}
+
+.pageBtnFast {
+  @apply hidden sm:flex;
+}
+
+.pageBtnActive {
+  @apply bg-[#B46A2C] text-white border-[#B46A2C] hover:bg-[#9E5820];
+}
+
+.pageBtnDisabled {
+  @apply opacity-30 cursor-not-allowed hover:bg-white;
+}
+
+.perPageSelect {
+  @apply appearance-none bg-white border border-slate-200 rounded-lg pl-3 pr-7 py-1.5 text-xs sm:text-sm text-slate-700 focus:outline-none focus:border-[#B46A2C] cursor-pointer shadow-sm;
+}

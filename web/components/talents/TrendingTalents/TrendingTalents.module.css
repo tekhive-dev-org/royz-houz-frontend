@@ -35,7 +35,7 @@
 
 /* ── Talent Card ─────────────────────────────────────── */
 .card {
-  @apply relative w-full aspect-[4/4.8] sm:aspect-[4/5] rounded-2xl md:rounded-[18px] overflow-hidden bg-slate-950 shadow-md border border-slate-100/10 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 cursor-pointer select-none;
+  @apply relative w-full aspect-[4/4.8] sm:aspect-[4/5] rounded-2xl md:rounded-[18px] overflow-hidden bg-slate-950 shadow-md border border-slate-100/10 transition-all duration-300 hover:shadow-xl cursor-pointer select-none;
 }
 
 .image {

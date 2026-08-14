@@ -52,7 +52,7 @@ export function AboutStory() {
               {/* Checklist & CTA */}
               <div className={styles.checklistCol}>
                 <p className={styles.subDescription}>
-                  Today, Royz House is home to over 500 of Africa&apos;s most exceptional
+                  Today, Royz Houz is home to over 500 of Africa&apos;s most exceptional
                   creatives across music, film, fashion, visual art, dance, photography,
                   and innovation.
                 </p>

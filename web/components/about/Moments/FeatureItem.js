@@ -1,4 +1,4 @@
-import { Sprout, Handshake, Heart } from "lucide-react";
+import { Sprout, Heart } from "lucide-react";
 import { SparkleStarIcon, TalentDiscoveryIcon } from "./Icons";
 import styles from "./Moments.module.css";
 
@@ -7,7 +7,7 @@ const ICON_MAP = {
   Sparkles: SparkleStarIcon,
   OrigamiDiscovery: TalentDiscoveryIcon,
   Sprout,
-  Handshake,
+  Handshake: TalentDiscoveryIcon,
   Heart,
 };
 

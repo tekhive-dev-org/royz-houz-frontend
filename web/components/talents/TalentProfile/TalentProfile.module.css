@@ -1,0 +1,24 @@
+@reference "../../../styles/globals.css";
+
+/* ══════════════════════════════════════════════════════
+   Talent Profile Detail Page Layout
+   ══════════════════════════════════════════════════════ */
+.mainContent {
+  @apply w-full bg-white text-slate-900 py-10 sm:py-14 md:py-16;
+}
+
+.container {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+}
+
+.layoutGrid {
+  @apply grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start;
+}
+
+.leftColumn {
+  @apply lg:col-span-8 w-full;
+}
+
+.rightColumn {
+  @apply lg:col-span-4 w-full;
+}

@@ -1,0 +1,87 @@
+@reference "../../../../styles/globals.css";
+
+/* ══════════════════════════════════════════════════════
+   Talent Profile Detail — Sidebar Widgets
+   ══════════════════════════════════════════════════════ */
+.sidebar {
+  @apply w-full flex flex-col gap-6;
+}
+
+/* ── Widget 1: Booking Card (Exact Figma Spec 384x257) ── */
+.bookingCard {
+  @apply bg-white border border-[#E2E4E9] rounded-[12px] p-6 sm:p-7 shadow-sm flex flex-col items-start w-full;
+}
+
+.bookingSubtitle {
+  @apply text-[11px] sm:text-xs font-bold text-[#0A0D14] uppercase tracking-wider mb-2;
+}
+
+.bookingPrice {
+  @apply text-3xl sm:text-[32px] font-extrabold text-[#B46A2C] mb-6 tracking-tight leading-none;
+}
+
+.bookTalentBtn {
+  @apply w-full h-12 rounded-[4px] bg-[#B46A2C] hover:bg-[#995222] active:scale-[0.99] text-white font-bold text-xs sm:text-[13px] uppercase tracking-widest transition-all shadow-sm mb-3 flex items-center justify-center cursor-pointer select-none;
+}
+
+.messageBtn {
+  @apply w-full h-11 rounded-[4px] bg-white hover:bg-slate-50 border border-[#E2E4E9] text-[#525866] hover:text-[#0A0D14] font-bold text-xs sm:text-[13px] uppercase tracking-widest transition-all mb-3.5 flex items-center justify-center cursor-pointer select-none;
+}
+
+.responseNotice {
+  @apply text-xs text-[#525866] text-center w-full font-normal;
+}
+
+/* ── Widget 2: Social & Streaming (Exact Figma Spec 384x121) ── */
+.socialWidget {
+  @apply bg-white border border-[#E2E4E9] rounded-[12px] p-6 shadow-sm w-full;
+}
+
+.widgetHeader {
+  @apply text-sm sm:text-[15px] font-bold text-[#0A0D14] mb-4;
+}
+
+.socialList {
+  @apply flex items-center gap-3 sm:gap-3.5;
+}
+
+.socialIconBtn {
+  @apply w-8 h-8 rounded-full flex items-center justify-center transition-transform duration-200 hover:scale-110 shrink-0 shadow-sm overflow-hidden;
+}
+
+/* ── Widget 3: Related Talents ───────────────────────── */
+.relatedWidget {
+  @apply bg-white border border-slate-200 rounded-xl p-6 shadow-sm flex flex-col;
+}
+
+.relatedList {
+  @apply flex flex-col gap-4 mb-5;
+}
+
+.relatedItem {
+  @apply flex items-center gap-3 cursor-pointer transition-colors;
+}
+
+.relatedItem:hover .relatedName {
+  @apply text-[#B46A2C];
+}
+
+.relatedAvatar {
+  @apply relative w-10 h-10 rounded-lg overflow-hidden shrink-0 bg-slate-900;
+}
+
+.relatedInfo {
+  @apply flex flex-col;
+}
+
+.relatedName {
+  @apply text-xs sm:text-sm font-bold text-slate-900 transition-colors leading-tight;
+}
+
+.relatedCategory {
+  @apply text-[11px] text-slate-600 font-normal;
+}
+
+.viewAllLink {
+  @apply inline-flex items-center gap-1 text-xs font-semibold text-[#B46A2C] hover:text-[#9E5820] transition-colors mt-auto;
+}
