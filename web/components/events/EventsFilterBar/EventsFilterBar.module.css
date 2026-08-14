@@ -1,0 +1,65 @@
+@reference "../../../styles/globals.css";
+
+/* ── Events Filter Bar ───────────────────────────────── */
+.filterSection {
+  @apply w-full pt-8 pb-4 select-none;
+}
+
+.innerContainer {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row md:items-center justify-between gap-4;
+}
+
+/* Category Pills Row */
+.categoryPillsList {
+  @apply flex items-center gap-2 sm:gap-2.5 overflow-x-auto pb-2 md:pb-0 scrollbar-none;
+}
+
+.pillBtn {
+  @apply h-[35px] px-4 sm:px-5 rounded-full border border-[#E2E4E9] bg-white text-[#525866] hover:text-[#0A0D14] hover:bg-slate-50 text-[13px] font-medium transition-all whitespace-nowrap cursor-pointer flex items-center justify-center;
+}
+
+.pillBtnActive {
+  @apply bg-[#B46A2C] border-[#B46A2C] text-white hover:bg-[#9E571E] hover:text-white font-semibold;
+}
+
+/* Right Filter Controls */
+.rightFilters {
+  @apply flex items-center gap-2.5 shrink-0 self-end md:self-auto;
+}
+
+.searchInputWrapper {
+  @apply relative flex items-center h-[36px] w-[160px] sm:w-[190px] bg-white border border-[#E2E4E9] rounded-[10px] px-3 transition-colors focus-within:border-[#B46A2C];
+}
+
+.searchIcon {
+  @apply w-3.5 h-3.5 text-[#4A5565] shrink-0 mr-2;
+}
+
+.searchInput {
+  @apply w-full text-xs text-[#0A0D14] placeholder-[#858585] bg-transparent outline-hidden;
+}
+
+/* Sort Dropdown Container & Menu */
+.sortContainer {
+  @apply relative;
+}
+
+.sortSelectBtn {
+  @apply h-[36px] px-3.5 rounded-[10px] border border-[#E2E4E9] bg-white text-[#525866] hover:text-[#0A0D14] hover:bg-slate-50 text-xs font-medium transition-all cursor-pointer flex items-center justify-between gap-2.5 shadow-2xs;
+}
+
+.sortSelectBtnActive {
+  @apply border-[#B46A2C] text-[#0A0D14] ring-1 ring-[#B46A2C]/20;
+}
+
+.sortMenu {
+  @apply absolute right-0 top-full mt-1.5 w-48 bg-white border border-[#E2E4E9] rounded-[12px] p-1.5 shadow-xl z-50 flex flex-col gap-0.5;
+}
+
+.sortOption {
+  @apply w-full px-3 py-2 text-xs text-left text-[#525866] hover:text-[#0A0D14] hover:bg-slate-50 rounded-[8px] transition-colors cursor-pointer flex items-center justify-between font-medium;
+}
+
+.sortOptionActive {
+  @apply text-[#B46A2C] font-semibold bg-[#B46A2C]/[0.08] hover:bg-[#B46A2C]/[0.12] hover:text-[#B46A2C];
+}

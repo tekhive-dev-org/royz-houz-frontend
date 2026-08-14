@@ -1,0 +1,85 @@
+@reference "../../../styles/globals.css";
+
+/* ── Event Card Component ────────────────────────────── */
+.card {
+  @apply relative bg-[#050505] border border-white/5 rounded-[10px] overflow-hidden shadow-xl flex flex-col transition-all duration-300 hover:border-[#B46A2C]/50;
+}
+
+.imageWrapper {
+  @apply relative w-full aspect-16/10 overflow-hidden bg-black;
+}
+
+.image {
+  @apply object-cover object-center transition-transform duration-500 group-hover:scale-105;
+}
+
+.imageOverlay {
+  @apply absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/40 to-transparent pointer-events-none;
+}
+
+/* Floating Date Badge for Upcoming Events */
+.dateBadge {
+  @apply absolute top-3.5 left-3.5 z-10 bg-white rounded-[10px] px-3.5 py-2 flex flex-col items-center justify-center shadow-lg min-w-[52px] text-center select-none;
+}
+
+.dateDay {
+  @apply text-lg font-bold text-[#B46A2C] leading-none tracking-tight;
+}
+
+.dateMonth {
+  @apply text-xs font-semibold text-[#B46A2C] leading-tight mt-1;
+}
+
+.dateYear {
+  @apply text-xs font-semibold text-[#B46A2C] leading-tight mt-0.5;
+}
+
+/* Category Tag Badge for Past Events */
+.categoryBadge {
+  @apply absolute top-3.5 left-3.5 z-10 bg-black/65 backdrop-blur-xs border border-white/20 px-2.5 py-1 rounded-[4px] text-[10px] uppercase font-bold text-white tracking-widest select-none;
+}
+
+/* Content Details */
+.content {
+  @apply p-5 sm:p-6 flex flex-col gap-3 flex-1 justify-between bg-[#050505];
+}
+
+.detailsHeader {
+  @apply flex flex-col gap-2;
+}
+
+.title {
+  @apply text-[18px] sm:text-[19px] font-bold text-white tracking-tight line-clamp-1 hover:text-[#B46A2C] transition-colors;
+}
+
+.locationRow {
+  @apply flex items-center gap-2 text-xs sm:text-[13px] text-white font-medium line-clamp-1;
+}
+
+.locationIcon {
+  @apply w-4 h-4 text-white shrink-0 stroke-[2];
+}
+
+.description {
+  @apply text-xs sm:text-[13px] text-white/75 font-normal leading-relaxed line-clamp-2;
+}
+
+/* Upcoming Registration CTA */
+.registerBtn {
+  @apply w-full py-2.5 sm:py-3 mt-2.5 rounded-[8px] border border-[#B46A2C] bg-transparent hover:bg-[#B46A2C]/10 text-[#B46A2C] font-semibold text-sm tracking-wide transition-all duration-200 text-center flex items-center justify-center cursor-pointer;
+}
+
+/* Past Events Card Footer */
+.pastFooter {
+  @apply flex items-center justify-between pt-3 mt-1 text-xs select-none border-t border-white/[0.04];
+}
+
+.attendeesText {
+  @apply text-[#9E9E9E] font-normal text-xs;
+}
+
+.viewRecapBtn {
+  @apply text-[#B46A2C] font-semibold text-xs transition-colors hover:text-[#C8781A] hover:underline cursor-pointer;
+}
+
+

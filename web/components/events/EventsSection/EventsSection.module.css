@@ -1,0 +1,30 @@
+@reference "../../../styles/globals.css";
+
+/* ── Events Grid Section ─────────────────────────────── */
+.section {
+  @apply w-full py-8 sm:py-10;
+}
+
+.innerContainer {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+}
+
+.sectionHeader {
+  @apply flex items-center gap-3 mb-6 sm:mb-8;
+}
+
+.accentBar {
+  @apply w-[5px] h-[25px] bg-[#DCA43E] rounded-[2.5px] shrink-0;
+}
+
+.sectionTitle {
+  @apply text-[20px] sm:text-[22px] font-bold text-[#0A0D14] tracking-tight leading-none;
+}
+
+.grid {
+  @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8;
+}
+
+.emptyState {
+  @apply col-span-full py-12 text-center text-slate-500 bg-slate-50 border border-[#E2E4E9] rounded-[12px] p-8;
+}
