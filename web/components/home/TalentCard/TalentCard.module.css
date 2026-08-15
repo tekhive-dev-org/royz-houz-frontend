@@ -1,7 +1,7 @@
 @reference "../../../styles/globals.css";
 
 .card {
-  @apply relative w-full h-[300px] rounded-xl overflow-hidden cursor-pointer shadow-lg transition-transform duration-300 hover:-translate-y-1;
+  @apply relative w-full h-[300px] rounded-xl overflow-hidden cursor-pointer shadow-lg transition-transform duration-300 hover:-translate-y-1 block;
 }
 
 .image {

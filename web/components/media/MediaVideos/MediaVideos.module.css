@@ -1,0 +1,131 @@
+@reference "../../../styles/globals.css";
+
+.section {
+  @apply flex flex-col gap-6 py-8;
+}
+
+/* ── Section Header ──────────────────────────────────── */
+.sectionHeader {
+  @apply flex flex-col gap-1.5;
+}
+
+.headerTop {
+  @apply flex items-center justify-between gap-4 w-full;
+}
+
+.titleRow {
+  @apply flex items-center gap-3;
+}
+
+.accentBar {
+  @apply w-[5px] h-[25px] rounded-[2.5px] bg-[#DCA43E] shrink-0;
+}
+
+.title {
+  @apply text-xl sm:text-2xl font-bold text-[#0A0D14] tracking-tight leading-none;
+}
+
+.subtitle {
+  @apply text-xs sm:text-sm text-[#525866] font-normal pl-[17px];
+}
+
+.viewAllLink {
+  @apply inline-flex items-center gap-0.5 text-xs sm:text-sm font-semibold text-[#B46A2C] hover:text-[#9E5A23] transition-colors cursor-pointer select-none shrink-0;
+}
+
+/* ── Grid ────────────────────────────────────────────── */
+.grid {
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6;
+}
+
+.videoCard {
+  @apply bg-white border border-[#E2E4E9] rounded-[16px] overflow-hidden shadow-2xs hover:shadow-md transition-all duration-300 cursor-pointer flex flex-col;
+}
+
+.thumbnailWrapper {
+  @apply relative w-full aspect-video bg-[#0A0D14] overflow-hidden;
+}
+
+.thumbnailImg {
+  @apply object-cover object-center transition-transform duration-500;
+}
+
+.videoCard:hover .thumbnailImg {
+  @apply scale-105;
+}
+
+.thumbnailOverlay {
+  @apply absolute inset-0 bg-black/20 transition-colors duration-300;
+}
+
+.videoCard:hover .thumbnailOverlay {
+  @apply bg-black/40;
+}
+
+.playBtnOverlay {
+  @apply absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300;
+}
+
+.videoCard:hover .playBtnOverlay {
+  @apply opacity-100;
+}
+
+.playIconCircle {
+  @apply w-12 h-12 rounded-full bg-[#B46A2C] flex items-center justify-center shadow-lg transform scale-90 transition-transform duration-300;
+}
+
+.videoCard:hover .playIconCircle {
+  @apply scale-100;
+}
+
+.durationBadge {
+  @apply absolute bottom-2.5 right-2.5 px-2 py-0.5 rounded-[4px] bg-black/80 text-white text-[11px] font-semibold tracking-wider;
+}
+
+.cardContent {
+  @apply p-5 flex flex-col justify-between flex-1 gap-4;
+}
+
+.titleGroup {
+  @apply flex flex-col gap-1;
+}
+
+.cardTitle {
+  @apply text-base font-bold text-[#0A0D14] tracking-tight transition-colors line-clamp-1;
+}
+
+.videoCard:hover .cardTitle {
+  @apply text-[#B46A2C];
+}
+
+.cardSubtitle {
+  @apply text-xs text-[#6B7280] line-clamp-1 font-normal;
+}
+
+.authorRow {
+  @apply pt-3 border-t border-[#F2F4F7] flex items-center;
+}
+
+.authorContainer {
+  @apply flex items-center gap-2.5;
+}
+
+.avatarWrapper {
+  @apply relative w-8 h-8 rounded-full overflow-hidden border border-[#E2E4E9] shrink-0;
+}
+
+.avatar {
+  @apply object-cover object-center;
+}
+
+.authorDetails {
+  @apply flex flex-col leading-tight gap-0.5;
+}
+
+.authorName {
+  @apply font-semibold text-[#0A0D14] text-xs;
+}
+
+.metaStats {
+  @apply flex items-center gap-4 text-[11px] text-[#6B7280];
+}

@@ -1,0 +1,122 @@
+@reference "../../../styles/globals.css";
+
+.section {
+  @apply flex flex-col gap-6 py-8;
+}
+
+/* ── Section Header ──────────────────────────────────── */
+.sectionHeader {
+  @apply flex flex-col gap-1.5;
+}
+
+.headerTop {
+  @apply flex items-center justify-between gap-4 w-full;
+}
+
+.titleRow {
+  @apply flex items-center gap-3;
+}
+
+.accentBar {
+  @apply w-[5px] h-[25px] rounded-[2.5px] bg-[#DCA43E] shrink-0;
+}
+
+.title {
+  @apply text-xl sm:text-2xl font-bold text-[#0A0D14] tracking-tight leading-none;
+}
+
+.subtitle {
+  @apply text-xs sm:text-sm text-[#525866] font-normal pl-[17px];
+}
+
+.viewAllLink {
+  @apply inline-flex items-center gap-0.5 text-xs sm:text-sm font-semibold text-[#B46A2C] hover:text-[#9E5A23] transition-colors cursor-pointer select-none shrink-0;
+}
+
+/* ── 3-Column Masonry Grid (identical to About Us Gallery) ───────────────── */
+.galleryGrid {
+  @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 items-start;
+}
+
+.masonryColumn {
+  @apply flex flex-col space-y-5 sm:space-y-6 w-full;
+}
+
+.galleryItem {
+  @apply relative w-full rounded-2xl md:rounded-[18px] overflow-hidden bg-slate-100 shadow-sm border border-slate-100 transition-all duration-300 hover:shadow-xl cursor-pointer;
+}
+
+.sizeShort {
+  @apply h-[200px] sm:h-[225px] md:h-[245px];
+}
+
+.sizeTall {
+  @apply h-[310px] sm:h-[355px] md:h-[385px];
+}
+
+.sizeExtraTall {
+  @apply h-[330px] sm:h-[380px] md:h-[415px];
+}
+
+.galleryImage {
+  @apply object-cover object-center transition-transform duration-700 ease-out;
+}
+
+.galleryItem:hover .galleryImage {
+  @apply scale-105;
+}
+
+.overlay {
+  @apply absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 transition-opacity duration-300;
+}
+
+.galleryItem:hover .overlay {
+  @apply opacity-100;
+}
+
+/* ── Interactive Lightbox Modal (matching Talents gallery) ── */
+.lightboxBackdrop {
+  @apply fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 sm:p-8;
+  animation: fadeIn 0.2s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.lightboxCloseBtn {
+  @apply absolute top-4 sm:top-6 right-4 sm:right-6 z-50 text-white/80 hover:text-white p-2 rounded-full hover:bg-white/10 transition-colors cursor-pointer;
+}
+
+.lightboxNavBtn {
+  @apply absolute top-1/2 -translate-y-1/2 z-50 text-white/80 hover:text-white p-2 sm:p-3 rounded-full hover:bg-white/10 transition-colors cursor-pointer;
+}
+
+.lightboxPrevBtn {
+  @apply left-2 sm:left-6;
+}
+
+.lightboxNextBtn {
+  @apply right-2 sm:right-6;
+}
+
+.lightboxImageWrapper {
+  @apply relative w-full max-w-4xl max-h-[82vh] h-[60vh] sm:h-[75vh] rounded-2xl overflow-hidden shadow-2xl flex flex-col justify-end;
+}
+
+.lightboxFooter {
+  @apply absolute bottom-0 inset-x-0 z-20 px-6 py-4 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex items-center justify-between text-white;
+}
+
+.lightboxTitle {
+  @apply text-sm sm:text-base font-bold tracking-tight truncate;
+}
+
+.lightboxCounter {
+  @apply text-xs text-white/70 font-semibold px-2 py-0.5 rounded-full bg-white/15;
+}

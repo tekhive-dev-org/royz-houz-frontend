@@ -1,0 +1,176 @@
+@reference "../../../styles/globals.css";
+
+.section {
+  @apply flex flex-col gap-6 py-8;
+}
+
+/* ── Section Header ──────────────────────────────────── */
+.sectionHeader {
+  @apply flex flex-col gap-1.5;
+}
+
+.headerTop {
+  @apply flex items-center justify-between gap-4 w-full;
+}
+
+.titleRow {
+  @apply flex items-center gap-3;
+}
+
+.accentBar {
+  @apply w-[5px] h-[25px] rounded-[2.5px] bg-[#DCA43E] shrink-0;
+}
+
+.title {
+  @apply text-xl sm:text-2xl font-bold text-[#0A0D14] tracking-tight leading-none;
+}
+
+.subtitle {
+  @apply text-xs sm:text-sm text-[#525866] font-normal pl-[17px];
+}
+
+.viewAllLink {
+  @apply inline-flex items-center gap-0.5 text-xs sm:text-sm font-semibold text-[#B46A2C] hover:text-[#9E5A23] transition-colors cursor-pointer select-none shrink-0;
+}
+
+/* ── Grid ────────────────────────────────────────────── */
+.grid {
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6;
+}
+
+.podcastCard {
+  @apply bg-white border border-[#E2E4E9] rounded-[18px] p-3.5 sm:p-4 shadow-2xs hover:shadow-md transition-all duration-300 cursor-pointer flex items-center gap-3.5 sm:gap-4;
+}
+
+.coverWrapper {
+  @apply relative w-28 sm:w-32 h-24 sm:h-28 rounded-[14px] bg-[#0A0D14] overflow-hidden shrink-0;
+}
+
+.coverImg {
+  @apply object-cover object-center transition-transform duration-500;
+}
+
+.podcastCard:hover .coverImg {
+  @apply scale-105;
+}
+
+.playOverlay {
+  @apply absolute inset-0 bg-black/20 flex items-center justify-center opacity-90 transition-opacity duration-300;
+}
+
+.podcastCard:hover .playOverlay {
+  @apply opacity-100;
+}
+
+.playIconCircle {
+  @apply w-8 h-8 rounded-full bg-black/60 border border-white/80 flex items-center justify-center shadow-md transform scale-90 transition-transform duration-300;
+}
+
+.podcastCard:hover .playIconCircle {
+  @apply scale-100 bg-black/80;
+}
+
+.durationBadge {
+  @apply absolute bottom-1.5 right-1.5 px-1.5 py-0.5 rounded-[3px] bg-black/85 text-white text-[10px] font-semibold tracking-wider;
+}
+
+.details {
+  @apply flex flex-col justify-between flex-1 min-w-0 h-full py-0.5 gap-2;
+}
+
+.titleGroup {
+  @apply flex flex-col gap-0.5;
+}
+
+.podcastTitle {
+  @apply text-sm sm:text-base font-bold text-[#0A0D14] tracking-tight transition-colors line-clamp-1;
+}
+
+.podcastCard:hover .podcastTitle {
+  @apply text-[#B46A2C];
+}
+
+.podcastDesc {
+  @apply text-xs text-[#6B7280] line-clamp-2 font-normal leading-relaxed;
+}
+
+.authorDetails {
+  @apply flex flex-col gap-0.5 pt-1 border-t border-[#F2F4F7];
+}
+
+.hostName {
+  @apply font-semibold text-[#0A0D14] text-xs;
+}
+
+.metaStats {
+  @apply flex items-center gap-4 text-[11px] text-[#858585];
+}
+
+/* ── Full Podcasts Catalog View ──────────────────────── */
+.fullPodcastsContainer {
+  @apply flex flex-col gap-4;
+}
+
+.beyondGrid {
+  @apply grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6;
+}
+
+.beyondCard {
+  @apply bg-white border border-[#E2E4E9] rounded-[18px] overflow-hidden shadow-2xs hover:shadow-md transition-all duration-300 cursor-pointer flex flex-col;
+}
+
+.beyondThumbWrapper {
+  @apply relative w-full aspect-video bg-[#0A0D14] overflow-hidden;
+}
+
+.beyondThumbImg {
+  @apply object-cover object-center transition-transform duration-500;
+}
+
+.beyondCard:hover .beyondThumbImg {
+  @apply scale-105;
+}
+
+.beyondPlayOverlay {
+  @apply absolute inset-0 bg-black/20 flex items-center justify-center opacity-85 transition-opacity duration-300;
+}
+
+.beyondCard:hover .beyondPlayOverlay {
+  @apply opacity-100 bg-black/35;
+}
+
+.beyondPlayCircle {
+  @apply w-11 h-11 rounded-full bg-black/60 border border-white/80 flex items-center justify-center shadow-lg transform scale-90 transition-transform duration-300;
+}
+
+.beyondCard:hover .beyondPlayCircle {
+  @apply scale-100 bg-black/80;
+}
+
+.beyondContent {
+  @apply p-4 sm:p-5 flex flex-col gap-2 flex-1 justify-between;
+}
+
+.categoryPill {
+  @apply inline-flex items-center px-2.5 py-0.5 rounded-full bg-[#FFF8F0] border border-[#B46A2C]/20 text-[#B46A2C] text-[10px] font-bold uppercase tracking-wider self-start;
+}
+
+.beyondTitle {
+  @apply text-sm sm:text-base font-bold text-[#0A0D14] tracking-tight transition-colors line-clamp-2;
+}
+
+.beyondCard:hover .beyondTitle {
+  @apply text-[#B46A2C];
+}
+
+.beyondMetaRow {
+  @apply flex items-center justify-between gap-2 pt-2 border-t border-[#F2F4F7] text-xs text-[#6B7280];
+}
+
+.beyondHost {
+  @apply font-medium text-[#525866] truncate;
+}
+
+.beyondDuration {
+  @apply font-semibold text-[#858585] shrink-0;
+}

@@ -42,6 +42,7 @@ export function TalentVideoPlayer({
     title: "The Sound Architect",
     thumbnail: "/assets/img/talents/producer-hero.jpg",
   },
+  breadcrumbRoot = { label: "Talent Hub", href: "/talents" },
 }) {
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
@@ -121,10 +122,10 @@ export function TalentVideoPlayer({
       <div className={styles.innerContainer}>
         {/* Top Breadcrumb */}
         <nav className={styles.breadcrumb} aria-label="Breadcrumb">
-          <Link href="/talents" className={styles.breadcrumbLink}>
+          <Link href={breadcrumbRoot.href || "/talents"} className={styles.breadcrumbLink}>
             <span className="inline-flex items-center gap-1">
               <ChevronLeft className="w-3.5 h-3.5" aria-hidden="true" />
-              Talent Hub
+              {breadcrumbRoot.label || "Talent Hub"}
             </span>
           </Link>
           <span>/</span>

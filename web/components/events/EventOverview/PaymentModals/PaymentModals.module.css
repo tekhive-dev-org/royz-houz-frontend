@@ -1,0 +1,133 @@
+@reference "../../../../styles/globals.css";
+
+/* ── Modal Overlay & Backdrop ──────────────────────────── */
+.modalOverlay {
+  @apply fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.modalCard {
+  @apply relative w-full max-w-lg bg-white rounded-[24px] p-6 sm:p-8 border border-[#E2E4E9] shadow-2xl flex flex-col gap-6 text-center;
+  animation: scaleUp 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleUp {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.closeBtn {
+  @apply absolute top-4 right-4 p-2 rounded-full hover:bg-slate-100 transition-colors cursor-pointer text-[#525866];
+}
+
+/* Icons */
+.successIconWrapper {
+  @apply flex items-center justify-center pt-2;
+}
+
+.successIconInner {
+  @apply w-16 h-16 rounded-full bg-emerald-50 border-[6px] border-emerald-100/70 flex items-center justify-center shadow-xs;
+}
+
+.failureIconWrapper {
+  @apply flex items-center justify-center pt-2;
+}
+
+.failureIconInner {
+  @apply w-16 h-16 rounded-full bg-rose-50 border-[6px] border-rose-100/70 flex items-center justify-center shadow-xs;
+}
+
+/* Headers */
+.headerContent {
+  @apply flex flex-col gap-1.5;
+}
+
+.modalTitle {
+  @apply text-xl sm:text-2xl font-extrabold text-[#0A0D14] tracking-tight;
+}
+
+.modalSubtitle {
+  @apply text-xs sm:text-sm text-[#525866] leading-relaxed max-w-md mx-auto;
+}
+
+.highlightText {
+  @apply font-semibold text-[#0A0D14];
+}
+
+/* Receipt Details Box */
+.receiptBox {
+  @apply bg-[#F8F9FA] border border-[#E2E4E9] rounded-[16px] p-4 sm:p-5 flex flex-col gap-2.5 text-left;
+}
+
+.receiptRow {
+  @apply flex items-center justify-between gap-3 text-xs sm:text-sm;
+}
+
+.receiptLabel {
+  @apply text-[#525866] font-normal;
+}
+
+.receiptValue {
+  @apply text-[#0A0D14] font-semibold text-right truncate;
+}
+
+.receiptRefCode {
+  @apply font-mono text-xs sm:text-[13px] font-bold text-[#C8781A] bg-[#FFF8F0] px-2.5 py-0.5 rounded-[6px] border border-[#C8781A]/30;
+}
+
+.receiptDivider {
+  @apply w-full h-[1px] bg-[#E2E4E9] my-1;
+}
+
+.receiptTotalLabel {
+  @apply text-sm sm:text-base font-bold text-[#0A0D14];
+}
+
+.receiptTotalValue {
+  @apply text-base sm:text-lg font-extrabold text-[#C8781A];
+}
+
+/* Troubleshooting Tips Box */
+.tipsBox {
+  @apply bg-[#FFF8F0] border border-[#C8781A]/25 rounded-[16px] p-4 text-left flex flex-col gap-2;
+}
+
+.tipsTitle {
+  @apply text-xs font-bold text-[#0A0D14] uppercase tracking-wider;
+}
+
+.tipsList {
+  @apply list-disc list-inside text-xs text-[#525866] flex flex-col gap-1 leading-relaxed;
+}
+
+/* Action Buttons Column */
+.actionsColumn {
+  @apply flex flex-col gap-2.5 pt-1;
+}
+
+.primarySuccessBtn {
+  @apply w-full py-4 rounded-[12px] bg-[#C8781A] hover:bg-[#B36814] active:scale-[0.99] text-white font-bold text-xs sm:text-sm tracking-wider uppercase transition-all duration-200 shadow-sm flex items-center justify-center gap-2 cursor-pointer;
+}
+
+.primaryFailureBtn {
+  @apply w-full py-4 rounded-[12px] bg-[#C8781A] hover:bg-[#B36814] active:scale-[0.99] text-white font-bold text-xs sm:text-sm tracking-wider uppercase transition-all duration-200 shadow-sm flex items-center justify-center gap-2 cursor-pointer;
+}
+
+.secondaryBtn {
+  @apply w-full py-3 rounded-[12px] border border-[#E2E4E9] bg-white hover:bg-slate-50 active:scale-[0.99] text-xs sm:text-sm font-semibold text-[#525866] transition-colors cursor-pointer;
+}

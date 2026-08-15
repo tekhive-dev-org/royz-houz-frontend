@@ -1,0 +1,29 @@
+@reference "../../../styles/globals.css";
+
+.ctaSection {
+  @apply py-8 sm:py-12;
+}
+
+.ctaCard {
+  @apply bg-[#FDF8F2] border border-[#C8781A]/20 rounded-[20px] p-6 sm:p-8 md:p-10 flex flex-col sm:flex-row sm:items-center justify-between gap-6 shadow-xs;
+}
+
+.ctaLeft {
+  @apply flex flex-col gap-1.5;
+}
+
+.ctaHeading {
+  @apply text-xl sm:text-2xl md:text-3xl font-extrabold text-[#0A0D14] tracking-tight;
+}
+
+.ctaSubheading {
+  @apply text-xs sm:text-sm md:text-base text-[#525866] font-normal leading-relaxed;
+}
+
+.ctaRight {
+  @apply shrink-0;
+}
+
+.joinBtn {
+  @apply inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-3.5 rounded-[10px] bg-[#B46A2C] hover:bg-[#9E5A23] active:scale-[0.98] text-white font-bold text-xs sm:text-sm tracking-wider uppercase transition-all duration-200 shadow-sm cursor-pointer select-none text-center;
+}

@@ -1,13 +1,20 @@
+import Link from "next/link";
 import Image from "next/image";
 import { Flame } from "lucide-react";
 import { TalentCardSocialSvg, RatingStarIcon } from "@/components/common/SocialIcons";
 import styles from "./TalentCard.module.css";
 
 export function TalentCard({ talent }) {
-  const { name, category, genre, location, rating, followers, image, isHot } = talent;
+  const { name, category, genre, location, rating, followers, image, isHot, slug, id } = talent;
+  const talentSlug = slug || id || "julius-ayomide";
+  const profileUrl = `/talents/${talentSlug}`;
 
   return (
-    <article className={`${styles.card} group`}>
+    <Link
+      href={profileUrl}
+      className={`${styles.card} group`}
+      aria-label={`View profile for ${name}`}
+    >
       {/* Background Image */}
       <Image
         src={image}
@@ -49,8 +56,9 @@ export function TalentCard({ talent }) {
           <TalentCardSocialSvg className="h-4 w-auto text-white/90" />
         </div>
       </div>
-    </article>
+    </Link>
   );
 }
 
 export default TalentCard;
+

@@ -1,0 +1,34 @@
+@reference "../../../../styles/globals.css";
+
+/* ── Event Gallery Section ───────────────────────────── */
+.section {
+  @apply bg-white border border-[#E2E4E9] rounded-[24px] p-6 sm:p-8 shadow-xs flex flex-col gap-6;
+}
+
+.header {
+  @apply flex items-center gap-3 select-none;
+}
+
+.accentBar {
+  @apply w-[5px] h-[25px] bg-[#DCA43E] rounded-full shrink-0;
+}
+
+.title {
+  @apply text-xl sm:text-2xl font-bold text-[#0D0F15] tracking-tight;
+}
+
+.grid {
+  @apply grid grid-cols-2 sm:grid-cols-3 gap-3.5 sm:gap-4;
+}
+
+.imageCard {
+  @apply relative aspect-4/3 rounded-[12px] overflow-hidden bg-slate-900 shadow-2xs cursor-pointer;
+}
+
+.image {
+  @apply object-cover object-center transition-transform duration-500 group-hover:scale-105;
+}
+
+.overlay {
+  @apply absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-300 pointer-events-none;
+}

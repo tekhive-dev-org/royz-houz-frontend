@@ -1,0 +1,163 @@
+@reference "../../../styles/globals.css";
+
+.section {
+  @apply flex flex-col gap-6 py-8;
+}
+
+/* ── Section Header ──────────────────────────────────── */
+.sectionHeader {
+  @apply flex flex-col gap-1.5;
+}
+
+.headerTop {
+  @apply flex items-center justify-between gap-4 w-full;
+}
+
+.titleRow {
+  @apply flex items-center gap-3;
+}
+
+.accentBar {
+  @apply w-[5px] h-[25px] rounded-[2.5px] bg-[#DCA43E] shrink-0;
+}
+
+.title {
+  @apply text-xl sm:text-2xl font-bold text-[#0A0D14] tracking-tight leading-none;
+}
+
+.subtitle {
+  @apply text-xs sm:text-sm text-[#525866] font-normal pl-[17px];
+}
+
+.viewAllLink {
+  @apply inline-flex items-center gap-0.5 text-xs sm:text-sm font-semibold text-[#B46A2C] hover:text-[#9E5A23] transition-colors cursor-pointer select-none shrink-0;
+}
+
+/* ── Layout ──────────────────────────────────────────── */
+.musicLayout {
+  @apply grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 items-stretch;
+}
+
+/* Left Featured Track Card */
+.featuredCard {
+  @apply lg:col-span-4 bg-[#0A0D14] rounded-[20px] overflow-hidden shadow-2xs hover:shadow-md transition-all duration-300 flex flex-col relative min-h-[380px] sm:min-h-[440px] cursor-pointer;
+}
+
+.featuredCoverWrapper {
+  @apply relative w-full h-full min-h-[380px] sm:min-h-[440px] bg-[#0A0D14] overflow-hidden flex flex-col justify-end p-6 sm:p-7;
+}
+
+.featuredCoverImg {
+  @apply object-cover object-center transition-transform duration-500;
+}
+
+.featuredCard:hover .featuredCoverImg {
+  @apply scale-105;
+}
+
+.featuredCoverOverlay {
+  @apply absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-black/10;
+}
+
+.featuredBottomContent {
+  @apply relative z-10 flex flex-col gap-1;
+}
+
+.featuredTitle {
+  @apply text-lg sm:text-xl font-bold text-white tracking-tight;
+}
+
+.featuredGenre {
+  @apply text-xs sm:text-sm text-[#D0D5DD] font-normal;
+}
+
+.featuredArtist {
+  @apply text-xs sm:text-sm text-[#D0D5DD] font-normal;
+}
+
+/* Right Tracks Grid */
+.tracksGrid {
+  @apply lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3.5 sm:gap-4;
+}
+
+.trackCard {
+  @apply bg-white border border-[#E2E4E9] rounded-[18px] p-3 sm:p-3.5 shadow-2xs hover:shadow-md transition-all duration-200 cursor-pointer flex flex-col gap-2.5;
+}
+
+.trackCardActive {
+  @apply border-[#B46A2C] bg-[#FFF8F0]/40;
+}
+
+.trackThumbWrapper {
+  @apply relative w-full aspect-16/10 rounded-[12px] bg-[#0A0D14] overflow-hidden;
+}
+
+.trackThumb {
+  @apply object-cover object-center transition-transform duration-300;
+}
+
+.trackCard:hover .trackThumb {
+  @apply scale-105;
+}
+
+.trackThumbOverlay {
+  @apply absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 transition-opacity duration-200;
+}
+
+.trackCard:hover .trackThumbOverlay {
+  @apply opacity-100;
+}
+
+.trackInfo {
+  @apply flex flex-col gap-0.5 min-w-0 pt-0.5;
+}
+
+.trackTitle {
+  @apply text-xs sm:text-sm font-bold text-[#0A0D14] tracking-tight transition-colors truncate;
+}
+
+.fullMusicContainer {
+  @apply flex flex-col gap-4;
+}
+
+/* ── Discover New Sounds 3-Card Grid ─────────────────── */
+.discoverGrid {
+  @apply grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6;
+}
+
+.discoverCard {
+  @apply relative w-full aspect-3/4 sm:aspect-4/5 rounded-[20px] overflow-hidden bg-[#0A0D14] shadow-2xs hover:shadow-md transition-all duration-300 flex flex-col justify-end p-6 sm:p-7 cursor-pointer;
+}
+
+.discoverImg {
+  @apply object-cover object-center transition-transform duration-500;
+}
+
+.discoverCard:hover .discoverImg {
+  @apply scale-105;
+}
+
+.discoverOverlay {
+  @apply absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-black/10;
+}
+
+.discoverBottomContent {
+  @apply relative z-10 flex flex-col gap-1;
+}
+
+.discoverTitle {
+  @apply text-lg sm:text-xl font-bold text-white tracking-tight;
+}
+
+.discoverGenre {
+  @apply text-xs sm:text-sm text-[#D0D5DD] font-normal;
+}
+
+.discoverArtist {
+  @apply text-xs sm:text-sm text-[#D0D5DD] font-normal;
+}
+
+/* ── 4-Column Track Cards Grid ───────────────────────── */
+.fullTracksGrid {
+  @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5;
+}

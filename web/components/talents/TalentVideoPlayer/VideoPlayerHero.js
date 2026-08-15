@@ -61,11 +61,31 @@ export function VideoPlayerHero({
   // Fullscreen change listener
   useEffect(() => {
     const handleFullscreenChange = () => {
-      setIsFullscreen(Boolean(document.fullscreenElement));
+      const isFull = Boolean(
+        document.fullscreenElement ||
+        document.webkitFullscreenElement ||
+        document.mozFullScreenElement ||
+        document.msFullscreenElement
+      );
+      setIsFullscreen(isFull);
+
+      if (!isFull && typeof window !== "undefined" && window.screen?.orientation?.unlock) {
+        try {
+          window.screen.orientation.unlock();
+        } catch (_) {}
+      }
     };
+
     document.addEventListener("fullscreenchange", handleFullscreenChange);
+    document.addEventListener("webkitfullscreenchange", handleFullscreenChange);
+    document.addEventListener("mozfullscreenchange", handleFullscreenChange);
+    document.addEventListener("MSFullscreenChange", handleFullscreenChange);
+
     return () => {
       document.removeEventListener("fullscreenchange", handleFullscreenChange);
+      document.removeEventListener("webkitfullscreenchange", handleFullscreenChange);
+      document.removeEventListener("mozfullscreenchange", handleFullscreenChange);
+      document.removeEventListener("MSFullscreenChange", handleFullscreenChange);
     };
   }, []);
 
@@ -140,21 +160,61 @@ export function VideoPlayerHero({
     setQuality(qualities[nextIdx]);
   };
 
-  // Toggle Fullscreen
-  const handleFullscreenToggle = () => {
+  // Toggle Fullscreen with mobile landscape orientation lock
+  const handleFullscreenToggle = async () => {
     if (!wrapperRef.current) return;
-    if (!document.fullscreenElement) {
-      if (wrapperRef.current.requestFullscreen) {
-        wrapperRef.current.requestFullscreen().catch(() => {});
-      } else if (wrapperRef.current.webkitRequestFullscreen) {
-        wrapperRef.current.webkitRequestFullscreen();
+
+    const isCurrentlyFull = Boolean(
+      document.fullscreenElement ||
+      document.webkitFullscreenElement ||
+      isFullscreen
+    );
+
+    if (!isCurrentlyFull) {
+      // 1. Request fullscreen on container
+      try {
+        if (wrapperRef.current.requestFullscreen) {
+          await wrapperRef.current.requestFullscreen();
+        } else if (wrapperRef.current.webkitRequestFullscreen) {
+          wrapperRef.current.webkitRequestFullscreen();
+        }
+      } catch (_) {
+        // Fallback for iOS/mobile without div fullscreen support
       }
+
+      // 2. Lock screen orientation to landscape for mobile
+      if (typeof window !== "undefined" && window.screen?.orientation?.lock) {
+        try {
+          await window.screen.orientation.lock("landscape");
+        } catch (_) {}
+      }
+
+      setIsFullscreen(true);
     } else {
-      if (document.exitFullscreen) {
-        document.exitFullscreen().catch(() => {});
-      } else if (document.webkitExitFullscreen) {
-        document.webkitExitFullscreen();
+      // 1. Exit fullscreen
+      try {
+        if (
+          document.fullscreenElement ||
+          document.webkitFullscreenElement ||
+          document.mozFullScreenElement ||
+          document.msFullscreenElement
+        ) {
+          if (document.exitFullscreen) {
+            await document.exitFullscreen();
+          } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+          }
+        }
+      } catch (_) {}
+
+      // 2. Unlock screen orientation
+      if (typeof window !== "undefined" && window.screen?.orientation?.unlock) {
+        try {
+          window.screen.orientation.unlock();
+        } catch (_) {}
       }
+
+      setIsFullscreen(false);
     }
   };
 
@@ -164,7 +224,9 @@ export function VideoPlayerHero({
   return (
     <div
       ref={wrapperRef}
-      className={`${styles.videoWrapper} group`}
+      className={`${styles.videoWrapper} ${
+        isFullscreen ? styles.fullscreenLandscape : ""
+      } group`}
       aria-label={`Video player: ${video.title}`}
     >
       {/* Video Canvas Artwork */}

@@ -3,3 +3,5 @@ export * from "./EventsTabs";
 export * from "./EventsFilterBar";
 export * from "./EventCard";
 export * from "./EventsSection";
+export * from "./EventOverview";
+

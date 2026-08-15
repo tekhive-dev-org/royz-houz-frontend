@@ -5,8 +5,8 @@ import styles from "./TalentVideoPlayer.module.css";
  * VideoPlayerMeta component rendering video title, creator info, and social action buttons.
  */
 export function VideoPlayerMeta({
-  title = "The Sound Architect",
-  talent = { name: "Julius Ayomide" },
+  title = "The Beat Behind The Hit",
+  talent = { name: "John Donald" },
   onShareClick,
   onReportClick,
 }) {
@@ -20,6 +20,7 @@ export function VideoPlayerMeta({
 
       {/* Action Controls: Share and Report */}
       <div className={styles.actionBtnGroup}>
+
         <button
           type="button"
           onClick={onShareClick}

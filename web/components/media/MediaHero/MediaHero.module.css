@@ -1,0 +1,106 @@
+@reference "../../../styles/globals.css";
+
+/* ── Hero Container ──────────────────────────────────── */
+.heroSection {
+  @apply relative w-full min-h-[580px] sm:min-h-[640px] md:min-h-[700px] bg-[#0A0D14] overflow-hidden flex flex-col justify-between;
+}
+
+.bgWrapper {
+  @apply absolute inset-0 z-0 select-none pointer-events-none;
+}
+
+.bgImage {
+  @apply object-cover object-right sm:object-right-top md:object-[80%_center];
+}
+
+.darkGradientOverlay {
+  @apply absolute inset-0 bg-gradient-to-r from-black via-black/90 to-transparent sm:via-black/75 md:from-black md:via-black/70 md:to-black/10;
+}
+
+/* ── Content Container ───────────────────────────────── */
+.contentWrapper {
+  @apply relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 sm:pt-24 pb-8 flex-1 flex items-center;
+}
+
+.contentContainer {
+  @apply flex flex-col gap-4 sm:gap-5 max-w-2xl;
+}
+
+.badgeWrapper {
+  @apply flex items-center;
+}
+
+.featuredBadge {
+  @apply px-4 py-1.5 rounded-full bg-white text-[#B46A2C] text-xs font-bold uppercase tracking-wider select-none shadow-sm;
+}
+
+.heroHeading {
+  @apply flex flex-col gap-0.5 text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-extrabold tracking-tight leading-[1.08];
+}
+
+.whiteTitle {
+  @apply text-white block;
+}
+
+.amberHighlight {
+  @apply text-[#B46A2C] block whitespace-pre-line;
+}
+
+.heroDescription {
+  @apply text-xs sm:text-sm md:text-base text-[#D0D5DD] leading-relaxed max-w-lg font-normal pt-1;
+}
+
+/* Meta Info Row */
+.metaRow {
+  @apply flex items-center gap-4 sm:gap-6 text-xs sm:text-sm text-[#9CA3AF] pt-2;
+}
+
+.authorGroup {
+  @apply flex items-center gap-2.5;
+}
+
+.authorAvatarWrapper {
+  @apply relative w-8 h-8 rounded-full overflow-hidden border border-white/30 shrink-0;
+}
+
+.authorAvatar {
+  @apply object-cover object-center;
+}
+
+.authorName {
+  @apply font-medium text-white text-xs sm:text-sm;
+}
+
+.metaStat {
+  @apply text-xs sm:text-sm text-[#9CA3AF] font-normal;
+}
+
+/* CTA */
+.ctaWrapper {
+  @apply pt-2;
+}
+
+.watchNowBtn {
+  @apply inline-flex items-center justify-center gap-2 px-6 sm:px-7 py-3 rounded-[10px] bg-[#B46A2C] hover:bg-[#9E5A23] active:scale-[0.98] text-white font-semibold text-xs sm:text-sm tracking-wide transition-all duration-200 shadow-md cursor-pointer;
+}
+
+/* ── Breadcrumb Bar ──────────────────────────────────── */
+.breadcrumbBar {
+  @apply relative z-10 w-full border-t border-white/10 bg-black/40 backdrop-blur-xs py-3;
+}
+
+.breadcrumbContainer {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center gap-2 text-xs text-[#9CA3AF];
+}
+
+.breadcrumbLink {
+  @apply hover:text-white transition-colors cursor-pointer;
+}
+
+.breadcrumbSlash {
+  @apply text-[#6B7280];
+}
+
+.breadcrumbActive {
+  @apply text-white font-medium;
+}

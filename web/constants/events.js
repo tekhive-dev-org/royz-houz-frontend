@@ -19,7 +19,22 @@ export const EVENT_LOCATIONS = [
 
 export const UPCOMING_EVENTS = [
   {
+    id: "fashion-forward-abuja",
+    slug: "fashion-forward-abuja",
+    title: "Fashion Forward: Abuja",
+    day: "08",
+    month: "Oct",
+    year: "2026",
+    location: "National Diamond Centre, Abuja, Central",
+    description: "Join Africa's premier fashion showcase highlighting creative innovation.",
+    category: "Fashion Show",
+    image: "/assets/img/events/events-hero-bg.png",
+    ticketLink: "/events/fashion-forward-abuja",
+    isPopular: false,
+  },
+  {
     id: "creative-summit-2026",
+    slug: "creative-summit-2026",
     title: "Creative Summit 2026",
     day: "18",
     month: "Sep",
@@ -28,11 +43,12 @@ export const UPCOMING_EVENTS = [
     description: "A gathering of creative minds shaping the future.",
     category: "Summit",
     image: "/assets/img/events/event1.jpg",
-    ticketLink: "#",
+    ticketLink: "/events/creative-summit-2026",
     isPopular: false,
   },
   {
     id: "african-creatives-conference",
+    slug: "african-creatives-conference",
     title: "African Creatives Conference",
     day: "26",
     month: "Sep",
@@ -41,11 +57,12 @@ export const UPCOMING_EVENTS = [
     description: "A gathering of creatives dedicated to shaping the future.",
     category: "Conferences",
     image: "/assets/img/events/event2.jpg",
-    ticketLink: "#",
+    ticketLink: "/events/african-creatives-conference",
     isPopular: false,
   },
   {
     id: "royz-houz-music-arts-festival",
+    slug: "royz-houz-music-arts-festival",
     title: "Royz Houz Music & Arts Festival",
     day: "10",
     month: "Oct",
@@ -54,11 +71,12 @@ export const UPCOMING_EVENTS = [
     description: "A gathering of creatives dedicated to shaping the future.",
     category: "Concert",
     image: "/assets/img/events/events-hero-bg.png",
-    ticketLink: "#",
+    ticketLink: "/events/royz-houz-music-arts-festival",
     isPopular: false,
   },
   {
     id: "future-of-african-creativity-terra",
+    slug: "future-of-african-creativity-terra",
     title: "The Future of African Creativity",
     day: "24",
     month: "Oct",
@@ -67,11 +85,12 @@ export const UPCOMING_EVENTS = [
     description: "A gathering of creatives dedicated to shaping the future.",
     category: "Summit",
     image: "/assets/img/events/event2.jpg",
-    ticketLink: "#",
+    ticketLink: "/events/future-of-african-creativity-terra",
     isPopular: false,
   },
   {
     id: "voices-of-the-next-generation",
+    slug: "voices-of-the-next-generation",
     title: "Voices of the Next Generation",
     day: "14",
     month: "Nov",
@@ -80,11 +99,12 @@ export const UPCOMING_EVENTS = [
     description: "A gathering of creatives dedicated to shaping the future.",
     category: "Film Screening",
     image: "/assets/img/events/event3.jpg",
-    ticketLink: "#",
+    ticketLink: "/events/voices-of-the-next-generation",
     isPopular: false,
   },
   {
     id: "creative-minds-networking-night",
+    slug: "creative-minds-networking-night",
     title: "Creative Minds Networking Night",
     day: "05",
     month: "Dec",
@@ -93,7 +113,7 @@ export const UPCOMING_EVENTS = [
     description: "A gathering of creatives dedicated to shaping the future.",
     category: "Fashion Show",
     image: "/assets/img/impact.jpg",
-    ticketLink: "#",
+    ticketLink: "/events/creative-minds-networking-night",
     isPopular: false,
   },
 ];
@@ -277,4 +297,161 @@ export const PAST_EVENTS = [
     isPast: true,
   },
 ];
+
+export const DEFAULT_EVENT_DETAILS = {
+  id: "fashion-forward-abuja",
+  slug: "fashion-forward-abuja",
+  title: "Fashion Forward: Abuja",
+  category: "Fashion Show",
+  categoryTag: "FASHION SHOW",
+  day: "08",
+  month: "Oct",
+  year: "2026",
+  dateString: "October 8, 2026 · 10:00 PM",
+  time: "10:00 PM",
+  location: "National Diamond Centre, Abuja, Central",
+  venue: "National Diamond Centre, Abuja, Central",
+  heroImage: "/assets/img/events/events-hero-bg.png",
+  image: "/assets/img/events/events-hero-bg.png",
+  startingPrice: "₦45,000",
+  ticketsSold: 75,
+  totalTickets: 150,
+  countdownTarget: "2026-10-08T22:00:00",
+  aboutParagraphs: [
+    "West Africa's premier fashion showcase spotlighting the continent's next generation of design talent. Full runway show, designer meet-and-greet, and pop-up market.",
+    "Join Africa's most influential creative minds for a day of powerful keynotes, intimate workshops, live performances, and unparalleled networking. This summit is where culture meets commerce.",
+  ],
+  ticketTiers: [
+    {
+      id: "early-bird",
+      name: "Early Bird",
+      price: 45000,
+      priceFormatted: "₦45,000",
+      badge: "12 LEFT",
+      badgeType: "alert",
+      features: [
+        "General access",
+        "Welcome drink",
+        "Event programme",
+      ],
+    },
+    {
+      id: "standard",
+      name: "Standard",
+      price: 85000,
+      priceFormatted: "₦85,000",
+      isDefault: true,
+      features: [
+        "General access",
+        "Welcome drink",
+        "Event programme",
+        "Networking session",
+      ],
+    },
+    {
+      id: "vip",
+      name: "VIP",
+      price: 250000,
+      priceFormatted: "₦250,000",
+      badge: "8 LEFT",
+      badgeType: "alert",
+      features: [
+        "Priority entry",
+        "Backstage access",
+        "Meet & greet",
+        "Gift bag",
+        "Reserved seating",
+        "Post-event dinner",
+      ],
+    },
+  ],
+  speakers: [
+    {
+      id: "amara-osei",
+      name: "Dr. Amara Osei",
+      role: "Creative Economy Strategist",
+      organization: "African Union",
+      avatar: "/assets/img/talents/amara.jpg",
+    },
+    {
+      id: "fatima-diallo",
+      name: "Fatima Diallo",
+      role: "CEO",
+      organization: "West Africa Fashion Week",
+      avatar: "/assets/img/talents/zara.jpg",
+    },
+    {
+      id: "kwame-asante",
+      name: "Kwame Asante",
+      role: "Film Director",
+      organization: "Nile Studios",
+      avatar: "/assets/img/talents/emeka.jpg",
+    },
+    {
+      id: "ngozi-williams",
+      name: "Ngozi Williams",
+      role: "Music Entrepreneur",
+      organization: "AfroSound Records",
+      avatar: "/assets/img/talents/fatima.jpg",
+    },
+  ],
+  gallery: [
+    "/assets/img/events/events-hero-bg.png",
+    "/assets/img/about/gallery/gallery-1.jpg",
+    "/assets/img/talents/headphones.jpg",
+    "/assets/img/events/event2.jpg",
+    "/assets/img/about/moments.jpg",
+    "/assets/img/events/event3.jpg",
+  ],
+  faqs: [
+    {
+      question: "What's the dress code?",
+      answer:
+        "The dress code is Creative Black Tie / High Fashion. Guests are encouraged to celebrate African contemporary elegance.",
+    },
+    {
+      question: "Can I transfer my ticket?",
+      answer:
+        "Yes, ticket transfers are permitted up to 48 hours before the event start time through your account portal or support.",
+    },
+    {
+      question: "Is parking available?",
+      answer:
+        "Yes, dedicated on-site secure parking is available for all attendees, with valet services complimentary for VIP ticket holders.",
+    },
+    {
+      question: "Will sessions be recorded?",
+      answer:
+        "Select keynote sessions and runway highlights will be recorded and shared with registered attendees following the event.",
+    },
+    {
+      question: "What is the refund policy?",
+      answer:
+        "Tickets are refundable up to 7 days before the event date. After this period, tickets may be transferred to another attendee.",
+    },
+  ],
+  host: {
+    name: "Zara Diallo",
+    role: "Lead Stylist & Creative Director",
+    avatar: "/assets/img/talents/zara.jpg",
+  },
+  partners: [
+    "Unity Bank",
+    "TechHive",
+    "ArtsFund",
+    "MediaCo",
+    "StyleNG",
+    "CreativeX",
+  ],
+  performingArtists: [
+    {
+      id: "zara-diallo",
+      name: "Zara Diallo",
+      initial: "Z",
+      href: "/talents/zara-diallo",
+    },
+  ],
+  tags: ["Fashion", "Design", "Abuja", "Runway", "Social", "Festival"],
+};
+
 

@@ -4,3 +4,4 @@ export * from "./TalentDirectory";
 export * from "./TalentProfile";
 export * from "./TalentVideoPlayer";
 export * from "./TalentCTA";
+export * from "./TalentApplication";

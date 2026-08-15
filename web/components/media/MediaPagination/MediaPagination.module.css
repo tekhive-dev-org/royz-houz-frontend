@@ -1,0 +1,45 @@
+@reference "../../../styles/globals.css";
+
+.paginationBar {
+  @apply flex flex-col sm:flex-row items-center justify-between gap-4 py-8 border-t border-[#E2E4E9] mt-4;
+}
+
+.pageInfo {
+  @apply text-xs sm:text-sm text-[#525866] font-medium order-2 sm:order-1;
+}
+
+.pageNumberGroup {
+  @apply flex items-center gap-1.5 sm:gap-2 order-1 sm:order-2 flex-wrap justify-center;
+}
+
+.pageNavBtn {
+  @apply w-8 h-8 sm:w-9 sm:h-9 rounded-[8px] border border-[#E2E4E9] bg-white text-[#0A0D14] text-sm font-semibold flex items-center justify-center hover:border-[#B46A2C] hover:text-[#B46A2C] transition-colors cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed select-none;
+}
+
+.pageNavBtnDisabled {
+  @apply opacity-30 cursor-not-allowed hover:border-[#E2E4E9] hover:text-[#0A0D14];
+}
+
+.pageNumBtn {
+  @apply w-8 h-8 sm:w-9 sm:h-9 rounded-[8px] border border-[#E2E4E9] bg-white text-[#0A0D14] text-xs sm:text-sm font-semibold flex items-center justify-center hover:border-[#B46A2C] hover:text-[#B46A2C] transition-colors cursor-pointer select-none;
+}
+
+.pageNumBtnActive {
+  @apply border-[#B46A2C] bg-[#B46A2C] text-white hover:bg-[#9E5A23] hover:text-white shadow-xs;
+}
+
+.ellipsis {
+  @apply px-1.5 text-xs text-[#858585] select-none;
+}
+
+.perPageWrapper {
+  @apply relative inline-flex items-center order-3;
+}
+
+.perPageSelect {
+  @apply appearance-none bg-white border border-[#E2E4E9] rounded-[8px] pl-3 pr-8 py-1.5 text-xs sm:text-sm font-medium text-[#0A0D14] cursor-pointer hover:border-[#B46A2C] focus:outline-hidden focus:border-[#B46A2C] transition-colors;
+}
+
+.perPageChevron {
+  @apply absolute right-2.5 w-3.5 h-3.5 text-[#525866] pointer-events-none;
+}

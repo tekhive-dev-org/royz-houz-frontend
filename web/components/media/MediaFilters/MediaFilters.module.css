@@ -1,0 +1,51 @@
+@reference "../../../styles/globals.css";
+
+.filterContainer {
+  @apply flex flex-col md:flex-row md:items-center justify-between gap-4 py-6 border-b border-[#E2E4E9];
+}
+
+/* Category Tabs */
+.tabsRow {
+  @apply flex items-center gap-2 sm:gap-2.5 overflow-x-auto pb-1 md:pb-0 scrollbar-none;
+}
+
+.tabBtn {
+  @apply px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold tracking-tight transition-all duration-200 shrink-0 cursor-pointer select-none outline-none;
+}
+
+.tabBtnActive {
+  @apply bg-[#B46A2C] text-white shadow-xs;
+}
+
+.tabBtnInactive {
+  @apply bg-white border border-[#E2E4E9] text-[#525866] hover:border-[#B46A2C]/40 hover:text-[#0A0D14];
+}
+
+/* Controls */
+.controlsRow {
+  @apply flex items-center gap-3 shrink-0;
+}
+
+.searchWrapper {
+  @apply relative flex-1 sm:w-60;
+}
+
+.searchIcon {
+  @apply absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#858585] pointer-events-none;
+}
+
+.searchInput {
+  @apply w-full bg-white border border-[#E2E4E9] rounded-full pl-9 pr-4 py-2 sm:py-2.5 text-xs sm:text-sm text-[#0A0D14] placeholder:text-[#858585] focus:border-[#B46A2C] focus:ring-1 focus:ring-[#B46A2C] outline-none transition-all;
+}
+
+.sortWrapper {
+  @apply relative;
+}
+
+.sortSelect {
+  @apply bg-white border border-[#E2E4E9] rounded-full pl-4 pr-8 py-2 sm:py-2.5 text-xs sm:text-sm font-medium text-[#525866] appearance-none focus:border-[#B46A2C] focus:ring-1 focus:ring-[#B46A2C] outline-none transition-all cursor-pointer;
+}
+
+.sortChevron {
+  @apply absolute right-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[#525866] pointer-events-none;
+}

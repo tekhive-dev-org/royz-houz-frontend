@@ -1,0 +1,54 @@
+@reference "../../../../styles/globals.css";
+
+/* ── Event Detail Hero Banner ────────────────────────── */
+.heroSection {
+  @apply relative w-full min-h-[380px] sm:min-h-[440px] md:min-h-[480px] flex items-end overflow-hidden bg-black;
+}
+
+.imageWrapper {
+  @apply absolute inset-0 w-full h-full;
+}
+
+.heroImage {
+  @apply object-cover object-center;
+}
+
+.gradientOverlay {
+  @apply absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/30;
+}
+
+.contentContainer {
+  @apply relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-10 sm:pb-12 pt-28;
+}
+
+.innerContent {
+  @apply max-w-4xl flex flex-col gap-3.5 sm:gap-4;
+}
+
+.categoryBadgeWrapper {
+  @apply flex items-center;
+}
+
+.categoryBadge {
+  @apply px-3 py-1 rounded-[6px] border border-[#B46A2C]/80 bg-[#B46A2C]/20 backdrop-blur-xs text-[#EAA144] text-[11px] sm:text-xs font-bold tracking-widest uppercase;
+}
+
+.title {
+  @apply text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-extrabold text-white tracking-tight leading-[1.1];
+}
+
+.metaRow {
+  @apply flex flex-wrap items-center gap-y-2 gap-x-4 text-xs sm:text-sm text-slate-300 font-normal pt-1;
+}
+
+.metaItem {
+  @apply flex items-center gap-2;
+}
+
+.metaIcon {
+  @apply w-4 h-4 text-[#C8781A] shrink-0;
+}
+
+.metaDivider {
+  @apply hidden sm:block w-1.5 h-1.5 rounded-full bg-white/30;
+}

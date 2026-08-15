@@ -25,6 +25,12 @@ export function EventCard({ event, isPast: isPastProp }) {
       ? `${formattedMonth} ${event.year || "2025"} · ${event.location}`
       : event.location);
 
+  const eventOverviewUrl = isPast
+    ? event.recapLink || "#"
+    : event.ticketLink && event.ticketLink !== "#"
+    ? event.ticketLink
+    : `/events/${event.slug || event.id}`;
+
   return (
     <article className={`${styles.card} group`} aria-label={event.title}>
       {/* Event Image & Badge */}
@@ -55,10 +61,7 @@ export function EventCard({ event, isPast: isPastProp }) {
       <div className={styles.content}>
         <div className={styles.detailsHeader}>
           <h3 className={styles.title}>
-            <Link
-              href={isPast ? event.recapLink || "#" : event.ticketLink || "#"}
-              className="hover:underline"
-            >
+            <Link href={eventOverviewUrl} className="hover:underline">
               {event.title}
             </Link>
           </h3>
@@ -89,7 +92,7 @@ export function EventCard({ event, isPast: isPastProp }) {
           </div>
         ) : (
           <Link
-            href={event.ticketLink || "#"}
+            href={eventOverviewUrl}
             className={styles.registerBtn}
             aria-label={`Register for ${event.title}`}
           >
@@ -102,5 +105,6 @@ export function EventCard({ event, isPast: isPastProp }) {
 }
 
 export default EventCard;
+
 
 
