@@ -1,10 +1,20 @@
+import { useRouter } from "next/router";
 import styles from "./TalentProfileSidebar.module.css";
 
 /**
  * BookingCard sidebar widget displaying pricing and booking action buttons.
  */
 export function BookingCard({ talent, onBookClick }) {
+  const router = useRouter();
   const price = talent?.bookingPrice || "₦250,000";
+
+  const handleBook = () => {
+    if (onBookClick) {
+      onBookClick();
+    } else {
+      router.push(`/talents/${talent?.slug || talent?.id}/book`);
+    }
+  };
 
   return (
     <div className={styles.bookingCard} aria-label="Booking Information">
@@ -13,7 +23,7 @@ export function BookingCard({ talent, onBookClick }) {
 
       <button
         type="button"
-        onClick={onBookClick}
+        onClick={handleBook}
         className={styles.bookTalentBtn}
       >
         Book This Talent
@@ -21,7 +31,7 @@ export function BookingCard({ talent, onBookClick }) {
 
       <button
         type="button"
-        onClick={() => alert(`Direct message dialog opened for ${talent.name}`)}
+        onClick={() => alert(`Direct message dialog opened for ${talent?.name || "talent"}`)}
         className={styles.messageBtn}
       >
         Send a Message

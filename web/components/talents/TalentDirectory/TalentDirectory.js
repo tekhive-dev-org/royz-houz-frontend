@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+import { useRouter } from "next/router";
 import { TALENT_DIRECTORY_ITEMS } from "@/constants/talents";
 import { CategoryFilter } from "./CategoryFilter";
 import { DirectoryCard } from "./DirectoryCard";
@@ -53,9 +54,10 @@ export function TalentDirectory({ searchQuery = "" }) {
     return sortedTalents.slice(start, start + perPage);
   }, [sortedTalents, currentPage, perPage]);
 
+  const router = useRouter();
+
   const handleBook = (talent) => {
-    // Booking flow handler
-    alert(`Booking request initiated for ${talent.name}`);
+    router.push(`/talents/${talent.slug || talent.id}/book`);
   };
 
   const handleCategorySelect = (catId) => {

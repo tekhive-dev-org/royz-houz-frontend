@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useRouter } from "next/router";
 import { TalentProfileHero } from "./TalentProfileHero";
 import { TalentProfileStickyBar } from "./TalentProfileStickyBar";
 import { TalentProfileTabs } from "./TalentProfileTabs";
@@ -11,12 +12,13 @@ import styles from "./TalentProfile.module.css";
  * TalentProfile root orchestrator composing hero, sticky bar, 2-column tabs/sidebar, and CTA.
  */
 export function TalentProfile({ talent }) {
+  const router = useRouter();
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
 
   if (!talent) return null;
 
   const handleBookClick = () => {
-    alert(`Initiating booking workflow for ${talent.name}`);
+    router.push(`/talents/${talent.slug || talent.id}/book`);
   };
 
   return (

@@ -5,3 +5,4 @@ export * from "./TalentProfile";
 export * from "./TalentVideoPlayer";
 export * from "./TalentCTA";
 export * from "./TalentApplication";
+export * from "./TalentBooking";

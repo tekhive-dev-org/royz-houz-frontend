@@ -58,13 +58,12 @@ export function TalentMiniProfile({
           <Link href={profileUrl} className={styles.btnViewProfile}>
             VIEW PROFILE
           </Link>
-          <button
-            type="button"
-            onClick={() => alert(`Initiating booking for ${talent.name}`)}
+          <Link
+            href={`/talents/${talent.slug || talent.id || "julius-ayomide"}/book`}
             className={styles.btnBook}
           >
             BOOK
-          </button>
+          </Link>
         </div>
       </div>
     </div>

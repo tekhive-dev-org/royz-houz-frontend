@@ -1,0 +1,248 @@
+@reference "../../../styles/globals.css";
+
+/* ── Talent Booking Page & Container ────────────────────── */
+.bookingPageContainer {
+  @apply min-h-screen bg-[#FDFBF9] py-8 sm:py-12 px-4 sm:px-6;
+}
+
+.bookingNavHeader {
+  @apply max-w-2xl mx-auto flex items-center justify-between mb-6;
+}
+
+.backButton {
+  @apply inline-flex items-center gap-1.5 text-sm font-semibold text-[#525866] hover:text-[#0A0D14] transition-colors cursor-pointer;
+}
+
+.bookingPageTitle {
+  @apply text-base sm:text-lg font-bold text-[#0A0D14] text-center flex-1 pr-10 sm:pr-0;
+}
+
+.bookingCardWrapper {
+  @apply max-w-xl mx-auto bg-white rounded-2xl border border-[#E2E4E9] p-6 sm:p-9 shadow-xs;
+}
+
+/* ── 4-Step Progress Bar ──────────────────────────────── */
+.progressBarContainer {
+  @apply flex items-center justify-between relative mb-8 w-full max-w-md mx-auto;
+}
+
+.stepIndicatorItem {
+  @apply flex flex-col items-center gap-1.5 z-10;
+}
+
+.stepCircle {
+  @apply w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all;
+}
+
+.stepCircleActive {
+  @apply bg-[#B46A2C] text-white shadow-xs;
+}
+
+.stepCircleCompleted {
+  @apply bg-[#B46A2C] text-white;
+}
+
+.stepCircleInactive {
+  @apply bg-white border border-[#E2E4E9] text-[#868C98];
+}
+
+.stepLabel {
+  @apply text-[11px] sm:text-xs font-semibold select-none;
+}
+
+.stepLabelActive {
+  @apply text-[#B46A2C];
+}
+
+.stepLabelInactive {
+  @apply text-[#868C98];
+}
+
+.progressConnectingLine {
+  @apply flex-1 h-[2px] -mt-5 mx-1 transition-all;
+}
+
+.lineCompleted {
+  @apply bg-[#B46A2C];
+}
+
+.lineInactive {
+  @apply bg-[#E2E4E9];
+}
+
+/* ── Talent Header Mini Card ─────────────────────────── */
+.talentMiniCard {
+  @apply flex items-center gap-3.5 p-3.5 rounded-xl border border-[#E2E4E9] bg-white mb-6;
+}
+
+.talentAvatarWrapper {
+  @apply relative w-12 h-12 rounded-lg overflow-hidden shrink-0 bg-slate-100 border border-[#E2E4E9];
+}
+
+.talentMetaGroup {
+  @apply flex flex-col;
+}
+
+.talentName {
+  @apply text-sm sm:text-base font-bold text-[#0A0D14] leading-tight;
+}
+
+.talentSubtext {
+  @apply text-xs text-[#525866] mt-0.5;
+}
+
+.talentPrice {
+  @apply text-xs font-bold text-[#B46A2C] mt-0.5;
+}
+
+/* ── Form Section & Fields ───────────────────────────── */
+.sectionTitle {
+  @apply text-base sm:text-lg font-bold text-[#0A0D14] mb-5 tracking-tight;
+}
+
+.formGrid {
+  @apply flex flex-col gap-4;
+}
+
+.nameRow {
+  @apply grid grid-cols-1 sm:grid-cols-2 gap-4;
+}
+
+.formGroup {
+  @apply flex flex-col gap-1.5;
+}
+
+.fieldLabel {
+  @apply text-xs sm:text-sm font-semibold text-[#0A0D14];
+}
+
+.inputField {
+  @apply w-full px-3.5 py-2.5 sm:py-3 text-sm font-medium text-[#0A0D14] bg-white border border-[#E2E4E9] rounded-[10px] placeholder:text-[#868C98] transition-all outline-hidden focus:border-[#B46A2C] focus:ring-2 focus:ring-[#B46A2C]/20 shadow-2xs;
+}
+
+.inputError {
+  border-color: #EF4444;
+}
+
+.errorMessage {
+  @apply text-xs font-medium text-red-500 mt-0.5;
+}
+
+.textareaField {
+  @apply w-full px-3.5 py-2.5 sm:py-3 text-sm font-medium text-[#0A0D14] bg-white border border-[#E2E4E9] rounded-[10px] placeholder:text-[#868C98] transition-all outline-hidden focus:border-[#B46A2C] focus:ring-2 focus:ring-[#B46A2C]/20 resize-none min-h-[96px] shadow-2xs;
+}
+
+/* ── Action Buttons ──────────────────────────────────── */
+.continueButton {
+  @apply w-full py-3.5 px-4 bg-[#B46A2C] hover:bg-[#9E5A23] text-white font-semibold rounded-[10px] transition-all text-sm sm:text-base mt-3 cursor-pointer shadow-sm;
+}
+
+.continueButtonDisabled {
+  @apply w-full py-3.5 px-4 bg-[#D1A77E] text-white font-semibold rounded-[10px] transition-all text-sm sm:text-base mt-3 cursor-not-allowed opacity-90;
+}
+
+/* ── Step 3: Review Table & Agreement ────────────────── */
+.reviewTable {
+  @apply flex flex-col gap-3 py-3 border-y border-[#E2E4E9]/70 my-4 text-xs sm:text-sm;
+}
+
+.reviewRow {
+  @apply grid grid-cols-[100px_1fr] sm:grid-cols-[120px_1fr] gap-3 items-start;
+}
+
+.reviewKey {
+  @apply font-semibold text-[#525866];
+}
+
+.reviewValue {
+  @apply font-medium text-[#0A0D14] text-right break-words;
+}
+
+.reviewValueDescription {
+  @apply font-normal text-[#525866] text-right text-xs leading-relaxed;
+}
+
+.disclaimerCard {
+  @apply bg-[#FBF5EF] border border-[#F0DFCD] rounded-xl p-3.5 sm:p-4 my-4;
+}
+
+.disclaimerText {
+  @apply text-xs text-[#525866] leading-relaxed;
+}
+
+.agreementLabel {
+  @apply flex items-start gap-2.5 text-xs text-[#525866] cursor-pointer select-none mb-3 mt-1;
+}
+
+.agreementCheckbox {
+  @apply w-4 h-4 rounded text-[#B46A2C] focus:ring-[#B46A2C] border-[#868C98] mt-0.5 cursor-pointer;
+}
+
+/* ── Step 4: Confirmed / Success ─────────────────────── */
+.successContainer {
+  @apply flex flex-col items-center text-center pt-2;
+}
+
+.successIconCircle {
+  @apply w-16 h-16 rounded-full bg-[#FBF5EF] border border-[#B46A2C] flex items-center justify-center mb-4 text-[#B46A2C];
+}
+
+.successHeading {
+  @apply text-xl sm:text-2xl font-bold text-[#0A0D14] tracking-tight;
+}
+
+.successSubheading {
+  @apply text-xs sm:text-sm text-[#525866] mt-1.5 max-w-sm;
+}
+
+.referenceTag {
+  @apply text-xs font-semibold text-[#868C98] mt-2 mb-6;
+}
+
+.referenceHighlight {
+  @apply text-[#0A0D14] font-bold;
+}
+
+.nextStepsCard {
+  @apply w-full border border-[#E2E4E9] rounded-xl p-4 sm:p-5 text-left mb-6;
+}
+
+.nextStepsTitle {
+  @apply text-xs sm:text-sm font-bold text-[#0A0D14] mb-3.5;
+}
+
+.stepsTimeline {
+  @apply flex flex-col gap-3.5;
+}
+
+.stepItemRow {
+  @apply flex items-start gap-3;
+}
+
+.stepNumber {
+  @apply text-xs sm:text-sm font-bold text-[#B46A2C] shrink-0 w-5;
+}
+
+.stepContent {
+  @apply flex flex-col;
+}
+
+.stepItemTitle {
+  @apply text-xs sm:text-sm font-bold text-[#0A0D14];
+}
+
+.stepItemDesc {
+  @apply text-xs text-[#525866] mt-0.5;
+}
+
+.confirmationBtnRow {
+  @apply w-full grid grid-cols-1 sm:grid-cols-2 gap-3;
+}
+
+.returnBtn {
+  @apply w-full py-3 px-4 bg-[#B46A2C] hover:bg-[#9E5A23] text-white font-semibold rounded-[10px] transition-all text-xs sm:text-sm cursor-pointer text-center;
+}
+
+.exploreBtn {
+  @apply w-full py-3 px-4 bg-white border border-[#E2E4E9] hover:bg-slate-50 text-[#0A0D14] font-semibold rounded-[10px] transition-all text-xs sm:text-sm cursor-pointer text-center;
+}
