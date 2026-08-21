@@ -1,0 +1,91 @@
+@reference "../../../styles/globals.css";
+
+/* ══════════════════════════════════════════════════════
+   Contact — Map / Headquarters Section (1440x304 Spec)
+   ══════════════════════════════════════════════════════ */
+.section {
+  @apply w-full bg-white py-10 sm:py-14;
+}
+
+.container {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+}
+
+.cardWrapper {
+  @apply w-full rounded-2xl border border-[#E2E4E9] overflow-hidden bg-white grid grid-cols-1 lg:grid-cols-12 min-h-[300px] lg:min-h-[320px] shadow-xs;
+}
+
+/* ── Left Content Panel (#F9F7F4) ─────────────────── */
+.leftPanel {
+  @apply lg:col-span-5 xl:col-span-4 bg-[#F9F7F4] p-6 sm:p-8 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-[#E2E4E9];
+}
+
+.panelTop {
+  @apply flex flex-col gap-2;
+}
+
+.eyebrow {
+  @apply text-[11px] sm:text-xs font-bold tracking-[0.18em] text-[#B46A2C] uppercase select-none;
+}
+
+.heading {
+  @apply text-xl sm:text-2xl font-bold text-[#0A0D14] tracking-tight;
+}
+
+.description {
+  @apply text-xs sm:text-sm text-[#525866] leading-relaxed mt-1;
+}
+
+.panelBottom {
+  @apply mt-6 sm:mt-8;
+}
+
+.directionsBtn {
+  @apply inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-[#B46A2C] text-[#B46A2C] hover:bg-[#B46A2C] hover:text-white transition-all duration-200 text-xs sm:text-sm font-semibold active:scale-95 shadow-xs cursor-pointer;
+}
+
+.directionsBtn svg {
+  @apply transition-transform;
+}
+
+.directionsBtn:hover svg {
+  transform: translateX(4px);
+}
+
+/* ── Right Map Panel ───────────────────────────────── */
+.rightPanel {
+  @apply lg:col-span-7 xl:col-span-8 relative w-full min-h-[280px] lg:min-h-full bg-slate-100 overflow-hidden;
+}
+
+.mapIframe {
+  @apply w-full h-full min-h-[280px] border-0;
+}
+
+/* ── Floating Info Overlay Card (#FDFCFC) ───────────── */
+.infoCard {
+  @apply absolute top-4 right-4 sm:top-6 sm:right-6 bg-[#FDFCFC] border border-[#E2E4E9] rounded-xl p-4 sm:p-5 shadow-lg max-w-[280px] flex flex-col gap-1.5 backdrop-blur-xs;
+}
+
+.infoCardHeader {
+  @apply flex items-center gap-2.5;
+}
+
+.redPinCircle {
+  @apply w-6 h-6 rounded-full bg-[#FB1B1B] flex items-center justify-center shrink-0 shadow-xs;
+}
+
+.infoTitle {
+  @apply text-xs sm:text-sm font-bold text-[#0A0D14] truncate;
+}
+
+.infoAddress {
+  @apply text-[11px] text-[#525866] leading-snug;
+}
+
+.infoHoursRow {
+  @apply flex items-center gap-1.5 mt-1 pt-1.5 border-t border-[#F0F1F3];
+}
+
+.infoHours {
+  @apply text-[10px] sm:text-[11px] text-[#868C98] font-medium;
+}

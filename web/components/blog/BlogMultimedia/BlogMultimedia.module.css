@@ -1,0 +1,172 @@
+@reference "../../../styles/globals.css";
+
+/* ── Multimedia Section ──────────────────────────────── */
+.section {
+  @apply w-full py-12 sm:py-16 md:py-20 bg-white border-b border-[#E2E4E9]/60;
+}
+
+.container {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-8 sm:gap-10;
+}
+
+/* ── Section Header (Left-Aligned as in Design) ──────── */
+.headerArea {
+  @apply flex flex-col items-start text-left gap-2.5 w-full pt-6 border-t border-[#E2E4E9]/70;
+}
+
+.tagline {
+  @apply inline-flex items-center gap-3 mb-0.5;
+}
+
+.accentLine {
+  @apply w-7 h-[1.5px] bg-[#DCA43E] shrink-0;
+}
+
+.tagText {
+  @apply text-xs font-bold text-[#B46A2C] tracking-widest uppercase;
+}
+
+.title {
+  @apply text-2xl sm:text-3xl md:text-[32px] font-extrabold text-[#0A0D14] tracking-tight;
+}
+
+.subtitle {
+  @apply text-xs sm:text-sm text-[#525866] leading-relaxed max-w-3xl;
+}
+
+/* ── Main 2-Column Grid Layout ───────────────────────── */
+.mainLayout {
+  @apply grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch;
+}
+
+/* ── Left Column: Video Main Frame ───────────────────── */
+.videoCard {
+  @apply lg:col-span-7 relative w-full aspect-16/10 rounded-xs overflow-hidden bg-black cursor-pointer shadow-2xs hover:shadow-md transition-shadow;
+}
+
+.videoCoverImage {
+  @apply object-cover object-center transition-transform duration-700;
+}
+
+.videoCard:hover .videoCoverImage {
+  transform: scale(1.03);
+}
+
+.videoBackdropOverlay {
+  @apply absolute inset-0 bg-black/25 transition-opacity;
+}
+
+.videoCard:hover .videoBackdropOverlay {
+  background-color: rgba(0, 0, 0, 0.15);
+}
+
+.playButtonWrapper {
+  @apply absolute inset-0 flex items-center justify-center;
+}
+
+.playTriangleSvg {
+  @apply w-10 h-12 sm:w-12 sm:h-14 drop-shadow-md transition-transform duration-300;
+}
+
+.videoCard:hover .playTriangleSvg {
+  transform: scale(1.1);
+}
+
+/* ── Right Column: Stacked Story Cards ───────────────── */
+.cardsStack {
+  @apply lg:col-span-5 flex flex-col justify-between gap-4 sm:gap-4.5;
+}
+
+.storyCard {
+  @apply w-full text-left bg-white rounded-xs p-5 sm:p-6 flex flex-col justify-between transition-all duration-300 cursor-pointer select-none;
+}
+
+.storyCardActive {
+  @apply border border-[#333333]/50 shadow-2xs;
+}
+
+.storyCardInactive {
+  @apply border border-[#333333]/20 hover:border-[#333333]/40;
+}
+
+.cardHeaderArea {
+  @apply mb-2;
+}
+
+.cardTitle {
+  @apply text-sm sm:text-base leading-snug transition-colors;
+}
+
+.titleActive {
+  @apply font-bold text-[#0A0D14];
+}
+
+.titleInactive {
+  @apply font-normal text-[#333333]/80;
+}
+
+/* ── Card Divider ────────────────────────────────────── */
+.cardDivider {
+  @apply w-full h-[1px] my-3;
+}
+
+.dividerActive {
+  @apply bg-[#333333]/80;
+}
+
+.dividerInactive {
+  @apply bg-[#333333]/15;
+}
+
+/* ── Card Footer ─────────────────────────────────────── */
+.cardFooterArea {
+  @apply flex items-center justify-between pt-0.5;
+}
+
+.metaLeft {
+  @apply flex items-center gap-4 text-xs;
+}
+
+.categoryText {
+  @apply text-xs transition-colors;
+}
+
+.categoryActive {
+  @apply font-semibold text-[#0A0D14];
+}
+
+.categoryInactive {
+  @apply text-[#333333]/60;
+}
+
+.durationText {
+  @apply text-xs transition-colors;
+}
+
+.durationActive {
+  @apply font-semibold text-[#0A0D14];
+}
+
+.durationInactive {
+  @apply text-[#333333]/60;
+}
+
+.playIconArea {
+  @apply flex items-center justify-center;
+}
+
+.cardPlayTriangle {
+  @apply w-2.5 h-3.5 transition-all duration-200;
+}
+
+.iconActive {
+  @apply text-[#0A0D14];
+}
+
+.iconInactive {
+  @apply text-[#333333]/60;
+}
+
+.storyCard:hover .cardPlayTriangle {
+  transform: scale(1.15) translateX(2px);
+}

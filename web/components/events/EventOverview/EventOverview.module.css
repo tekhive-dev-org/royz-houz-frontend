@@ -2,19 +2,19 @@
 
 /* ── Event Overview Main Layout ──────────────────────── */
 .pageWrapper {
-  @apply w-full min-h-screen bg-[#FDFCFB];
+  @apply w-full min-h-screen;
 }
 
 .mainContainer {
-  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12;
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10;
 }
 
 .grid {
-  @apply grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start;
+  @apply grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start;
 }
 
 .leftColumn {
-  @apply lg:col-span-8 flex flex-col gap-10 sm:gap-12;
+  @apply lg:col-span-8 flex flex-col;
 }
 
 .rightColumn {

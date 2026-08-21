@@ -1,0 +1,153 @@
+@reference "../../../styles/globals.css";
+
+/* ══════════════════════════════════════════════════════
+   Merchandise Product Grid Styles (Figma Specification)
+   ══════════════════════════════════════════════════════ */
+.section {
+  @apply w-full bg-white py-12 sm:py-16 border-b border-[#ECE8E1];
+}
+
+.container {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-8 sm:gap-10;
+}
+
+/* ── Section Header ──────────────────────────── */
+.headerRow {
+  @apply flex flex-col md:flex-row md:items-end justify-between gap-4 sm:gap-6;
+}
+
+.headerLeft {
+  @apply flex flex-col gap-2;
+}
+
+.tagWrapper {
+  @apply flex items-center gap-2.5;
+}
+
+.tagLine {
+  @apply w-8 h-[1.5px] bg-[#B46A2C] inline-block;
+}
+
+.tagText {
+  @apply text-xs font-semibold text-[#B46A2C] tracking-widest uppercase;
+}
+
+.heading {
+  @apply text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#0A0D14] tracking-tight;
+}
+
+.headerRight {
+  @apply flex flex-col items-start md:items-end gap-1.5 md:gap-2;
+}
+
+.subtitleText {
+  @apply text-xs sm:text-sm text-[#525866] leading-relaxed md:text-right;
+}
+
+.viewAllBtn {
+  @apply inline-flex items-center gap-1 text-xs sm:text-sm font-semibold text-[#B46A2C] hover:text-[#995222] transition-colors cursor-pointer select-none;
+}
+
+
+/* ── Products Grid (5-column layout on desktop) ──────── */
+.productGrid {
+  @apply grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3.5 sm:gap-4 lg:gap-5;
+}
+
+.productCard {
+  @apply flex flex-col gap-2.5 bg-white transition-all duration-300;
+}
+
+.imageContainer {
+  @apply relative w-full aspect-[4/5] rounded-none sm:rounded-sm overflow-hidden bg-[#F4F4F6];
+}
+
+.imageWrap {
+  @apply absolute inset-0 w-full h-full;
+}
+
+.prodImg {
+  @apply w-full h-full object-cover transition-transform duration-700 ease-out;
+}
+
+.productCard:hover .prodImg {
+  transform: scale(1.05);
+}
+
+.productBadge {
+  @apply absolute top-2.5 left-2.5 z-10 px-2 py-0.5 rounded bg-white text-[#0A0D14] text-[10px] sm:text-[11px] font-bold select-none shadow-2xs;
+}
+
+.wishlistBtn {
+  @apply absolute top-2.5 right-2.5 z-10 w-7 h-7 rounded-full bg-white flex items-center justify-center transition-all cursor-pointer shadow-2xs hover:bg-white hover:scale-110 active:scale-95;
+}
+
+.wishlistBtnActive {
+  @apply bg-white shadow-sm;
+}
+
+/* Quick Add Overlay */
+.quickAddBtn {
+  @apply absolute bottom-2 left-2 right-2 z-10 py-2 px-3 rounded bg-[#0A0D14]/90 hover:bg-[#B46A2C] text-white text-[11px] font-semibold flex items-center justify-center gap-1.5 backdrop-blur-xs transition-all opacity-0 translate-y-2 cursor-pointer shadow-md active:scale-[0.98];
+}
+
+.productCard:hover .quickAddBtn {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Product Details ─────────────────────────────────── */
+.productDetails {
+  @apply flex flex-col gap-1 px-0.5;
+}
+
+.categoryAndRating {
+  @apply flex items-center justify-between gap-1 text-[10px] sm:text-[11px];
+}
+
+.categoryLabel {
+  @apply font-bold text-[#B46A2C] uppercase tracking-wider truncate max-w-[55%];
+}
+
+.ratingRow {
+  @apply flex items-center gap-1 shrink-0;
+}
+
+.starsGroup {
+  @apply flex items-center gap-0.5;
+}
+
+.ratingCount {
+  @apply text-[10px] sm:text-[11px] text-[#525866] font-normal;
+}
+
+.productTitle {
+  @apply text-xs font-semibold text-[#0A0D14] leading-snug truncate transition-colors mt-0.5;
+}
+
+.productCard:hover .productTitle {
+  color: #B46A2C;
+}
+
+.priceRow {
+  @apply flex items-baseline gap-2 mt-0.5;
+}
+
+
+.priceAmount {
+  @apply text-xs sm:text-sm font-extrabold text-[#0A0D14] tracking-tight;
+}
+
+.oldPrice {
+  @apply text-[11px] text-[#868C98] line-through;
+}
+
+/* ── Bottom Outline Action Button (158x38 Figma Vector) ── */
+.bottomActionWrap {
+  @apply flex justify-center pt-4 sm:pt-6;
+}
+
+.bottomOutlineBtn {
+  @apply inline-flex items-center justify-center px-6 h-[38px] min-w-[158px] rounded-[4px] border border-[#B46A2C] bg-white hover:bg-[#B46A2C] text-xs font-semibold text-[#B46A2C] hover:text-white transition-all duration-300 cursor-pointer shadow-2xs active:scale-[0.98];
+}
+

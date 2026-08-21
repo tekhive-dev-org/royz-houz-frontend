@@ -38,7 +38,10 @@ export function EventCard({ event }) {
           <span className={styles.locationText}>{event.location}</span>
         </div>
 
-        <Link href={event.ticketLink} className={styles.ticketBtn}>
+        <Link
+          href={event.ticketLink || (event.slug || event.id ? `/events/${event.slug || event.id}` : "/events")}
+          className={styles.ticketBtn}
+        >
           <span className={styles.ticketBtnText}>Get Ticket</span>
         </Link>
       </div>

@@ -1,0 +1,93 @@
+@reference "../../../styles/globals.css";
+
+/* ── Blog Hero Section ───────────────────────────────── */
+.heroSection {
+  @apply relative w-full min-h-[520px] sm:min-h-[580px] md:min-h-[620px] lg:min-h-[660px] flex items-center overflow-hidden bg-white select-none;
+}
+
+/* ── Background Carousel Container ───────────────────── */
+.backgroundContainer {
+  @apply absolute inset-0 z-0 w-full h-full overflow-hidden;
+}
+
+.slideImageWrapper {
+  @apply absolute inset-0 w-full h-full transition-opacity duration-700 ease-in-out;
+}
+
+.slideActive {
+  @apply opacity-100 z-1;
+}
+
+.slideInactive {
+  @apply opacity-0 z-0 pointer-events-none;
+}
+
+.bgImage {
+  @apply object-cover object-right md:object-center;
+}
+
+.ambientOverlay {
+  @apply absolute inset-0 z-2 bg-gradient-to-r from-white/90 via-white/40 to-transparent md:w-[60%] lg:w-[50%] pointer-events-none;
+}
+
+/* ── Content Container ───────────────────────────────── */
+.contentContainer {
+  @apply relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16;
+}
+
+.textColumn {
+  @apply flex flex-col items-start max-w-xl md:max-w-2xl gap-4 sm:gap-5;
+}
+
+/* ── Minimalist Long-Arrow Navigation Row ─────────────── */
+.navControlsRow {
+  @apply flex items-center gap-7 mb-2;
+}
+
+.arrowButton {
+  @apply p-0 bg-transparent border-0 transition-all duration-200 cursor-pointer select-none flex items-center justify-center;
+}
+
+.arrowDimmed {
+  @apply text-[#333333]/40 hover:text-[#0A0D14] hover:opacity-100;
+}
+
+.arrowActive {
+  @apply text-[#525866] hover:text-[#0A0D14] hover:scale-105;
+}
+
+.arrowSvg {
+  @apply w-7 h-3.5 transition-transform;
+}
+
+/* ── Badge Pill ──────────────────────────────────────── */
+.badgeWrapper {
+  @apply inline-flex;
+}
+
+.badgePill {
+  @apply text-xs sm:text-sm font-medium text-[#B46A2C] px-3.5 py-1.5 rounded-full border border-[#B46A2C] bg-white/90 backdrop-blur-xs tracking-tight shadow-xs;
+}
+
+/* ── Main Title ──────────────────────────────────────── */
+.mainTitle {
+  @apply text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-extrabold text-[#0A0D14] tracking-tight leading-[1.15];
+}
+
+.highlightText {
+  @apply text-[#B46A2C];
+}
+
+/* ── Description ─────────────────────────────────────── */
+.descriptionText {
+  @apply text-xs sm:text-sm md:text-base text-[#525866] leading-relaxed max-w-lg;
+}
+
+/* ── Action Button ───────────────────────────────────── */
+.actionRow {
+  @apply pt-2;
+}
+
+.ctaButton {
+  @apply inline-flex items-center justify-center px-6 py-3 rounded-[10px] bg-[#B46A2C] hover:bg-[#9E5A23] active:scale-98 text-white text-xs sm:text-sm font-semibold tracking-wide transition-all duration-200 shadow-sm cursor-pointer;
+}

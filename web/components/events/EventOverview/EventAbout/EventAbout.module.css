@@ -1,8 +1,8 @@
 @reference "../../../../styles/globals.css";
 
-/* ── About Event Section ─────────────────────────────── */
+/* ── About Event Section Card ────────────────────────── */
 .section {
-  @apply bg-white border border-[#E2E4E9] rounded-[24px] p-6 sm:p-8 shadow-xs flex flex-col gap-5;
+  @apply bg-white  border-[#E2E4E9] rounded-2xl p-6 sm:p-7 shadow-xs flex flex-col gap-4 mb-6;
 }
 
 .header {
@@ -10,17 +10,17 @@
 }
 
 .accentBar {
-  @apply w-[5px] h-[25px] bg-[#DCA43E] rounded-full shrink-0;
+  @apply w-[5px] h-[24px] sm:h-[25px] bg-[#DCA43E] rounded-full shrink-0;
 }
 
 .title {
-  @apply text-xl sm:text-2xl font-bold text-[#0A0D14] tracking-tight;
+  @apply text-base sm:text-lg md:text-xl font-bold text-[#0A0D14] tracking-tight;
 }
 
 .body {
-  @apply flex flex-col gap-4 text-sm sm:text-base text-[#525866] leading-relaxed font-normal;
+  @apply flex flex-col gap-3.5 text-xs sm:text-sm text-[#525866] leading-relaxed font-normal;
 }
 
 .paragraph {
-  @apply leading-[1.75];
+  @apply leading-relaxed;
 }

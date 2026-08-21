@@ -1,0 +1,35 @@
+@reference "../../../../styles/globals.css";
+
+.bodyContainer {
+  @apply flex flex-col gap-6 text-sm sm:text-base text-[#333333] leading-relaxed;
+}
+
+.paragraph {
+  @apply text-sm sm:text-[15px] text-[#414651] leading-[1.75];
+}
+
+/* ── Blockquote with Orange Vertical Bar ─────────────── */
+.blockquote {
+  @apply relative my-4 py-3 pl-6 pr-4 border-l-[3px] border-[#DCA43E] bg-white flex flex-col gap-1;
+}
+
+.quoteMark {
+  @apply text-2xl font-serif text-[#DCA43E] leading-none select-none;
+}
+
+.quoteText {
+  @apply text-base sm:text-lg font-bold text-[#0A0D14] italic leading-snug;
+}
+
+/* ── Key Takeaway Highlight Callout Card (709x147 Vector Spec) ── */
+.impactCard {
+  @apply my-4 p-6 sm:p-7 md:p-8 rounded-[12px] bg-[#B46A2C] text-white flex flex-col justify-center gap-2.5 shadow-[0_4px_20px_rgba(180,106,44,0.12)] w-full max-w-[709px];
+}
+
+.impactTag {
+  @apply text-xs font-extrabold tracking-[0.14em] text-white uppercase;
+}
+
+.impactText {
+  @apply text-sm sm:text-[15px] font-medium text-[#E2E4E9] leading-[1.65];
+}

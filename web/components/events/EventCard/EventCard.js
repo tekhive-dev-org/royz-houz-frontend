@@ -83,7 +83,7 @@ export function EventCard({ event, isPast: isPastProp }) {
               {event.attendees || "3,400 attended"}
             </span>
             <Link
-              href={event.recapLink || "#"}
+              href={event.recapLink && event.recapLink !== "#" ? event.recapLink : `/events/${event.slug || event.id}`}
               className={styles.viewRecapBtn}
               aria-label={`View recap for ${event.title}`}
             >

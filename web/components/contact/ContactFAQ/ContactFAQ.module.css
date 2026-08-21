@@ -1,0 +1,68 @@
+@reference "../../../styles/globals.css";
+
+/* ══════════════════════════════════════════════════════
+   Contact — FAQ Section (1440x362 Card Specification)
+   ══════════════════════════════════════════════════════ */
+
+
+.section {
+  @apply w-full bg-white py-8 sm:py-12;
+}
+
+.container {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+}
+
+/* ── 1275x350 Spec Outer Card ────────────────────────── */
+.cardWrapper {
+  @apply w-full rounded-2xl border border-[#E2E4E9] bg-white p-6 sm:p-8 md:p-10 shadow-xs flex flex-col gap-8;
+}
+
+.header {
+  @apply flex items-center gap-3.5 select-none;
+}
+
+.accentBar {
+  @apply w-[5px] h-[25px] bg-[#DCA43E] rounded-full shrink-0;
+}
+
+.title {
+  @apply text-xl sm:text-2xl font-bold text-[#0A0D14] tracking-tight;
+}
+
+/* ── 2-Column Accordion Grid ─────────────────────────── */
+.grid {
+  @apply grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 items-start;
+}
+
+.accordionItem {
+  @apply rounded-xl border border-[#E2E4E9] bg-white transition-all duration-200 overflow-hidden;
+}
+
+.accordionItemOpen {
+  @apply border-[#B46A2C]/40 shadow-xs;
+}
+
+.questionBtn {
+  @apply w-full px-5 py-4 flex items-center justify-between text-left gap-4 cursor-pointer hover:bg-slate-50/70 transition-colors select-none;
+}
+
+.questionText {
+  @apply text-xs sm:text-sm font-semibold text-[#0A0D14] tracking-tight;
+}
+
+.chevron {
+  @apply w-4 h-4 text-[#525866] transition-transform duration-200 shrink-0 stroke-[1.33];
+}
+
+.chevronOpen {
+  @apply rotate-180 text-[#B46A2C];
+}
+
+.answerContent {
+  @apply px-5 pb-4 pt-2 border-t border-[#F0F1F3] bg-slate-50/30;
+}
+
+.answerText {
+  @apply text-xs sm:text-sm text-[#525866] leading-relaxed;
+}

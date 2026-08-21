@@ -1,0 +1,174 @@
+@reference "../../../styles/globals.css";
+
+/* ══════════════════════════════════════════════════════
+   Donate — Form Section (2-Column Layout with Right Information Form)
+   ══════════════════════════════════════════════════════ */
+.section {
+  @apply w-full bg-[#FBFBFC] py-10 sm:py-14;
+}
+
+.container {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+}
+
+/* ── 2-Column Split Grid ─────────────────────────────── */
+.cardGrid {
+  @apply grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start;
+}
+
+/* ── Left Column: Giving Parameters Card ─────────────── */
+.leftCard {
+  @apply lg:col-span-7 bg-white rounded-2xl border border-[#E2E4E9] p-6 sm:p-9 shadow-xs flex flex-col gap-6;
+}
+
+/* ── Right Column: Information Form Card ─────────────── */
+.rightCard {
+  @apply lg:col-span-5 bg-white rounded-2xl border border-[#E2E4E9] p-6 sm:p-9 shadow-xs flex flex-col gap-6;
+}
+
+/* ── Header with Gold Accent Bar ────────────────────── */
+.header {
+  @apply flex items-start gap-3.5 select-none;
+}
+
+.accentBar {
+  @apply w-[5px] h-[25px] bg-[#DCA43E] rounded-full shrink-0 mt-0.5;
+}
+
+.title {
+  @apply text-xl sm:text-2xl font-bold text-[#0A0D14] tracking-tight;
+}
+
+.subtitle {
+  @apply text-xs sm:text-sm text-[#525866] mt-0.5;
+}
+
+/* ── Form Groups ─────────────────────────────────────── */
+.formGroup {
+  @apply flex flex-col gap-2;
+}
+
+.sectionLabel {
+  @apply text-sm font-semibold text-[#0A0D14] flex items-center gap-1.5;
+}
+
+.nairaSymbol {
+  @apply text-xs font-bold text-[#0A0D14];
+}
+
+.inputLabel {
+  @apply text-xs sm:text-sm font-medium text-[#0A0D14];
+}
+
+/* ── Frequency Tabs (55px high) ──────────────────────── */
+.freqRow {
+  @apply flex flex-wrap gap-2.5 sm:gap-3 items-center;
+}
+
+.freqBtn {
+  @apply flex-1 min-w-[130px] h-[52px] sm:h-[55px] rounded-[10px] text-xs sm:text-sm font-medium transition-all duration-200 flex items-center justify-center cursor-pointer select-none text-center px-3;
+}
+
+.freqBtnActive {
+  @apply bg-[#B46A2C] border border-[#B46A2C] text-white font-semibold shadow-xs hover:bg-[#995222];
+}
+
+.freqBtnInactive {
+  @apply bg-white border border-[#979797] text-[#0A0D14] hover:bg-slate-50;
+}
+
+/* ── Preset Amounts (55px high) ──────────────────────── */
+.amountGrid {
+  @apply grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3 items-center;
+}
+
+.amountBtn {
+  @apply w-full h-[52px] sm:h-[55px] rounded-[10px] text-xs sm:text-sm font-semibold transition-all duration-200 flex items-center justify-center cursor-pointer select-none text-center;
+}
+
+.amountBtnActive {
+  @apply bg-[#F8F6F5] border border-[#B46A2C] text-[#0A0D14] font-bold shadow-xs;
+}
+
+.amountBtnInactive {
+  @apply bg-white border border-[#CCCCCC] text-[#0A0D14] hover:bg-slate-50;
+}
+
+/* ── Text Input (64px high) ──────────────────────────── */
+.textInput {
+  @apply w-full h-[56px] sm:h-[62px] px-4 sm:px-5 rounded-[10px] border border-[#CCCCCC] bg-white text-sm sm:text-base text-[#0A0D14] placeholder:text-[#979797] focus:outline-none focus:ring-2 focus:ring-[#B46A2C]/30 focus:border-[#B46A2C] transition-all;
+}
+
+/* ── Select Dropdown (64px high) ─────────────────────── */
+.selectWrapper {
+  @apply relative w-full;
+}
+
+.selectInput {
+  @apply w-full h-[56px] sm:h-[62px] px-4 sm:px-5 rounded-[10px] border border-[#CCCCCC] bg-white text-sm sm:text-base text-[#0A0D14] focus:outline-none focus:ring-2 focus:ring-[#B46A2C]/30 focus:border-[#B46A2C] transition-all appearance-none cursor-pointer pr-12;
+}
+
+.selectChevron {
+  @apply absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#868C98] pointer-events-none;
+}
+
+/* ── Right Column: Info Fields Container ─────────────── */
+.infoFieldsWrap {
+  @apply flex flex-col gap-4 sm:gap-5;
+}
+
+/* Phone input with country flag picker (64px high) */
+.phoneInputWrapper {
+  @apply relative flex items-center w-full h-[56px] sm:h-[62px] rounded-[10px] border border-[#CCCCCC] bg-white focus-within:ring-2 focus-within:ring-[#B46A2C]/30 focus-within:border-[#B46A2C] transition-all;
+}
+
+.flagPickerBtn {
+  @apply flex items-center gap-1.5 px-3 sm:px-3.5 h-full border-r border-[#CCCCCC] bg-slate-50/70 hover:bg-slate-100/70 rounded-l-[10px] transition-colors cursor-pointer select-none text-xs sm:text-sm text-[#0A0D14] shrink-0;
+}
+
+.dialCode {
+  @apply font-medium text-xs sm:text-sm text-[#525866];
+}
+
+.phoneInput {
+  @apply w-full h-full px-3.5 sm:px-4 text-sm sm:text-base text-[#0A0D14] placeholder:text-[#979797] focus:outline-none bg-transparent;
+}
+
+.countryDropdownMenu {
+  @apply absolute left-0 top-[calc(100%+6px)] z-50 w-72 bg-white rounded-xl border border-[#E2E4E9] shadow-xl p-2 flex flex-col gap-1.5;
+  animation: fadeIn 0.15s ease-out forwards;
+}
+
+.countrySearchWrap {
+  @apply flex items-center gap-2 px-3 py-2 bg-slate-50 rounded-lg border border-[#E2E4E9];
+}
+
+.countrySearchInput {
+  @apply w-full bg-transparent text-xs text-[#0A0D14] placeholder:text-[#868C98] focus:outline-none;
+}
+
+.countryListScroll {
+  @apply max-h-48 overflow-y-auto flex flex-col gap-0.5;
+}
+
+.countryOption {
+  @apply flex items-center justify-between px-3 py-2 rounded-lg text-xs hover:bg-slate-50 transition-colors cursor-pointer text-[#0A0D14] text-left;
+}
+
+.countryOptionActive {
+  @apply bg-[#B46A2C]/10 text-[#B46A2C] font-semibold;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ── Submit CTA Button (64px high) ───────────────────── */
+.submitBtn {
+  @apply w-full h-[56px] sm:h-[62px] rounded-xl bg-[#B46A2C] hover:bg-[#995222] text-white font-bold text-base sm:text-lg transition-all duration-200 shadow-sm active:scale-[0.99] cursor-pointer mt-1 flex items-center justify-center;
+}
+
+.securityNote {
+  @apply flex items-center justify-center gap-2 text-xs text-[#868C98] select-none text-center;
+}

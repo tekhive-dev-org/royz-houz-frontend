@@ -1,0 +1,106 @@
+@reference "../../../styles/globals.css";
+
+/* ══════════════════════════════════════════════════════
+   Product Info & Purchase Panel Styles
+   ══════════════════════════════════════════════════════ */
+.infoContainer {
+  @apply flex flex-col gap-5 w-full lg:w-1/2 lg:sticky lg:top-24 h-fit;
+}
+
+/* Product Title */
+.title {
+  @apply text-2xl sm:text-3xl font-extrabold text-[#0A0D14] tracking-tight leading-tight;
+}
+
+/* Ratings & Reviews */
+.ratingRow {
+  @apply flex items-center gap-2;
+}
+
+.stars {
+  @apply flex items-center gap-0.5;
+}
+
+.reviewsCount {
+  @apply text-xs sm:text-sm font-medium text-[#525866];
+}
+
+/* Pricing & Discount */
+.priceRow {
+  @apply flex items-center gap-3 mt-1;
+}
+
+.price {
+  @apply text-2xl sm:text-3xl font-extrabold text-[#0A0D14] tracking-tight;
+}
+
+.oldPrice {
+  @apply text-base sm:text-lg font-medium text-[#868C98] line-through;
+}
+
+.discountBadge {
+  @apply px-2 py-0.5 rounded-full bg-[#FEF3F2] text-[#D92D20] text-xs font-bold;
+}
+
+/* Description */
+.description {
+  @apply text-xs sm:text-sm text-[#525866] leading-relaxed;
+}
+
+.divider {
+  @apply w-full h-[1px] bg-[#ECE8E1] my-1;
+}
+
+/* Color & Size Sections */
+.optionSection {
+  @apply flex flex-col gap-2.5;
+}
+
+.optionLabel {
+  @apply text-xs sm:text-sm font-bold text-[#0A0D14];
+}
+
+.colorSwatches {
+  @apply flex items-center gap-3;
+}
+
+.colorSwatch {
+  @apply w-7 h-7 rounded-full flex items-center justify-center transition-all hover:scale-110 active:scale-95 cursor-pointer;
+}
+
+.colorSwatchSelected {
+  @apply ring-2 ring-offset-2 ring-[#B46A2C];
+}
+
+.sizesWrap {
+  @apply flex flex-wrap gap-2;
+}
+
+.sizePill {
+  @apply px-4 py-2 rounded-full bg-[#F4F5F6] text-xs sm:text-sm font-medium text-[#525866] transition-all hover:bg-[#E4E7EC] hover:text-[#0A0D14] cursor-pointer;
+}
+
+.sizePillActive {
+  @apply bg-[#0A0D14] text-white font-bold hover:bg-[#0A0D14] hover:text-white;
+}
+
+/* Quantity & CTA Row */
+.actionsRow {
+  @apply flex items-center gap-3 pt-3;
+}
+
+.stepperWrap {
+  @apply flex items-center justify-between border border-[#D5D7DA] rounded-lg h-[46px] px-2 w-[120px] bg-white;
+}
+
+.stepperBtn {
+  @apply p-1.5 rounded hover:bg-stone-100 transition-colors cursor-pointer;
+}
+
+.stepperValue {
+  @apply text-sm font-bold text-[#0A0D14];
+}
+
+.addToCartBtn {
+  @apply flex-1 h-[46px] rounded-lg bg-[#B46A2C] hover:bg-[#995222] text-white font-bold text-sm sm:text-base transition-all shadow-sm active:scale-[0.99] cursor-pointer flex items-center justify-center;
+}

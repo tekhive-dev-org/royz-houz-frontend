@@ -1,0 +1,33 @@
+@reference "../../../../styles/globals.css";
+
+.section {
+  @apply w-full bg-white rounded-2xl  p-5 sm:p-7 mb-6;
+}
+
+.header {
+  @apply flex items-center gap-2.5 mb-5;
+}
+
+.accentBar {
+  @apply w-1 h-5 rounded-full bg-[#B46A2C];
+}
+
+.title {
+  @apply text-base sm:text-lg font-bold text-[#0A0D14] tracking-tight;
+}
+
+.scheduleBox {
+  @apply w-full border border-[#E2E4E9] rounded-xl overflow-hidden divide-y divide-[#E2E4E9]/80 bg-white;
+}
+
+.scheduleRow {
+  @apply flex items-center gap-4 px-4 py-3.5 sm:px-5 sm:py-4 transition-colors hover:bg-slate-50/60;
+}
+
+.timePill {
+  @apply text-xs sm:text-sm font-bold text-[#B46A2C] shrink-0 min-w-[50px];
+}
+
+.scheduleContent {
+  @apply text-xs sm:text-sm font-medium text-[#0A0D14];
+}

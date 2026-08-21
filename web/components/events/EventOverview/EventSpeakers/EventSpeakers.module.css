@@ -1,8 +1,8 @@
 @reference "../../../../styles/globals.css";
 
-/* ── Featured Speakers Section ───────────────────────── */
+/* ── Featured Speakers & Performers Section Card ──────── */
 .section {
-  @apply bg-white border border-[#E2E4E9] rounded-[24px] p-6 sm:p-8 shadow-xs flex flex-col gap-6;
+  @apply bg-white  border-[#E2E4E9] rounded-2xl p-6 sm:p-7 shadow-xs flex flex-col gap-6 mb-6;
 }
 
 .header {
@@ -10,23 +10,23 @@
 }
 
 .accentBar {
-  @apply w-[5px] h-[25px] bg-[#DCA43E] rounded-full shrink-0;
+  @apply w-[5px] h-[24px] sm:h-[25px] bg-[#DCA43E] rounded-full shrink-0;
 }
 
 .title {
-  @apply text-xl sm:text-2xl font-bold text-[#0D0F15] tracking-tight;
+  @apply text-base sm:text-lg md:text-xl font-bold text-[#0A0D14] tracking-tight;
 }
 
 .speakersGrid {
-  @apply grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-8 pt-2;
+  @apply grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-8 pt-1 items-start;
 }
 
 .speakerCard {
-  @apply flex flex-col items-center text-center;
+  @apply flex flex-col items-center text-center transition-transform duration-200;
 }
 
 .avatarWrapper {
-  @apply relative w-20 h-20 sm:w-[92px] sm:h-[92px] rounded-full overflow-hidden mb-3.5 shadow-xs;
+  @apply relative w-16 h-16 sm:w-[72px] sm:h-[72px] rounded-full overflow-hidden mb-3 shadow-xs border border-[#F0F1F3];
 }
 
 .avatar {
@@ -34,21 +34,21 @@
 }
 
 .speakerCard:hover .avatar {
-  transform: scale(1.05);
+  transform: scale(1.06);
 }
 
 .speakerInfo {
-  @apply flex flex-col gap-1;
+  @apply flex flex-col items-center gap-0.5 max-w-[160px];
 }
 
 .speakerName {
-  @apply text-sm sm:text-base font-bold text-[#0D0F15] tracking-tight leading-snug;
+  @apply text-sm sm:text-[15px] font-bold text-[#0A0D14] tracking-tight leading-snug;
 }
 
 .speakerRole {
-  @apply text-xs sm:text-[13px] text-[#525866] font-normal leading-snug;
+  @apply text-xs text-[#525866] font-normal leading-snug;
 }
 
 .speakerOrg {
-  @apply text-xs sm:text-[13px] text-[#B46A2C] font-semibold leading-snug mt-0.5;
+  @apply text-xs text-[#B46A2C] font-medium leading-snug;
 }

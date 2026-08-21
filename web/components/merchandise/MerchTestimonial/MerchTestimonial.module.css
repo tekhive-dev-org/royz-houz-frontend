@@ -1,0 +1,78 @@
+@reference "../../../styles/globals.css";
+
+/* ══════════════════════════════════════════════════════
+   Merchandise Testimonials Section Styles
+   ══════════════════════════════════════════════════════ */
+.section {
+  @apply w-full bg-white py-14 sm:py-20 border-b border-[#F0ECE4];
+}
+
+.container {
+  @apply max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-8 sm:gap-10 items-center text-center;
+}
+
+.header {
+  @apply flex flex-col items-center gap-2 max-w-xl mx-auto;
+}
+
+.badge {
+  @apply inline-block text-[11px] font-bold text-[#B46A2C] tracking-widest uppercase;
+}
+
+.title {
+  @apply text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#0A0D14] tracking-tight;
+}
+
+.subtitle {
+  @apply text-xs sm:text-sm text-[#525866] leading-relaxed;
+}
+
+/* ── Testimonial Card ────────────────────────────────── */
+.card {
+  @apply w-full bg-[#FAF9F7] rounded-3xl border border-[#E2E4E9] p-7 sm:p-12 shadow-xs flex flex-col items-center gap-6 sm:gap-8 relative;
+}
+
+.quoteIcon {
+  @apply w-10 h-10 text-[#DCA43E] shrink-0;
+}
+
+.quoteText {
+  @apply text-base sm:text-lg md:text-xl font-medium text-[#0A0D14] leading-relaxed max-w-2xl italic;
+}
+
+.authorRow {
+  @apply flex items-center gap-3.5 pt-2;
+}
+
+.avatarWrap {
+  @apply w-12 h-12 rounded-full overflow-hidden border-2 border-[#B46A2C]/30 bg-[#F0ECE4] shrink-0;
+}
+
+.avatarImg {
+  @apply w-full h-full object-cover;
+}
+
+.authorMeta {
+  @apply flex flex-col text-left;
+}
+
+.authorName {
+  @apply text-sm sm:text-base font-bold text-[#0A0D14];
+}
+
+.authorRole {
+  @apply text-xs text-[#868C98];
+}
+
+/* ── Pagination Dots ─────────────────────────────────── */
+.dotsRow {
+  @apply flex items-center gap-2 pt-2;
+}
+
+.dot {
+  @apply w-2.5 h-2.5 rounded-full bg-[#D1D5DB] hover:bg-[#9CA3AF] transition-all cursor-pointer;
+}
+
+.dotActive {
+  @apply w-7 bg-[#B46A2C] hover:bg-[#B46A2C];
+}

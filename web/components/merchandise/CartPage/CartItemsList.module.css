@@ -1,0 +1,29 @@
+@reference "../../../styles/globals.css";
+
+/* ══════════════════════════════════════════════════════
+   Cart Items List Container Styles
+   ══════════════════════════════════════════════════════ */
+.listContainer {
+  @apply flex flex-col gap-4 w-full;
+}
+
+/* Empty State */
+.emptyState {
+  @apply flex flex-col items-center justify-center text-center py-16 px-4 rounded-2xl border border-dashed border-[#ECE8E1] bg-[#FAF8F5] gap-3;
+}
+
+.emptyIconWrap {
+  @apply w-16 h-16 rounded-full bg-white flex items-center justify-center shadow-xs mb-1;
+}
+
+.emptyTitle {
+  @apply text-lg sm:text-xl font-bold text-[#0A0D14] tracking-tight;
+}
+
+.emptySubtitle {
+  @apply text-xs sm:text-sm text-[#525866] max-w-sm;
+}
+
+.shopNowBtn {
+  @apply mt-3 inline-flex items-center justify-center px-6 h-10 rounded-xl bg-[#B46A2C] hover:bg-[#995222] text-white text-xs sm:text-sm font-bold transition-all shadow-xs active:scale-95;
+}

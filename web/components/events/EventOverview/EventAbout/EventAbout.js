@@ -4,11 +4,19 @@ import styles from "./EventAbout.module.css";
  * EventAbout component displaying event summary paragraphs with amber accent title.
  */
 export function EventAbout({ event }) {
-  const paragraphs =
-    event?.aboutParagraphs || [
-      "West Africa's premier fashion showcase spotlighting the continent's next generation of design talent. Full runway show, designer meet-and-greet, and pop-up market.",
+  let paragraphs = [
+    "West Africa's premier fashion showcase spotlighting the continent's next generation of design talent. Full runway show, designer meet-and-greet, and pop-up market.",
+    "Join Africa's most influential creative minds for a day of powerful keynotes, intimate workshops, live performances, and unparalleled networking. This summit is where culture meets commerce.",
+  ];
+
+  if (Array.isArray(event?.aboutParagraphs) && event.aboutParagraphs.length > 0) {
+    paragraphs = event.aboutParagraphs;
+  } else if (typeof event?.description === "string" && event.description.trim()) {
+    paragraphs = [
+      event.description,
       "Join Africa's most influential creative minds for a day of powerful keynotes, intimate workshops, live performances, and unparalleled networking. This summit is where culture meets commerce.",
     ];
+  }
 
   return (
     <section className={styles.section} aria-label="About this Event">

@@ -1,0 +1,141 @@
+@reference "../../../../styles/globals.css";
+
+.section {
+  @apply w-full py-12 sm:py-16 bg-white border-t border-[#E2E4E9];
+}
+
+.container {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-8 sm:gap-10;
+}
+
+/* ── Section Header (1067x135 Spec) ─────────────────── */
+.headerArea {
+  @apply flex flex-col items-start text-left gap-2.5 w-full max-w-3xl;
+}
+
+.eyebrowRow {
+  @apply flex items-center gap-2.5;
+}
+
+.accentLine {
+  @apply w-8 h-[1px] bg-[#B46A2C] block shrink-0;
+}
+
+.eyebrowText {
+  @apply text-xs font-bold tracking-widest text-[#B46A2C] uppercase select-none;
+}
+
+.title {
+  @apply text-2xl sm:text-3xl lg:text-[32px] font-extrabold text-[#0A0D14] tracking-tight;
+}
+
+.subtitle {
+  @apply text-xs sm:text-sm text-[#525866] leading-relaxed max-w-2xl;
+}
+
+/* ── 3-Column Grid (350x441 Spec) ────────────────────── */
+.grid {
+  @apply grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-6 lg:gap-7;
+}
+
+/* ── Article Card Container (350x441 Vector Spec) ───── */
+.articleCard {
+  @apply flex flex-col bg-white border border-[#333333]/40 rounded-[4px] p-2 hover:border-[#333333]/80 hover:shadow-md transition-all duration-300 select-none cursor-pointer;
+}
+
+.imageOuterFrame {
+  @apply w-full;
+}
+
+.imageContainer {
+  @apply relative w-full aspect-16/10 rounded-[2px] overflow-hidden border border-[#333333]/40 bg-slate-900;
+}
+
+.articleImage {
+  @apply object-cover object-center transition-transform duration-500;
+}
+
+.articleCard:hover .articleImage {
+  transform: scale(1.05);
+}
+
+.cardContent {
+  @apply px-1.5 pt-3 pb-1 flex flex-col flex-1;
+}
+
+/* ── Meta Row: ★ PREMIUM   [ PODCAST ]   Date ───────── */
+.metaRow {
+  @apply flex items-center justify-between gap-2 text-[11px];
+}
+
+.badgeGroup {
+  @apply flex items-center gap-2;
+}
+
+.premiumTag {
+  @apply text-[#F81E00] text-[11px] font-bold tracking-wider flex items-center gap-1;
+}
+
+.star {
+  @apply text-[10px];
+}
+
+.formatBracket {
+  @apply text-[#000000] text-[11px] font-bold tracking-wider;
+}
+
+.metaDate {
+  @apply text-[11px] text-[#686868] font-normal uppercase;
+}
+
+/* ── Horizontal Divider Line (Y: 246.8px Spec) ───────── */
+.metaDivider {
+  @apply w-full h-[1px] bg-[#E2E4E9] my-2.5;
+}
+
+/* ── Title & Excerpt ─────────────────────────────────── */
+.textBlock {
+  @apply flex flex-col gap-1.5 flex-1 mb-3;
+}
+
+.articleTitle {
+  @apply text-sm sm:text-[15px] font-bold text-[#0A0D14] leading-snug line-clamp-2 transition-colors duration-200;
+}
+
+.articleCard:hover .articleTitle {
+  color: #B46A2C;
+}
+
+.articleExcerpt {
+  @apply text-xs text-[#525866] leading-relaxed line-clamp-3;
+}
+
+/* ── Footer Row: Author, Read Time, Arrow (Y: 414px) ─── */
+.footerRow {
+  @apply flex items-center justify-between pt-2 border-t border-[#E2E4E9]/60 mt-auto text-xs text-[#686868];
+}
+
+.footerMeta {
+  @apply flex items-center gap-2 text-[11px] text-[#686868];
+}
+
+.footerAuthor {
+  @apply text-[#525866] font-medium;
+}
+
+.footerReadTime {
+  @apply text-[#686868] uppercase;
+}
+
+.arrowWrapper {
+  @apply flex items-center justify-center;
+}
+
+.arrowIcon {
+  @apply text-[#525866] transition-all duration-200;
+}
+
+.articleCard:hover .arrowIcon {
+  color: #B46A2C;
+  transform: translateX(4px);
+}

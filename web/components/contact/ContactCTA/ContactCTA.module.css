@@ -1,0 +1,32 @@
+@reference "../../../styles/globals.css";
+
+/* ══════════════════════════════════════════════════════
+   Contact — Talent CTA Banner (Screenshot Match)
+   ══════════════════════════════════════════════════════ */
+.section {
+  @apply w-full bg-white py-8 sm:py-12;
+}
+
+.container {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+}
+
+.card {
+  @apply w-full rounded-2xl bg-[#FAF6F0] border border-[#B46A2C]/35 p-6 sm:p-8 md:px-12 md:py-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 shadow-xs;
+}
+
+.content {
+  @apply flex flex-col gap-1;
+}
+
+.heading {
+  @apply text-xl sm:text-2xl md:text-[26px] font-bold text-[#0A0D14] tracking-tight;
+}
+
+.subtitle {
+  @apply text-xs sm:text-sm text-[#717680] leading-relaxed mt-0.5;
+}
+
+.ctaBtn {
+  @apply inline-flex items-center justify-center px-6 py-2.5 rounded-lg bg-[#B46A2C] hover:bg-[#995222] text-white font-semibold text-xs sm:text-sm transition-all duration-200 shadow-xs active:scale-95 whitespace-nowrap shrink-0 cursor-pointer;
+}

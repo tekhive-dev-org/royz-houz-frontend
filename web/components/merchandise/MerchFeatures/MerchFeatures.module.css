@@ -1,0 +1,36 @@
+@reference "../../../styles/globals.css";
+
+/* ══════════════════════════════════════════════════════
+   Merchandise Features Bar (1440x88 Exact Spec)
+   ══════════════════════════════════════════════════════ */
+.section {
+  @apply w-full bg-white border-b border-[#D5B8A0];
+}
+
+.container {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+}
+
+.grid {
+  @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-[#D5B8A0]/60 min-h-[88px] items-center;
+}
+
+.featureCard {
+  @apply flex items-center justify-center gap-3.5 px-4 sm:px-6 py-4.5 lg:py-0 h-full text-left;
+}
+
+.iconWrap {
+  @apply flex items-center justify-center shrink-0 w-6 h-6;
+}
+
+.textContent {
+  @apply flex flex-col text-left;
+}
+
+.title {
+  @apply text-sm font-bold text-[#0A0D14] tracking-tight leading-snug;
+}
+
+.subtitle {
+  @apply text-xs text-[#525866] leading-tight mt-0.5;
+}

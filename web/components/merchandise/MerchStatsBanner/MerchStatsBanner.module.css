@@ -1,0 +1,81 @@
+@reference "../../../styles/globals.css";
+
+/* ══════════════════════════════════════════════════════
+   Merchandise: What Makes Us Different Styles
+   ══════════════════════════════════════════════════════ */
+.section {
+  @apply relative w-full bg-[#FAF6F0] pt-14 sm:pt-20 lg:pt-24 pb-14 sm:pb-20 lg:pb-24 overflow-visible;
+}
+
+/* Terracotta backdrop shape on top-right of the banner section */
+.terracottaBackdrop {
+  @apply hidden lg:block absolute top-0 right-0 bottom-0 w-[38%] bg-[#B46A2C] z-0 pointer-events-none;
+}
+
+.container {
+  @apply relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+}
+
+.grid {
+  @apply grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center;
+}
+
+/* ── Left Column ─────────────────────────────────────── */
+.leftCol {
+  @apply lg:col-span-6 flex flex-col justify-center gap-8 sm:gap-10;
+}
+
+.textWrap {
+  @apply flex flex-col gap-3;
+}
+
+.title {
+  @apply text-3xl sm:text-4xl lg:text-[46px] font-bold text-[#0A0D14] leading-[1.18] tracking-tight;
+}
+
+.subtitle {
+  @apply text-sm sm:text-base lg:text-[17px] text-[#525866] font-normal;
+}
+
+.statsRow {
+  @apply grid grid-cols-2 gap-4 sm:gap-6 max-w-md w-full;
+}
+
+/* Card 1: Terracotta / Brown Card */
+.statCardTerracotta {
+  @apply bg-[#B46A2C] rounded-2xl p-6 sm:p-8 flex flex-col items-center justify-center text-center shadow-xs transition-transform duration-300 hover:-translate-y-1 min-h-[150px] sm:min-h-[175px];
+}
+
+.statLabelLight {
+  @apply text-xs sm:text-sm font-medium text-white/95 mb-4 sm:mb-6;
+}
+
+.statValueLight {
+  @apply text-3xl sm:text-4xl lg:text-[40px] font-bold text-white tracking-tight leading-none;
+}
+
+/* Card 2: Crisp White Card */
+.statCardWhite {
+  @apply bg-white rounded-2xl p-6 sm:p-8 flex flex-col items-center justify-center text-center shadow-[0_4px_24px_rgba(0,0,0,0.06)] transition-transform duration-300 hover:-translate-y-1 min-h-[150px] sm:min-h-[175px];
+}
+
+.statLabelDark {
+  @apply text-xs sm:text-sm font-medium text-[#0A0D14] mb-4 sm:mb-6;
+}
+
+.statValueDark {
+  @apply text-3xl sm:text-4xl lg:text-[40px] font-bold text-[#0A0D14] tracking-tight leading-none;
+}
+
+/* ── Right Column: Living Room Image Protruding Down ─── */
+.rightCol {
+  @apply lg:col-span-6 flex justify-center lg:justify-end w-full relative z-20;
+}
+
+.imageCard {
+  @apply relative w-full max-w-[540px] h-[360px] sm:h-[460px] lg:h-[530px] rounded-[24px] sm:rounded-[28px] overflow-hidden shadow-2xl bg-stone-200 lg:mb-[-60px] xl:mb-[-80px] transition-transform duration-500 hover:scale-[1.01];
+}
+
+.lifestyleImg {
+  @apply w-full h-full object-cover;
+}

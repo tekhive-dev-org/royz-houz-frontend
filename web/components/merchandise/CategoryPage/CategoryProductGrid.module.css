@@ -1,0 +1,80 @@
+@reference "../../../styles/globals.css";
+
+/* ══════════════════════════════════════════════════════
+   Category Product Grid Styles
+   ══════════════════════════════════════════════════════ */
+.gridSection {
+  @apply flex-1 flex flex-col gap-6 sm:gap-8;
+}
+
+/* ── Header Bar ──────────────────────────────────────── */
+.headerBar {
+  @apply flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-[#ECE8E1];
+}
+
+.categoryTitle {
+  @apply text-2xl sm:text-3xl font-extrabold text-[#0A0D14] tracking-tight;
+}
+
+.metaControls {
+  @apply flex flex-wrap items-center gap-4 sm:gap-6;
+}
+
+.resultsCount {
+  @apply text-xs sm:text-sm text-[#525866];
+}
+
+/* Sort Dropdown */
+.sortWrapper {
+  @apply relative;
+}
+
+.sortBtn {
+  @apply flex items-center gap-2 text-xs sm:text-sm text-[#525866] cursor-pointer py-1.5 px-3 rounded-lg hover:bg-stone-50 transition-colors border border-transparent hover:border-[#ECE8E1];
+}
+
+.sortLabel strong {
+  @apply font-bold text-[#0A0D14];
+}
+
+.sortDropdown {
+  @apply absolute right-0 top-full mt-1 z-30 w-48 rounded-xl bg-white border border-[#ECE8E1] shadow-lg p-1.5 flex flex-col gap-1;
+}
+
+.sortOption {
+  @apply w-full text-left px-3 py-2 rounded-lg text-xs sm:text-sm font-medium text-[#525866] hover:bg-[#F2EDE4] hover:text-[#0A0D14] transition-colors cursor-pointer;
+}
+
+.sortOptionActive {
+  @apply bg-[#FAF5EC] text-[#B46A2C] font-bold;
+}
+
+/* ── 3-Column Products Grid ─────────────────────────── */
+.productsGrid {
+  @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-7;
+}
+
+/* ── Pagination Bar ─────────────────────────────────── */
+.paginationBar {
+  @apply flex flex-wrap items-center justify-between gap-4 pt-8 sm:pt-10 mt-4 border-t border-[#ECE8E1];
+}
+
+.pageBtn {
+  @apply flex items-center gap-2 px-4 py-2 rounded-lg border border-[#D5D7DA] text-xs sm:text-sm font-semibold text-[#0A0D14] hover:bg-stone-50 transition-colors cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed;
+}
+
+.pageNumbers {
+  @apply flex items-center gap-1.5 sm:gap-2;
+}
+
+.pageNumber {
+  @apply w-8 h-8 sm:w-9 sm:h-9 rounded-lg flex items-center justify-center text-xs sm:text-sm font-medium text-[#525866] hover:bg-stone-100 hover:text-[#0A0D14] transition-colors cursor-pointer;
+}
+
+.pageNumberActive {
+  @apply bg-[#F4F5F6] font-bold text-[#0A0D14];
+}
+
+.pageEllipsis {
+  @apply px-1 text-xs text-[#868C98];
+}

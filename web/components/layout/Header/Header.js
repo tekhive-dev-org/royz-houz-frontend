@@ -20,6 +20,7 @@ export function Header() {
     { label: "Events", href: "/events" },
     { label: "Media", href: "/media" },
     { label: "Blog", href: "/blog" },
+    // { label: "Store", href: "/merchandise" },
     { label: "Contact", href: "/contact" },
   ];
 
@@ -51,19 +52,21 @@ export function Header() {
 
         {/* Desktop Navigation */}
         <nav className={styles.desktopNav}>
-          {navItems.map((item) => {
-            const isActive = router.pathname === item.href;
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`${styles.navLink} ${isActive ? styles.navLinkActive : ""}`}
-              >
-                {item.label}
-                {isActive && <span className={styles.activeIndicator} />}
-              </Link>
-            );
-          })}
+          {navItems
+            .filter((item) => Boolean(item && item.href))
+            .map((item) => {
+              const isActive = router.pathname === item.href;
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`${styles.navLink} ${isActive ? styles.navLinkActive : ""}`}
+                >
+                  {item.label}
+                  {isActive && <span className={styles.activeIndicator} />}
+                </Link>
+              );
+            })}
         </nav>
 
         {/* Actions (Search, Socials, Donate Button) */}
@@ -156,18 +159,20 @@ export function Header() {
       {mobileMenuOpen && (
         <div className={styles.mobileDrawer}>
           <nav className={styles.mobileNav}>
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                onClick={() => setMobileMenuOpen(false)}
-                className={`${styles.mobileNavLink} ${
-                  router.pathname === item.href ? styles.mobileNavLinkActive : ""
-                }`}
-              >
-                {item.label}
-              </Link>
-            ))}
+            {navItems
+              .filter((item) => Boolean(item && item.href))
+              .map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`${styles.mobileNavLink} ${
+                    router.pathname === item.href ? styles.mobileNavLinkActive : ""
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              ))}
           </nav>
 
           {/* Mobile Drawer Search Bar when open */}

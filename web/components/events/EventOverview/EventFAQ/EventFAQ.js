@@ -2,39 +2,43 @@ import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import styles from "./EventFAQ.module.css";
 
+const DEFAULT_FAQS = [
+  {
+    question: "What's the dress code?",
+    answer:
+      "The dress code is Creative Black Tie / High Fashion. Guests are encouraged to celebrate African contemporary elegance.",
+  },
+  {
+    question: "Can I transfer my ticket?",
+    answer:
+      "Yes, ticket transfers are permitted up to 48 hours before the event start time through your account portal or support.",
+  },
+  {
+    question: "Is parking available?",
+    answer:
+      "Yes, dedicated on-site secure parking is available for all attendees, with valet services complimentary for VIP ticket holders.",
+  },
+  {
+    question: "Will sessions be recorded?",
+    answer:
+      "Select keynote sessions and runway highlights will be recorded and shared with registered attendees following the event.",
+  },
+  {
+    question: "What is the refund policy?",
+    answer:
+      "Tickets are refundable up to 7 days before the event date. After this period, tickets may be transferred to another attendee.",
+  },
+];
+
 /**
  * EventFAQ component rendering an interactive accordion for event frequently asked questions.
  */
 export function EventFAQ({ event }) {
-  const faqs = event?.faqs || [
-    {
-      question: "What's the dress code?",
-      answer:
-        "The dress code is Creative Black Tie / High Fashion. Guests are encouraged to celebrate African contemporary elegance.",
-    },
-    {
-      question: "Can I transfer my ticket?",
-      answer:
-        "Yes, ticket transfers are permitted up to 48 hours before the event start time through your account portal or support.",
-    },
-    {
-      question: "Is parking available?",
-      answer:
-        "Yes, dedicated on-site secure parking is available for all attendees, with valet services complimentary for VIP ticket holders.",
-    },
-    {
-      question: "Will sessions be recorded?",
-      answer:
-        "Select keynote sessions and runway highlights will be recorded and shared with registered attendees following the event.",
-    },
-    {
-      question: "What is the refund policy?",
-      answer:
-        "Tickets are refundable up to 7 days before the event date. After this period, tickets may be transferred to another attendee.",
-    },
-  ];
+  const faqs = (Array.isArray(event?.faqs) && event.faqs.length > 0)
+    ? event.faqs
+    : DEFAULT_FAQS;
 
-  const [openIndices, setOpenIndices] = useState([]); // Collapsed by default matching mockup
+  const [openIndices, setOpenIndices] = useState([]);
 
   const toggleIndex = (idx) => {
     setOpenIndices((prev) =>

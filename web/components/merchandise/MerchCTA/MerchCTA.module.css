@@ -1,0 +1,54 @@
+@reference "../../../styles/globals.css";
+
+/* ══════════════════════════════════════════════════════
+   Merchandise Elevate Your Wardrobe Banner Styles
+   ══════════════════════════════════════════════════════ */
+.section {
+  @apply w-full bg-white pt-14 sm:pt-18 lg:pt-24 pb-14 sm:pb-20;
+}
+
+.container {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+}
+
+.bannerCard {
+  @apply relative rounded-2xl bg-[#FAF5EC] p-8 sm:p-12 lg:p-16 overflow-hidden shadow-xs border border-[#EBE4D8] min-h-[220px] sm:min-h-[260px] flex items-center;
+}
+
+/* Background Watermark Globe Positioned on Right */
+.watermarkWrapper {
+  @apply absolute -right-16 -top-24 sm:-right-12 sm:-top-20 w-[380px] h-[380px] sm:w-[480px] sm:h-[480px] lg:w-[524px] lg:h-[524px] pointer-events-none z-0;
+}
+
+.watermarkSvg {
+  @apply w-full h-full;
+}
+
+.contentWrap {
+  @apply relative z-10 w-full flex flex-col md:flex-row md:items-center justify-between gap-6 sm:gap-8;
+}
+
+.textContent {
+  @apply flex flex-col gap-2 max-w-2xl;
+}
+
+.title {
+  @apply text-2xl sm:text-3xl lg:text-[38px] font-bold text-[#0A0D14] tracking-tight leading-tight;
+}
+
+.subtitle {
+  @apply text-sm sm:text-base text-[#525866] leading-relaxed font-normal;
+}
+
+.actionWrap {
+  @apply shrink-0;
+}
+
+/* Outline Action Button "Shop Now ↗" */
+.shopNowBtn {
+  @apply inline-flex items-center justify-center gap-2 px-6 h-12 rounded-lg border border-[#B46A2C] text-[#B46A2C] font-semibold text-sm sm:text-base transition-all duration-300 hover:bg-[#B46A2C] hover:text-white active:scale-95 cursor-pointer whitespace-nowrap bg-transparent shadow-2xs;
+}
+
+.shopNowBtn:hover .arrowIcon {
+  transform: translate(2px, -2px);
+}

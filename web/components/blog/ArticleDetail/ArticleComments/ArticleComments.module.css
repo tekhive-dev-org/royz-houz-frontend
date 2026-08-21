@@ -1,0 +1,196 @@
+@reference "../../../../styles/globals.css";
+
+.commentsSection {
+  @apply w-full pt-8 flex flex-col gap-6 max-w-[1026px];
+}
+
+/* ── Header with Tab Filters (1026x76 Spec) ──────────── */
+.sectionHeader {
+  @apply flex items-center justify-between pb-4 border-b border-[#E2E4E9] flex-wrap gap-4 min-h-[56px];
+}
+
+.commentsCount {
+  @apply text-lg sm:text-[20px] font-bold text-[#0A0D14] tracking-tight;
+}
+
+.sortTabs {
+  @apply inline-flex items-center gap-1.5 p-1 bg-white/5 border border-[#E2E4E9] rounded-full h-[38px];
+}
+
+.sortTab {
+  @apply px-3.5 h-[28px] text-[12px] font-medium text-[#858585] rounded-full transition-all duration-200 cursor-pointer flex items-center justify-center hover:text-[#0A0D14];
+}
+
+.sortTabActive {
+  @apply bg-[#B46A2C] text-white font-semibold shadow-xs hover:text-white;
+}
+
+/* ── Comments List & Card Container (1026x169 Spec) ─── */
+.commentsList {
+  @apply flex flex-col gap-4;
+}
+
+.commentCard {
+  @apply w-full bg-white border border-[#E2E4E9] rounded-[16px] p-5 sm:p-6 transition-all duration-200 hover:border-[#D1D5DB] shadow-[0_2px_12px_rgba(0,0,0,0.02)];
+}
+
+.commentMainRow {
+  @apply flex items-start gap-3.5 sm:gap-4;
+}
+
+.avatarWrapper {
+  @apply relative w-10 h-10 rounded-full overflow-hidden shrink-0 border border-[#E2E4E9];
+}
+
+.avatar {
+  @apply object-cover object-center;
+}
+
+.initialAvatar {
+  @apply relative w-10 h-10 rounded-full overflow-hidden shrink-0 bg-[#FAF5EE] text-[#B46A2C] border border-[#F0DFCD] flex items-center justify-center font-bold text-sm select-none;
+}
+
+.commentBody {
+  @apply flex flex-col gap-2.5 flex-1 min-w-0;
+}
+
+.commentMetaRow {
+  @apply flex items-center justify-between flex-wrap gap-2;
+}
+
+.authorBadgeGroup {
+  @apply flex items-center gap-2.5 flex-wrap;
+}
+
+.authorName {
+  @apply text-sm font-bold text-[#0A0D14];
+}
+
+.youBadge {
+  @apply px-2 py-0.5 rounded-full bg-[#C8781A]/10 text-[#C8781A] text-[10px] font-bold border border-[#C8781A]/20 tracking-wider;
+}
+
+.authorBadge {
+  @apply px-2 py-0.5 rounded-full bg-[#FAF5EE] text-[#B46A2C] text-[10px] font-bold border border-[#F0DFCD] tracking-wider;
+}
+
+.commentDate {
+  @apply text-xs text-[#6A7282];
+}
+
+.headerActions {
+  @apply flex items-center gap-1.5 ml-auto;
+}
+
+.iconBtn {
+  @apply p-1.5 text-[#6A7282] hover:text-[#0A0D14] hover:bg-slate-100 rounded-[6px] transition-colors cursor-pointer;
+}
+
+.iconBtnDelete {
+  @apply p-1.5 text-[#6A7282] hover:text-[#F81E00] hover:bg-red-50 rounded-[6px] transition-colors cursor-pointer;
+}
+
+.commentContent {
+  @apply text-xs sm:text-sm text-[#414651] leading-relaxed;
+}
+
+/* ── Inline Edit Mode ────────────────────────────────── */
+.editArea {
+  @apply flex flex-col gap-2 my-1;
+}
+
+.editTextarea {
+  @apply w-full p-3 text-xs sm:text-sm text-[#0A0D14] bg-[#F9FAFB] border border-[#E2E4E9] rounded-[10px] focus:outline-hidden focus:border-[#B46A2C] focus:bg-white transition-all resize-none;
+}
+
+.editActionRow {
+  @apply flex items-center gap-2;
+}
+
+.saveEditBtn {
+  @apply inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#B46A2C] hover:bg-[#9B5A24] text-white text-xs font-semibold rounded-[6px] transition-colors cursor-pointer;
+}
+
+/* ── Action Buttons (Reply, Like) ────────────────────── */
+.commentActions {
+  @apply flex items-center gap-4 pt-1 text-xs;
+}
+
+.replyButton {
+  @apply inline-flex items-center gap-1.5 font-semibold text-[#525866] hover:text-[#B46A2C] transition-colors cursor-pointer;
+}
+
+.likeButton {
+  @apply inline-flex items-center gap-1.5 text-[#686868] hover:text-[#F81E00] transition-all duration-150 cursor-pointer active:scale-95;
+}
+
+.liked {
+  @apply text-[#F81E00] font-semibold;
+}
+
+/* ── Delete Confirmation Banner ──────────────────────── */
+.deleteConfirmBanner {
+  @apply p-3 bg-red-50 border border-red-200 rounded-[8px] flex items-center justify-between gap-3 text-xs text-red-900 my-1.5;
+}
+
+.deleteConfirmText {
+  @apply font-medium;
+}
+
+.deleteBtnGroup {
+  @apply flex items-center gap-2 shrink-0;
+}
+
+.deleteConfirmBtn {
+  @apply px-3 py-1 bg-red-600 hover:bg-red-700 text-white rounded-[6px] font-bold transition-colors cursor-pointer;
+}
+
+.cancelBtn {
+  @apply px-2.5 py-1 text-slate-600 hover:text-slate-900 text-xs font-medium cursor-pointer inline-flex items-center gap-1;
+}
+
+/* ── Reply Input (Guest Friendly) ────────────────────── */
+.replyInputArea {
+  @apply mt-3 p-3.5 bg-[#F9FAFB] border border-[#E2E4E9] rounded-[12px] flex flex-col gap-2.5;
+}
+
+.replyInputRow {
+  @apply flex items-center gap-2;
+}
+
+.replyNameInput {
+  @apply w-full max-w-[240px] px-3 py-1.5 bg-white border border-[#E2E4E9] rounded-[8px] text-xs text-[#0A0D14] focus:outline-hidden focus:border-[#B46A2C];
+}
+
+.replyTextarea {
+  @apply w-full p-2.5 bg-white border border-[#E2E4E9] rounded-[8px] text-xs text-[#0A0D14] focus:outline-hidden focus:border-[#B46A2C] resize-none;
+}
+
+.replyBtnRow {
+  @apply flex items-center gap-2;
+}
+
+.replySubmitBtn {
+  @apply px-3.5 py-1.5 bg-[#B46A2C] text-white text-xs font-semibold rounded-[6px] hover:bg-[#9B5A24] transition-colors cursor-pointer;
+}
+
+/* ── Nested Replies List ─────────────────────────────── */
+.repliesList {
+  @apply mt-4 pl-4 sm:pl-6 border-l-2 border-[#E2E4E9] flex flex-col gap-4;
+}
+
+.replyItem {
+  @apply flex items-start gap-3 bg-[#FAF5EE]/40 p-3.5 rounded-[12px] border border-[#F0DFCD]/60;
+}
+
+.replyAvatarWrapper {
+  @apply relative w-8 h-8 rounded-full overflow-hidden shrink-0 border border-[#E2E4E9];
+}
+
+.replyBody {
+  @apply flex flex-col gap-1.5 flex-1;
+}
+
+.replyActions {
+  @apply flex items-center gap-3 pt-1;
+}

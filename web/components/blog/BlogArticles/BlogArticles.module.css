@@ -1,0 +1,138 @@
+@reference "../../../styles/globals.css";
+
+/* ── Latest Stories Section ───────────────────────────── */
+.section {
+  @apply w-full py-14 sm:py-16 md:py-20 bg-[#FAFAFA] border-b border-[#E2E4E9]/60;
+}
+
+.container {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-10 sm:gap-12;
+}
+
+/* ── Section Header ──────────────────────────────────── */
+.headerArea {
+  @apply flex flex-col items-center text-center gap-2.5 max-w-2xl mx-auto;
+}
+
+.tagline {
+  @apply inline-flex items-center gap-3 mb-1;
+}
+
+.accentLine {
+  @apply w-7 h-[1.5px] bg-[#DCA43E] shrink-0;
+}
+
+.tagText {
+  @apply text-xs font-bold text-[#B46A2C] tracking-widest uppercase;
+}
+
+.title {
+  @apply text-2xl sm:text-3xl md:text-[34px] font-extrabold text-[#0A0D14] tracking-tight;
+}
+
+.subtitle {
+  @apply text-xs sm:text-sm text-[#525866] leading-relaxed max-w-xl;
+}
+
+/* ── 3-Column Grid ───────────────────────────────────── */
+.grid {
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7;
+}
+
+/* ── Card Styling ────────────────────────────────────── */
+.articleCard {
+  @apply flex flex-col rounded-xs overflow-hidden bg-white border border-[#333333]/30 hover:border-[#333333]/70 hover:shadow-md transition-all duration-300;
+}
+
+.cardLink {
+  @apply flex flex-col h-full cursor-pointer;
+}
+
+.imageOuterFrame {
+  @apply p-2 pb-0 w-full;
+}
+
+.imageWrapper {
+  @apply relative w-full aspect-16/10 rounded-[2px] overflow-hidden bg-slate-900 border border-[#333333]/20;
+}
+
+.articleImage {
+  @apply object-cover object-center transition-transform duration-500;
+}
+
+.articleCard:hover .articleImage {
+  transform: scale(1.05);
+}
+
+/* ── Meta Row ────────────────────────────────────────── */
+.metaRow {
+  @apply px-3 pt-3 pb-2.5 flex items-center justify-between gap-2 text-xs select-none;
+}
+
+.badgeGroup {
+  @apply flex items-center gap-2;
+}
+
+.premiumTag {
+  @apply inline-flex items-center gap-1 font-bold text-[#F81E00] text-[11px] sm:text-xs tracking-wider;
+}
+
+.starIcon {
+  @apply shrink-0;
+}
+
+.formatBracket {
+  @apply font-semibold text-[#0A0D14] text-[11px] sm:text-xs;
+}
+
+.dateText {
+  @apply text-[11px] sm:text-xs text-[#686868] font-normal;
+}
+
+/* ── Card Divider ────────────────────────────────────── */
+.dividerLine {
+  @apply w-full h-[1px] bg-[#E2E4E9];
+}
+
+/* ── Content Body ────────────────────────────────────── */
+.contentBody {
+  @apply p-3.5 sm:p-4 flex flex-col flex-1 gap-2.5;
+}
+
+.articleTitle {
+  @apply text-base sm:text-[17px] font-bold text-[#0A0D14] leading-snug line-clamp-2 transition-colors;
+}
+
+.articleCard:hover .articleTitle {
+  color: #B46A2C;
+}
+
+.articleExcerpt {
+  @apply text-xs sm:text-[13px] text-[#525866] leading-relaxed line-clamp-3;
+}
+
+/* ── Footer Row ──────────────────────────────────────── */
+.footerRow {
+  @apply mt-auto pt-3 flex items-center justify-between border-t border-[#F0F2F5];
+}
+
+.authorMeta {
+  @apply flex items-center gap-3 text-xs text-[#525866];
+}
+
+.authorName {
+  @apply font-medium text-[#0A0D14];
+}
+
+.readTime {
+  @apply text-[#525866];
+}
+
+.footerArrow {
+  @apply text-[#525866] transition-all duration-200;
+}
+
+.articleCard:hover .footerArrow {
+  color: #B46A2C;
+  transform: translateX(4px);
+}

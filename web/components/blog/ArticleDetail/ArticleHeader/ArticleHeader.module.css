@@ -1,0 +1,95 @@
+@reference "../../../../styles/globals.css";
+
+.header {
+  @apply w-full flex flex-col gap-6 sm:gap-8;
+}
+
+/* ── Breadcrumb ──────────────────────────────────────── */
+.breadcrumb {
+  @apply w-full py-1 text-xs text-[#686868];
+}
+
+.breadcrumbList {
+  @apply flex items-center gap-2 flex-wrap list-none p-0 m-0;
+}
+
+.breadcrumbLink {
+  @apply hover:text-[#0A0D14] transition-colors font-medium;
+}
+
+.breadcrumbSeparator {
+  @apply text-[#A4A7AE] select-none text-[10px];
+}
+
+.breadcrumbCurrent {
+  @apply text-[#0A0D14] font-medium line-clamp-1 max-w-[280px] sm:max-w-md;
+}
+
+/* ── Featured Cover Image Frame ──────────────────────── */
+.coverImageFrame {
+  @apply w-full;
+}
+
+.coverImageContainer {
+  @apply relative w-full aspect-16/9 md:aspect-21/9 rounded-xs overflow-hidden bg-slate-900 border border-[#333333]/20 shadow-2xs;
+}
+
+.coverImage {
+  @apply object-cover object-center;
+}
+
+/* ── Title & Meta ────────────────────────────────────── */
+.metaArea {
+  @apply flex flex-col gap-4 sm:gap-5 pt-2;
+}
+
+.categoryBadge {
+  @apply inline-flex items-center px-3 py-1 bg-[#FAF5EE] text-[#B46A2C] text-xs font-bold uppercase tracking-wider rounded-xs border border-[#F0DFCD] w-fit;
+}
+
+.title {
+  @apply text-2xl sm:text-3xl md:text-4xl lg:text-[40px] font-extrabold text-[#0A0D14] tracking-tight leading-[1.2];
+}
+
+/* ── Author & Social Bar (Exact 1034x98 spec) ────────── */
+.authorSocialRow {
+  @apply flex items-center justify-between gap-4 py-4 sm:py-5 border-b border-[#E2E4E9] flex-wrap;
+}
+
+.authorInfo {
+  @apply flex items-center gap-3 sm:gap-4;
+}
+
+.authorAvatarRing {
+  @apply relative w-12 h-12 rounded-full p-[2px] bg-[#DCA43E]/30 shrink-0 flex items-center justify-center;
+  box-shadow: 0 0 0 2px rgba(200, 120, 26, 0.4);
+}
+
+.authorAvatarContainer {
+  @apply relative w-full h-full rounded-full overflow-hidden bg-slate-100;
+}
+
+.authorAvatar {
+  @apply object-cover object-center;
+}
+
+.authorText {
+  @apply flex flex-col gap-0.5;
+}
+
+.authorName {
+  @apply text-sm sm:text-[15px] font-bold text-[#0A0D14];
+}
+
+.metaSubtitle {
+  @apply text-xs text-[#858585] font-normal;
+}
+
+/* ── Social Action Buttons (X, WhatsApp, Instagram, Link) */
+.socialActions {
+  @apply flex items-center gap-4 sm:gap-5;
+}
+
+.socialIconBtn {
+  @apply text-[#858585] hover:text-[#0A0D14] transition-colors p-1 flex items-center justify-center cursor-pointer;
+}

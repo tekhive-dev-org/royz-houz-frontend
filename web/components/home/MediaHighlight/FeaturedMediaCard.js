@@ -50,7 +50,7 @@ export function FeaturedMediaCard({ item }) {
         </div>
 
         {/* Watch CTA Button */}
-        <Link href={item.watchLink} className={styles.watchBtn}>
+        <Link href={item.watchLink || "/media"} className={styles.watchBtn}>
           <Play className={styles.playIcon} />
           <span>Watch Now</span>
         </Link>

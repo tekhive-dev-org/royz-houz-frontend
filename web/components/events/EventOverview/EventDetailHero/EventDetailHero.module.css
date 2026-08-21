@@ -2,7 +2,7 @@
 
 /* ── Event Detail Hero Banner ────────────────────────── */
 .heroSection {
-  @apply relative w-full min-h-[380px] sm:min-h-[440px] md:min-h-[480px] flex items-end overflow-hidden bg-black;
+  @apply relative w-full min-h-[480px] sm:min-h-[540px] md:min-h-[580px] flex items-end overflow-hidden bg-black;
 }
 
 .imageWrapper {
@@ -10,35 +10,46 @@
 }
 
 .heroImage {
-  @apply object-cover object-center;
+  @apply object-cover object-center brightness-75;
 }
 
 .gradientOverlay {
-  @apply absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/30;
+  @apply absolute inset-0 bg-gradient-to-t from-black via-black/75 to-black/40;
 }
 
 .contentContainer {
-  @apply relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-10 sm:pb-12 pt-28;
+  @apply relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-10 pt-28 sm:pt-32;
 }
 
 .innerContent {
-  @apply max-w-4xl flex flex-col gap-3.5 sm:gap-4;
+  @apply max-w-4xl flex flex-col gap-4 sm:gap-6;
 }
 
-.categoryBadgeWrapper {
-  @apply flex items-center;
+/* ── Category Pill Badges ────────────────────────────── */
+.badgePastEvents {
+  @apply inline-flex items-center px-4 py-1 rounded-full bg-white text-[#B46A2C] border border-[#B46A2C] text-[11px] sm:text-xs font-bold tracking-wider uppercase shadow-xs;
 }
 
 .categoryBadge {
-  @apply px-3 py-1 rounded-[6px] border border-[#B46A2C]/80 bg-[#B46A2C]/20 backdrop-blur-xs text-[#EAA144] text-[11px] sm:text-xs font-bold tracking-widest uppercase;
+  @apply px-3.5 py-1 rounded-md border border-[#B46A2C]/80 bg-[#B46A2C]/20 backdrop-blur-xs text-[#EAA144] text-[11px] sm:text-xs font-bold tracking-widest uppercase;
 }
 
+/* ── Title & 3-Line Accents ──────────────────────────── */
 .title {
-  @apply text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-extrabold text-white tracking-tight leading-[1.1];
+  @apply text-3xl sm:text-5xl md:text-6xl font-black text-white tracking-tight leading-[1.08] uppercase;
 }
 
+.titleLine {
+  @apply block;
+}
+
+.accentWord {
+  @apply text-[#B46A2C];
+}
+
+/* ── Meta Info Bar ───────────────────────────────────── */
 .metaRow {
-  @apply flex flex-wrap items-center gap-y-2 gap-x-4 text-xs sm:text-sm text-slate-300 font-normal pt-1;
+  @apply flex flex-wrap items-center gap-y-2 gap-x-5 text-xs sm:text-sm text-slate-300 font-normal;
 }
 
 .metaItem {
@@ -46,9 +57,56 @@
 }
 
 .metaIcon {
-  @apply w-4 h-4 text-[#C8781A] shrink-0;
+  @apply w-4 h-4 text-[#B46A2C] shrink-0;
 }
 
-.metaDivider {
-  @apply hidden sm:block w-1.5 h-1.5 rounded-full bg-white/30;
+/* ── Past Event Countdown Boxes (00:00:00:00) ────────── */
+.countdownGrid {
+  @apply grid grid-cols-4 gap-3 sm:gap-3.5 max-w-sm sm:max-w-md pt-1;
+}
+
+.countdownBox {
+  @apply flex flex-col items-center justify-center py-3 px-2 sm:py-3.5 rounded-2xl bg-white/5 border border-white/20 backdrop-blur-md;
+}
+
+.countdownNumber {
+  @apply text-2xl sm:text-3xl font-bold text-white leading-none;
+}
+
+.countdownLabel {
+  @apply text-[9px] sm:text-[10px] font-semibold text-slate-400 tracking-wider uppercase mt-1.5;
+}
+
+/* ── Action Buttons ──────────────────────────────────── */
+.heroBtnRow {
+  @apply flex flex-wrap items-center gap-3.5 pt-2;
+}
+
+.upcomingBtn {
+  @apply px-6 py-3 rounded-lg bg-[#B46A2C] hover:bg-[#9E5A23] text-white font-semibold text-xs sm:text-sm transition-all shadow-sm cursor-pointer;
+}
+
+.shareBtn {
+  @apply px-6 py-3 rounded-lg bg-black/40 hover:bg-black/60 border border-white/50 text-white font-semibold text-xs sm:text-sm flex items-center gap-2 transition-all cursor-pointer backdrop-blur-xs;
+}
+
+/* ── Breadcrumb Bar ──────────────────────────────────── */
+.breadcrumbContainer {
+  @apply w-full bg-[#0A0D14] border-t border-white/10 py-2.5 px-4 sm:px-6 lg:px-8;
+}
+
+.breadcrumbInner {
+  @apply max-w-7xl mx-auto flex items-center gap-2 text-xs text-[#868C98];
+}
+
+.breadcrumbLink {
+  @apply hover:text-white transition-colors;
+}
+
+.breadcrumbSeparator {
+  @apply text-[#525866];
+}
+
+.breadcrumbCurrent {
+  @apply text-slate-300 font-medium truncate;
 }

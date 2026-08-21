@@ -1,0 +1,132 @@
+@reference "../../../styles/globals.css";
+
+/* ══════════════════════════════════════════════════════
+   Payment Success Response Styles
+   ══════════════════════════════════════════════════════ */
+.container {
+  @apply w-full py-8 sm:py-12 flex items-center justify-center px-4;
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+.card {
+  @apply bg-white rounded-3xl border border-[#E2E4E9] p-6 sm:p-10 md:p-12 max-w-2xl w-full shadow-lg flex flex-col items-center gap-7 text-center relative overflow-hidden;
+}
+
+/* ── Icon & Halo Animation ───────────────────────────── */
+.iconWrapper {
+  @apply relative flex items-center justify-center mt-2;
+}
+
+.iconHalo {
+  @apply absolute w-24 h-24 rounded-full bg-emerald-100/60 animate-ping pointer-events-none;
+  animation-duration: 3s;
+}
+
+.iconCircle {
+  @apply relative z-10 w-20 h-20 rounded-full bg-emerald-50 border-4 border-emerald-100 flex items-center justify-center shadow-inner;
+}
+
+/* ── Header ──────────────────────────────────────────── */
+.textHeader {
+  @apply flex flex-col items-center gap-2 max-w-lg;
+}
+
+.badgeSuccess {
+  @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-emerald-100 text-emerald-800 mb-1;
+}
+
+.title {
+  @apply text-2xl sm:text-3xl font-extrabold text-[#0A0D14] tracking-tight;
+}
+
+.subtitle {
+  @apply text-xs sm:text-sm text-[#525866] leading-relaxed;
+}
+
+.highlightEmail {
+  @apply font-semibold text-[#0A0D14];
+}
+
+/* ── Receipt Box ─────────────────────────────────────── */
+.receiptBox {
+  @apply w-full bg-[#FBFBFC] rounded-2xl border border-[#E2E4E9] p-5 sm:p-7 flex flex-col gap-5 text-left;
+}
+
+.receiptTop {
+  @apply flex flex-col sm:flex-row sm:items-center justify-between gap-3;
+}
+
+.receiptLabel {
+  @apply text-[11px] font-semibold text-[#868C98] uppercase tracking-wider;
+}
+
+.amountDisplay {
+  @apply text-2xl sm:text-3xl font-extrabold text-[#B46A2C] mt-0.5 tracking-tight;
+}
+
+.refWrap {
+  @apply flex flex-col sm:items-end gap-1;
+}
+
+.copyBtn {
+  @apply inline-flex items-center gap-1.5 px-2.5 py-1 bg-white hover:bg-slate-100 rounded-lg border border-[#E2E4E9] transition-all text-xs font-mono text-[#0A0D14] cursor-pointer select-none shadow-2xs;
+}
+
+.divider {
+  @apply w-full h-[1px] bg-[#E2E4E9];
+}
+
+.receiptDetailsGrid {
+  @apply grid grid-cols-1 sm:grid-cols-2 gap-y-3.5 gap-x-6 text-xs sm:text-sm;
+}
+
+.detailRow {
+  @apply flex flex-col gap-0.5;
+}
+
+.detailLabel {
+  @apply text-[11px] text-[#868C98] font-medium;
+}
+
+.detailValue {
+  @apply font-semibold text-[#0A0D14] truncate;
+}
+
+.statusPaid {
+  @apply inline-flex items-center gap-1.5 text-xs font-bold text-emerald-700;
+}
+
+.statusDot {
+  @apply w-2 h-2 rounded-full bg-emerald-500 animate-pulse;
+}
+
+/* ── Impact Banner ───────────────────────────────────── */
+.impactBanner {
+  @apply w-full bg-[#FAF6F0] rounded-xl border border-[#B46A2C]/20 p-4 sm:p-5 flex items-start gap-3.5 text-left text-xs sm:text-sm text-[#4E341F] leading-relaxed shadow-2xs;
+}
+
+.impactText {
+  @apply flex-1;
+}
+
+/* ── Actions Group ───────────────────────────────────── */
+.actionsGroup {
+  @apply w-full flex flex-col sm:flex-row gap-3 pt-2;
+}
+
+.btnSecondary {
+  @apply flex-1 py-3.5 px-5 rounded-xl border border-[#E2E4E9] bg-white hover:bg-slate-50 text-xs sm:text-sm font-semibold text-[#0A0D14] flex items-center justify-center gap-2 transition-all cursor-pointer shadow-xs active:scale-[0.99];
+}
+
+.btnPrimary {
+  @apply flex-1 py-3.5 px-5 rounded-xl bg-[#B46A2C] hover:bg-[#995222] text-white text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition-all shadow-xs cursor-pointer active:scale-[0.99];
+}
+
+.footerNote {
+  @apply flex items-center justify-center gap-2 text-[11px] text-[#868C98];
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}

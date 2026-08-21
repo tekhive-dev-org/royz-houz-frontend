@@ -7,7 +7,7 @@ import styles from "./LatestBlog.module.css";
  */
 export function BlogCard({ post }) {
   return (
-    <Link href={post.link} className={styles.card}>
+    <Link href={post.link || (post.slug ? `/blog/${post.slug}` : "/blog")} className={styles.card}>
       {/* Thumbnail Image */}
       <div className={styles.imageWrapper}>
         <Image

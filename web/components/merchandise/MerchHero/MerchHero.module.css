@@ -1,0 +1,134 @@
+@reference "../../../styles/globals.css";
+
+/* ══════════════════════════════════════════════════════
+   Merchandise Hero Section Styles
+   - Desktop: Exact 663px height with full-height right-aligned model background
+   - Mobile: Clean stacked layout with non-colliding visual & stats bar
+   ══════════════════════════════════════════════════════ */
+.heroSection {
+  @apply w-full bg-[#F2F0F1] relative overflow-hidden border-b border-[#E5E2DE] min-h-0 lg:min-h-[663px] lg:h-[663px] flex items-center;
+}
+
+/* ── Desktop Full-Height Background Model Layer (Desktop ONLY) ─ */
+.desktopBgLayer {
+  @apply hidden lg:block absolute inset-0 w-full h-full pointer-events-none overflow-hidden select-none z-0;
+}
+
+.desktopModelWrapper {
+  @apply absolute right-0 bottom-0 top-0 h-full w-full max-w-[620px] xl:max-w-[700px] 2xl:max-w-[760px] flex items-end justify-end;
+}
+
+.desktopModelImg {
+  @apply h-full w-auto max-w-none object-contain object-bottom select-none;
+}
+
+.desktopStarTopRight {
+  @apply absolute top-12 lg:top-14 right-10 sm:right-16 lg:right-24 text-[#0A0D14] drop-shadow-xs z-10 pointer-events-none;
+}
+
+.desktopStarMiddleLeft {
+  @apply absolute top-[52%] right-[38%] xl:right-[36%] text-[#0A0D14] drop-shadow-xs z-10 pointer-events-none;
+}
+
+/* ── Foreground Content Container ─────────────────────── */
+.container {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative w-full z-10;
+}
+
+.mainGrid {
+  @apply grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-4 items-center min-h-0 lg:h-[663px];
+}
+
+/* ── Left Column: Content ────────────────────────────── */
+.leftCol {
+  @apply lg:col-span-7 flex flex-col gap-4 sm:gap-6 pt-8 sm:pt-12 lg:pt-14 pb-2 lg:pb-14 text-left;
+}
+
+.badgeWrapper {
+  @apply inline-flex items-center max-sm:justify-center;
+}
+
+.badge {
+  @apply inline-flex items-center justify-center h-9 px-4.5 rounded-full border border-[#B46A2C] bg-white text-[#B46A2C] text-xs font-semibold select-none shadow-2xs;
+}
+
+.title {
+  @apply text-3xl sm:text-4xl lg:text-[54px] max-sm:text-center font-black text-[#0A0D14] tracking-tight leading-[1.12];
+}
+
+.highlightText {
+  @apply text-[#B46A2C];
+}
+
+.description {
+  @apply text-sm sm:text-base text-[#525866] max-sm:text-center leading-relaxed max-w-xl;
+}
+
+/* ── CTA Buttons ─────────────────────────────────────── */
+.ctaGroup {
+  @apply flex flex-row items-center gap-3 sm:gap-4 pt-1 w-full sm:w-auto;
+}
+
+.primaryBtn {
+  @apply flex-1 sm:flex-initial inline-flex items-center justify-center h-12 px-6 sm:px-8 rounded-xl bg-[#B46A2C] hover:bg-[#995222] text-white font-semibold text-sm sm:text-base transition-all duration-200 shadow-sm active:scale-[0.99] cursor-pointer;
+}
+
+.secondaryBtn {
+  @apply flex-1 sm:flex-initial inline-flex items-center justify-center h-12 px-4 sm:px-7 rounded-xl border border-[#B46A2C] bg-white sm:bg-transparent hover:bg-white/60 text-[#B46A2C] font-semibold text-sm sm:text-base transition-all duration-200 cursor-pointer;
+}
+
+/* ── Key Statistics Row (Desktop: inside left column) ─── */
+.desktopStatsRow {
+  @apply hidden lg:flex items-center gap-6 sm:gap-10 pt-8 sm:pt-10 border-t border-[#E0DDD5]/80 mt-2 max-w-xl;
+}
+
+/* ── Key Statistics Row (Mobile/Tablet ONLY) ──────────── */
+.mobileStatsRow {
+  @apply flex lg:hidden items-center justify-between gap-2 sm:gap-6 pt-6 pb-8 border-t border-[#E0DDD5]/80 mt-2 w-full col-span-1;
+}
+
+.statItem {
+  @apply flex flex-col gap-0.5 text-center sm:text-left;
+}
+
+.statNumber {
+  @apply text-xl sm:text-2xl lg:text-4xl font-extrabold text-[#0A0D14] tracking-tight;
+}
+
+.statLabel {
+  @apply text-[11px] sm:text-xs font-medium text-[#868C98];
+}
+
+.statDivider {
+  @apply w-[1px] h-8 sm:h-10 bg-[#E0DDD5];
+}
+
+/* ── Mobile Right Column (Mobile/Tablet ONLY) ─────────── */
+.mobileRightCol {
+  @apply flex lg:hidden relative justify-center items-end h-full mt-2;
+}
+
+.mobileModelContainer {
+  @apply relative w-full max-w-[360px] sm:max-w-[440px] flex items-end justify-center;
+}
+
+.mobileModelImageWrapper {
+  @apply relative w-full flex items-end justify-center;
+}
+
+.mobileModelImg {
+  @apply w-full h-auto max-h-[380px] sm:max-h-[460px] object-contain object-bottom select-none;
+}
+
+/* 4-Point Geometric Sparkle Stars (Mobile) */
+.mobileStarTopRight {
+  @apply absolute -top-3 right-4 sm:right-6 text-[#0A0D14] z-20 pointer-events-none drop-shadow-xs;
+}
+
+.mobileStarMiddleLeft {
+  @apply absolute top-[44%] -left-3 sm:-left-6 text-[#0A0D14] z-20 pointer-events-none drop-shadow-xs;
+}
+
+
+
+

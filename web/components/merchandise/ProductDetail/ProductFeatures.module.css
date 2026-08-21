@@ -1,0 +1,32 @@
+@reference "../../../styles/globals.css";
+
+/* ══════════════════════════════════════════════════════
+   Product Features Value Props Styles
+   ══════════════════════════════════════════════════════ */
+.section {
+  @apply w-full py-8 my-8 border-y border-[#ECE8E1];
+}
+
+.grid {
+  @apply grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8;
+}
+
+.featureCard {
+  @apply flex items-start gap-4;
+}
+
+.iconWrap {
+  @apply w-10 h-10 rounded-xl bg-[#FAF5EC] flex items-center justify-center shrink-0;
+}
+
+.textContent {
+  @apply flex flex-col gap-1;
+}
+
+.featureTitle {
+  @apply text-sm sm:text-base font-bold text-[#0A0D14] tracking-tight;
+}
+
+.featureDesc {
+  @apply text-xs text-[#525866] leading-relaxed;
+}

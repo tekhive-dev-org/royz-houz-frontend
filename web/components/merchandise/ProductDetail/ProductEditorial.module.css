@@ -1,0 +1,40 @@
+@reference "../../../styles/globals.css";
+
+/* ══════════════════════════════════════════════════════
+   Product Editorial Lookbook Styles
+   ══════════════════════════════════════════════════════ */
+.section {
+  @apply w-full my-12 flex flex-col gap-6;
+}
+
+.header {
+  @apply text-center flex flex-col items-center gap-1.5;
+}
+
+.title {
+  @apply text-2xl sm:text-3xl font-extrabold text-[#0A0D14] tracking-tight;
+}
+
+.subtitle {
+  @apply text-xs font-semibold text-[#868C98] tracking-widest uppercase;
+}
+
+.grid {
+  @apply grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6;
+}
+
+.editorialCard {
+  @apply relative w-full aspect-[4/5] bg-[#F7F5F0] overflow-hidden rounded-xl sm:rounded-2xl transition-all duration-300;
+}
+
+.imageWrap {
+  @apply absolute inset-0 w-full h-full block;
+}
+
+.editorialImg {
+  @apply w-full h-full object-cover object-center transition-transform duration-700 ease-out;
+}
+
+.editorialCard:hover .editorialImg {
+  transform: scale(1.04);
+}

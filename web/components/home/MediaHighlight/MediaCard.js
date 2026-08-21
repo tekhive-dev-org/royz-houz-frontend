@@ -9,7 +9,7 @@ import styles from "./MediaHighlight.module.css";
  */
 export function MediaCard({ item }) {
   return (
-    <Link href={item.link} className={styles.mediaCard}>
+    <Link href={item.link || "/media"} className={styles.mediaCard}>
       {/* Thumbnail Container */}
       <div className={styles.thumbnailWrapper}>
         <Image

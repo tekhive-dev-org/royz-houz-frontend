@@ -1,0 +1,74 @@
+@reference "../../../styles/globals.css";
+
+/* ══════════════════════════════════════════════════════
+   Order Summary Card Styles
+   ══════════════════════════════════════════════════════ */
+.summaryCard {
+  @apply flex flex-col gap-5 p-6 rounded-2xl border border-[#ECE8E1] bg-white w-full lg:w-[380px] shrink-0 lg:sticky lg:top-24 h-fit shadow-xs;
+}
+
+.cardTitle {
+  @apply text-lg sm:text-xl font-bold text-[#0A0D14] tracking-tight;
+}
+
+.breakdownList {
+  @apply flex flex-col gap-3;
+}
+
+.row {
+  @apply flex items-center justify-between text-sm;
+}
+
+.label {
+  @apply text-[#525866];
+}
+
+.value {
+  @apply font-bold text-[#0A0D14];
+}
+
+.discountValue {
+  @apply font-bold text-[#F04438];
+}
+
+.divider {
+  @apply w-full h-[1px] bg-[#ECE8E1] my-1;
+}
+
+.totalRow {
+  @apply flex items-center justify-between;
+}
+
+.totalLabel {
+  @apply text-base font-bold text-[#0A0D14];
+}
+
+.totalValue {
+  @apply text-xl sm:text-2xl font-extrabold text-[#0A0D14] tracking-tight;
+}
+
+/* Promo Form */
+.promoForm {
+  @apply flex items-center gap-2 mt-1;
+}
+
+.promoInputWrap {
+  @apply flex-1 flex items-center gap-2 bg-[#F4F5F6] rounded-xl px-3.5 h-11 border border-transparent focus-within:border-[#B46A2C] transition-colors;
+}
+
+.promoInput {
+  @apply w-full bg-transparent text-xs sm:text-sm text-[#0A0D14] placeholder-[#868C98] focus:outline-none;
+}
+
+.applyBtn {
+  @apply h-11 px-5 rounded-xl border border-[#D5D7DA] bg-white hover:bg-stone-50 text-xs sm:text-sm font-semibold text-[#0A0D14] transition-colors cursor-pointer shrink-0 active:scale-95;
+}
+
+.promoApplied {
+  @apply text-xs text-[#039855] bg-[#EDFDF5] px-3 py-2 rounded-lg font-medium;
+}
+
+/* Checkout CTA */
+.checkoutBtn {
+  @apply w-full h-12 rounded-xl bg-[#B46A2C] hover:bg-[#995222] text-white text-sm sm:text-base font-bold flex items-center justify-center gap-2 transition-all duration-300 shadow-xs cursor-pointer active:scale-[0.99] mt-1;
+}

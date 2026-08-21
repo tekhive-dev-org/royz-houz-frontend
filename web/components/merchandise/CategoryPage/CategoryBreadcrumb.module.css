@@ -1,0 +1,28 @@
+@reference "../../../styles/globals.css";
+
+/* ══════════════════════════════════════════════════════
+   Category & Product Detail Breadcrumb (CLS-Optimized)
+   ══════════════════════════════════════════════════════ */
+.nav {
+  @apply w-full py-2 mb-6 min-h-[36px] flex items-center border-b border-[#ECE8E1]/60;
+}
+
+.list {
+  @apply flex items-center flex-wrap gap-x-2 gap-y-1 text-xs sm:text-sm text-[#868C98];
+}
+
+.item {
+  @apply flex items-center whitespace-nowrap shrink-0;
+}
+
+.link {
+  @apply text-[#868C98] hover:text-[#0A0D14] transition-colors whitespace-nowrap;
+}
+
+.separator {
+  @apply flex items-center text-[#868C98]/60 shrink-0 select-none;
+}
+
+.activeItem {
+  @apply font-semibold text-[#0A0D14] truncate max-w-[200px] sm:max-w-md lg:max-w-xl;
+}

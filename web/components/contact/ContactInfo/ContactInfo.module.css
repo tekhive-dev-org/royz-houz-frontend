@@ -1,0 +1,218 @@
+@reference "../../../styles/globals.css";
+
+/* ══════════════════════════════════════════════════════
+   Contact — Info Cards + Form Section (1275x766 Spec)
+   ══════════════════════════════════════════════════════ */
+.section {
+  @apply w-full bg-white py-12 sm:py-16;
+}
+
+.container {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start;
+}
+
+/* ── Left Column: Contact Info Cards ─────────────────── */
+.leftCol {
+  @apply lg:col-span-6 flex flex-col gap-6 w-full;
+}
+
+.leftHeader {
+  @apply flex flex-col gap-1.5;
+}
+
+.leftTitle {
+  @apply text-2xl sm:text-3xl font-extrabold text-[#0A0D14] tracking-tight;
+}
+
+.leftSubtitle {
+  @apply text-xs sm:text-sm text-[#525866] leading-relaxed max-w-md;
+}
+
+.cardsGrid {
+  @apply flex flex-col gap-4 w-full;
+}
+
+.contactCard {
+  @apply flex items-center justify-between gap-4 p-4 sm:p-5 rounded-[12px] border border-[#E2E4E9] bg-white transition-all duration-200 hover:shadow-xs hover:border-[#D5D7DA];
+}
+
+.cardLeft {
+  @apply flex items-center gap-3.5 sm:gap-4 min-w-0;
+}
+
+.copperIconCircle {
+  @apply w-10 h-10 rounded-full bg-[#B46A2C] flex items-center justify-center shrink-0 shadow-xs;
+}
+
+.cardDetails {
+  @apply flex flex-col gap-0.5 min-w-0;
+}
+
+.cardLabel {
+  @apply text-sm font-bold text-[#0A0D14] leading-snug;
+}
+
+.cardValue {
+  @apply text-xs font-normal text-[#525866] truncate;
+}
+
+.cardSubtext {
+  @apply text-[11px] text-[#858585] leading-tight;
+}
+
+.pillActionBtn {
+  @apply inline-flex items-center justify-center px-4 py-2 rounded-full border border-[#E2E4E9] bg-white text-xs font-medium text-[#525866] hover:border-[#B46A2C] hover:text-[#B46A2C] transition-all duration-200 whitespace-nowrap shrink-0 shadow-xs cursor-pointer;
+}
+
+/* ── Social Icons Row in Card 4 ──────────────────────── */
+.socialIconsRow {
+  @apply flex items-center gap-2 mt-1;
+}
+
+.socialCircleFb {
+  @apply w-7 h-7 rounded-full bg-[#1877F2] text-white flex items-center justify-center hover:opacity-90 transition-opacity;
+}
+
+.socialCircleYt {
+  @apply w-7 h-7 rounded-full bg-[#FF0000] text-white flex items-center justify-center hover:opacity-90 transition-opacity;
+}
+
+.socialCircleIg {
+  @apply w-7 h-7 rounded-full bg-gradient-to-tr from-[#FFDC80] via-[#FD1D1D] to-[#833AB4] text-white flex items-center justify-center hover:opacity-90 transition-opacity;
+}
+
+.socialCircleX {
+  @apply w-7 h-7 rounded-full bg-[#000000] text-white flex items-center justify-center hover:opacity-90 transition-opacity;
+}
+
+.socialCircleTt {
+  @apply w-7 h-7 rounded-full bg-[#000000] text-white flex items-center justify-center hover:opacity-90 transition-opacity;
+}
+
+/* ── Right Column: Message Form ──────────────────────── */
+.rightCol {
+  @apply lg:col-span-6 w-full;
+}
+
+.formCard {
+  @apply bg-white border border-[#E2E4E9] rounded-[16px] p-6 sm:p-8 shadow-xs;
+}
+
+.formTitle {
+  @apply text-lg sm:text-xl font-bold text-[#0A0D14] tracking-tight;
+}
+
+.formSubtitle {
+  @apply text-xs sm:text-sm text-[#525866] mt-1 mb-6;
+}
+
+.form {
+  @apply flex flex-col gap-4;
+}
+
+.formRow {
+  @apply grid grid-cols-1 sm:grid-cols-2 gap-4;
+}
+
+.formGroup {
+  @apply flex flex-col gap-1.5;
+}
+
+.formLabel {
+  @apply text-xs sm:text-sm font-medium text-[#0A0D14];
+}
+
+.formInput {
+  @apply w-full px-3.5 py-2.5 rounded-lg border border-[#E2E4E9] bg-white text-sm text-[#0A0D14] placeholder:text-[#868C98] focus:outline-none focus:ring-2 focus:ring-[#B46A2C]/30 focus:border-[#B46A2C] transition-all;
+}
+
+/* ── Real-World Standard Phone Input ─────────────────── */
+.phoneInputWrapper {
+  @apply relative flex items-center rounded-lg border border-[#E2E4E9] bg-white transition-all focus-within:ring-2 focus-within:ring-[#B46A2C]/30 focus-within:border-[#B46A2C];
+}
+
+.flagPickerBtn {
+  @apply flex items-center gap-1.5 px-3 py-2.5 bg-slate-50 border-r border-[#E2E4E9] shrink-0 select-none hover:bg-slate-100 transition-colors cursor-pointer rounded-l-lg text-left;
+}
+
+.flagEmoji {
+  @apply text-base leading-none;
+}
+
+.dialCodeText {
+  @apply text-xs text-[#525866] font-semibold;
+}
+
+.phoneInput {
+  @apply w-full px-3 py-2.5 text-sm text-[#0A0D14] placeholder:text-[#868C98] focus:outline-none bg-transparent;
+}
+
+/* Country Selector Dropdown Menu */
+.countryDropdownMenu {
+  @apply absolute top-full left-0 mt-1.5 w-72 max-w-[90vw] bg-white rounded-xl border border-[#E2E4E9] shadow-xl z-50 overflow-hidden flex flex-col;
+}
+
+.countrySearchWrap {
+  @apply flex items-center gap-2 px-3 py-2.5 border-b border-[#E2E4E9] bg-slate-50;
+}
+
+.countrySearchInput {
+  @apply w-full bg-transparent text-xs text-[#0A0D14] placeholder:text-[#868C98] focus:outline-none;
+}
+
+.countryListScroll {
+  @apply max-h-52 overflow-y-auto divide-y divide-[#F0F1F3];
+}
+
+.countryOption {
+  @apply w-full px-3.5 py-2.5 flex items-center justify-between text-xs text-[#0A0D14] hover:bg-slate-50 transition-colors cursor-pointer text-left;
+}
+
+.countryOptionActive {
+  @apply bg-[#B46A2C]/10 text-[#B46A2C] font-semibold;
+}
+
+.countryOptionFlag {
+  @apply text-base mr-2;
+}
+
+.countryOptionName {
+  @apply flex-1 truncate pr-2;
+}
+
+.countryOptionDial {
+  @apply text-[11px] text-[#868C98] font-medium shrink-0;
+}
+
+.noCountryMatch {
+  @apply px-4 py-3 text-xs text-[#868C98] text-center;
+}
+
+/* ── Select & Textarea ───────────────────────────────── */
+.formSelect {
+  @apply w-full px-3.5 py-2.5 rounded-lg border border-[#E2E4E9] bg-white text-sm text-[#0A0D14] focus:outline-none focus:ring-2 focus:ring-[#B46A2C]/30 focus:border-[#B46A2C] transition-all appearance-none cursor-pointer;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23868C98' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 0.75rem center;
+  background-repeat: no-repeat;
+  background-size: 1.25em 1.25em;
+}
+
+.formTextarea {
+  @apply w-full px-3.5 py-2.5 rounded-lg border border-[#E2E4E9] bg-white text-sm text-[#0A0D14] placeholder:text-[#868C98] focus:outline-none focus:ring-2 focus:ring-[#B46A2C]/30 focus:border-[#B46A2C] transition-all resize-none;
+}
+
+.charCount {
+  @apply text-[11px] text-[#868C98] text-right -mt-1;
+}
+
+.submitBtn {
+  @apply w-full flex items-center justify-center py-3.5 rounded-xl bg-[#B46A2C] hover:bg-[#995222] text-white font-semibold text-sm sm:text-base transition-all duration-200 shadow-sm active:scale-[0.98] cursor-pointer mt-1;
+}
+
+.successMsg {
+  @apply text-sm text-emerald-600 font-medium text-center py-1;
+}
+
+.privacyNote {
+  @apply flex items-center justify-center gap-1.5 text-[11px] text-[#868C98] text-center mt-1 select-none;
+}

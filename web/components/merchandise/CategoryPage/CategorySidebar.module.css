@@ -1,0 +1,128 @@
+@reference "../../../styles/globals.css";
+
+/* ══════════════════════════════════════════════════════
+   Category Sidebar Filter Styles
+   ══════════════════════════════════════════════════════ */
+.sidebar {
+  @apply w-full lg:w-[280px] shrink-0;
+}
+
+.sidebarCard {
+  @apply bg-white rounded-2xl border border-[#ECE8E1] p-5 sm:p-6 flex flex-col gap-5 shadow-xs;
+}
+
+/* Header */
+.header {
+  @apply flex items-center justify-between pb-2;
+}
+
+.headerTitle {
+  @apply text-lg font-bold text-[#0A0D14] tracking-tight;
+}
+
+/* Category List */
+.categoryList {
+  @apply flex flex-col gap-1;
+}
+
+.categoryItem {
+  @apply flex items-center justify-between py-2 text-sm text-[#525866] hover:text-[#0A0D14] transition-colors cursor-pointer w-full text-left font-medium;
+}
+
+.categoryItemActive {
+  @apply text-[#B46A2C] font-bold;
+}
+
+.divider {
+  @apply w-full h-[1px] bg-[#ECE8E1];
+}
+
+/* Section Accordion */
+.sectionBlock {
+  @apply flex flex-col gap-4;
+}
+
+.sectionToggle {
+  @apply flex items-center justify-between w-full cursor-pointer text-left;
+}
+
+.sectionHeading {
+  @apply text-base font-bold text-[#0A0D14] tracking-tight;
+}
+
+.sectionBody {
+  @apply flex flex-col gap-3 pt-1;
+}
+
+/* Price Range Slider */
+.sliderContainer {
+  @apply relative w-full h-2 bg-[#F2EDE4] rounded-full flex items-center;
+}
+
+.rangeInput {
+  @apply absolute w-full h-2 appearance-none bg-transparent cursor-pointer z-10 accent-[#B46A2C];
+}
+
+.sliderProgress {
+  @apply absolute left-0 h-2 bg-[#B46A2C] rounded-full pointer-events-none;
+}
+
+.priceLabels {
+  @apply flex items-center justify-between text-xs font-semibold text-[#0A0D14];
+}
+
+.priceTag {
+  @apply text-xs font-semibold text-[#0A0D14];
+}
+
+/* Colors Grid */
+.colorsGrid {
+  @apply grid grid-cols-5 gap-3 pt-1;
+}
+
+.colorSwatch {
+  @apply w-8 h-8 rounded-full flex items-center justify-center transition-transform hover:scale-110 active:scale-95 cursor-pointer;
+}
+
+.colorSwatchBorder {
+  @apply border border-[#D5D7DA];
+}
+
+.colorSwatchSelected {
+  @apply ring-2 ring-offset-2 ring-[#B46A2C];
+}
+
+/* Size Chips */
+.sizesWrap {
+  @apply flex flex-wrap gap-2 pt-1;
+}
+
+.sizePill {
+  @apply px-3.5 py-2 rounded-full bg-[#F0F2F5] text-xs font-medium text-[#525866] transition-all hover:bg-[#E4E7EC] hover:text-[#0A0D14] cursor-pointer;
+}
+
+.sizePillActive {
+  @apply bg-[#B46A2C] text-white font-bold hover:bg-[#995222] hover:text-white shadow-2xs;
+}
+
+/* Dress Style */
+.dressStyleList {
+  @apply flex flex-col gap-1 pt-1;
+}
+
+.dressStyleItem {
+  @apply flex items-center justify-between py-2 text-sm text-[#525866] hover:text-[#0A0D14] transition-colors cursor-pointer w-full text-left font-medium;
+}
+
+.dressStyleItemActive {
+  @apply text-[#B46A2C] font-bold;
+}
+
+/* Apply Filter Button */
+.actionContainer {
+  @apply pt-2;
+}
+
+.applyBtn {
+  @apply w-full py-3.5 rounded-full bg-[#B46A2C] hover:bg-[#995222] text-white font-bold text-sm tracking-wide transition-all shadow-sm active:scale-[0.99] cursor-pointer text-center;
+}

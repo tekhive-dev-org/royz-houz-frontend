@@ -1,0 +1,58 @@
+@reference "../../../styles/globals.css";
+
+/* ══════════════════════════════════════════════════════
+   Donate — Hero Section (Full-Bleed Right Layout)
+   ══════════════════════════════════════════════════════ */
+.heroSection {
+  @apply w-full bg-white overflow-hidden;
+}
+
+.heroGrid {
+  @apply w-full grid grid-cols-1 lg:grid-cols-12 items-center min-h-[460px] lg:min-h-[500px];
+}
+
+/* ── Left Content Column ─────────────────────────────── */
+.leftCol {
+  @apply lg:col-span-6 xl:col-span-6 w-full flex justify-end px-4 sm:px-6 lg:px-10 py-12 lg:py-16;
+}
+
+.contentWrap {
+  @apply w-full max-w-xl flex flex-col items-start;
+}
+
+.badgeWrapper {
+  @apply mb-4;
+}
+
+.badge {
+  @apply inline-flex items-center px-4 py-1.5 rounded-full border border-[#B46A2C] text-[#B46A2C] text-xs font-semibold tracking-wider uppercase select-none;
+}
+
+.headline {
+  @apply text-3xl sm:text-4xl lg:text-[42px] font-extrabold text-[#0A0D14] leading-[1.18] tracking-tight;
+}
+
+.copperText {
+  @apply text-[#B46A2C];
+}
+
+.description {
+  @apply text-sm sm:text-base text-[#525866] leading-relaxed mt-4 max-w-lg;
+}
+
+.accentBar {
+  @apply w-16 h-[3.5px] bg-[#B46A2C] rounded-full mt-6 sm:mt-8;
+}
+
+/* ── Right Image Column (Bleeds to 100vw right) ──────── */
+.rightCol {
+  @apply lg:col-span-6 xl:col-span-6 w-full h-[320px] sm:h-[400px] lg:h-[500px] relative;
+}
+
+.imageContainer {
+  @apply relative w-full h-full;
+}
+
+.heroImg {
+  @apply object-cover object-center;
+}

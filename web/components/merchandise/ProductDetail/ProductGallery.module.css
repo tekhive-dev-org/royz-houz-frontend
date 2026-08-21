@@ -1,0 +1,24 @@
+@reference "../../../styles/globals.css";
+
+/* ══════════════════════════════════════════════════════
+   Product Detail Page Gallery Styles
+   ══════════════════════════════════════════════════════ */
+.galleryContainer {
+  @apply flex flex-col gap-4 sm:gap-6 w-full lg:w-1/2;
+}
+
+.imageCard {
+  @apply relative w-full aspect-[3/4] bg-[#F7F5F0] overflow-hidden rounded-xl sm:rounded-2xl transition-all duration-300;
+}
+
+.imageWrapper {
+  @apply absolute inset-0 w-full h-full block;
+}
+
+.productPhoto {
+  @apply w-full h-full object-cover object-center transition-transform duration-700 ease-out;
+}
+
+.imageCard:hover .productPhoto {
+  transform: scale(1.04);
+}

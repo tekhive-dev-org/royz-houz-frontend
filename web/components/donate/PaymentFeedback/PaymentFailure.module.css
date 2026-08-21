@@ -1,0 +1,112 @@
+@reference "../../../styles/globals.css";
+
+/* ══════════════════════════════════════════════════════
+   Payment Failure Response Styles
+   ══════════════════════════════════════════════════════ */
+.container {
+  @apply w-full py-8 sm:py-12 flex items-center justify-center px-4;
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+.card {
+  @apply bg-white rounded-3xl border border-[#E2E4E9] p-6 sm:p-10 md:p-12 max-w-2xl w-full shadow-lg flex flex-col items-center gap-7 text-center relative overflow-hidden;
+}
+
+/* ── Icon & Pulse Animation ──────────────────────────── */
+.iconWrapper {
+  @apply relative flex items-center justify-center mt-2;
+}
+
+.iconHalo {
+  @apply absolute w-24 h-24 rounded-full bg-rose-100/70 animate-ping pointer-events-none;
+  animation-duration: 3s;
+}
+
+.iconCircle {
+  @apply relative z-10 w-20 h-20 rounded-full bg-rose-50 border-4 border-rose-100 flex items-center justify-center shadow-inner;
+}
+
+/* ── Header ──────────────────────────────────────────── */
+.textHeader {
+  @apply flex flex-col items-center gap-2 max-w-lg;
+}
+
+.badgeFailure {
+  @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-rose-100 text-rose-800 mb-1;
+}
+
+.title {
+  @apply text-2xl sm:text-3xl font-extrabold text-[#0A0D14] tracking-tight;
+}
+
+.subtitle {
+  @apply text-xs sm:text-sm text-[#525866] leading-relaxed;
+}
+
+.amountHighlight {
+  @apply font-bold text-[#0A0D14];
+}
+
+/* ── Diagnostic Reason Box ──────────────────────────── */
+.diagnosticBox {
+  @apply w-full bg-[#FFF8F8] rounded-2xl border border-rose-200/80 p-5 sm:p-7 flex flex-col gap-4 text-left;
+}
+
+.diagnosticHeader {
+  @apply flex items-center justify-between;
+}
+
+.boxLabel {
+  @apply text-[11px] font-semibold text-rose-700 uppercase tracking-wider;
+}
+
+.errCodeBtn {
+  @apply inline-flex items-center gap-1.5 px-2.5 py-1 bg-white hover:bg-rose-50 rounded-lg border border-rose-200 text-xs font-mono text-rose-800 cursor-pointer select-none shadow-2xs;
+}
+
+.reasonMessage {
+  @apply text-xs sm:text-sm text-[#7D2424] font-medium leading-relaxed;
+}
+
+/* ── Troubleshoot Steps ──────────────────────────────── */
+.troubleshootSection {
+  @apply flex flex-col gap-2 pt-3 border-t border-rose-200/60;
+}
+
+.troubleshootTitle {
+  @apply text-xs font-bold text-[#0A0D14];
+}
+
+.troubleshootList {
+  @apply flex flex-col gap-2 text-xs text-[#525866];
+}
+
+.troubleshootList li {
+  @apply flex items-start gap-2.5;
+}
+
+.stepNum {
+  @apply w-4 h-4 rounded-full bg-rose-100 text-rose-800 text-[10px] font-bold flex items-center justify-center shrink-0 mt-0.5;
+}
+
+/* ── Actions Group ───────────────────────────────────── */
+.actionsGroup {
+  @apply w-full flex flex-col sm:flex-row gap-3 pt-2;
+}
+
+.btnSecondary {
+  @apply flex-1 py-3.5 px-5 rounded-xl border border-[#E2E4E9] bg-white hover:bg-slate-50 text-xs sm:text-sm font-semibold text-[#0A0D14] flex items-center justify-center gap-2 transition-all cursor-pointer shadow-xs active:scale-[0.99];
+}
+
+.btnPrimary {
+  @apply flex-1 py-3.5 px-5 rounded-xl bg-[#B46A2C] hover:bg-[#995222] text-white text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition-all shadow-xs cursor-pointer active:scale-[0.99];
+}
+
+.supportFooter {
+  @apply flex items-center justify-center gap-2 text-xs text-[#868C98] text-center;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}

@@ -1,0 +1,58 @@
+@reference "../../../styles/globals.css";
+
+/* ══════════════════════════════════════════════════════
+   Contact — Hero Section (Full-Bleed Right Edge Image)
+   ══════════════════════════════════════════════════════ */
+.hero {
+  @apply w-full bg-white border-b border-[#E2E4E9] overflow-hidden;
+}
+
+.wrapper {
+  @apply w-full flex flex-col lg:flex-row items-stretch min-h-[420px] lg:min-h-[480px] xl:min-h-[520px];
+}
+
+/* ── Left Column: Aligns with Container Left ─────────── */
+.leftCol {
+  @apply w-full lg:w-1/2 flex items-center justify-end px-4 sm:px-6 lg:pl-8 lg:pr-12 xl:pl-16 xl:pr-16 py-12 sm:py-16 lg:py-20;
+}
+
+.content {
+  @apply w-full max-w-xl flex flex-col items-start;
+}
+
+.badgeWrapper {
+  @apply mb-4 sm:mb-5;
+}
+
+.badge {
+  @apply inline-flex items-center px-4 py-1.5 rounded-full border border-[#B46A2C] text-[#B46A2C] text-[11px] sm:text-xs font-semibold tracking-widest uppercase select-none;
+}
+
+.headline {
+  @apply flex flex-col gap-0.5 sm:gap-1;
+}
+
+.headlineDark {
+  @apply text-3xl sm:text-4xl md:text-5xl lg:text-[48px] font-extrabold text-[#0A0D14] tracking-tight uppercase leading-[1.1];
+}
+
+.headlineAccent {
+  @apply text-3xl sm:text-4xl md:text-5xl lg:text-[48px] font-extrabold text-[#B46A2C] tracking-tight uppercase leading-[1.1];
+}
+
+.description {
+  @apply text-xs sm:text-sm md:text-base text-[#525866] leading-relaxed max-w-lg mt-4 sm:mt-5;
+}
+
+.accentBar {
+  @apply w-16 sm:w-20 h-1 bg-[#B46A2C] rounded-full mt-6 sm:mt-8;
+}
+
+/* ── Right Column: Touches 100vw Right Edge ──────────── */
+.rightCol {
+  @apply relative w-full lg:w-1/2 min-h-[300px] sm:min-h-[380px] lg:min-h-full bg-slate-900 overflow-hidden;
+}
+
+.heroImage {
+  @apply object-cover object-center;
+}

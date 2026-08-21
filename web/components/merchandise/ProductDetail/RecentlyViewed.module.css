@@ -1,0 +1,16 @@
+@reference "../../../styles/globals.css";
+
+/* ══════════════════════════════════════════════════════
+   Recently Viewed Section Styles
+   ══════════════════════════════════════════════════════ */
+.section {
+  @apply w-full my-12 flex flex-col gap-6;
+}
+
+.heading {
+  @apply text-xl sm:text-2xl font-extrabold text-[#0A0D14] tracking-tight;
+}
+
+.grid {
+  @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8;
+}
