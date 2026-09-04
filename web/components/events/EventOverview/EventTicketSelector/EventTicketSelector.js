@@ -23,6 +23,10 @@ export function EventTicketSelector({
   const [quantity, setQuantity] = useState(1);
 
   const selectedTier = tiers.find((t) => t.id === selectedTierId) || defaultTier;
+  const availableQuantity = Number(selectedTier?.available);
+  const maxQuantity = Number.isFinite(availableQuantity) && availableQuantity > 0
+    ? Math.min(10, availableQuantity)
+    : 10;
 
   // Form State for Step 2
   const [formData, setFormData] = useState({
@@ -44,8 +48,13 @@ export function EventTicketSelector({
   const [showFailureModal, setShowFailureModal] = useState(false);
   const [orderReceipt, setOrderReceipt] = useState(null);
 
-  const handleIncrement = () => setQuantity((prev) => Math.min(prev + 1, 10));
+  const handleIncrement = () => setQuantity((prev) => Math.min(prev + 1, maxQuantity));
   const handleDecrement = () => setQuantity((prev) => Math.max(prev - 1, 1));
+  const handleQuantityChange = (value) => {
+    const nextQuantity = Number(value);
+    if (!Number.isFinite(nextQuantity)) return;
+    setQuantity(Math.min(Math.max(Math.floor(nextQuantity), 1), maxQuantity));
+  };
 
   const handleSelectTier = (tierId) => {
     if (onSelectTier) {
@@ -304,7 +313,9 @@ export function EventTicketSelector({
 
                   {/* Price Display */}
                   <div className={styles.tierRight}>
-                    <span className={styles.tierPrice}>{tier.priceFormatted}</span>
+                    <span className={styles.tierPrice}>
+                      {tier.priceFormatted || `₦${Number(tier.price || 0).toLocaleString("en-NG")}`}
+                    </span>
                     <span className={styles.tierPriceSub}>per ticket</span>
                   </div>
                 </div>
@@ -319,7 +330,10 @@ export function EventTicketSelector({
             <div className={styles.stepperControl}>
               <button
                 type="button"
-                onClick={handleDecrement}
+                onClick={(event) => {
+                  event.stopPropagation();
+                  handleDecrement();
+                }}
                 disabled={quantity <= 1}
                 className={styles.stepperMinusBtn}
                 aria-label="Decrease quantity"
@@ -327,12 +341,23 @@ export function EventTicketSelector({
                 <Minus className="w-4 h-4 text-white" />
               </button>
 
-              <span className={styles.quantityCount}>{quantity}</span>
+              <input
+                type="number"
+                min="1"
+                max={maxQuantity}
+                value={quantity}
+                onChange={(event) => handleQuantityChange(event.target.value)}
+                className={styles.quantityCount}
+                aria-label="Ticket quantity"
+              />
 
               <button
                 type="button"
-                onClick={handleIncrement}
-                disabled={quantity >= 10}
+                onClick={(event) => {
+                  event.stopPropagation();
+                  handleIncrement();
+                }}
+                disabled={quantity >= maxQuantity}
                 className={styles.stepperPlusBtn}
                 aria-label="Increase quantity"
               >

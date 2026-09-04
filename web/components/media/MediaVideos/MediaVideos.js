@@ -14,7 +14,9 @@ export function MediaVideos({
   onVideoClick,
   onViewAll,
   isFullView = false,
+  pageContent = {},
 }) {
+  const labels = { title: "Videos", fullTitle: "Latest Videos", subtitle: "Watch inspiring stories, performances, interviews and more.", viewAllLabel: "View all videos", ...pageContent };
   const [currentPage, setCurrentPage] = useState(1);
   const [perPage, setPerPage] = useState(9);
 
@@ -44,7 +46,7 @@ export function MediaVideos({
           <div className={styles.titleRow}>
             <div className={styles.accentBar} aria-hidden="true" />
             <h2 id="videos-heading" className={styles.title}>
-              {isFullView ? "Latest Videos" : "Videos"}
+              {isFullView ? labels.fullTitle : labels.title}
             </h2>
           </div>
 
@@ -59,13 +61,13 @@ export function MediaVideos({
               }}
               className={styles.viewAllLink}
             >
-              <span>View all videos</span>
+              <span>{labels.viewAllLabel}</span>
               <ChevronRight className="w-4 h-4" />
             </Link>
           )}
         </div>
         <p className={styles.subtitle}>
-          Watch Inspiring stories, performance, interviews and more.
+          {labels.subtitle}
         </p>
       </div>
 

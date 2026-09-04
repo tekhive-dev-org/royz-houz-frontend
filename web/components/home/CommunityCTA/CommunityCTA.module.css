@@ -31,6 +31,12 @@
   @apply w-full sm:w-auto cursor-pointer px-7 py-3 rounded-lg bg-[#0A0D14] hover:bg-black text-white font-medium text-sm transition-all duration-200 shadow-md active:scale-95 shrink-0;
 }
 
+.errorMessage {
+  color: #b42318;
+  font-size: 0.875rem;
+  margin-top: 10px;
+}
+
 .successMessage {
   @apply text-sm text-white font-medium bg-black/30 border border-white/30 px-5 py-2.5 rounded-lg inline-block transition-opacity duration-300;
 }

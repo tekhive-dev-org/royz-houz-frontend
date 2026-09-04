@@ -50,6 +50,10 @@
   @apply w-full px-3.5 py-2.5 bg-white border border-[#E2E4E9] rounded-[8px] text-[13px] text-[#0A0D14] placeholder-[#8C92A4] focus:border-[#C8781A] focus:ring-1 focus:ring-[#C8781A] outline-hidden transition-all resize-none min-h-[75px];
 }
 
+.submitError {
+  @apply mb-4 rounded-[8px] border border-red-200 bg-red-50 px-3.5 py-2.5 text-[12px] leading-relaxed text-red-700;
+}
+
 .submitBtn {
   @apply w-full py-3.5 rounded-[8px] font-bold text-xs sm:text-sm tracking-wider uppercase transition-all bg-[#B46A2C] hover:bg-[#9E571E] text-white cursor-pointer shadow-xs text-center;
 }

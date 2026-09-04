@@ -1,0 +1,9 @@
+.loading {
+  align-items: center;
+  color: #667085;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 320px;
+  gap: 12px;
+}

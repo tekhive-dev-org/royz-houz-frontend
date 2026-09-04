@@ -2,88 +2,44 @@ import Image from "next/image";
 import Link from "next/link";
 import { Play } from "lucide-react";
 import styles from "./TalentProfileTabs.module.css";
+import {
+  getTalentMediaPath,
+  getTalentVideos,
+} from "@/components/talents/TalentVideoPlayer/talentVideoUtils";
 
 /**
  * VideosTab component rendering a 3-column video showcase navigating to the Producer Video Player page.
  */
 export function VideosTab({ talent }) {
-  const defaultVideos = [
-    {
-      id: "the-sound-architect",
-      title: "Full Performance at Barbican Calabar",
-      artist: talent?.name || "Fatima Osei",
-      duration: "28:00",
-      thumbnail: "/assets/img/talents/fatima.jpg",
-    },
-    {
-      id: "v2",
-      title: "Full Performance at Barbican Calabar",
-      artist: talent?.name || "Fatima Osei",
-      duration: "28:00",
-      thumbnail: "/assets/img/talents/julius.jpg",
-    },
-    {
-      id: "v3",
-      title: "Full Performance at Barbican Calabar",
-      artist: talent?.name || "Fatima Osei",
-      duration: "28:00",
-      thumbnail: "/assets/img/talents/headphones.jpg",
-    },
-    {
-      id: "v4",
-      title: "Full Performance at Barbican Calabar",
-      artist: talent?.name || "Fatima Osei",
-      duration: "28:00",
-      thumbnail: "/assets/img/talents/studio.jpg",
-    },
-    {
-      id: "production-reel",
-      title: "Full Performance at Barbican Calabar",
-      artist: talent?.name || "Fatima Osei",
-      duration: "28:00",
-      thumbnail: "/assets/img/talents/producer-hero.jpg",
-    },
-    {
-      id: "v6",
-      title: "Full Performance at Barbican Calabar",
-      artist: talent?.name || "Fatima Osei",
-      duration: "28:00",
-      thumbnail: "/assets/img/talents/kofi.jpg",
-    },
-    {
-      id: "v7",
-      title: "Full Performance at Barbican Calabar",
-      artist: talent?.name || "Fatima Osei",
-      duration: "28:00",
-      thumbnail: "/assets/img/talents/amara.jpg",
-    },
-  ];
-
-  const videos = talent?.videos || defaultVideos;
-  const talentSlug = talent?.slug || talent?.id || "julius-ayomide";
-
+  const videos = getTalentVideos(talent);
   return (
     <div role="tabpanel" aria-label="Talent Videos">
       {/* 3-Column Video Showcase Grid */}
       <div className={styles.videoGrid}>
         {videos.map((vid) => {
-          const videoUrl = `/talents/${talentSlug}/video/${vid.id || "the-sound-architect"}`;
+          const videoUrl = getTalentMediaPath(talent, vid);
 
           return (
             <Link
               key={vid.id || vid.title}
-              href={videoUrl}
+              href={videoUrl || "#"}
+              onClick={(event) => {
+                if (!videoUrl) event.preventDefault();
+              }}
+              aria-disabled={!videoUrl}
               className={styles.videoCard}
-              aria-label={`Watch ${vid.title}`}
+              aria-label={`Watch ${vid.title || "video"}`}
             >
               {/* Background Thumbnail Photography */}
-              <Image
-                src={vid.thumbnail}
-                alt={vid.title}
-                fill
-                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                className={styles.videoImage}
-              />
+              {vid.thumbnail ? (
+                <Image
+                  src={vid.thumbnail}
+                  alt={vid.title}
+                  fill
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  className={styles.videoImage}
+                />
+              ) : null}
 
               {/* Gradient Overlay & Card Elements */}
               <div className={styles.videoOverlay}>
@@ -100,8 +56,12 @@ export function VideosTab({ talent }) {
                 {/* Bottom Content Row */}
                 <div className={styles.videoBottomInfo}>
                   <h4 className={styles.videoTitle}>{vid.title}</h4>
-                  <p className={styles.videoArtist}>{vid.artist}</p>
-                  <span className={styles.videoDuration}>{vid.duration}</span>
+                  <p className={styles.videoArtist}>
+                    {vid.artist || talent?.name}
+                  </p>
+                  {vid.duration ? (
+                    <span className={styles.videoDuration}>{vid.duration}</span>
+                  ) : null}
                 </div>
               </div>
             </Link>

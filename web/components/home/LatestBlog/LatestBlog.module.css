@@ -4,7 +4,7 @@
    Section & Container
    ══════════════════════════════════════════════════════ */
 .section {
-  @apply w-full bg-white text-slate-900 py-12 sm:pt-4 pb-20 overflow-hidden;
+  @apply w-full bg-white text-slate-900 py-12 sm:pt-6 pb-20 overflow-hidden;
 }
 
 .container {
@@ -23,31 +23,30 @@
 }
 
 .titleBar {
-  @apply w-[5px] h-[25px] rounded-[2.5px] bg-[#DCA43E] shrink-0;
+  @apply w-[5px] h-[26px] rounded-full bg-[#DCA43E] shrink-0;
 }
 
 .title {
-  @apply text-xl sm:text-2xl font-medium text-[#0A0D14] tracking-tight;
+  @apply text-2xl sm:text-[28px] font-semibold text-[#0A0D14] tracking-tight;
 }
 
 .viewAllLink {
-  @apply text-xs sm:text-sm font-medium text-[#B46A2C] hover:text-[#995222] transition-colors inline-flex items-center gap-1 shrink-0;
+  @apply text-sm font-medium text-[#C0772C] hover:text-[#995222] transition-colors inline-flex items-center gap-1 shrink-0;
 }
 
 .viewAllIcon {
-  @apply w-4 h-4;
+  @apply w-4 h-4 text-[#C0772C];
 }
-
 
 /* ══════════════════════════════════════════════════════
    Blog Card
    ══════════════════════════════════════════════════════ */
 .card {
-  @apply relative w-[464px] h-full flex flex-col rounded-2xl overflow-hidden bg-white cursor-pointer transition-all duration-300 border border-slate-100/90 shadow-sm hover:shadow-md;
+  @apply relative w-[440px] h-full flex flex-col rounded-2xl overflow-hidden bg-white cursor-pointer transition-all duration-300 border border-slate-200/90 shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-md;
 }
 
 .imageWrapper {
-  @apply relative w-full h-[200px] sm:h-[260px] overflow-hidden rounded-t-2xl bg-slate-100 shrink-0;
+  @apply relative w-full h-[220px] sm:h-[240px] overflow-hidden rounded-t-2xl bg-slate-100 shrink-0;
 }
 
 .cardImage {
@@ -59,23 +58,19 @@
 }
 
 .cardBody {
-  @apply p-4 sm:p-5 flex flex-col gap-2 sm:gap-3 flex-1 justify-between bg-white;
+  @apply p-5 sm:p-6 flex flex-col flex-1 justify-between bg-white;
 }
 
 .metaRow {
-  @apply flex items-center justify-between gap-2;
-}
-
-.category {
-  @apply text-xs font-bold text-[#B46A2C] uppercase tracking-wider;
+  @apply flex items-center justify-end w-full;
 }
 
 .readTime {
-  @apply text-xs text-slate-500 font-normal;
+  @apply text-xs text-slate-400 font-normal;
 }
 
 .postTitle {
-  @apply text-base sm:text-xl font-bold text-[#0A0D14] tracking-tight leading-snug transition-colors duration-200 line-clamp-1 sm:line-clamp-2;
+  @apply text-lg sm:text-xl font-bold text-[#0A0D14] tracking-tight leading-snug transition-colors duration-200 line-clamp-2 mt-2 mb-4;
 }
 
 .card:hover .postTitle {
@@ -83,7 +78,7 @@
 }
 
 .date {
-  @apply text-xs sm:text-sm text-slate-500 font-normal pt-1;
+  @apply text-xs sm:text-sm text-slate-400 font-normal mt-auto;
 }
 
 /* ══════════════════════════════════════════════════════
@@ -93,10 +88,5 @@
   .card {
     @apply w-full;
   }
-
-  .postTitle {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
 }
+

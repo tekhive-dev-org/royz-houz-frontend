@@ -1,11 +1,17 @@
 import Image from "next/image";
 import { QuoteIcon } from "@/components/common/SocialIcons";
+import { HOMEPAGE_TESTIMONIALS_CONTENT } from "@/constants/homepageContent";
 import styles from "./Testimonials.module.css";
 
 /**
  * Single Testimonial Card displaying quote, avatar, author name, and location/role.
  */
 export function TestimonialCard({ testimonial }) {
+  const testimonialContent = {
+    ...HOMEPAGE_TESTIMONIALS_CONTENT.testimonials[0],
+    ...testimonial,
+  };
+
   return (
     <article className={styles.card}>
       {/* Decorative Quote Icon */}
@@ -13,23 +19,23 @@ export function TestimonialCard({ testimonial }) {
 
       {/* Quote Statement */}
       <blockquote className={styles.quoteText}>
-        {testimonial.quote}
+        {testimonialContent.quote}
       </blockquote>
 
       {/* Author Information */}
       <div className={styles.authorRow}>
         <div className={styles.avatar}>
           <Image
-            src={testimonial.avatar}
-            alt={testimonial.name}
+            src={testimonialContent.avatar}
+            alt={testimonialContent.name}
             fill
             className="object-cover"
           />
         </div>
 
         <div className={styles.authorInfo}>
-          <span className={styles.authorName}>{testimonial.name}</span>
-          <span className={styles.authorRole}>{testimonial.role}</span>
+          <span className={styles.authorName}>{testimonialContent.name}</span>
+          <span className={styles.authorRole}>{testimonialContent.role}</span>
         </div>
       </div>
     </article>

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { MapPin } from "lucide-react";
+import { formatDate } from "@/utils/dateFormatter";
 import styles from "./EventCard.module.css";
 
 /**
@@ -19,11 +20,13 @@ export function EventCard({ event, isPast: isPastProp }) {
   const categoryLabel =
     event.categoryTag || (event.category || "SUMMIT").toUpperCase();
 
-  const locationText =
+  const pastDate =
     event.dateString ||
-    (isPast
-      ? `${formattedMonth} ${event.year || "2025"} · ${event.location}`
-      : event.location);
+    (event.starts_at || event.date ? formatDate(event.starts_at || event.date) : `${formattedMonth} ${event.year || "2026"}`);
+
+  const locationText = isPast
+    ? `${pastDate} · ${event.location}`
+    : event.location;
 
   const eventOverviewUrl = isPast
     ? event.recapLink || "#"

@@ -2,10 +2,9 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { EventOverview } from "@/components/events";
 import { SupportMovement } from "@/components/home";
-import { getAllEventSlugs, getEventBySlug } from "@/utils/eventHelpers";
-import { DEFAULT_EVENT_DETAILS } from "@/constants/events";
+import { getEventBySlug, listEvents } from "@/services/content/eventService";
 
-export default function EventDetailPage({ event }) {
+export default function EventDetailPage({ event, popularEvents }) {
   const router = useRouter();
 
   if (router.isFallback) {
@@ -16,7 +15,7 @@ export default function EventDetailPage({ event }) {
     );
   }
 
-  const currentEvent = event || DEFAULT_EVENT_DETAILS;
+  const currentEvent = event;
 
   return (
     <>
@@ -45,7 +44,7 @@ export default function EventDetailPage({ event }) {
 
       <main className="w-full min-h-screen bg-[#FDFCFB]">
         {/* Full Event Overview Layout */}
-        <EventOverview event={currentEvent} />
+        <EventOverview event={currentEvent} popularEvents={popularEvents} />
 
         {/* Bottom Support Movement Banner */}
         <SupportMovement />
@@ -55,30 +54,43 @@ export default function EventDetailPage({ event }) {
 }
 
 export async function getStaticPaths() {
-  const slugs = getAllEventSlugs();
-  const paths = slugs.map((slug) => ({
-    params: { slug },
-  }));
+  try {
+    const result = await listEvents();
+    const paths = result.success
+      ? result.data.map((event) => ({ params: { slug: event.slug } }))
+      : [];
 
-  return {
-    paths,
-    fallback: "blocking",
-  };
+    return {
+      paths,
+      fallback: "blocking",
+    };
+  } catch {
+    return {
+      paths: [],
+      fallback: "blocking",
+    };
+  }
 }
 
 export async function getStaticProps({ params }) {
-  const event = getEventBySlug(params?.slug);
+  try {
+    const [result, popularResult] = await Promise.all([
+      getEventBySlug(params?.slug),
+      listEvents(),
+    ]);
 
-  if (!event) {
+    if (!result.success || !result.data) {
+      return { notFound: true, revalidate: 60 };
+    }
+
     return {
-      notFound: true,
+      props: {
+        event: result.data,
+        popularEvents: popularResult.success ? popularResult.data.filter((item) => item.isPopular && item.slug !== result.data.slug) : [],
+      },
+      revalidate: 60,
     };
+  } catch {
+    return { notFound: true, revalidate: 60 };
   }
-
-  return {
-    props: {
-      event,
-    },
-    revalidate: 60,
-  };
 }

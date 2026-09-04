@@ -1,95 +1,116 @@
 import Image from "next/image";
 import Link from "next/link";
+import { formatBannerDuration, formatDisplayDuration } from "@/adapters/mediaAdapter";
+import { partitionTalentVideoQueue } from "./talentVideoUtils";
 import styles from "./TalentVideoPlayer.module.css";
+
+function getItemSubtitle(item) {
+  if (item.mediaType === "music") {
+    return item.artist || item.producer || item.plays || item.streams || "Track";
+  }
+  return item.artist || "";
+}
+
+function getItemDuration(item) {
+  if (!item?.duration) return "";
+  return formatBannerDuration(item.duration) || formatDisplayDuration(item.duration) || String(item.duration);
+}
 
 /**
  * UpNextVideos sidebar widget rendering video queue with interactive playback selection.
  */
 export function UpNextVideos({
-  videos = [
-    {
-      id: "golden-hour",
-      title: "Golden Hour",
-      artist: "Amaka Nwosu",
-      duration: "4 : 01",
-      thumbnail: "/assets/img/talents/upnext-golden-hour.jpg",
-      href: "/talents/julius-ayomide/video/golden-hour",
-    },
-    {
-      id: "beautiful-chaos",
-      title: "Beautiful Chaos",
-      artist: "Tee Brown",
-      duration: "3 : 28",
-      thumbnail: "/assets/img/talents/upnext-beautiful-chaos.jpg",
-      href: "/talents/julius-ayomide/video/beautiful-chaos",
-    },
-    {
-      id: "new-beginnings",
-      title: "New Beginnings",
-      artist: "Ayo Kalu",
-      duration: "4 : 18",
-      thumbnail: "/assets/img/talents/upnext-new-beginnings.jpg",
-      href: "/talents/julius-ayomide/video/new-beginnings",
-    },
-  ],
+  videos = [],
   activeVideoId,
   onSelectVideo,
 }) {
-  const videoList = videos || [];
+  const { currentVideo, upcomingVideos } = partitionTalentVideoQueue(videos, activeVideoId);
 
   return (
-    <div className={styles.upNextCard} aria-label="Up Next Videos">
-      <h3 className={styles.widgetHeading}>Up Next</h3>
+    <div className={styles.upNextCard} aria-label="Up next playback queue">
+      {currentVideo ? (
+        <section className={styles.nowPlayingSection} aria-label="Currently playing video">
+          <span className={styles.nowPlayingHeading}>Now Playing</span>
+          <div className={styles.nowPlayingItem}>
+            <div className={styles.nowPlayingLeft}>
+              <div className={styles.nowPlayingThumb}>
+                {currentVideo.thumbnail ? (
+                  <Image
+                    src={currentVideo.thumbnail}
+                    alt={currentVideo.title}
+                    fill
+                    sizes="56px"
+                    className="object-cover object-center"
+                  />
+                ) : null}
+              </div>
+              <div className={styles.nowPlayingDetails}>
+                <span className={styles.nowPlayingTitle} title={currentVideo.title}>
+                  {currentVideo.title}
+                </span>
+                <span className={styles.nowPlayingArtist}>
+                  {getItemSubtitle(currentVideo)}
+                </span>
+                <span className={styles.nowPlayingLabel}>
+                  <span className={styles.nowPlayingPulse} />
+                  Playing now
+                </span>
+              </div>
+            </div>
+            {getItemDuration(currentVideo) ? (
+              <span className={styles.nowPlayingDuration}>
+                {getItemDuration(currentVideo)}
+              </span>
+            ) : null}
+          </div>
+        </section>
+      ) : null}
 
-      <div className={styles.upNextList}>
-        {videoList.map((vid) => {
-          const isActive =
-            activeVideoId &&
-            (activeVideoId === vid.id ||
-              String(activeVideoId).toLowerCase() === String(vid.title).toLowerCase());
+      <div className={styles.queueHeadingRow}>
+        <h3 className={styles.queueHeading}>Up Next</h3>
+        <span className={styles.queueCount}>{upcomingVideos.length}</span>
+      </div>
 
-          return (
+      {upcomingVideos.length ? (
+        <div className={styles.upNextList}>
+          {upcomingVideos.map((vid) => (
             <Link
               key={vid.id}
               href={vid.href || "#"}
-              onClick={(e) => {
+              onClick={(event) => {
                 if (onSelectVideo) {
-                  e.preventDefault();
+                  event.preventDefault();
                   onSelectVideo(vid);
                 }
               }}
-              className={`${styles.upNextItem} ${
-                isActive ? "bg-amber-500/10 border-l-2 border-l-[#C8781A]" : ""
-              }`}
+              className={styles.upNextItem}
             >
               <div className={styles.upNextLeft}>
                 <div className={styles.upNextThumb}>
-                  <Image
-                    src={vid.thumbnail || "/assets/img/talents/upnext-golden-hour.jpg"}
-                    alt={vid.title}
-                    fill
-                    sizes="48px"
-                    className="object-cover object-center"
-                  />
+                  {vid.thumbnail ? (
+                    <Image
+                      src={vid.thumbnail}
+                      alt={vid.title}
+                      fill
+                      sizes="48px"
+                      className="object-cover object-center"
+                    />
+                  ) : null}
                 </div>
-
                 <div className={styles.upNextDetails}>
-                  <span
-                    className={`${styles.upNextTitle} ${
-                      isActive ? "text-[#B46A2C] font-bold" : ""
-                    }`}
-                  >
-                    {vid.title}
-                  </span>
-                  <span className={styles.upNextArtist}>{vid.artist}</span>
+                  <span className={styles.upNextTitle}>{vid.title}</span>
+                  <span className={styles.upNextArtist}>{getItemSubtitle(vid)}</span>
                 </div>
               </div>
-
-              <span className={styles.upNextDuration}>{vid.duration}</span>
+              {getItemDuration(vid) ? (
+                <span className={styles.upNextDuration}>{getItemDuration(vid)}</span>
+              ) : null}
             </Link>
-          );
-        })}
-      </div>
+          ))}
+        </div>
+      ) : (
+        <p className={styles.upNextEmpty}>You&apos;ve reached the end of this playlist.</p>
+      )}
     </div>
   );
 }

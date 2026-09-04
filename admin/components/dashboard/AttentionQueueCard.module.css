@@ -1,0 +1,263 @@
+.card {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+
+.headingRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.title {
+  color: #0F172A !important;
+  font-weight: 700 !important;
+  font-size: 1.125rem !important;
+  letter-spacing: -0.01em;
+}
+
+.description {
+  color: #64748B !important;
+  font-size: 0.8125rem !important;
+  margin-top: 2px !important;
+}
+
+.countBadgeAlert {
+  background: #FEF3C7;
+  color: #B45309;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 9999px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border: 1px solid #FDE68A;
+}
+
+.countBadgeClear {
+  background: #ECFDF5;
+  color: #047857;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 9999px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border: 1px solid #A7F3D0;
+}
+
+.filterGroup {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #F8FAFC;
+  padding: 4px;
+  border-radius: 8px;
+  border: 1px solid #E2E8F0;
+}
+
+.filterBtn {
+  background: transparent;
+  border: none;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #64748B;
+  padding: 5px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.filterBtn:hover {
+  color: #0F172A;
+}
+
+.filterBtnActive {
+  background: #FFFFFF;
+  color: #0F172A;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.itemList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.itemRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-radius: 10px;
+  background: #F8FAFC;
+  border: 1px solid #EDF2F7;
+  transition: all 0.15s ease;
+  gap: 16px;
+}
+
+.itemRow:hover {
+  background: #F1F5F9;
+  border-color: #CBD5E1;
+}
+
+.itemLeft {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  flex: 1;
+}
+
+.itemIconBadge {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.typeApplication {
+  background: #EFF6FF;
+  color: #2563EB;
+}
+
+.typeContact {
+  background: #FEF3C7;
+  color: #D97706;
+}
+
+.typeComment {
+  background: #FDF2F8;
+  color: #DB2777;
+}
+
+.itemMeta {
+  flex: 1;
+}
+
+.itemTopRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 2px;
+}
+
+.itemTitle {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #0F172A;
+}
+
+.typeBadge {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.itemTime {
+  font-size: 0.725rem;
+  color: #94A3B8;
+  margin-left: auto;
+}
+
+.itemSubtitle {
+  font-size: 0.8125rem;
+  color: #475569;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.itemEmail {
+  display: inline-block;
+  font-size: 0.725rem;
+  color: #64748B;
+  margin-top: 2px;
+}
+
+.itemRight {
+  flex-shrink: 0;
+}
+
+.actionBtn {
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+  border-color: #CBD5E1 !important;
+  color: #334155 !important;
+  background: #FFFFFF !important;
+  border-radius: 6px !important;
+  padding: 5px 12px !important;
+}
+
+.actionBtn:hover {
+  border-color: #94A3B8 !important;
+  background: #F8FAFC !important;
+  color: #0F172A !important;
+}
+
+.emptyState {
+  padding: 32px 16px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.emptyIconWrap {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #ECFDF5;
+  color: #059669;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.emptyIcon {
+  font-size: 1.75rem !important;
+}
+
+.emptyTitle {
+  color: #0F172A !important;
+  font-weight: 700 !important;
+}
+
+.emptyDesc {
+  color: #64748B !important;
+  font-size: 0.8125rem !important;
+  max-width: 420px;
+  margin-top: 4px !important;
+}
+
+@media (max-width: 768px) {
+  .itemRow {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .itemRight {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+  }
+}

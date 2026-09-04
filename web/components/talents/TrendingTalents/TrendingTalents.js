@@ -1,11 +1,10 @@
-import { TRENDING_TALENTS } from "@/constants/talents";
 import { TalentCard } from "./TalentCard";
 import styles from "./TrendingTalents.module.css";
 
 /**
  * TrendingTalents section highlighting featured creatives and performers.
  */
-export function TrendingTalents() {
+export function TrendingTalents({ talents = [] }) {
   return (
     <section className={styles.section} aria-label="Trending Talents">
       <div className={styles.container}>
@@ -22,7 +21,7 @@ export function TrendingTalents() {
 
         {/* 4-Column Grid */}
         <div className={styles.grid}>
-          {TRENDING_TALENTS.map((talent) => (
+          {talents.map((talent) => (
             <TalentCard key={talent.id} talent={talent} />
           ))}
         </div>

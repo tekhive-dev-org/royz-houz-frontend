@@ -4,10 +4,11 @@ import styles from "./TalentProfileSidebar.module.css";
  * SocialStreaming sidebar widget rendering exact Figma brand icons.
  */
 export function SocialStreaming({ talent }) {
+  const socialLinks = talent?.socials || {};
   const socials = [
     {
       name: "Facebook",
-      href: talent?.socials?.facebook || "https://facebook.com",
+      href: socialLinks.facebook || talent?.facebook,
       renderIcon: () => (
         <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
           <defs>
@@ -22,8 +23,38 @@ export function SocialStreaming({ talent }) {
       ),
     },
     {
+      name: "Spotify",
+      href: socialLinks.spotify || talent?.spotify,
+      renderIcon: () => (
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="16" cy="16" r="16" fill="#1DB954" />
+          <path d="M8.8 12.3C13.8 10.8 20 11.1 24 13.2M9.8 16.5C14.1 15.3 19.2 15.5 22.8 17.3M10.7 20.4C14.4 19.5 18.5 19.7 21.6 21.2" stroke="white" strokeWidth="2" strokeLinecap="round" />
+        </svg>
+      ),
+    },
+    {
+      name: "Apple Music",
+      href: socialLinks.appleMusic || talent?.appleMusic,
+      renderIcon: () => (
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="16" cy="16" r="16" fill="#FA2D48" />
+          <path d="M20.8 8.8V19C20.8 21 19.4 22.4 17.7 22.4C16.3 22.4 15.2 21.5 15.2 20.3C15.2 19.1 16.3 18.2 17.8 18.2C18.3 18.2 18.7 18.3 19 18.5V12L13 13.3V20.7C13 22.7 11.6 24 9.9 24C8.5 24 7.4 23.1 7.4 21.9C7.4 20.7 8.5 19.8 10 19.8C10.5 19.8 10.9 19.9 11.2 20.1V10.9L20.8 8.8Z" fill="white" />
+        </svg>
+      ),
+    },
+    {
+      name: "SoundCloud",
+      href: socialLinks.soundcloud || talent?.soundcloud,
+      renderIcon: () => (
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="16" cy="16" r="16" fill="#FF5500" />
+          <path d="M8 18.2H9V21H8V18.2ZM10 16.7H11V21H10V16.7ZM12 15.4H13V21H12V15.4ZM14 13.5H15V21H14V13.5ZM16 12.6C19.3 12.6 21.9 15 22.2 18.1C22.5 18 22.9 17.9 23.3 17.9C25.1 17.9 26.5 19.3 26.5 21H16V12.6Z" fill="white" />
+        </svg>
+      ),
+    },
+    {
       name: "YouTube",
-      href: talent?.socials?.youtube || "https://youtube.com",
+      href: socialLinks.youtube || talent?.youtube,
       renderIcon: () => (
         <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
           <circle cx="16" cy="16" r="16" fill="#FF0000" />
@@ -33,7 +64,7 @@ export function SocialStreaming({ talent }) {
     },
     {
       name: "Instagram",
-      href: talent?.socials?.instagram || "https://instagram.com",
+      href: socialLinks.instagram || talent?.instagram,
       renderIcon: () => (
         <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
           <defs>
@@ -59,7 +90,7 @@ export function SocialStreaming({ talent }) {
     },
     {
       name: "X",
-      href: talent?.socials?.twitter || "https://x.com",
+      href: socialLinks.twitter || talent?.twitter,
       renderIcon: () => (
         <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
           <circle cx="16" cy="16" r="16" fill="black" />
@@ -69,7 +100,7 @@ export function SocialStreaming({ talent }) {
     },
     {
       name: "TikTok",
-      href: talent?.socials?.tiktok || "https://tiktok.com",
+      href: socialLinks.tiktok || talent?.tiktok,
       renderIcon: () => (
         <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
           <circle cx="16" cy="16" r="16" fill="black" />
@@ -90,7 +121,7 @@ export function SocialStreaming({ talent }) {
       <h3 className={styles.widgetHeader}>Social & Streaming</h3>
 
       <div className={styles.socialList}>
-        {socials.map((item) => (
+        {socials.filter((item) => item.href).map((item) => (
           <a
             key={item.name}
             href={item.href}

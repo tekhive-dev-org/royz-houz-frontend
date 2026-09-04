@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { getTalentBookingPrice } from "../TalentProfile/talentProfileData";
 import styles from "./TalentBooking.module.css";
 
 /**
@@ -7,20 +8,23 @@ import styles from "./TalentBooking.module.css";
 export function BookingTalentCard({ talent, currentStep }) {
   if (!talent) return null;
 
-  const talentImage = talent.image || talent.avatar || "/assets/img/talents/zara.jpg";
-  const talentGenre = talent.genre || talent.category || "Afrobeats / R&B";
-  const talentLocation = talent.location || "Lagos, Nigeria";
-  const bookingPrice = talent.bookingPrice || "₦250,000";
+  const talentImage = talent.image || talent.avatar;
+  const talentGenre = talent.genre || talent.category || "";
+  const talentLocation = talent.location || "";
+  const talentDetails = [talentGenre, talentLocation].filter(Boolean).join(" • ");
+  const bookingPrice = getTalentBookingPrice(talent);
 
   return (
     <div className={styles.talentMiniCard}>
       <div className={styles.talentAvatarWrapper}>
-        <Image
-          src={talentImage}
-          alt={talent.name}
-          fill
-          className="object-cover"
-        />
+        {talentImage && (
+          <Image
+            src={talentImage}
+            alt={talent.name || "Talent"}
+            fill
+            className="object-cover"
+          />
+        )}
       </div>
 
       <div className={styles.talentMetaGroup}>
@@ -31,10 +35,10 @@ export function BookingTalentCard({ talent, currentStep }) {
         ) : (
           <>
             <span className={styles.talentSubtext}>
-              {talentGenre} • {talentLocation}
+              {talentDetails}
             </span>
             <span className={styles.talentPrice}>
-              Booking from {bookingPrice}
+              {bookingPrice ? `Booking from ${bookingPrice}` : "Contact for pricing"}
             </span>
           </>
         )}

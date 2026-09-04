@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
-import { getRelatedTalents } from "@/utils/talentHelpers";
+
 import styles from "./TalentVideoPlayer.module.css";
 
 /**
@@ -13,11 +13,11 @@ export function MoreTalents({
   talents,
 }) {
   const resolvedTalents =
-    (talents && talents.length > 0)
+    talents && talents.length > 0
       ? talents
-      : (talent?.relatedCreatives && talent.relatedCreatives.length > 0)
-      ? talent.relatedCreatives
-      : getRelatedTalents(talent?.categoryKey || talent?.category, talent?.id, 3);
+      : talent?.relatedCreatives && talent.relatedCreatives.length > 0
+        ? talent.relatedCreatives
+        : [];
 
   const formatCategoryName = (cat) => {
     if (!cat) return "Creatives";
@@ -49,13 +49,15 @@ export function MoreTalents({
           >
             <div className={styles.moreTalentLeft}>
               <div className={styles.moreTalentAvatar}>
-                <Image
-                  src={item.image || "/assets/img/talents/julius.jpg"}
-                  alt={item.name}
-                  fill
-                  sizes="40px"
-                  className="object-cover object-center"
-                />
+                {item.image ? (
+                  <Image
+                    src={item.image}
+                    alt={item.alt || item.name}
+                    fill
+                    sizes="40px"
+                    className="object-cover object-center"
+                  />
+                ) : null}
               </div>
 
               <div>

@@ -1,0 +1,60 @@
+.page {
+  margin: 0 auto;
+  max-width: 960px;
+  padding: 48px 32px;
+}
+
+.chip {
+  background: #f3e7dc !important;
+  color: #7b3e1b !important;
+  font-weight: 700 !important;
+}
+
+.title {
+  color: #172033;
+  font-weight: 700 !important;
+  margin-top: 16px !important;
+}
+
+.description {
+  color: #667085;
+  margin-top: 12px !important;
+  max-width: 640px;
+}
+
+.statusCard {
+  align-items: flex-start;
+  background: #ffffff !important;
+  border: 1px solid #e7e9ee;
+  border-radius: 12px !important;
+  display: flex;
+  gap: 16px;
+  padding: 24px;
+}
+
+.statusIcon {
+  color: #b46a2c;
+  flex: 0 0 auto;
+}
+
+.statusTitle {
+  color: #172033;
+  font-weight: 700 !important;
+}
+
+.statusDescription {
+  color: #667085;
+  margin-top: 4px !important;
+}
+
+.notice {
+  background: #ffffff !important;
+  border-color: #d8e2f0 !important;
+  color: #475467 !important;
+}
+
+@media (max-width: 599px) {
+  .page {
+    padding: 32px 20px;
+  }
+}

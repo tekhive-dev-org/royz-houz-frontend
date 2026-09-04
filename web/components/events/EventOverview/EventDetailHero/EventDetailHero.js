@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { Calendar, MapPin, Share2, Check } from "lucide-react";
+import { formatDate } from "@/utils/dateFormatter";
 import styles from "./EventDetailHero.module.css";
 
 /**
@@ -16,8 +17,16 @@ export function EventDetailHero({ event }) {
 
   const isPast = Boolean(event?.isPast || event?.categoryTag === "PAST EVENTS");
   const heroImage = event.heroImage || event.image || "/assets/img/events/events-hero-bg.png";
-  const dateFormatted = event.dateString || "8 March 2026 . 3 PM GMT";
-  const locationFormatted = event.venue || event.location || "November 2022 · Abuja, Nigeria";
+  const rawDate =
+    event.dateFormatted ||
+    event.dateString ||
+    (event.day && event.month && event.year ? `${event.month} ${event.day}, ${event.year}` : "") ||
+    event.starts_at ||
+    event.date ||
+    "";
+  const baseDate = formatDate(rawDate) || rawDate || "January 1, 2026";
+  const dateFormatted = event.time ? `${baseDate} · ${event.time}` : baseDate;
+  const locationFormatted = event.venue || event.location || "Abuja, Nigeria";
 
   const handleShare = async () => {
     if (typeof window !== "undefined" && navigator.clipboard) {

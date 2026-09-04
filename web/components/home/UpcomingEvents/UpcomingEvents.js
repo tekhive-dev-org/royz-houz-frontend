@@ -1,11 +1,15 @@
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
-import { UPCOMING_EVENTS } from "@/constants/events";
+import { HOMEPAGE_UPCOMING_EVENTS_CONTENT } from "@/constants/homepageContent";
 import { Carousel } from "@/components/common/Carousel";
 import { EventCard } from "./EventCard";
 import styles from "./UpcomingEvents.module.css";
 
-export function UpcomingEvents() {
+export function UpcomingEvents({ content }) {
+  const sectionContent = { ...HOMEPAGE_UPCOMING_EVENTS_CONTENT, ...content };
+  const events = Array.isArray(sectionContent.events)
+    ? sectionContent.events
+    : HOMEPAGE_UPCOMING_EVENTS_CONTENT.events;
   return (
     <section className={styles.section} id="upcoming-events">
       <div className={styles.container}>
@@ -14,20 +18,20 @@ export function UpcomingEvents() {
         <div className={styles.headerRow}>
           <div className={styles.titleGroup}>
             <span className={styles.titleBar} aria-hidden="true" />
-            <h2 className={styles.title}>Upcoming Events</h2>
+            <h2 className={styles.title}>{sectionContent.title}</h2>
           </div>
 
-          <Link href="/events" className={styles.viewAllLink}>
-            <span>View all events</span>
+          <Link href={sectionContent.viewAllHref} className={styles.viewAllLink}>
+            <span>{sectionContent.viewAllLabel}</span>
             <ChevronRight className={styles.viewAllIcon} />
           </Link>
         </div>
 
         {/* Reusable Carousel */}
         <Carousel
-          items={UPCOMING_EVENTS}
-          ariaLabel="Upcoming events carousel"
-          renderItem={(event) => <EventCard event={event} />}
+          items={events}
+          ariaLabel={sectionContent.carouselAriaLabel}
+          renderItem={(event) => <EventCard event={event} ticketLabel={sectionContent.ticketLabel} />}
         />
 
       </div>

@@ -1,0 +1,170 @@
+.appBar {
+  background: rgba(255, 255, 255, 0.88) !important;
+  backdrop-filter: blur(14px) !important;
+  -webkit-backdrop-filter: blur(14px) !important;
+  border-bottom: 1px solid #E8EAEF !important;
+  color: #111827 !important;
+  left: 272px !important;
+  width: calc(100% - 272px) !important;
+  transition: all 0.2s ease;
+}
+
+.toolbar {
+  justify-content: space-between;
+  min-height: 64px !important;
+  padding: 0 24px !important;
+}
+
+.breadcrumbArea,
+.actions {
+  align-items: center;
+  display: flex;
+}
+
+.breadcrumbArea {
+  gap: 12px;
+  min-width: 0;
+}
+
+.actions {
+  gap: 12px;
+}
+
+.statusPill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: #ECFDF5;
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.statusDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #10B981;
+  box-shadow: 0 0 6px rgba(16, 185, 129, 0.6);
+}
+
+.statusLabel {
+  color: #065F46;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.iconBtn {
+  border: 1px solid #E8EAEF !important;
+  border-radius: 9px !important;
+  color: #4B5563 !important;
+  padding: 8px !important;
+}
+
+.iconBtn:hover {
+  background: #F3F4F6 !important;
+  border-color: #D1D5DB !important;
+}
+
+.menuButton {
+  display: none !important;
+}
+
+.accountButton {
+  border: 1px solid #E8EAEF !important;
+  border-radius: 10px !important;
+  padding: 4px 10px 4px 6px !important;
+  color: #1F2937 !important;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.accountButton:hover {
+  background: #F9FAFB !important;
+  border-color: #D1D5DB !important;
+}
+
+.avatar {
+  width: 32px !important;
+  height: 32px !important;
+  font-size: 0.75rem !important;
+  font-weight: 700 !important;
+  background: linear-gradient(135deg, #B46A2C 0%, #7B3E1B 100%) !important;
+  color: #FFFFFF !important;
+}
+
+.accountMeta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.accountName {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #111827;
+  line-height: 1.2;
+  max-width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.accountRole {
+  font-size: 0.6875rem;
+  color: #6B7280;
+  line-height: 1.2;
+  text-transform: capitalize;
+}
+
+.menuHeader {
+  padding: 10px 16px;
+}
+
+.accountMenuProfile {
+  padding: 10px 16px 8px;
+  min-width: 180px;
+}
+
+.emptyMenuItem {
+  color: #9CA3AF !important;
+  font-size: 0.8125rem !important;
+}
+
+.menuItemIcon {
+  margin-right: 10px;
+  color: #6B7280;
+}
+
+@media (max-width: 959px) {
+  .appBar {
+    left: 0 !important;
+    width: 100% !important;
+  }
+
+  .toolbar {
+    padding: 0 16px !important;
+  }
+
+  .menuButton {
+    display: inline-flex !important;
+  }
+
+  .statusPill {
+    display: none;
+  }
+}
+
+@media (max-width: 599px) {
+  .accountMeta {
+    display: none;
+  }
+  
+  .accountButton {
+    padding: 4px !important;
+  }
+}

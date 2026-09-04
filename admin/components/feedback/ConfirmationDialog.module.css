@@ -1,0 +1,131 @@
+.dialogPaper {
+  border: 1px solid #E5E7EB;
+  border-radius: 18px !important;
+  box-shadow: 0 24px 64px rgba(17, 24, 39, 0.18) !important;
+  overflow: visible;
+  position: relative;
+}
+
+.closeButton {
+  color: #6B7280 !important;
+  position: absolute !important;
+  right: 14px;
+  top: 14px;
+  z-index: 1;
+}
+
+.closeButton:hover {
+  background: #F3F4F6 !important;
+  color: #111827 !important;
+}
+
+.content {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  padding: 36px 32px 24px !important;
+  text-align: center;
+}
+
+.iconWrap {
+  align-items: center;
+  border-radius: 50%;
+  display: flex;
+  height: 58px;
+  justify-content: center;
+  margin-bottom: 20px;
+  position: relative;
+  width: 58px;
+}
+
+.iconWrap::before {
+  border-radius: inherit;
+  content: "";
+  inset: -7px;
+  opacity: 0.45;
+  position: absolute;
+}
+
+.iconWrap svg {
+  font-size: 29px;
+  position: relative;
+}
+
+.danger {
+  background: #FEE2E2;
+  color: #DC2626;
+}
+
+.danger::before {
+  background: #FEF2F2;
+}
+
+.warning {
+  background: #FEF3C7;
+  color: #D97706;
+}
+
+.warning::before {
+  background: #FFFBEB;
+}
+
+.title {
+  color: #111827;
+  font-size: 1.25rem !important;
+  font-weight: 750 !important;
+  letter-spacing: -0.02em !important;
+  line-height: 1.35 !important;
+}
+
+.description {
+  color: #667085;
+  font-size: 0.925rem !important;
+  line-height: 1.65 !important;
+  margin-top: 9px !important;
+  max-width: 340px;
+}
+
+.actions {
+  border-top: 1px solid #EEF0F3;
+  display: grid !important;
+  gap: 12px;
+  grid-template-columns: 1fr 1fr;
+  padding: 18px 24px 24px !important;
+}
+
+.cancelButton,
+.confirmButton {
+  border-radius: 9px !important;
+  font-weight: 650 !important;
+  min-height: 42px;
+  text-transform: none !important;
+}
+
+.cancelButton {
+  border-color: #D1D5DB !important;
+  color: #374151 !important;
+}
+
+.cancelButton:hover {
+  background: #F9FAFB !important;
+  border-color: #9CA3AF !important;
+}
+
+@media (max-width: 479px) {
+  .dialogPaper {
+    margin: 18px !important;
+  }
+
+  .content {
+    padding: 34px 22px 22px !important;
+  }
+
+  .actions {
+    grid-template-columns: 1fr;
+    padding: 16px 20px 20px !important;
+  }
+
+  .confirmButton {
+    grid-row: 1;
+  }
+}

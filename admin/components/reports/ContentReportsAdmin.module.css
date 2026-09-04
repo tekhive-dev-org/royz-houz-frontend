@@ -1,0 +1,164 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.header {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.title {
+  color: #111827;
+  font-size: 1.75rem !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.025em !important;
+}
+
+.description {
+  color: #4B5563;
+  margin-top: 6px !important;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.statCard {
+  align-items: center;
+  border: 1px solid #E8EAEF;
+  border-radius: 12px !important;
+  color: #B46A2C;
+  display: flex;
+  gap: 12px;
+  padding: 16px;
+}
+
+.statCard span {
+  color: #64748B;
+  display: flex;
+  flex-direction: column;
+  font-size: 0.75rem;
+}
+
+.statCard strong {
+  color: #111827;
+  font-size: 1.25rem;
+}
+
+.filters {
+  border: 1px solid #E8EAEF;
+  border-radius: 12px !important;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 12px;
+  padding: 16px;
+}
+
+.tableContainer {
+  border: 1px solid #E8EAEF;
+  border-radius: 12px !important;
+  overflow-x: auto;
+}
+
+.table {
+  min-width: 980px;
+}
+
+.contentTitle {
+  font-weight: 700 !important;
+}
+
+.ownerCell {
+  display: flex;
+  flex-direction: column;
+  min-width: 170px;
+}
+
+.ownerName {
+  font-weight: 600 !important;
+}
+
+.ownerEmail {
+  color: #B46A2C;
+  overflow-wrap: anywhere;
+  text-decoration: none;
+}
+
+.ownerEmail:hover {
+  text-decoration: underline;
+}
+
+.capitalize,
+.status {
+  text-transform: capitalize;
+}
+
+.status {
+  border-radius: 999px;
+  display: inline-flex;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 4px 9px;
+}
+
+.status_new { background: #FEF3C7; color: #92400E; }
+.status_reviewing { background: #DBEAFE; color: #1D4ED8; }
+.status_actioned { background: #D1FAE5; color: #047857; }
+.status_dismissed,
+.status_duplicate,
+.status_archived { background: #F3F4F6; color: #4B5563; }
+
+.empty {
+  color: #64748B !important;
+  padding: 36px !important;
+}
+
+.detailBlock,
+.privateBlock {
+  border: 1px solid #E5E7EB;
+  border-radius: 10px;
+  padding: 14px;
+}
+
+.privateBlock {
+  background: #FFF7ED;
+  border-color: #FED7AA;
+}
+
+.detailLabel {
+  color: #64748B !important;
+  display: block !important;
+}
+
+.reasonText {
+  font-weight: 700 !important;
+  text-transform: capitalize;
+}
+
+.reportDetails {
+  color: #475569;
+  margin-top: 8px !important;
+  white-space: pre-wrap;
+}
+
+.dialogActions {
+  padding: 16px 24px !important;
+}
+
+.primaryButton {
+  background: #B46A2C !important;
+  text-transform: none !important;
+}
+
+@media (max-width: 800px) {
+  .statsGrid,
+  .filters {
+    grid-template-columns: 1fr;
+  }
+}

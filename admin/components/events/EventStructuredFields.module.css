@@ -1,0 +1,109 @@
+.container {
+  width: 100%;
+}
+
+.section {
+  background: #ffffff;
+  border-color: #e8eaef;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.sectionHeader {
+  align-items: flex-start;
+  display: flex;
+  gap: 16px;
+  justify-content: space-between;
+  padding: 16px;
+}
+
+.sectionTitle {
+  color: #111827;
+  font-weight: 700 !important;
+}
+
+.sectionDescription,
+.empty {
+  color: #6b7280;
+}
+
+.sectionDescription {
+  margin-top: 3px !important;
+}
+
+.rows {
+  padding: 16px;
+}
+
+.row {
+  align-items: flex-start;
+  display: grid;
+  gap: 12px;
+  grid-template-columns: 92px minmax(0, 1fr) auto;
+}
+
+.rowLabel {
+  color: #6b7280;
+  font-weight: 700 !important;
+  padding-top: 9px;
+  text-transform: uppercase;
+}
+
+.fields {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.fields > :first-child {
+  min-width: 0;
+}
+
+.mediaField {
+  align-items: flex-start;
+  display: flex;
+  gap: 12px;
+  min-width: 0;
+}
+
+.mediaField > :first-child {
+  min-width: 0;
+}
+
+.deleteButton {
+  color: #b42318;
+  margin-top: 4px !important;
+}
+
+@media (max-width: 700px) {
+  .row {
+    grid-template-columns: 1fr auto;
+  }
+
+  .rowLabel {
+    grid-column: 1 / -1;
+    padding-top: 0;
+  }
+
+  .fields,
+  .mediaField {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 480px) {
+  .sectionHeader {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .sectionHeader button {
+    align-self: flex-start;
+  }
+
+  .fields,
+  .mediaField {
+    display: flex;
+    flex-direction: column;
+  }
+}

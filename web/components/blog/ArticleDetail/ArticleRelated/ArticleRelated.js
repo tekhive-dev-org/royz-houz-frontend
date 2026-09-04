@@ -2,19 +2,15 @@ import Image from "next/image";
 import Link from "next/link";
 import styles from "./ArticleRelated.module.css";
 import { BLOG_ARTICLES } from "@/constants/blog";
+import { formatDate } from "@/utils/dateFormatter";
 
 /**
  * ArticleRelated renders the 3 recommended story cards matching the 350x441 vector specification.
  */
-export function ArticleRelated({ currentSlug }) {
-  // Get 3 related articles (prioritizing the 3 key cards from design, or excluding currentSlug)
-  const relatedArticles = BLOG_ARTICLES.filter(
-    (a) => a.slug !== currentSlug
-  ).slice(0, 3);
-
-  // Fallback to top 3 articles if not enough
-  const displayArticles =
-    relatedArticles.length === 3 ? relatedArticles : BLOG_ARTICLES.slice(0, 3);
+export function ArticleRelated({ currentSlug, articles = BLOG_ARTICLES }) {
+  // Keep the established fallback cards only when public related content is unavailable.
+  const relatedArticles = articles.filter((article) => article.slug !== currentSlug).slice(0, 3);
+  const displayArticles = relatedArticles.length === 3 ? relatedArticles : articles.slice(0, 3);
 
   return (
     <section className={styles.section} aria-label="You Might Also Like">
@@ -66,7 +62,7 @@ export function ArticleRelated({ currentSlug }) {
                       [ {article.format || "PODCAST"} ]
                     </span>
                   </div>
-                  <span className={styles.metaDate}>{article.date}</span>
+                  <span className={styles.metaDate}>{formatDate(article.date) || article.date}</span>
                 </div>
 
                 {/* Horizontal Divider Line (Y: 246.8px Spec) */}

@@ -1,4 +1,8 @@
 import { useRouter } from "next/router";
+import {
+  getTalentBookingPrice,
+  isTalentAvailableForBooking,
+} from "../talentProfileData";
 import styles from "./TalentProfileSidebar.module.css";
 
 /**
@@ -6,24 +10,32 @@ import styles from "./TalentProfileSidebar.module.css";
  */
 export function BookingCard({ talent, onBookClick }) {
   const router = useRouter();
-  const price = talent?.bookingPrice || "₦250,000";
+  const price = getTalentBookingPrice(talent);
+  const isBookingAvailable = isTalentAvailableForBooking(talent);
 
   const handleBook = () => {
+    if (!isBookingAvailable) return;
+
     if (onBookClick) {
       onBookClick();
     } else {
-      router.push(`/talents/${talent?.slug || talent?.id}/book`);
+      const talentIdentifier = talent?.slug || talent?.id;
+      if (talentIdentifier) {
+        router.push(`/talents/${talentIdentifier}/book`);
+      }
     }
   };
 
   return (
     <div className={styles.bookingCard} aria-label="Booking Information">
-      <span className={styles.bookingSubtitle}>Booking starts from</span>
-      <span className={styles.bookingPrice}>{price}</span>
+      <span className={styles.bookingSubtitle}>{price ? "Booking starts from" : "Booking rate"}</span>
+      <span className={styles.bookingPrice}>{price || "Contact for pricing"}</span>
 
       <button
         type="button"
         onClick={handleBook}
+        disabled={!isBookingAvailable}
+        aria-disabled={!isBookingAvailable}
         className={styles.bookTalentBtn}
       >
         Book This Talent

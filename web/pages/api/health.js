@@ -1,18 +1,28 @@
+import { sendSuccess, sendMethodNotAllowed } from "@/utils/apiResponse";
+import { logApiEvent } from "@/utils/serverLogger";
+
 export default function handler(req, res) {
   if (req.method !== "GET") {
-    return res.status(455).json({
-      success: false,
-      error: { code: "METHOD_NOT_ALLOWED", message: "Only GET requests are allowed" },
+    const response = sendMethodNotAllowed(res, ["GET"]);
+    logApiEvent({
+      requestId: "health-check",
+      route: "/api/health",
+      method: req.method,
+      status: 405,
+      errorCode: "METHOD_NOT_ALLOWED",
     });
+    return response;
   }
 
-  return res.status(200).json({
-    success: true,
-    data: {
+  const response = sendSuccess(
+    res,
+    {
       status: "healthy",
       timestamp: new Date().toISOString(),
       service: "RoyzHouse Web API",
     },
-    message: "Service is healthy",
-  });
+    "Service is healthy"
+  );
+  logApiEvent({ requestId: "health-check", route: "/api/health", method: req.method, status: 200 });
+  return response;
 }

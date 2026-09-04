@@ -1,0 +1,121 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.item {
+  align-items: center;
+  border: 1px solid #E8EAEF;
+  border-radius: 12px;
+  background: #FFFFFF;
+  display: flex;
+  justify-content: space-between;
+  padding: 14px 18px;
+  transition: transform 0.2s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
+  user-select: none;
+  cursor: grab;
+}
+
+.item:hover {
+  border-color: rgba(180, 106, 44, 0.35);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+  transform: translateY(-1px);
+}
+
+.item:active {
+  cursor: grabbing;
+}
+
+.dragging {
+  opacity: 0.55;
+  border: 2px dashed #B46A2C !important;
+  background: #FAF4EF !important;
+  box-shadow: 0 12px 28px rgba(180, 106, 44, 0.18) !important;
+  transform: scale(1.01) !important;
+}
+
+.leftCol {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  flex: 1;
+}
+
+.dragHandle {
+  align-items: center;
+  border-radius: 6px;
+  color: #9CA3AF;
+  cursor: grab;
+  display: inline-flex;
+  flex-shrink: 0;
+  padding: 4px;
+  touch-action: none;
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+.dragHandle:hover {
+  background: #F3F4F6;
+  color: #B46A2C;
+}
+
+.dragHandle:active {
+  cursor: grabbing;
+}
+
+.dragHandle:focus-visible {
+  outline: 2px solid #B46A2C;
+  outline-offset: 2px;
+}
+
+.indexBadge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #B46A2C;
+  background: #FAF4EF;
+  border: 1px solid #F2E4D6;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-family: monospace;
+}
+
+.content {
+  flex: 1;
+  min-width: 0;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+  margin-left: 12px;
+}
+
+.keyboardHint {
+  color: #B46A2C;
+  font-weight: 600;
+  margin-right: 8px;
+  white-space: nowrap;
+}
+
+.iconBtn {
+  border: 1px solid #E8EAEF !important;
+  border-radius: 8px !important;
+  color: #4B5563 !important;
+  padding: 6px !important;
+  background: #FFFFFF !important;
+}
+
+.iconBtn:hover {
+  background: #F3F4F6 !important;
+  border-color: #D1D5DB !important;
+  color: #111827 !important;
+}
+
+.deleteBtn:hover {
+  background: #FEF2F2 !important;
+  border-color: #FECACA !important;
+  color: #DC2626 !important;
+}

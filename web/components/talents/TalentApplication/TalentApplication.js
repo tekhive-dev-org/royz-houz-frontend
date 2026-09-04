@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
 import { ChevronLeft } from "lucide-react";
 import { INITIAL_FORM_DATA } from "@/constants/talentApplication";
@@ -9,6 +9,11 @@ import { Step3PortfolioSocials } from "./Step3PortfolioSocials";
 import { Step4AvailabilityBooking } from "./Step4AvailabilityBooking";
 import { Step5ReviewSubmit } from "./Step5ReviewSubmit";
 import { ApplicationSuccessModal } from "./ApplicationSuccessModal";
+import {
+  buildJoinApplicationPayload,
+  getJoinSubmissionError,
+  submitJoinApplication,
+} from "./joinApplicationRequest";
 import styles from "./TalentApplication.module.css";
 
 /**
@@ -19,20 +24,23 @@ export function TalentApplication() {
   const [formData, setFormData] = useState(INITIAL_FORM_DATA);
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submissionError, setSubmissionError] = useState("");
+  const [hasSubmitted, setHasSubmitted] = useState(false);
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
   const [referenceId, setReferenceId] = useState("");
+  const submissionInFlightRef = useRef(false);
 
   const updateFormData = (fields) => {
     setFormData((prev) => ({ ...prev, ...fields }));
-    // Clear errors for modified fields
+    setSubmissionError("");
+
+    // Clear errors for modified fields.
     const updatedKeys = Object.keys(fields);
-    if (updatedKeys.some((k) => errors[k])) {
-      setErrors((prev) => {
-        const next = { ...prev };
-        updatedKeys.forEach((k) => delete next[k]);
-        return next;
-      });
-    }
+    setErrors((prev) => {
+      const next = { ...prev };
+      updatedKeys.forEach((key) => delete next[key]);
+      return next;
+    });
   };
 
   const validateStep = (step) => {
@@ -87,13 +95,59 @@ export function TalentApplication() {
   };
 
   const handleSubmit = async () => {
+    if (submissionInFlightRef.current || hasSubmitted) return;
+
+    submissionInFlightRef.current = true;
     setIsSubmitting(true);
-    // Simulate server submission delay
-    await new Promise((resolve) => setTimeout(resolve, 800));
-    const genRef = `RH-APP-${Math.floor(100000 + Math.random() * 900000)}`;
-    setReferenceId(genRef);
-    setIsSubmitting(false);
-    setIsSuccessModalOpen(true);
+    setSubmissionError("");
+    setErrors({});
+
+    try {
+      const result = await submitJoinApplication(buildJoinApplicationPayload(formData));
+
+      if (!result.ok) {
+        const serverFieldErrors = result.body?.error?.details || [];
+        const fieldToStep = {
+          fullName: 1,
+          email: 1,
+          phone: 1,
+          dateOfBirth: 1,
+          stateRegion: 1,
+          talentCategory: 2,
+          customTalentCategory: 2,
+          experienceLevel: 2,
+          yearsOfExperience: 2,
+          shortBio: 2,
+        };
+        const fieldToFormField = { email: "emailAddress", phone: "phoneNumber" };
+        const safeFieldErrors = {};
+        let firstInvalidStep;
+
+        serverFieldErrors.forEach(({ field }) => {
+          const apiField = String(field || "").split(".")[0];
+          const formField = fieldToFormField[apiField] || apiField;
+          if (!fieldToStep[apiField]) return;
+
+          safeFieldErrors[formField] = "Please check this field.";
+          firstInvalidStep = firstInvalidStep || fieldToStep[apiField];
+        });
+
+        setErrors(safeFieldErrors);
+        setSubmissionError(getJoinSubmissionError(result.status));
+        if (firstInvalidStep) setCurrentStep(firstInvalidStep);
+        return;
+      }
+
+      const id = result.body?.data?.id;
+      setReferenceId(typeof id === "string" || typeof id === "number" ? String(id) : "");
+      setHasSubmitted(true);
+      setIsSuccessModalOpen(true);
+    } catch {
+      setSubmissionError("We could not submit your application right now. Please try again.");
+    } finally {
+      submissionInFlightRef.current = false;
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -163,6 +217,8 @@ export function TalentApplication() {
               onBack={handleBack}
               onEditStep={(stepId) => setCurrentStep(stepId)}
               isSubmitting={isSubmitting}
+              hasSubmitted={hasSubmitted}
+              submissionError={submissionError}
             />
           )}
         </div>

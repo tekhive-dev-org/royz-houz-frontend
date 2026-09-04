@@ -7,26 +7,37 @@ import { BLOG_PILLARS } from "../../../constants/blog";
  * BlogPillars component rendering the 4 creative pillars of Royz Houz
  * following exact vector proportions (303x564, 8px padding, 287x416 portrait ratio, vector arrow).
  */
-export function BlogPillars({ pillars = BLOG_PILLARS }) {
+export function BlogPillars({ pillars, pillarsData }) {
+  const data = pillarsData || {};
+  const tagline = data.sectionTagline || "EXPLORE OUR STORIES";
+  const title = data.sectionTitle || "Discover the World of Royz Houz";
+  const subtitle =
+    data.sectionSubtitle ||
+    "Explore the talent, culture, stories and creative experiences that make Royz Houz a platform for African creativity and impact.";
+  const items =
+    data.items && data.items.length > 0
+      ? data.items
+      : pillars && pillars.length > 0
+      ? pillars
+      : BLOG_PILLARS;
+
   return (
-    <section className={styles.section} aria-label="Discover the World of Royz Houz">
+    <section className={styles.section} aria-label={title}>
       <div className={styles.container}>
         {/* Section Header with exact dual accent lines */}
         <div className={styles.headerArea}>
           <div className={styles.tagline}>
             <span className={styles.accentLine} aria-hidden="true" />
-            <span className={styles.tagText}>EXPLORE OUR STORIES</span>
+            <span className={styles.tagText}>{tagline}</span>
             <span className={styles.accentLine} aria-hidden="true" />
           </div>
-          <h2 className={styles.title}>Discover the World of Royz Houz</h2>
-          <p className={styles.subtitle}>
-            Explore the talent, culture, stories and creative experiences that make Royz Houz a platform for African creativity and impact.
-          </p>
+          <h2 className={styles.title}>{title}</h2>
+          <p className={styles.subtitle}>{subtitle}</p>
         </div>
 
         {/* 4 Pillars Responsive Grid */}
         <div className={styles.grid}>
-          {pillars.map((pillar) => (
+          {items.map((pillar) => (
             <Link
               key={pillar.id}
               href={pillar.link || "#"}

@@ -22,7 +22,7 @@ export function PaymentSuccess({
 
   const amountNumber = donationData?.amount || 25000;
   const formattedAmount = `₦${amountNumber.toLocaleString()}`;
-  const refCode = donationData?.refCode || `RH-DON-${Math.floor(1000000 + Math.random() * 9000000)}`;
+  const refCode = donationData?.recordId || "Pending verification";
   const dateFormatted = new Date().toLocaleDateString("en-GB", {
     day: "numeric",
     month: "short",
@@ -54,7 +54,7 @@ export function PaymentSuccess({
   };
 
   return (
-    <div className={styles.container} aria-label="Payment Successful">
+    <div className={styles.container} aria-label="Donation Request Received">
       <div className={styles.card}>
         {/* ── Success Icon with Pulsing Halo ─────────── */}
         <div className={styles.iconWrapper}>
@@ -66,15 +66,14 @@ export function PaymentSuccess({
 
         {/* ── Title & Message ────────────────────────── */}
         <div className={styles.textHeader}>
-          <span className={styles.badgeSuccess}>Payment Confirmed</span>
+          <span className={styles.badgeSuccess}>Donation Request Received</span>
           <h2 className={styles.title}>Thank You for Your Generosity!</h2>
           <p className={styles.subtitle}>
-            Your donation has been processed successfully. An official receipt has
-            been sent to{" "}
+            Your donation request is pending payment verification. We&apos;ll contact{" "}
             <span className={styles.highlightEmail}>
-              {donationData?.email || "donaldlawrence9@gmail.com"}
+              {donationData?.email || "you"}
             </span>
-            .
+            {" "}with next steps.
           </p>
         </div>
 
@@ -82,11 +81,11 @@ export function PaymentSuccess({
         <div className={styles.receiptBox}>
           <div className={styles.receiptTop}>
             <div>
-              <span className={styles.receiptLabel}>Total Amount Donated</span>
+              <span className={styles.receiptLabel}>Requested Donation Amount</span>
               <div className={styles.amountDisplay}>{formattedAmount}</div>
             </div>
             <div className={styles.refWrap}>
-              <span className={styles.receiptLabel}>Transaction Reference</span>
+              <span className={styles.receiptLabel}>Request Reference</span>
               <button
                 type="button"
                 onClick={handleCopyRef}
@@ -132,8 +131,8 @@ export function PaymentSuccess({
             </div>
 
             <div className={styles.detailRow}>
-              <span className={styles.detailLabel}>Payment Method</span>
-              <span className={styles.detailValue}>Paystack / Card (•••• 4242)</span>
+              <span className={styles.detailLabel}>Payment Status</span>
+              <span className={styles.detailValue}>Awaiting verification</span>
             </div>
 
             <div className={styles.detailRow}>
@@ -144,7 +143,7 @@ export function PaymentSuccess({
             <div className={styles.detailRow}>
               <span className={styles.detailLabel}>Status</span>
               <span className={styles.statusPaid}>
-                <span className={styles.statusDot} /> Completed
+                <span className={styles.statusDot} /> Pending
               </span>
             </div>
           </div>
@@ -184,7 +183,7 @@ export function PaymentSuccess({
         {/* ── Footer Link ────────────────────────────── */}
         <div className={styles.footerNote}>
           <ShieldCheck className="w-4 h-4 text-[#868C98]" />
-          <span>Tax-deductible contribution processed securely by Royz House.</span>
+          <span>Payment is not confirmed until it has been verified by Royz House.</span>
         </div>
       </div>
     </div>

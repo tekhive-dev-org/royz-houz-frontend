@@ -1,0 +1,141 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.header {
+  margin-bottom: 4px;
+}
+
+.title {
+  color: #111827;
+  font-weight: 800;
+  font-size: 1.75rem !important;
+  letter-spacing: -0.025em;
+}
+
+.description {
+  color: #4B5563;
+  margin-top: 6px;
+  max-width: 720px;
+  font-size: 0.9375rem;
+}
+
+.grid {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+
+.card {
+  border: 1px solid #E8EAEF;
+  border-radius: 14px;
+  background: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+}
+
+.cardHeader {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.cardTitle {
+  color: #111827;
+  font-weight: 700;
+  font-size: 1rem !important;
+}
+
+.statusRow {
+  align-items: center;
+  display: flex;
+  gap: 14px;
+  padding: 4px 0;
+}
+
+.indicator {
+  border-radius: 50%;
+  height: 10px;
+  width: 10px;
+  flex-shrink: 0;
+}
+
+.indicatorActive {
+  background-color: #10B981;
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.5);
+}
+
+.indicatorWarning {
+  background-color: #F59E0B;
+  box-shadow: 0 0 8px rgba(245, 158, 11, 0.5);
+}
+
+.indicatorError {
+  background-color: #EF4444;
+  box-shadow: 0 0 8px rgba(239, 68, 68, 0.5);
+}
+
+.quickLinks {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  margin-top: 12px;
+}
+
+.quickLinkCard {
+  align-items: center;
+  border: 1px solid #E8EAEF;
+  border-radius: 12px;
+  background: #FFFFFF;
+  display: flex;
+  gap: 14px;
+  padding: 18px 20px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.quickLinkCard:hover {
+  border-color: rgba(180, 106, 44, 0.4);
+  box-shadow: 0 6px 20px rgba(180, 106, 44, 0.08);
+  transform: translateY(-2px);
+}
+
+.quickLinkIcon {
+  align-items: center;
+  background: linear-gradient(135deg, #FAF4EF 0%, #F2E4D6 100%);
+  border: 1px solid rgba(180, 106, 44, 0.15);
+  border-radius: 10px;
+  color: #B46A2C;
+  display: flex;
+  height: 44px;
+  justify-content: center;
+  width: 44px;
+  flex-shrink: 0;
+}
+
+.quickLinkText {
+  display: flex;
+  flex-direction: column;
+}
+
+.quickLinkTitle {
+  color: #111827;
+  font-weight: 700;
+  font-size: 0.9375rem;
+}
+
+.quickLinkDesc {
+  color: #6B7280;
+  margin-top: 2px;
+  line-height: 1.3;
+}

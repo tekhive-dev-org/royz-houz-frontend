@@ -19,7 +19,9 @@ export function MediaGallery({
   photos,
   onViewAll,
   isFullView = false,
+  pageContent = {},
 }) {
+  const labels = { title: "Through The Lens", subtitle: "Visual stories capturing moments from across Nigeria.", fullSubtitle: "Capturing moments that tell our stories", viewAllLabel: "View all photos", ...pageContent };
   const [currentPage, setCurrentPage] = useState(1);
   const [perPage, setPerPage] = useState(9);
   const [selectedIndex, setSelectedIndex] = useState(null);
@@ -87,7 +89,7 @@ export function MediaGallery({
           <div className={styles.titleRow}>
             <div className={styles.accentBar} aria-hidden="true" />
             <h2 id="gallery-heading" className={styles.title}>
-              Through The Lens
+              {labels.title}
             </h2>
           </div>
 
@@ -102,15 +104,15 @@ export function MediaGallery({
               }}
               className={styles.viewAllLink}
             >
-              <span>View all photos</span>
+              <span>{labels.viewAllLabel}</span>
               <ChevronRight className="w-4 h-4" />
             </Link>
           )}
         </div>
         <p className={styles.subtitle}>
           {isFullView
-            ? "Capturing moments that tell our stories"
-            : "Visual stories capturing moments from across Nigeria."}
+            ? labels.fullSubtitle
+            : labels.subtitle}
         </p>
       </div>
 

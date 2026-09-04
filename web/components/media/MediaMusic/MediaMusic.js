@@ -15,10 +15,16 @@ import styles from "./MediaMusic.module.css";
  */
 export function MediaMusic({
   musicData,
+  musicTracks,
+  discoverTracks,
   onMusicClick,
   onViewAll,
   isFullView = false,
+  pageContent = {},
 }) {
+  const labels = { discoverTitle: "Discover New Sounds", discoverSubtitle: "Explore emerging voices and unique sounds shaping the evolving music scene.", spotlightTitle: "Music Spotlight", spotlightSubtitle: "Go beyond the spotlight and discover the people behind this creative excellence.", ...pageContent };
+  const catalogTracks = musicTracks || MEDIA_ALL_MUSIC_TRACKS;
+  const catalogDiscoverTracks = discoverTracks || MEDIA_DISCOVER_SOUNDS;
   const [activeTrackId, setActiveTrackId] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [perPage, setPerPage] = useState(8);
@@ -51,18 +57,18 @@ export function MediaMusic({
               <div className={styles.titleRow}>
                 <div className={styles.accentBar} aria-hidden="true" />
                 <h2 id="discover-heading" className={styles.title}>
-                  Discover New Sounds
+                  {labels.discoverTitle}
                 </h2>
               </div>
             </div>
             <p className={styles.subtitle}>
-              Explore emerging voices and unique sounds shaping evolving music scene.
+              {labels.discoverSubtitle}
             </p>
           </div>
 
           {/* 3 Full-Bleed Discover Cards */}
           <div className={styles.discoverGrid}>
-            {MEDIA_DISCOVER_SOUNDS.map((item) => (
+            {catalogDiscoverTracks.map((item) => (
               <div
                 key={item.id}
                 onClick={() => handleTrackAction(item)}
@@ -102,18 +108,18 @@ export function MediaMusic({
               <div className={styles.titleRow}>
                 <div className={styles.accentBar} aria-hidden="true" />
                 <h2 id="music-spotlight-heading" className={styles.title}>
-                  Music Spotlight
+                  {labels.spotlightTitle}
                 </h2>
               </div>
             </div>
             <p className={styles.subtitle}>
-              Go beyond the spotlight and discover the people this creative excellence.
+              {labels.spotlightSubtitle}
             </p>
           </div>
 
           {/* 4-Column Track Cards Grid */}
           <div className={styles.fullTracksGrid}>
-            {MEDIA_ALL_MUSIC_TRACKS.slice(
+            {catalogTracks.slice(
               (currentPage - 1) * perPage,
               currentPage * perPage
             ).map((track) => {
@@ -169,7 +175,7 @@ export function MediaMusic({
             currentPage={currentPage}
             totalPages={Math.max(
               1,
-              Math.ceil(MEDIA_ALL_MUSIC_TRACKS.length / perPage)
+              Math.ceil(catalogTracks.length / perPage)
             )}
             perPage={perPage}
             onPageChange={handlePageChange}
@@ -211,7 +217,7 @@ export function MediaMusic({
           </Link>
         </div>
         <p className={styles.subtitle}>
-          Explore original sounds, studio tracks, and upcoming artist releases.
+          {labels.spotlightSubtitle}
         </p>
       </div>
 

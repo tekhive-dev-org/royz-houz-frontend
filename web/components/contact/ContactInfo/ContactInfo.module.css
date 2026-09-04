@@ -213,6 +213,10 @@
   @apply text-sm text-emerald-600 font-medium text-center py-1;
 }
 
+.errorMsg {
+  @apply text-xs text-rose-600 font-medium;
+}
+
 .privacyNote {
   @apply flex items-center justify-center gap-1.5 text-[11px] text-[#868C98] text-center mt-1 select-none;
 }

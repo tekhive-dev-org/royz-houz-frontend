@@ -7,7 +7,7 @@ import styles from "./TalentApplication.module.css";
  */
 export function ApplicationSuccessModal({
   isOpen,
-  referenceId = `RH-APP-${Math.floor(100000 + Math.random() * 900000)}`,
+  referenceId = "",
   applicantName = "Creative Artist",
 }) {
   if (!isOpen) return null;
@@ -27,7 +27,7 @@ export function ApplicationSuccessModal({
 
         <div className={styles.refCodeBox}>
           <span className={styles.refCodeLabel}>Application Reference ID</span>
-          <span className={styles.refCodeValue}>{referenceId}</span>
+          <span className={styles.refCodeValue}>{referenceId || "Submitted successfully"}</span>
         </div>
 
         <p className={styles.successHelper}>

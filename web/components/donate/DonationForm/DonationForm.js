@@ -37,11 +37,16 @@ const COUNTRY_CODES = [
  * - Left side: Giving Options (Frequency, Amount, Custom Amount, Cause)
  * - Right side: Information Form (Full Name, Email, Phone Number, Submit CTA, Security Badge)
  */
-export function DonationForm({ initialData, onProceedToReview }) {
+export function DonationForm({ initialData, campaigns, onProceedToReview }) {
+  const causeList =
+    campaigns && campaigns.length > 0
+      ? campaigns.map((c) => c.title)
+      : CAUSES;
+
   const [frequency, setFrequency] = useState(initialData?.frequency || "one-time");
   const [amount, setAmount] = useState(initialData?.amount || 25000);
   const [customAmount, setCustomAmount] = useState(initialData?.customAmount || "");
-  const [cause, setCause] = useState(initialData?.cause || CAUSES[0]);
+  const [cause, setCause] = useState(initialData?.cause || causeList[0]);
 
   // Donor Information (Right Column)
   const [fullName, setFullName] = useState(initialData?.fullName || "Donald Lawrence");
@@ -84,6 +89,9 @@ export function DonationForm({ initialData, onProceedToReview }) {
     e.preventDefault();
     if (!amount || amount <= 0) return;
 
+    const matchedCampaign = campaigns?.find((c) => c.title === cause || c.slug === cause);
+    const campaignSlug = matchedCampaign?.slug || "career-skill-development";
+
     const formattedData = {
       ...(initialData || {}),
       frequency,
@@ -92,6 +100,7 @@ export function DonationForm({ initialData, onProceedToReview }) {
       amount,
       customAmount,
       cause,
+      campaignSlug,
       fullName: fullName.trim() || "Donald Lawrence",
       email: email.trim() || "donaldlawrence9@gmail.com",
       phone: `${selectedCountry.dial} ${phone.trim()}`,
@@ -191,7 +200,7 @@ export function DonationForm({ initialData, onProceedToReview }) {
                   onChange={(e) => setCause(e.target.value)}
                   className={styles.selectInput}
                 >
-                  {CAUSES.map((c) => (
+                  {causeList.map((c) => (
                     <option key={c} value={c}>
                       {c}
                     </option>

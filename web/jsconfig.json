@@ -7,6 +7,7 @@
       "@/pages/*": ["pages/*"],
       "@/hooks/*": ["hooks/*"],
       "@/services/*": ["services/*"],
+      "@/adapters/*": ["adapters/*"],
       "@/repositories/*": ["repositories/*"],
       "@/validators/*": ["validators/*"],
       "@/utils/*": ["utils/*"],

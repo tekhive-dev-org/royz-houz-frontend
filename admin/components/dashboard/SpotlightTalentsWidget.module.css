@@ -1,0 +1,196 @@
+.card {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 20px 22px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #F1F5F9;
+}
+
+.titleRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.headerIcon {
+  color: #B46A2C;
+  font-size: 1.5rem !important;
+}
+
+.title {
+  color: #0F172A !important;
+  font-weight: 700 !important;
+  font-size: 1.05rem !important;
+  line-height: 1.2 !important;
+}
+
+.subtitle {
+  color: #64748B !important;
+  font-size: 0.775rem !important;
+  display: block;
+}
+
+.viewAllBtn {
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+  color: #B46A2C !important;
+  text-transform: none !important;
+  padding: 4px 8px !important;
+}
+
+.viewAllBtn:hover {
+  background: #FDF4EC !important;
+}
+
+.talentList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+
+.talentItem {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: #F8FAFC;
+  border: 1px solid #EDF2F7;
+  transition: all 0.15s ease;
+}
+
+.talentItem:hover {
+  background: #F1F5F9;
+  border-color: #CBD5E1;
+}
+
+.avatarWrap {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  border: 2px solid #FFFFFF;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.avatarImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatarPlaceholder {
+  width: 100%;
+  height: 100%;
+  background: #FAF4EF;
+  color: #B46A2C;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1rem;
+}
+
+.talentInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.talentNameRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 2px;
+}
+
+.talentName {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #0F172A;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.featuredBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 0.625rem;
+  font-weight: 700;
+  background: #FDF4EC;
+  color: #B46A2C;
+  padding: 1px 6px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+.starIcon {
+  font-size: 0.75rem !important;
+}
+
+.categoryBadge {
+  font-size: 0.75rem;
+  color: #64748B;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.profileLink {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #64748B;
+  text-decoration: none;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: all 0.15s ease;
+  border: 1px solid transparent;
+}
+
+.profileLink:hover {
+  background: #FFFFFF;
+  color: #0F172A;
+  border-color: #CBD5E1;
+}
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 28px 16px;
+  text-align: center;
+  flex: 1;
+}
+
+.emptyText {
+  font-size: 0.8125rem;
+  color: #64748B;
+  margin-bottom: 12px;
+}
+
+.addBtn {
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+  border-color: #CBD5E1 !important;
+  color: #334155 !important;
+  border-radius: 6px !important;
+}

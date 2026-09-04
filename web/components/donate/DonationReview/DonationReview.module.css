@@ -89,6 +89,10 @@
   @apply opacity-75 cursor-not-allowed;
 }
 
+.submissionError {
+  @apply text-sm text-rose-600 font-medium text-center;
+}
+
 .redirectNotice {
   @apply flex items-center justify-center gap-2 text-xs text-[#868C98] text-center select-none;
 }

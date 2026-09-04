@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
-import { getRelatedTalents } from "@/utils/talentHelpers";
 import styles from "./TalentProfileSidebar.module.css";
 
 /**
@@ -20,10 +19,9 @@ export function RelatedTalents({ talent }) {
     return `${cat}s`;
   };
 
-  const relatedList =
-    (talent?.relatedCreatives && talent.relatedCreatives.length > 0)
-      ? talent.relatedCreatives
-      : getRelatedTalents(talent?.categoryKey || talent?.category, talent?.id, 3);
+  const relatedList = Array.isArray(talent?.relatedCreatives)
+    ? talent.relatedCreatives
+    : [];
 
   const title =
     talent?.relatedCategoryTitle ||
@@ -41,13 +39,15 @@ export function RelatedTalents({ talent }) {
             className={styles.relatedItem}
           >
             <div className={styles.relatedAvatar}>
-              <Image
-                src={item.image || "/assets/img/talents/julius.jpg"}
-                alt={item.name}
-                fill
-                sizes="40px"
-                className="object-cover object-center"
-              />
+              {item.image && (
+                <Image
+                  src={item.image}
+                  alt={item.name || "Related talent"}
+                  fill
+                  sizes="40px"
+                  className="object-cover object-center"
+                />
+              )}
             </div>
 
             <div className={styles.relatedInfo}>

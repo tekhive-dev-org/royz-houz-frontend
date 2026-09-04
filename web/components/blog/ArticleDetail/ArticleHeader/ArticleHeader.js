@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { Check } from "lucide-react";
+import { formatDate } from "@/utils/dateFormatter";
 import styles from "./ArticleHeader.module.css";
 
 /**
@@ -78,8 +79,8 @@ export function ArticleHeader({ article }) {
             <div className={styles.authorAvatarRing}>
               <div className={styles.authorAvatarContainer}>
                 <Image
-                  src="/assets/img/blog/author-chisom.jpg"
-                  alt="Chisom Obi"
+                  src={article?.authorData?.avatar || "/assets/img/blog/author-chisom.jpg"}
+                  alt={article?.author || "Chisom Obi"}
                   fill
                   className={styles.authorAvatar}
                 />
@@ -90,7 +91,7 @@ export function ArticleHeader({ article }) {
                 {article?.author || "Chisom Obi"}
               </span>
               <span className={styles.metaSubtitle}>
-                {article?.date || "July 28, 2024"} · {article?.readTime || "6 min read"}
+                {formatDate(article?.date) || article?.date || "July 28, 2024"} · {article?.readTime || "6 min read"}
               </span>
             </div>
           </div>

@@ -1,48 +1,70 @@
+import Image from "next/image";
 import styles from "./ArticleBody.module.css";
 
-/**
- * ArticleBody component rendering article paragraphs, featured blockquote,
- * and the Key Takeaway / Impact callout card matching the 709x147 vector specification.
- */
-export function ArticleBody() {
-  return (
-    <div className={styles.bodyContainer}>
-      <p className={styles.paragraph}>
-        This initiative was born out of a simple yet powerful realization: Africa&apos;s creative economy is one of the continent&apos;s most untapped resources. For thousands of young people across Nigeria, access to mentorship, state-of-the-art studio facilities, and career pathways in music, film, design, and storytelling has remained elusive.
-      </p>
+function ArticleBlock({ block }) {
+  if (block.type === "heading") {
+    const level = Math.min(Math.max(Number(block.level) || 2, 2), 4);
+    const headingClasses = {
+      2: "text-2xl font-bold text-[#0A0D14] mt-6 mb-2 tracking-tight",
+      3: "text-xl font-bold text-[#0A0D14] mt-5 mb-2",
+      4: "text-lg font-semibold text-[#0A0D14] mt-4 mb-1",
+    };
+    const Heading = `h${level}`;
+    return <Heading className={headingClasses[level] || styles.paragraph}>{block.text}</Heading>;
+  }
 
-      <p className={styles.paragraph}>
-        At Royz Houz, we launched our 2026 Creative Fellowship with a bold mission: to train, mentor, and launch 500 youth into sustainable creative careers. Through an intensive 12-week immersive curriculum, fellows gained hands-on experience in creative production, digital distribution, brand storytelling, and international licensing.
-      </p>
-
-      {/* Featured Quote Callout */}
+  if (block.type === "quote") {
+    return (
       <blockquote className={styles.blockquote}>
         <span className={styles.quoteMark}>“</span>
-        <p className={styles.quoteText}>
-          The creatives who succeed long-term are not the ones who shine first. They are the ones who show each day.
-        </p>
+        <p className={styles.quoteText}>{block.text}</p>
         <span className={styles.quoteMark}>”</span>
       </blockquote>
+    );
+  }
 
-      <p className={styles.paragraph}>
-        Fellows worked side-by-side with seasoned industry mentors across Lagos, Accra, and London. They were challenged to produce original content that reflects the authenticity of modern African narratives while meeting global technical standards.
-      </p>
-
-      {/* Key Takeaway Highlight Callout Card (709x147 Vector Spec) */}
+  if (block.type === "callout") {
+    return (
       <div className={styles.impactCard}>
-        <div className={styles.impactTag}>KEY TAKEAWAY</div>
-        <p className={styles.impactText}>
-          Sustainable creative careers in Africa demand more than just talent; they require financial literacy, strategic collaboration, intentional branding, and a commitment to continuous mentorship.
-        </p>
+        <span className={styles.impactTag}>{block.title || "KEY TAKEAWAY"}</span>
+        <p className={styles.impactText}>{block.text}</p>
       </div>
+    );
+  }
 
-      <p className={styles.paragraph}>
-        The results were nothing short of extraordinary. Over 85% of our fellows transitioned directly into full-time roles, secured freelance commissions, or launched creative enterprises within three months of graduation.
-      </p>
+  if (block.type === "image") {
+    return (
+      <figure className="my-6 flex flex-col gap-2">
+        <div className="relative w-full h-[300px] sm:h-[420px] rounded-xl overflow-hidden bg-stone-100">
+          <Image src={block.src} alt={block.alt || "Article visual"} fill sizes="(max-width: 1024px) 100vw, 750px" className="object-cover" />
+        </div>
+        {block.caption && <figcaption className="text-xs text-stone-500 italic text-center">{block.caption}</figcaption>}
+      </figure>
+    );
+  }
 
-      <p className={styles.paragraph}>
-        This is just the beginning. Our vision is to expand the fellowship model across 10 African cities by 2028, ensuring that no young creative with passion and dedication is held back by lack of opportunity.
-      </p>
+  if (block.type === "list" || block.type === "listItem") {
+    return <p className={styles.paragraph}>• {block.text}</p>;
+  }
+
+  if (block.type === "divider") return <hr className="my-6 border-stone-200" />;
+
+  return <p className={styles.paragraph}>{block.text}</p>;
+}
+
+/**
+ * Renders the sanitized structured article body supplied by the public post record.
+ */
+export function ArticleBody({ article }) {
+  const blocks = article?.content || [];
+
+  return (
+    <div className={styles.bodyContainer}>
+      {blocks.length > 0 ? (
+        blocks.map((block, index) => <ArticleBlock key={`${block.type}-${index}`} block={block} />)
+      ) : (
+        <p className={styles.paragraph}>{article?.excerpt}</p>
+      )}
     </div>
   );
 }

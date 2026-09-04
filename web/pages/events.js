@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback, useEffect } from "react";
 import Head from "next/head";
 import {
   EventsHero,
@@ -7,11 +7,8 @@ import {
   EventsSection,
 } from "@/components/events";
 import { SupportMovement } from "@/components/home";
-import {
-  UPCOMING_EVENTS,
-  POPULAR_EVENTS,
-  PAST_EVENTS,
-} from "@/constants/events";
+import { EVENT_CATEGORIES } from "@/constants/events";
+import { listEventCategories, listEvents } from "@/services/content/eventService";
 
 const MONTH_MAP = {
   jan: 0, feb: 1, mar: 2, apr: 3, may: 4, jun: 5,
@@ -25,7 +22,35 @@ function getEventDateTimestamp(ev) {
   return new Date(year, month, day).getTime();
 }
 
-export default function EventsPage() {
+function getEventSections(events) {
+  const now = Date.now();
+  const pastEvents = events.filter((event) => {
+    // An event belongs to Past Events only after it has actually ended.
+    // Legacy events without an end time fall back to their start time.
+    const endTimestamp = event.ends_at || event.endsAt || event.countdownTarget || event.starts_at;
+    const endDate = endTimestamp ? new Date(endTimestamp).getTime() : NaN;
+    return event.isPast || (Number.isFinite(endDate) && endDate <= now);
+  });
+  const upcomingEvents = events.filter((event) => !pastEvents.includes(event));
+
+  return {
+    upcoming: upcomingEvents,
+    popular: upcomingEvents.filter((event) => event.isPopular),
+    past: pastEvents,
+  };
+}
+
+export default function EventsPage({ events, categories: initialCategories }) {
+  const [liveEvents, setLiveEvents] = useState(events || []);
+  const [categories, setCategories] = useState(
+    initialCategories?.length ? initialCategories : EVENT_CATEGORIES.slice(1).map((title) => ({ title }))
+  );
+  const eventSections = useMemo(() => getEventSections(liveEvents), [liveEvents]);
+
+  useEffect(() => {
+    setLiveEvents(events || []);
+    if (initialCategories?.length) setCategories(initialCategories);
+  }, [events, initialCategories]);
   const [selectedLocation, setSelectedLocation] = useState("Nigeria");
   const [activeEventsTab, setActiveEventsTab] = useState("upcoming");
   const [selectedCategory, setSelectedCategory] = useState("All");
@@ -90,16 +115,16 @@ export default function EventsPage() {
   );
 
   const filteredUpcoming = useMemo(
-    () => filterAndSortEvents(UPCOMING_EVENTS),
-    [filterAndSortEvents]
+    () => filterAndSortEvents(eventSections.upcoming),
+    [eventSections.upcoming, filterAndSortEvents]
   );
   const filteredPopular = useMemo(
-    () => filterAndSortEvents(POPULAR_EVENTS),
-    [filterAndSortEvents]
+    () => filterAndSortEvents(eventSections.popular),
+    [eventSections.popular, filterAndSortEvents]
   );
   const filteredPast = useMemo(
-    () => filterAndSortEvents(PAST_EVENTS),
-    [filterAndSortEvents]
+    () => filterAndSortEvents(eventSections.past),
+    [eventSections.past, filterAndSortEvents]
   );
 
   return (
@@ -127,6 +152,7 @@ export default function EventsPage() {
 
         {/* Filter Bar: Categories, Live Search & Production-Ready Sorting */}
         <EventsFilterBar
+          categories={["All", ...categories.map((category) => category.title)]}
           selectedCategory={selectedCategory}
           onCategoryChange={setSelectedCategory}
           searchQuery={searchQuery}
@@ -175,4 +201,29 @@ export default function EventsPage() {
       </main>
     </>
   );
+}
+
+export async function getStaticProps() {
+  try {
+    const [result, categoryResult] = await Promise.all([listEvents(), listEventCategories()]);
+    const events = result.success ? result.data : [];
+
+    return {
+      props: {
+        events,
+        categories: categoryResult.success && categoryResult.data.length
+          ? categoryResult.data
+          : EVENT_CATEGORIES.slice(1).map((title) => ({ title })),
+      },
+      revalidate: 60,
+    };
+  } catch {
+    return {
+      props: {
+        events: [],
+        categories: [],
+      },
+      revalidate: 60,
+    };
+  }
 }

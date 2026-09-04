@@ -3,13 +3,13 @@ import styles from "./TalentBooking.module.css";
 /**
  * Step 3: Review Booking Request & Consent Agreement
  */
-export function Step3Review({ formData, updateFormData, onConfirm }) {
-  const fullName = `${formData.firstName || ""} ${formData.lastName || ""}`.trim() || "John Doe";
+export function Step3Review({ formData, updateFormData, onConfirm, isSubmitting = false, submitError = "" }) {
+  const fullName = `${formData.firstName || ""} ${formData.lastName || ""}`.trim();
   const formattedBudget = formData.budget
     ? formData.budget.startsWith("₦")
       ? formData.budget
       : `₦${formData.budget}`
-    : "₦250,000";
+    : "";
 
   const handleCheckboxChange = (e) => {
     updateFormData({ agreedToTerms: e.target.checked });
@@ -33,27 +33,27 @@ export function Step3Review({ formData, updateFormData, onConfirm }) {
 
         <div className={styles.reviewRow}>
           <span className={styles.reviewKey}>Email</span>
-          <span className={styles.reviewValue}>{formData.email || "Johndoe@xample.com"}</span>
+          <span className={styles.reviewValue}>{formData.email || ""}</span>
         </div>
 
         <div className={styles.reviewRow}>
           <span className={styles.reviewKey}>Phone</span>
-          <span className={styles.reviewValue}>{formData.phone || "+2348066704632"}</span>
+          <span className={styles.reviewValue}>{formData.phone || ""}</span>
         </div>
 
         <div className={styles.reviewRow}>
           <span className={styles.reviewKey}>Event Type</span>
-          <span className={styles.reviewValue}>{formData.eventType || "Corporate Event"}</span>
+          <span className={styles.reviewValue}>{formData.eventType || ""}</span>
         </div>
 
         <div className={styles.reviewRow}>
           <span className={styles.reviewKey}>Date</span>
-          <span className={styles.reviewValue}>{formData.eventDate || "2026-12-31"}</span>
+          <span className={styles.reviewValue}>{formData.eventDate || ""}</span>
         </div>
 
         <div className={styles.reviewRow}>
           <span className={styles.reviewKey}>Location</span>
-          <span className={styles.reviewValue}>{formData.eventLocation || "Enugu"}</span>
+          <span className={styles.reviewValue}>{formData.eventLocation || ""}</span>
         </div>
 
         <div className={styles.reviewRow}>
@@ -64,8 +64,7 @@ export function Step3Review({ formData, updateFormData, onConfirm }) {
         <div className={styles.reviewRow}>
           <span className={styles.reviewKey}>Description</span>
           <p className={styles.reviewValueDescription}>
-            {formData.eventDescription ||
-              "We are organizing a creative event and are seeking talented professionals to deliver engaging performances or services that align with the event's theme, audience, and overall objectives."}
+            {formData.eventDescription || ""}
           </p>
         </div>
       </div>
@@ -90,17 +89,23 @@ export function Step3Review({ formData, updateFormData, onConfirm }) {
         <span>I agree to the Royz House Booking Terms &amp; Conditions and Privacy Policy</span>
       </label>
 
+      {submitError ? (
+        <p className={styles.errorMessage} role="alert">
+          {submitError}
+        </p>
+      ) : null}
+
       {/* Submit Booking Request Button */}
       <button
         type="submit"
-        disabled={!formData.agreedToTerms}
+        disabled={!formData.agreedToTerms || isSubmitting}
         className={
-          formData.agreedToTerms
+          formData.agreedToTerms && !isSubmitting
             ? styles.continueButton
             : styles.continueButtonDisabled
         }
       >
-        Confirm Booking Request
+        {isSubmitting ? "Submitting Request…" : "Confirm Booking Request"}
       </button>
     </form>
   );

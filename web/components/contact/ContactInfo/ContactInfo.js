@@ -6,6 +6,7 @@ import {
   YoutubeIcon,
   TikTokIcon,
 } from "@/components/common/SocialIcons";
+import { useGlobalLayout } from "@/hooks/useGlobalLayout";
 import styles from "./ContactInfo.module.css";
 
 const COUNTRY_CODES = [
@@ -50,10 +51,25 @@ export function ContactInfo() {
     message: "",
   });
 
+  const { socialLinks, contactInfo } = useGlobalLayout();
+
+  const emailValue = contactInfo?.email || "hello@royzhouz.com";
+  const phoneValue = contactInfo?.phone || "+234 124 231 3542";
+  const addressValue = contactInfo?.address || "Royz Houz Headquarters";
+
+  const facebookUrl = socialLinks?.find((s) => s.platform === "facebook")?.url || "https://facebook.com";
+  const youtubeUrl = socialLinks?.find((s) => s.platform === "youtube")?.url || "https://youtube.com";
+  const instagramUrl = socialLinks?.find((s) => s.platform === "instagram")?.url || "https://instagram.com";
+  const xUrl = socialLinks?.find((s) => s.platform === "x" || s.platform === "twitter")?.url || "https://x.com";
+  const tiktokUrl = socialLinks?.find((s) => s.platform === "tiktok")?.url || "https://tiktok.com";
+
   const [selectedCountry, setSelectedCountry] = useState(COUNTRY_CODES[0]); // Default Nigeria (+234)
   const [isCountryOpen, setIsCountryOpen] = useState(false);
   const [countrySearch, setCountrySearch] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formError, setFormError] = useState("");
+  const [fieldErrors, setFieldErrors] = useState({});
 
   const dropdownRef = useRef(null);
 
@@ -72,6 +88,8 @@ export function ContactInfo() {
     const { name, value } = e.target;
     if (name === "message" && value.length > 600) return;
     setFormData((prev) => ({ ...prev, [name]: value }));
+    setFieldErrors((previous) => ({ ...previous, [name]: "" }));
+    setFormError("");
   };
 
   const handleCountrySelect = (country) => {
@@ -80,12 +98,65 @@ export function ContactInfo() {
     setCountrySearch("");
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.firstName.trim() || !formData.email.trim() || !formData.message.trim()) return;
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 5000);
-    setFormData({ firstName: "", lastName: "", email: "", phone: "", reason: "", message: "" });
+    if (isSubmitting) return;
+
+    const nextErrors = {};
+    if (!formData.firstName.trim()) nextErrors.firstName = "Enter your first name.";
+    if (!formData.email.trim()) nextErrors.email = "Enter your email address.";
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) {
+      nextErrors.email = "Enter a valid email address.";
+    }
+    if (!formData.message.trim()) nextErrors.message = "Enter your message.";
+
+    if (Object.keys(nextErrors).length) {
+      setFieldErrors(nextErrors);
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubmitted(false);
+    setFormError("");
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          firstName: formData.firstName.trim(),
+          lastName: formData.lastName.trim() || null,
+          email: formData.email.trim(),
+          phone: formData.phone.trim() ? `${selectedCountry.dial} ${formData.phone.trim()}` : null,
+          countryCode: formData.phone.trim() ? selectedCountry.code : null,
+          reason: formData.reason || null,
+          message: formData.message.trim(),
+        }),
+      });
+      const payload = await response.json().catch(() => null);
+
+      if (!response.ok || !payload?.success) {
+        const details = Array.isArray(payload?.error?.details) ? payload.error.details : [];
+        const nextErrors = details.reduce((errors, detail) => {
+          const field = String(detail?.field || "").split(".")[0];
+          if (["firstName", "email", "message"].includes(field)) {
+            errors[field] = "Please check this field.";
+          }
+          return errors;
+        }, {});
+        setFieldErrors(nextErrors);
+        setFormError(payload?.error?.message || "We could not send your message. Please try again.");
+        return;
+      }
+
+      setSubmitted(true);
+      setFieldErrors({});
+      setFormData({ firstName: "", lastName: "", email: "", phone: "", reason: "", message: "" });
+    } catch {
+      setFormError("We could not send your message. Please check your connection and try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const filteredCountries = COUNTRY_CODES.filter(
@@ -116,12 +187,12 @@ export function ContactInfo() {
                 </div>
                 <div className={styles.cardDetails}>
                   <h3 className={styles.cardLabel}>Email Us</h3>
-                  <p className={styles.cardValue}>hello@royzhouz.com</p>
+                  <p className={styles.cardValue}>{emailValue}</p>
                   <p className={styles.cardSubtext}>We respond within 24 hours</p>
                 </div>
               </div>
               <a
-                href="mailto:hello@royzhouz.com"
+                href={`mailto:${emailValue}`}
                 className={styles.pillActionBtn}
               >
                 Chat for support
@@ -136,12 +207,12 @@ export function ContactInfo() {
                 </div>
                 <div className={styles.cardDetails}>
                   <h3 className={styles.cardLabel}>Call Us</h3>
-                  <p className={styles.cardValue}>+234 124 231 3542</p>
+                  <p className={styles.cardValue}>{phoneValue}</p>
                   <p className={styles.cardSubtext}>Mon – Fri, 8:00AM – 5:00PM</p>
                 </div>
               </div>
               <a
-                href="tel:+2341242313542"
+                href={`tel:${phoneValue.replace(/\s+/g, "")}`}
                 className={styles.pillActionBtn}
               >
                 Call our team
@@ -156,7 +227,7 @@ export function ContactInfo() {
                 </div>
                 <div className={styles.cardDetails}>
                   <h3 className={styles.cardLabel}>Visit Us</h3>
-                  <p className={styles.cardValue}>Royz Houz Headquarters</p>
+                  <p className={styles.cardValue}>{addressValue}</p>
                   <p className={styles.cardSubtext}>Lagos, Nigeria</p>
                 </div>
               </div>
@@ -178,7 +249,7 @@ export function ContactInfo() {
                   <h3 className={styles.cardLabel}>Follow Us</h3>
                   <div className={styles.socialIconsRow}>
                     <a
-                      href="https://facebook.com"
+                      href={facebookUrl}
                       target="_blank"
                       rel="noreferrer"
                       className={styles.socialCircleFb}
@@ -189,7 +260,7 @@ export function ContactInfo() {
                       </svg>
                     </a>
                     <a
-                      href="https://youtube.com"
+                      href={youtubeUrl}
                       target="_blank"
                       rel="noreferrer"
                       className={styles.socialCircleYt}
@@ -198,7 +269,7 @@ export function ContactInfo() {
                       <YoutubeIcon className="w-3.5 h-3.5" />
                     </a>
                     <a
-                      href="https://instagram.com"
+                      href={instagramUrl}
                       target="_blank"
                       rel="noreferrer"
                       className={styles.socialCircleIg}
@@ -207,7 +278,7 @@ export function ContactInfo() {
                       <InstagramIcon className="w-3.5 h-3.5" />
                     </a>
                     <a
-                      href="https://x.com"
+                      href={xUrl}
                       target="_blank"
                       rel="noreferrer"
                       className={styles.socialCircleX}
@@ -216,7 +287,7 @@ export function ContactInfo() {
                       <XIcon className="w-3.5 h-3.5" />
                     </a>
                     <a
-                      href="https://tiktok.com"
+                      href={tiktokUrl}
                       target="_blank"
                       rel="noreferrer"
                       className={styles.socialCircleTt}
@@ -252,8 +323,10 @@ export function ContactInfo() {
                     onChange={handleChange}
                     placeholder="Enter your name"
                     className={styles.formInput}
+                    aria-invalid={Boolean(fieldErrors.firstName)}
                     required
                   />
+                  {fieldErrors.firstName && <p className={styles.errorMsg}>{fieldErrors.firstName}</p>}
                 </div>
                 <div className={styles.formGroup}>
                   <label htmlFor="contact-last" className={styles.formLabel}>Last name</label>
@@ -281,8 +354,10 @@ export function ContactInfo() {
                     onChange={handleChange}
                     placeholder="you@company.com"
                     className={styles.formInput}
+                    aria-invalid={Boolean(fieldErrors.email)}
                     required
                   />
+                  {fieldErrors.email && <p className={styles.errorMsg}>{fieldErrors.email}</p>}
                 </div>
 
                 <div className={styles.formGroup}>
@@ -386,23 +461,26 @@ export function ContactInfo() {
                   placeholder="Leave us a message"
                   rows={4}
                   className={styles.formTextarea}
+                  aria-invalid={Boolean(fieldErrors.message)}
                   required
                 />
+                {fieldErrors.message && <p className={styles.errorMsg}>{fieldErrors.message}</p>}
                 <span className={styles.charCount}>
                   {formData.message.length}/600
                 </span>
               </div>
 
               {/* Submit */}
-              <button type="submit" className={styles.submitBtn}>
-                Send Message
+              <button type="submit" className={styles.submitBtn} disabled={isSubmitting}>
+                {isSubmitting ? "Sending Message..." : "Send Message"}
               </button>
 
               {submitted && (
-                <p className={styles.successMsg}>
+                <p className={styles.successMsg} role="status">
                   ✓ Message sent successfully! We&apos;ll get back to you soon.
                 </p>
               )}
+              {formError && <p className={styles.errorMsg} role="alert">{formError}</p>}
 
               <div className={styles.privacyNote}>
                 <ShieldCheck className="w-3.5 h-3.5 text-[#868C98] shrink-0" />

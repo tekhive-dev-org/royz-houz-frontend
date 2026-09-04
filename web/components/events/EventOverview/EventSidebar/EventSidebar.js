@@ -61,14 +61,16 @@ export function EventSidebar({ event, selectedTier, onGetTickets }) {
   };
 
   const handleAddToCalendar = () => {
+    const start = event?.starts_at ? new Date(event.starts_at) : null;
+    if (!start || Number.isNaN(start.getTime())) return;
+
+    const end = event?.ends_at ? new Date(event.ends_at) : new Date(start.getTime() + 60 * 60 * 1000);
+    const toGoogleDate = (date) => date.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
     const title = encodeURIComponent(event?.title || "Royz House Event");
-    const details = encodeURIComponent(
-      event?.aboutParagraphs?.[0] || "Royz House Event Showcase."
-    );
-    const location = encodeURIComponent(
-      event?.venue || event?.location || "Kumasi Cultural Centre, Kumasi, Lagos"
-    );
-    const gCalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&details=${details}&location=${location}`;
+    const details = encodeURIComponent(event?.aboutParagraphs?.[0] || event?.description || "Royz House Event Showcase.");
+    const location = encodeURIComponent(event?.venue || event?.location || "");
+    const dates = `${toGoogleDate(start)}/${toGoogleDate(end)}`;
+    const gCalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${dates}&details=${details}&location=${location}`;
     window.open(gCalUrl, "_blank", "noopener,noreferrer");
   };
 
@@ -206,7 +208,7 @@ export function EventSidebar({ event, selectedTier, onGetTickets }) {
                 className={styles.auxBtn}
               >
                 <Calendar className="w-3.5 h-3.5 text-[#525866]" />
-                <span>Add to calender</span>
+                <span>Add to calendar</span>
               </button>
 
               <button

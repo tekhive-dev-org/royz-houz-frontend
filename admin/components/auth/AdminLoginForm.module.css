@@ -1,0 +1,115 @@
+.page {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 24px;
+  background: radial-gradient(circle at top, #181B26 0%, #0B0C10 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.page::before {
+  content: "";
+  position: absolute;
+  top: -20%;
+  right: -10%;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(180, 106, 44, 0.15) 0%, rgba(0,0,0,0) 70%);
+  filter: blur(40px);
+  pointer-events: none;
+}
+
+.page::after {
+  content: "";
+  position: absolute;
+  bottom: -20%;
+  left: -10%;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(220, 164, 62, 0.1) 0%, rgba(0,0,0,0) 70%);
+  filter: blur(40px);
+  pointer-events: none;
+}
+
+.card {
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  background: rgba(24, 27, 38, 0.85) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 20px !important;
+  box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.5) !important;
+  color: #FFFFFF;
+  max-width: 440px;
+  padding: 40px;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+.logoBadge {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #B46A2C 0%, #7B3E1B 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 16px rgba(180, 106, 44, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  margin-bottom: 16px;
+}
+
+.logoInitial {
+  font-family: 'Lato', sans-serif;
+  font-weight: 900;
+  font-size: 1.25rem;
+  color: #FFFFFF;
+}
+
+.eyebrow {
+  color: #DCA43E !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.15em !important;
+}
+
+.title {
+  color: #FFFFFF !important;
+  font-weight: 800 !important;
+  font-size: 1.75rem !important;
+  margin-top: 4px;
+  letter-spacing: -0.02em;
+}
+
+.description {
+  color: #9CA3AF !important;
+  margin-top: 6px;
+}
+
+.darkInput :global(.MuiOutlinedInput-root) {
+  background: rgba(255, 255, 255, 0.04);
+  color: #FFFFFF;
+}
+
+.darkInput :global(.MuiOutlinedInput-notchedOutline) {
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.darkInput :global(.MuiInputLabel-root) {
+  color: #9CA3AF;
+}
+
+.submitButton {
+  min-height: 46px;
+  margin-top: 8px;
+  font-size: 0.9375rem !important;
+}
+
+@media (max-width: 480px) {
+  .card {
+    padding: 30px 22px;
+  }
+}

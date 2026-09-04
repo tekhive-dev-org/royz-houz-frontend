@@ -1,418 +1,673 @@
-import { useState, useRef, useEffect } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import {
   Play,
   Pause,
   ChevronsLeft,
   ChevronsRight,
-  Volume2,
-  Volume1,
-  VolumeX,
   Maximize,
   Minimize,
+  Music2,
+  Loader2,
 } from "lucide-react";
+import { useYouTubePlayer } from "@/hooks/useYouTubePlayer";
+import { PlayerVolumeControl } from "./PlayerVolumeControl";
 import styles from "./TalentVideoPlayer.module.css";
+import { getSafeMediaSource, parseMediaDurationToSeconds } from "./talentVideoUtils";
 
-/**
- * Format time in seconds to M:SS
- */
 function formatTime(seconds) {
-  const mins = Math.floor(seconds / 60);
-  const secs = Math.floor(seconds % 60);
+  const safeSeconds = Number.isFinite(seconds) && seconds > 0 ? Math.round(seconds) : 0;
+  const hours = Math.floor(safeSeconds / 3600);
+  const mins = Math.floor((safeSeconds % 3600) / 60);
+  const secs = safeSeconds % 60;
+  if (hours > 0) {
+    return `${hours}:${mins < 10 ? "0" : ""}${mins}:${secs < 10 ? "0" : ""}${secs}`;
+  }
   return `${mins}:${secs < 10 ? "0" : ""}${secs}`;
 }
 
-/**
- * Production-ready, dynamically reusable VideoPlayerHero component.
- * Supports seeking, play/pause, volume adjustment, speed, quality, and CC toggling.
- */
-export function VideoPlayerHero({
-  video = {
-    title: "The Sound Architect",
-    thumbnail: "/assets/img/talents/producer-video-frame.jpg",
-    duration: 214, // 3:34
-  },
-  initialTime = 8,
-  autoPlay = false,
-}) {
-  const [isPlaying, setIsPlaying] = useState(autoPlay);
-  const [currentTime, setCurrentTime] = useState(initialTime);
-  const [duration, setDuration] = useState(video.duration || 214);
+export function VideoPlayerHero({ media, autoPlay = false, onEnded, onDurationDetected, onPlaybackStart }) {
+  const wrapperRef = useRef(null);
+  const mediaRef = useRef(null);
+  const progressRef = useRef(null);
+  const lastAudibleVolumeRef = useRef(0.65);
+  const lastDetectedDurationRef = useRef(null);
+  const onDurationDetectedRef = useRef(onDurationDetected);
+  const onPlaybackStartRef = useRef(onPlaybackStart);
+
+  useEffect(() => {
+    onDurationDetectedRef.current = onDurationDetected;
+  }, [onDurationDetected]);
+
+  useEffect(() => {
+    onPlaybackStartRef.current = onPlaybackStart;
+  }, [onPlaybackStart]);
+
+  const source = getSafeMediaSource(media.videoUrl || media.trackUrl, media.mediaType);
+  const isAudio = source?.type === "audio";
+  const isNativeMedia = source?.type === "cloudinary" || isAudio;
+  const isYouTubeVideo = source?.type === "youtube";
+  const isIframeVideo = source?.type === "vimeo" || source?.type === "iframe";
+  const mediaLabel = isAudio ? "audio" : "video";
+  const initialDuration = parseMediaDurationToSeconds(media?.duration);
+  const youtubePlayer = useYouTubePlayer({
+    videoId: isYouTubeVideo ? source.videoId : null,
+    autoPlay,
+    fallbackDuration: initialDuration,
+    onEnded,
+  });
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [hasAttemptedPlay, setHasAttemptedPlay] = useState(Boolean(autoPlay));
+  const [isWaitingForData, setIsWaitingForData] = useState(false);
+  const [isControlsVisible, setIsControlsVisible] = useState(true);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(initialDuration);
+  const hideControlsTimerRef = useRef(null);
+
+  useEffect(() => {
+    if (youtubePlayer.duration && youtubePlayer.duration > 0) {
+      if (lastDetectedDurationRef.current !== youtubePlayer.duration) {
+        lastDetectedDurationRef.current = youtubePlayer.duration;
+        onDurationDetectedRef.current?.(youtubePlayer.duration);
+      }
+    }
+  }, [youtubePlayer.duration]);
+
   const [volume, setVolume] = useState(0.65);
   const [isMuted, setIsMuted] = useState(false);
-  const [isCCActive, setIsCCActive] = useState(true);
-  const [playbackSpeed, setPlaybackSpeed] = useState("1x");
-  const [quality, setQuality] = useState("Auto");
+  const [playbackSpeed, setPlaybackSpeed] = useState(1);
   const [isFullscreen, setIsFullscreen] = useState(false);
 
-  const wrapperRef = useRef(null);
-  const progressRef = useRef(null);
-  const volumeRef = useRef(null);
+  const activeIsPlaying = isYouTubeVideo ? youtubePlayer.isPlaying : isPlaying;
+  const activeIsBuffering = isYouTubeVideo
+    ? Boolean(youtubePlayer.isBuffering || (hasAttemptedPlay && !youtubePlayer.isPlaying && !youtubePlayer.isReady))
+    : Boolean(isWaitingForData && (activeIsPlaying || hasAttemptedPlay));
 
-  // Keep duration and state in sync with video prop changes
   useEffect(() => {
-    if (video.duration) {
-      setDuration(video.duration);
+    if (activeIsPlaying) {
+      onPlaybackStartRef.current?.();
     }
-    setCurrentTime(0);
-    setIsPlaying(true);
-  }, [video.id, video.title, video.duration]);
+  }, [activeIsPlaying]);
 
-  // Fullscreen change listener
+  const scheduleHideControls = useCallback(() => {
+    if (hideControlsTimerRef.current) {
+      clearTimeout(hideControlsTimerRef.current);
+    }
+    setIsControlsVisible(true);
+    if (activeIsPlaying && !activeIsBuffering) {
+      hideControlsTimerRef.current = setTimeout(() => {
+        setIsControlsVisible(false);
+      }, 2500);
+    }
+  }, [activeIsPlaying, activeIsBuffering]);
+
+  const handleUserActivity = useCallback(() => {
+    scheduleHideControls();
+  }, [scheduleHideControls]);
+
+  const handleMouseLeave = useCallback(() => {
+    if (activeIsPlaying && !activeIsBuffering) {
+      if (hideControlsTimerRef.current) {
+        clearTimeout(hideControlsTimerRef.current);
+      }
+      hideControlsTimerRef.current = setTimeout(() => {
+        setIsControlsVisible(false);
+      }, 400);
+    }
+  }, [activeIsPlaying, activeIsBuffering]);
+
+  useEffect(() => {
+    if (!activeIsPlaying || activeIsBuffering) {
+      if (hideControlsTimerRef.current) {
+        clearTimeout(hideControlsTimerRef.current);
+      }
+      setIsControlsVisible(true);
+    } else {
+      scheduleHideControls();
+    }
+    return () => {
+      if (hideControlsTimerRef.current) {
+        clearTimeout(hideControlsTimerRef.current);
+      }
+    };
+  }, [activeIsPlaying, activeIsBuffering, scheduleHideControls]);
+
+  // Reload the media element only when the media source URL changes or autoPlay changes
+  useEffect(() => {
+    const mediaElement = mediaRef.current;
+    setCurrentTime(0);
+    setIsPlaying(false);
+    setIsWaitingForData(false);
+    setHasAttemptedPlay(Boolean(autoPlay));
+    setPlaybackSpeed(1);
+
+    if (!mediaElement) return;
+    mediaElement.pause();
+    mediaElement.load();
+
+    if (autoPlay) {
+      setIsWaitingForData(true);
+      mediaElement.play().catch(() => {
+        setIsPlaying(false);
+        setIsWaitingForData(false);
+        setHasAttemptedPlay(false);
+      });
+    }
+  }, [autoPlay, source?.url]);
+
+  // Keep internal duration in sync if the media prop updates and hasn't been detected yet
+  useEffect(() => {
+    const fallbackNum = parseMediaDurationToSeconds(media?.duration);
+    if (Number.isFinite(fallbackNum) && fallbackNum > 0) {
+      setDuration((prev) => (prev > 0 ? prev : fallbackNum));
+    }
+  }, [media?.duration]);
+
+  const lockLandscapeOrientation = async () => {
+    try {
+      if (typeof window !== "undefined" && window.screen?.orientation?.lock) {
+        await window.screen.orientation.lock("landscape");
+      }
+    } catch {
+      // Best-effort orientation lock; falls back to CSS landscape transform
+    }
+  };
+
+  const unlockScreenOrientation = () => {
+    try {
+      if (typeof window !== "undefined" && window.screen?.orientation?.unlock) {
+        window.screen.orientation.unlock();
+      }
+    } catch {
+      // Ignore
+    }
+  };
+
   useEffect(() => {
     const handleFullscreenChange = () => {
-      const isFull = Boolean(
+      const active = Boolean(
         document.fullscreenElement ||
         document.webkitFullscreenElement ||
         document.mozFullScreenElement ||
         document.msFullscreenElement
       );
-      setIsFullscreen(isFull);
-
-      if (!isFull && typeof window !== "undefined" && window.screen?.orientation?.unlock) {
-        try {
-          window.screen.orientation.unlock();
-        } catch (_) {}
+      setIsFullscreen(active);
+      if (!active) {
+        unlockScreenOrientation();
       }
+    };
+
+    const mediaElement = mediaRef.current;
+    const handleWebkitBegin = () => setIsFullscreen(true);
+    const handleWebkitEnd = () => {
+      setIsFullscreen(false);
+      unlockScreenOrientation();
     };
 
     document.addEventListener("fullscreenchange", handleFullscreenChange);
     document.addEventListener("webkitfullscreenchange", handleFullscreenChange);
-    document.addEventListener("mozfullscreenchange", handleFullscreenChange);
-    document.addEventListener("MSFullscreenChange", handleFullscreenChange);
+    if (mediaElement) {
+      mediaElement.addEventListener("webkitbeginfullscreen", handleWebkitBegin);
+      mediaElement.addEventListener("webkitendfullscreen", handleWebkitEnd);
+    }
 
     return () => {
       document.removeEventListener("fullscreenchange", handleFullscreenChange);
       document.removeEventListener("webkitfullscreenchange", handleFullscreenChange);
-      document.removeEventListener("mozfullscreenchange", handleFullscreenChange);
-      document.removeEventListener("MSFullscreenChange", handleFullscreenChange);
+      if (mediaElement) {
+        mediaElement.removeEventListener("webkitbeginfullscreen", handleWebkitBegin);
+        mediaElement.removeEventListener("webkitendfullscreen", handleWebkitEnd);
+      }
     };
   }, []);
 
-  const speeds = ["0.75x", "1x", "1.25x", "1.5x", "2x"];
-  const qualities = ["Auto", "1080p", "720p", "480p"];
-
-  // Simulated playback timer for showcase mode
+  // Lock body scroll and handle Escape key when in pseudo-fullscreen
   useEffect(() => {
-    let interval = null;
-    if (isPlaying) {
-      const speedMultiplier = parseFloat(playbackSpeed.replace("x", "")) || 1;
-      interval = setInterval(() => {
-        setCurrentTime((prev) => {
-          if (prev >= duration) {
-            setIsPlaying(false);
-            return duration;
-          }
-          return Math.min(prev + 1 * speedMultiplier, duration);
-        });
-      }, 1000);
+    if (isFullscreen) {
+      document.body.style.overflow = "hidden";
+      const handleKeyDown = (e) => {
+        if (e.key === "Escape") {
+          setIsFullscreen(false);
+          unlockScreenOrientation();
+        }
+      };
+      window.addEventListener("keydown", handleKeyDown);
+      return () => {
+        document.body.style.overflow = "";
+        window.removeEventListener("keydown", handleKeyDown);
+      };
     }
-    return () => {
-      if (interval) clearInterval(interval);
-    };
-  }, [isPlaying, duration, playbackSpeed]);
+    document.body.style.overflow = "";
+  }, [isFullscreen]);
 
-  // Handle Seek Track click
-  const handleSeek = (e) => {
-    if (!progressRef.current) return;
+  const handlePlayToggle = async () => {
+    if (isYouTubeVideo) {
+      setHasAttemptedPlay(true);
+      youtubePlayer.togglePlay();
+      return;
+    }
+
+    const mediaElement = mediaRef.current;
+    if (!mediaElement) return;
+
+    if (mediaElement.paused) {
+      setHasAttemptedPlay(true);
+      if (mediaElement.readyState < 3) {
+        setIsWaitingForData(true);
+      }
+      try {
+        await mediaElement.play();
+      } catch {
+        setIsPlaying(false);
+        setIsWaitingForData(false);
+        setHasAttemptedPlay(false);
+      }
+    } else {
+      mediaElement.pause();
+      setIsPlaying(false);
+      setIsWaitingForData(false);
+      setHasAttemptedPlay(false);
+    }
+  };
+
+  const handleSeek = (event) => {
+    if (!progressRef.current || !activeDuration) return;
     const rect = progressRef.current.getBoundingClientRect();
-    const clickX = e.clientX - rect.left;
-    const percentage = Math.max(0, Math.min(1, clickX / rect.width));
-    setCurrentTime(percentage * duration);
-  };
-
-  // Skip 10 seconds backward
-  const handleSkipBackward = () => {
-    setCurrentTime((prev) => Math.max(0, prev - 10));
-  };
-
-  // Skip 10 seconds forward
-  const handleSkipForward = () => {
-    setCurrentTime((prev) => Math.min(duration, prev + 10));
-  };
-
-  // Handle Volume Slider click
-  const handleVolumeClick = (e) => {
-    if (!volumeRef.current) return;
-    const rect = volumeRef.current.getBoundingClientRect();
-    const clickX = e.clientX - rect.left;
-    const newVol = Math.max(0, Math.min(1, clickX / rect.width));
-    setVolume(newVol);
-    if (isMuted && newVol > 0) {
-      setIsMuted(false);
+    const percentage = Math.max(
+      0,
+      Math.min(1, (event.clientX - rect.left) / rect.width)
+    );
+    const targetTime = percentage * activeDuration;
+    if (isYouTubeVideo) {
+      youtubePlayer.seekTo(targetTime);
+      return;
+    }
+    if (mediaRef.current) {
+      if (activeIsPlaying || hasAttemptedPlay) {
+        setIsWaitingForData(true);
+      }
+      mediaRef.current.currentTime = targetTime;
     }
   };
 
-  // Toggle Mute
+  const handleSkip = (seconds) => {
+    if (isYouTubeVideo) {
+      youtubePlayer.seekTo(activeCurrentTime + seconds);
+      return;
+    }
+
+    const mediaElement = mediaRef.current;
+    if (!mediaElement) return;
+    if (activeIsPlaying || hasAttemptedPlay) {
+      setIsWaitingForData(true);
+    }
+    mediaElement.currentTime = Math.max(
+      0,
+      Math.min(mediaElement.duration || activeDuration, mediaElement.currentTime + seconds)
+    );
+  };
+
   const handleMuteToggle = () => {
-    setIsMuted((prev) => !prev);
+    if (isYouTubeVideo) {
+      youtubePlayer.toggleMute();
+      return;
+    }
+
+    const mediaElement = mediaRef.current;
+    if (!mediaElement) return;
+    if (mediaElement.muted || mediaElement.volume === 0) {
+      const restoredVolume = volume > 0 ? volume : lastAudibleVolumeRef.current;
+      mediaElement.volume = restoredVolume;
+      mediaElement.muted = false;
+      setVolume(restoredVolume);
+      setIsMuted(false);
+    } else {
+      mediaElement.muted = true;
+      setIsMuted(true);
+    }
   };
 
-  // Toggle Speed
+  const handleVolumeChange = (nextValue) => {
+    const nextVolume = Math.max(0, Math.min(1, nextValue));
+    if (isYouTubeVideo) {
+      youtubePlayer.setVolume(nextVolume);
+      return;
+    }
+
+    const mediaElement = mediaRef.current;
+    if (!mediaElement) return;
+    mediaElement.volume = nextVolume;
+    mediaElement.muted = nextVolume === 0;
+    if (nextVolume > 0) lastAudibleVolumeRef.current = nextVolume;
+    setVolume(nextVolume);
+    setIsMuted(nextVolume === 0);
+  };
+
   const handleSpeedToggle = () => {
-    const nextIdx = (speeds.indexOf(playbackSpeed) + 1) % speeds.length;
-    setPlaybackSpeed(speeds[nextIdx]);
+    if (isYouTubeVideo) {
+      youtubePlayer.cyclePlaybackSpeed();
+      return;
+    }
+
+    const mediaElement = mediaRef.current;
+    if (!mediaElement) return;
+    const speeds = [0.75, 1, 1.25, 1.5, 2];
+    const nextSpeed = speeds[(speeds.indexOf(playbackSpeed) + 1) % speeds.length];
+    mediaElement.playbackRate = nextSpeed;
+    setPlaybackSpeed(nextSpeed);
   };
 
-  // Toggle Quality
-  const handleQualityToggle = () => {
-    const nextIdx = (qualities.indexOf(quality) + 1) % qualities.length;
-    setQuality(qualities[nextIdx]);
-  };
-
-  // Toggle Fullscreen with mobile landscape orientation lock
   const handleFullscreenToggle = async () => {
-    if (!wrapperRef.current) return;
+    const wrapper = wrapperRef.current;
+    const mediaElement = mediaRef.current;
+    if (!wrapper) return;
 
-    const isCurrentlyFull = Boolean(
+    const isCurrentlyFullscreen = Boolean(
       document.fullscreenElement ||
       document.webkitFullscreenElement ||
       isFullscreen
     );
 
-    if (!isCurrentlyFull) {
-      // 1. Request fullscreen on container
-      try {
-        if (wrapperRef.current.requestFullscreen) {
-          await wrapperRef.current.requestFullscreen();
-        } else if (wrapperRef.current.webkitRequestFullscreen) {
-          wrapperRef.current.webkitRequestFullscreen();
-        }
-      } catch (_) {
-        // Fallback for iOS/mobile without div fullscreen support
-      }
-
-      // 2. Lock screen orientation to landscape for mobile
-      if (typeof window !== "undefined" && window.screen?.orientation?.lock) {
+    if (isCurrentlyFullscreen) {
+      if (document.fullscreenElement || document.webkitFullscreenElement) {
         try {
-          await window.screen.orientation.lock("landscape");
-        } catch (_) {}
-      }
-
-      setIsFullscreen(true);
-    } else {
-      // 1. Exit fullscreen
-      try {
-        if (
-          document.fullscreenElement ||
-          document.webkitFullscreenElement ||
-          document.mozFullScreenElement ||
-          document.msFullscreenElement
-        ) {
           if (document.exitFullscreen) {
             await document.exitFullscreen();
           } else if (document.webkitExitFullscreen) {
-            document.webkitExitFullscreen();
+            await document.webkitExitFullscreen();
           }
-        }
-      } catch (_) {}
-
-      // 2. Unlock screen orientation
-      if (typeof window !== "undefined" && window.screen?.orientation?.unlock) {
-        try {
-          window.screen.orientation.unlock();
-        } catch (_) {}
+        } catch {}
       }
-
       setIsFullscreen(false);
+      unlockScreenOrientation();
+      return;
     }
+
+    // Entering fullscreen
+    let nativeWorked = false;
+    try {
+      if (wrapper.requestFullscreen) {
+        await wrapper.requestFullscreen();
+        nativeWorked = true;
+      } else if (wrapper.webkitRequestFullscreen) {
+        await wrapper.webkitRequestFullscreen();
+        nativeWorked = true;
+      }
+    } catch {
+      nativeWorked = false;
+    }
+
+    // On iOS Safari where div.requestFullscreen is not allowed, fallback to native video fullscreen
+    if (!nativeWorked && !isYouTubeVideo && mediaElement?.webkitEnterFullscreen) {
+      try {
+        mediaElement.webkitEnterFullscreen();
+        return;
+      } catch {}
+    }
+
+    setIsFullscreen(true);
+    await lockLandscapeOrientation();
   };
 
-  const progressPercent = duration > 0 ? (currentTime / duration) * 100 : 0;
-  const activeVolume = isMuted ? 0 : volume;
+  const activeCurrentTime = isYouTubeVideo ? youtubePlayer.currentTime : currentTime;
+  const activeDuration = isYouTubeVideo ? youtubePlayer.duration : duration;
+  const activePlaybackSpeed = isYouTubeVideo ? youtubePlayer.playbackSpeed : playbackSpeed;
+  const activeVolumeLevel = isYouTubeVideo ? youtubePlayer.volume : volume;
+  const activeMuted = isYouTubeVideo ? youtubePlayer.isMuted : isMuted;
+  const progressPercent = activeDuration > 0 ? (activeCurrentTime / activeDuration) * 100 : 0;
+
+  const controlsFadeClass =
+    isControlsVisible || !activeIsPlaying || activeIsBuffering
+      ? styles.controlsVisible
+      : styles.controlsHidden;
 
   return (
     <div
       ref={wrapperRef}
-      className={`${styles.videoWrapper} ${
-        isFullscreen ? styles.fullscreenLandscape : ""
-      } group`}
-      aria-label={`Video player: ${video.title}`}
+      className={`${styles.videoWrapper} ${isFullscreen ? styles.fullscreenLandscape : ""} ${
+        !isControlsVisible && activeIsPlaying && !activeIsBuffering ? styles.cursorHidden : ""
+      }`}
+      onPointerMove={handleUserActivity}
+      onPointerDown={handleUserActivity}
+      onPointerEnter={handleUserActivity}
+      onPointerLeave={handleMouseLeave}
+      aria-label={`${isAudio ? "Audio" : "Video"} player: ${media.title}`}
     >
-      {/* Video Canvas Artwork */}
-      <Image
-        src={video.thumbnail || "/assets/img/talents/producer-video-frame.jpg"}
-        alt={video.title}
-        fill
-        priority
-        sizes="(max-width: 1024px) 100vw, 66vw"
-        className={styles.videoImage}
-      />
-
-      {/* Cinematic Dark Vignette & Gradient Overlay */}
-      <div className={styles.videoGradientOverlay} />
-
-      {/* Big Center Play/Pause Trigger Area */}
-      <div
-        className={styles.centerPlayTrigger}
-        onClick={() => setIsPlaying(!isPlaying)}
-        aria-label={isPlaying ? "Pause video" : "Play video"}
-      >
-        {!isPlaying && (
-          <div className={styles.centerPlayBtn}>
-            <Play className="w-6 h-6 sm:w-8 sm:h-8 fill-white text-white translate-x-0.5" />
-          </div>
-        )}
-      </div>
-
-      {/* Floating Bottom Controls Container */}
-      <div className={styles.controlsBar} onClick={(e) => e.stopPropagation()}>
-        {/* Seek Progress Bar (Touch-friendly Hit Area) */}
+      {isYouTubeVideo ? (
         <div
-          ref={progressRef}
-          onClick={handleSeek}
-          className={styles.progressContainer}
-          role="progressbar"
-          aria-valuenow={Math.round(progressPercent)}
-          aria-valuemin={0}
-          aria-valuemax={100}
-          aria-label="Seek track"
+          ref={youtubePlayer.mountRef}
+          className={styles.youtubePlayerMount}
+          aria-label={`YouTube video: ${media.title}`}
+        />
+      ) : null}
+
+      {isIframeVideo ? (
+        <iframe
+          src={source.url}
+          title={media.title || "Royz House Media Video"}
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowFullScreen
+          className={styles.videoMedia}
+        />
+      ) : null}
+
+      {isNativeMedia ? (
+        <video
+          ref={mediaRef}
+          className={`${styles.videoMedia} ${isAudio ? styles.audioMediaElement : ""}`}
+          poster={!isAudio ? media.thumbnail || undefined : undefined}
+          preload="auto"
+          playsInline
+          muted={isMuted}
+          onWaiting={() => {
+            if (activeIsPlaying || hasAttemptedPlay) {
+              setIsWaitingForData(true);
+            }
+          }}
+          onStalled={() => {
+            if (activeIsPlaying || hasAttemptedPlay) {
+              setIsWaitingForData(true);
+            }
+          }}
+          onSeeking={() => {
+            if (activeIsPlaying || hasAttemptedPlay) {
+              setIsWaitingForData(true);
+            }
+          }}
+          onCanPlay={() => setIsWaitingForData(false)}
+          onCanPlayThrough={() => setIsWaitingForData(false)}
+          onPlaying={() => {
+            setIsPlaying(true);
+            setIsWaitingForData(false);
+            setHasAttemptedPlay(true);
+          }}
+          onPause={() => {
+            setIsPlaying(false);
+            setIsWaitingForData(false);
+          }}
+          onSeeked={() => setIsWaitingForData(false)}
+          onError={() => {
+            setIsPlaying(false);
+            setIsWaitingForData(false);
+            setHasAttemptedPlay(false);
+          }}
+          onEnded={() => {
+            setIsPlaying(false);
+            setIsWaitingForData(false);
+            setHasAttemptedPlay(false);
+            onEnded?.();
+          }}
+          onTimeUpdate={(event) => setCurrentTime(event.currentTarget.currentTime)}
+          onLoadedMetadata={(event) => {
+            setIsWaitingForData(false);
+            const mediaDuration = event.currentTarget.duration;
+            if (Number.isFinite(mediaDuration) && mediaDuration > 0) {
+              setDuration(mediaDuration);
+              if (lastDetectedDurationRef.current !== mediaDuration) {
+                lastDetectedDurationRef.current = mediaDuration;
+                onDurationDetectedRef.current?.(mediaDuration);
+              }
+            }
+            event.currentTarget.volume = volume;
+            event.currentTarget.muted = isMuted;
+          }}
         >
-          <div className={styles.progressTrack}>
-            <div
-              className={styles.progressFill}
-              style={{ width: `${progressPercent}%` }}
-            />
+          <source src={source.url} type={isAudio ? "audio/mpeg" : "video/mp4"} />
+        </video>
+      ) : null}
+
+      {/* Rotating spinning buffering/loading indicator */}
+      {activeIsBuffering ? (
+        <div className={styles.spinnerContainer} aria-label="Loading media" role="status">
+          <div className={styles.spinnerBackdrop}>
+            <div className={`${styles.spinnerRotator} royz-spin`}>
+              <Loader2 className={styles.spinnerIcon} />
+            </div>
           </div>
         </div>
+      ) : null}
 
-        {/* Bottom Controls Row */}
-        <div className={styles.controlsRow}>
-          {/* Left Control Group */}
-          <div className={styles.controlsLeft}>
-            {/* Play / Pause Toggle */}
-            <button
-              type="button"
-              onClick={() => setIsPlaying(!isPlaying)}
-              className={styles.playPauseBtn}
-              aria-label={isPlaying ? "Pause" : "Play"}
-            >
-              {isPlaying ? (
-                <Pause className="w-4 h-4 fill-white text-white" />
-              ) : (
-                <Play className="w-4 h-4 fill-white text-white translate-x-0.5" />
-              )}
-            </button>
-
-            {/* 10s Rewind */}
-            <button
-              type="button"
-              onClick={handleSkipBackward}
-              className={styles.controlIconBtn}
-              aria-label="Rewind 10 seconds"
-              title="Rewind 10s"
-            >
-              <ChevronsLeft className="w-4 h-4" />
-            </button>
-
-            {/* 10s Fast Forward */}
-            <button
-              type="button"
-              onClick={handleSkipForward}
-              className={styles.controlIconBtn}
-              aria-label="Fast forward 10 seconds"
-              title="Forward 10s"
-            >
-              <ChevronsRight className="w-4 h-4" />
-            </button>
-
-            {/* Time Stamp Display */}
-            <span className={styles.timeText}>
-              {formatTime(currentTime)} / {formatTime(duration)}
+      {isAudio ? (
+        <div className={styles.audioBackdrop}>
+          {media.thumbnail ? (
+            <Image
+              src={media.thumbnail}
+              alt=""
+              fill
+              priority
+              sizes="(max-width: 1024px) 100vw, 66vw"
+              className={styles.audioArtwork}
+            />
+          ) : null}
+          <div className={styles.audioIdentity}>
+            <span className={styles.audioIcon} aria-hidden="true">
+              <Music2 />
             </span>
+            <span className={styles.audioType}>Now playing</span>
+            <strong className={styles.audioTitle}>{media.title}</strong>
           </div>
+        </div>
+      ) : null}
 
-          {/* Right Control Group */}
-          <div className={styles.controlsRight}>
-            {/* Speaker Mute/Unmute */}
-            <button
-              type="button"
-              onClick={handleMuteToggle}
-              className={styles.controlIconBtn}
-              aria-label={isMuted ? "Unmute" : "Mute"}
+      {!source && media.thumbnail ? (
+        <Image
+          src={media.thumbnail}
+          alt={media.title}
+          fill
+          priority
+          sizes="(max-width: 1024px) 100vw, 66vw"
+          className={styles.videoImage}
+        />
+      ) : null}
+
+      {!source ? (
+        <div className={styles.mediaUnavailable}>Media unavailable</div>
+      ) : null}
+
+      {isNativeMedia || isYouTubeVideo ? (
+        <>
+          <div className={`${styles.videoGradientOverlay} ${controlsFadeClass}`} />
+          <button
+            type="button"
+            className={`${styles.centerPlayTrigger} ${controlsFadeClass}`}
+            onClick={handlePlayToggle}
+            aria-label={activeIsPlaying ? `Pause ${mediaLabel}` : `Play ${mediaLabel}`}
+          >
+            {!activeIsPlaying && !activeIsBuffering ? (
+              <span className={styles.centerPlayBtn}>
+                <Play className="w-6 h-6 sm:w-8 sm:h-8 fill-white text-white translate-x-0.5" />
+              </span>
+            ) : null}
+          </button>
+
+          <div className={`${styles.controlsBar} ${controlsFadeClass}`}>
+            <div
+              ref={progressRef}
+              onClick={handleSeek}
+              className={styles.progressContainer}
+              role="slider"
+              tabIndex={0}
+              aria-valuenow={Math.round(activeCurrentTime)}
+              aria-valuemin={0}
+              aria-valuemax={Math.round(activeDuration)}
+              aria-label={`${isAudio ? "Audio" : "Video"} progress`}
             >
-              {isMuted || activeVolume === 0 ? (
-                <VolumeX className="w-4 h-4 text-red-400" />
-              ) : activeVolume < 0.5 ? (
-                <Volume1 className="w-4 h-4" />
-              ) : (
-                <Volume2 className="w-4 h-4" />
-              )}
-            </button>
-
-            {/* Interactive Volume Slider (Desktop/Tablet) */}
-            <div className={styles.volumeContainer}>
-              <div
-                ref={volumeRef}
-                onClick={handleVolumeClick}
-                className={styles.volumeTrack}
-                role="slider"
-                aria-valuenow={Math.round(activeVolume * 100)}
-                aria-valuemin={0}
-                aria-valuemax={100}
-                aria-label="Volume slider"
-              >
+              <div className={styles.progressTrack}>
                 <div
-                  className={styles.volumeFill}
-                  style={{ width: `${activeVolume * 100}%` }}
-                />
-                <div
-                  className={styles.volumeThumb}
-                  style={{ left: `${activeVolume * 100}%` }}
+                  className={styles.progressFill}
+                  style={{ width: `${progressPercent}%` }}
                 />
               </div>
             </div>
 
-            {/* Closed Captions Badge */}
-            <button
-              type="button"
-              onClick={() => setIsCCActive(!isCCActive)}
-              className={isCCActive ? styles.ccBadgeActive : styles.pillBadge}
-              aria-label="Closed captions"
-              title="Closed Captions"
-            >
-              CC
-            </button>
+            <div className={styles.controlsRow}>
+              <div className={styles.controlsLeft}>
+                <button
+                  type="button"
+                  onClick={handlePlayToggle}
+                  className={styles.playPauseBtn}
+                  aria-label={activeIsPlaying ? "Pause" : "Play"}
+                >
+                  {activeIsPlaying ? (
+                    <Pause className="w-4 h-4 fill-white text-white" />
+                  ) : (
+                    <Play className="w-4 h-4 fill-white text-white translate-x-0.5" />
+                  )}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleSkip(-10)}
+                  className={styles.controlIconBtn}
+                  aria-label="Rewind 10 seconds"
+                >
+                  <ChevronsLeft className="w-4 h-4" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleSkip(10)}
+                  className={styles.controlIconBtn}
+                  aria-label="Fast forward 10 seconds"
+                >
+                  <ChevronsRight className="w-4 h-4" />
+                </button>
+                <span className={styles.timeText}>
+                  {formatTime(activeCurrentTime)} / {formatTime(activeDuration)}
+                </span>
+              </div>
 
-            {/* Playback Speed Badge */}
-            <button
-              type="button"
-              onClick={handleSpeedToggle}
-              className={styles.pillBadge}
-              aria-label="Playback speed"
-              title="Playback Speed"
-            >
-              {playbackSpeed}
-            </button>
-
-            {/* Quality Badge */}
-            <button
-              type="button"
-              onClick={handleQualityToggle}
-              className={`${styles.pillBadge} hidden xs:inline-flex`}
-              aria-label="Video quality"
-              title="Video Quality"
-            >
-              {quality}
-            </button>
-
-            {/* Fullscreen Toggle */}
-            <button
-              type="button"
-              onClick={handleFullscreenToggle}
-              className={styles.controlIconBtn}
-              aria-label={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
-              title={isFullscreen ? "Exit Fullscreen" : "Fullscreen"}
-            >
-              {isFullscreen ? (
-                <Minimize className="w-4 h-4" />
-              ) : (
-                <Maximize className="w-4 h-4" />
-              )}
-            </button>
+              <div className={styles.controlsRight}>
+                <PlayerVolumeControl
+                  volume={activeVolumeLevel}
+                  isMuted={activeMuted}
+                  onVolumeChange={handleVolumeChange}
+                  onMuteToggle={handleMuteToggle}
+                  disabled={isYouTubeVideo && !youtubePlayer.isReady}
+                />
+                <button
+                  type="button"
+                  onClick={handleSpeedToggle}
+                  className={styles.pillBadge}
+                  aria-label="Playback speed"
+                >
+                  {activePlaybackSpeed}x
+                </button>
+                <button
+                  type="button"
+                  onClick={handleFullscreenToggle}
+                  className={styles.controlIconBtn}
+                  aria-label={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
+                >
+                  {isFullscreen ? (
+                    <Minimize className="w-4 h-4" />
+                  ) : (
+                    <Maximize className="w-4 h-4" />
+                  )}
+                </button>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+        </>
+      ) : null}
     </div>
   );
 }

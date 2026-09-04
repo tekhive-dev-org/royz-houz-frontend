@@ -4,8 +4,19 @@ import { Flame } from "lucide-react";
 import { TalentCardSocialSvg, RatingStarIcon } from "@/components/common/SocialIcons";
 import styles from "./TalentCard.module.css";
 
-export function TalentCard({ talent }) {
-  const { name, category, genre, location, rating, followers, image, isHot, slug, id } = talent;
+export function TalentCard({ talent = {} }) {
+  const {
+    name = "Featured talent",
+    category = "Talent",
+    genre = "",
+    location = "",
+    rating = "",
+    followers = "",
+    image = "/assets/img/talent-hero.jpg",
+    isHot = false,
+    slug,
+    id,
+  } = talent;
   const talentSlug = slug || id || "julius-ayomide";
   const profileUrl = `/talents/${talentSlug}`;
 

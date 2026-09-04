@@ -7,16 +7,9 @@ import styles from "./TalentProfileTabs.module.css";
  * GalleryTab rendering a responsive grid of photography with interactive full-screen Lightbox.
  */
 export function GalleryTab({ talent }) {
-  const images = talent?.galleryImages || [
-    talent?.coverImage || "/assets/img/talents/producer-hero.jpg",
-    talent?.image || "/assets/img/talents/julius.jpg",
-    "/assets/img/talents/studio.jpg",
-    "/assets/img/talents/headphones.jpg",
-    "/assets/img/talents/kofi.jpg",
-    "/assets/img/talents/fatima.jpg",
-    "/assets/img/talents/amara.jpg",
-    "/assets/img/talents/blessing.jpg",
-  ];
+  const images = Array.isArray(talent?.galleryImages)
+    ? talent.galleryImages.filter(Boolean)
+    : [];
 
   const [selectedIndex, setSelectedIndex] = useState(null);
 

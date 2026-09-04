@@ -1,0 +1,628 @@
+/* ─── Container & Header ──────────────────────────────────────────── */
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.header {
+  align-items: flex-start;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.title {
+  color: #111827;
+  font-size: 1.75rem !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.025em;
+}
+
+.description {
+  color: #4b5563;
+  margin-top: 6px !important;
+  max-width: 760px;
+  font-size: 0.9375rem;
+}
+
+.headerActions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+.createButton {
+  background: #b46a2c !important;
+  text-transform: none !important;
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+  white-space: nowrap;
+  padding: 8px 18px !important;
+}
+
+.createButton:hover {
+  background: #9a5b26 !important;
+}
+
+/* ─── Section Tabs ───────────────────────────────────────────────── */
+.sectionTabs {
+  border-bottom: 1px solid #E8EAEF;
+}
+
+.sectionTabs :global(.MuiTab-root) {
+  text-transform: none !important;
+  font-weight: 600 !important;
+  font-size: 0.9375rem !important;
+  color: #4B5563 !important;
+  min-height: 48px !important;
+  gap: 6px;
+}
+
+.sectionTabs :global(.Mui-selected) {
+  color: #B46A2C !important;
+  font-weight: 700 !important;
+}
+
+.sectionTabs :global(.MuiTabs-indicator) {
+  background-color: #B46A2C !important;
+  height: 3px !important;
+  border-radius: 3px 3px 0 0 !important;
+}
+
+/* ─── Controls Bar ───────────────────────────────────────────────── */
+.controlsBar {
+  background: #FFFFFF;
+  border: 1px solid #E8EAEF;
+  border-radius: 12px;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+}
+
+.filtersRow {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 12px;
+  align-items: center;
+}
+
+.searchInput {
+  background: #FFFFFF;
+}
+
+.filterControl {
+  background: #FFFFFF;
+}
+
+/* ─── Quick Pills ────────────────────────────────────────────────── */
+.quickFiltersRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding-top: 2px;
+}
+
+.quickPills {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  padding-bottom: 2px;
+  scrollbar-width: none;
+}
+
+.quickPills::-webkit-scrollbar {
+  display: none;
+}
+
+.quickPill {
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+  padding: 4px 12px !important;
+  border-radius: 20px !important;
+  border: 1px solid #E5E7EB !important;
+  background: #F9FAFB !important;
+  color: #4B5563 !important;
+  cursor: pointer;
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
+  transition: all 0.15s ease !important;
+}
+
+.quickPill:hover {
+  background: #F3F4F6 !important;
+  border-color: #D1D5DB !important;
+  color: #111827 !important;
+}
+
+.quickPillActive {
+  background: #FAF4EF !important;
+  border-color: #B46A2C !important;
+  color: #B46A2C !important;
+  font-weight: 700 !important;
+}
+
+.resultsMeta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8125rem;
+  color: #6B7280;
+  white-space: nowrap;
+}
+
+.resultsCount {
+  font-weight: 600;
+  color: #111827;
+}
+
+.resetFiltersBtn {
+  font-size: 0.75rem !important;
+  color: #B46A2C !important;
+  text-transform: none !important;
+  font-weight: 600 !important;
+  padding: 2px 6px !important;
+  min-width: auto !important;
+}
+
+/* ─── Table Container ────────────────────────────────────────────── */
+.tableContainer {
+  border: 1px solid #E8EAEF;
+  border-radius: 12px;
+  background: #FFFFFF;
+  overflow-x: auto;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+}
+
+.table {
+  min-width: 860px;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.tableHeadRow {
+  background: #FAFAFC;
+  border-bottom: 1px solid #E8EAEF;
+}
+
+.tableHeadCell {
+  font-size: 0.75rem !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  color: #4B5563 !important;
+  padding: 14px 18px !important;
+  white-space: nowrap;
+  border-bottom: 1px solid #E8EAEF !important;
+}
+
+.tableRow {
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+.tableRow:hover {
+  background-color: #FAF6F2 !important;
+  box-shadow: inset 4px 0 0 #B46A2C, 0 4px 14px -2px rgba(0, 0, 0, 0.04) !important;
+}
+
+.tableCell {
+  padding: 14px 18px !important;
+  border-bottom: 1px solid #F1F3F7 !important;
+  vertical-align: middle;
+}
+
+/* ─── Media Identity Cell ────────────────────────────────────────── */
+.mediaCell {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.thumbnail {
+  width: 80px;
+  height: 52px;
+  border-radius: 8px;
+  object-fit: cover;
+  flex-shrink: 0;
+  background: #F3E8DE;
+  display: block;
+}
+
+.thumbnailPlaceholder {
+  width: 80px;
+  height: 52px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #FAF4EF 0%, #F2E4D6 100%);
+  border: 1px solid #E8D5C4;
+  color: #B46A2C;
+  font-size: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.mediaMeta {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: 2px;
+}
+
+.mediaTitle {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #111827;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 260px;
+}
+
+.mediaSlug {
+  font-size: 0.6875rem;
+  color: #9CA3AF;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 240px;
+}
+
+/* ─── Type & Section Badges ──────────────────────────────────────── */
+.typeBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.typeBadgeVideo {
+  background: #EFF6FF;
+  color: #1D4ED8;
+  border: 1px solid #BFDBFE;
+}
+
+.typeBadgeAudio {
+  background: #F5F3FF;
+  color: #6D28D9;
+  border: 1px solid #DDD6FE;
+}
+
+.typeBadgeImage {
+  background: #ECFDF5;
+  color: #065F46;
+  border: 1px solid #A7F3D0;
+}
+
+.typeBadgeYoutube {
+  background: #FEF2F2;
+  color: #DC2626;
+  border: 1px solid #FECACA;
+}
+
+.sectionBadge {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  background: #F8FAFC;
+  color: #475569;
+  border: 1px solid #E2E8F0;
+  white-space: nowrap;
+}
+
+.featuredBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  background: #FAF4EF;
+  color: #B46A2C;
+  border: 1px solid #F2E4D6;
+}
+
+/* ─── Order Cell ─────────────────────────────────────────────────── */
+.orderCell {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #374151;
+}
+
+/* ─── Action Dock ────────────────────────────────────────────────── */
+.actionsDock {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
+  padding: 3px 6px;
+}
+
+.actionBtn {
+  color: #64748B !important;
+  padding: 6px !important;
+  border-radius: 6px !important;
+}
+
+.actionBtn:hover {
+  color: #0F172A !important;
+  background: #FFFFFF !important;
+}
+
+.actionBtnEdit:hover {
+  color: #B46A2C !important;
+  background: #FAF4EF !important;
+}
+
+.actionBtnDanger:hover {
+  color: #EF4444 !important;
+  background: #FEF2F2 !important;
+}
+
+/* ─── Empty State ────────────────────────────────────────────────── */
+.emptyState {
+  text-align: center;
+  padding: 64px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.emptyIcon {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #FAF4EF 0%, #F2E4D6 100%);
+  border: 1px solid #E8D5C4;
+  color: #B46A2C;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+/* ─── Settings Card ──────────────────────────────────────────────── */
+.settingsCard {
+  background: #ffffff;
+  border-color: #e8eaef !important;
+  border-radius: 14px !important;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+}
+
+.settingsCard > :global(.MuiTabs-root) {
+  background: #f9fafb;
+  border-bottom: 1px solid #e8eaef;
+  margin: 0 -24px;
+  padding: 0 24px;
+}
+
+.settingsFields {
+  display: grid !important;
+  gap: 16px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.settingsActions {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 8px;
+}
+
+.settingsActions button {
+  background: #b46a2c;
+  text-transform: none;
+}
+
+/* ─── Media Preview ──────────────────────────────────────────────── */
+.previewMedia {
+  background: #0b0c10;
+  border-radius: 10px;
+  display: block;
+  max-height: 60vh;
+  object-fit: contain;
+  width: 100%;
+}
+
+/* ─── Modal Form Grids & SubSections ─────────────────────────────── */
+.formGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.fullWidth {
+  grid-column: 1 / -1;
+}
+
+.subSection {
+  background: #FAFAFB;
+  border: 1px solid #E8EAEF;
+  border-radius: 12px;
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.subSectionTitle {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #4B5563;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.sourceCardsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.sourceCard {
+  border: 1.5px solid #E8EAEF;
+  border-radius: 12px;
+  padding: 16px 18px;
+  background: #FFFFFF;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  text-align: left;
+}
+
+.sourceCard:hover {
+  border-color: #B46A2C;
+  background: #FAF6F2;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(180, 106, 44, 0.08);
+}
+
+.sourceCardActive {
+  border-color: #B46A2C !important;
+  background: #FAF4EF !important;
+  box-shadow: 0 0 0 1px #B46A2C, 0 4px 12px rgba(180, 106, 44, 0.12) !important;
+}
+
+.typePills {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.typePill {
+  border: 1.5px solid #E8EAEF;
+  border-radius: 10px;
+  padding: 10px 18px;
+  background: #FFFFFF;
+  color: #4B5563;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.typePill:hover {
+  border-color: #B46A2C;
+  color: #B46A2C;
+  background: #FAF6F2;
+}
+
+.typePillActive {
+  background: #FAF4EF !important;
+  border-color: #B46A2C !important;
+  color: #B46A2C !important;
+  font-weight: 700 !important;
+  box-shadow: 0 0 0 1px #B46A2C !important;
+}
+
+.uploadDropzone {
+  border: 2px dashed #D1D5DB;
+  border-radius: 12px;
+  padding: 24px;
+  text-align: center;
+  background: #FAF9F6;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.uploadDropzone:hover {
+  border-color: #B46A2C;
+  background: #FAF4EF;
+}
+
+.featureHeroCard {
+  background: linear-gradient(135deg, #FAF4EF 0%, #FFFFFF 100%);
+  border: 1px solid #E8D5C4;
+  border-radius: 12px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+/* ─── Responsive ─────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .filtersRow {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .header {
+    flex-direction: column;
+  }
+
+  .headerActions {
+    width: 100%;
+  }
+
+  .createButton {
+    width: 100%;
+  }
+
+  .settingsFields {
+    grid-template-columns: 1fr;
+  }
+
+  .settingsCard {
+    padding: 18px;
+  }
+
+  .settingsCard > :global(.MuiTabs-root) {
+    margin: 0 -18px;
+    padding: 0 18px;
+  }
+
+  .sourceCardsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .formGrid {
+    grid-template-columns: 1fr;
+  }
+}

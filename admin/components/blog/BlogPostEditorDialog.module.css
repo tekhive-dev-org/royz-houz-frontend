@@ -1,0 +1,101 @@
+.dialogPaper {
+  border-radius: 16px !important;
+  overflow: hidden;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px 16px;
+  background: #FAFAFA;
+}
+
+.titleGroup {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.tabs {
+  border-bottom: 1px solid #E5E7EB;
+  background: #FAFAFA;
+  padding: 0 16px;
+}
+
+.content {
+  padding: 24px !important;
+  min-height: 480px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.imagePreviewBox {
+  position: relative;
+  width: 100%;
+  height: 220px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #E5E7EB;
+  background: #F9FAFB;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.imagePreview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.blockItem {
+  padding: 16px;
+  border-radius: 10px;
+  border: 1px solid #E5E7EB;
+  background: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+}
+
+.blockHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #F9FAFB;
+  padding: 6px 12px;
+  border-radius: 6px;
+}
+
+.blockControls {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.addBlockButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-top: 8px;
+}
+
+.calloutPreview {
+  border-left: 4px solid #B46A2C;
+  background: #FAF3E8;
+  padding: 12px 16px;
+  border-radius: 6px;
+}
+
+.quotePreview {
+  border-left: 3px solid #DCA43E;
+  padding: 8px 16px;
+  font-style: italic;
+  background: #FFFBF5;
+}

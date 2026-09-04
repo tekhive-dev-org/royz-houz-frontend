@@ -1,0 +1,270 @@
+.card {
+  background: #FFFFFF;
+  border: 1px solid #E8EAEF;
+  border-radius: 14px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02), 0 4px 16px -2px rgba(0, 0, 0, 0.03);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #F3F4F6;
+}
+
+.headerLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cardTitle {
+  font-size: 1.25rem !important;
+  font-weight: 800 !important;
+  color: #111827;
+  letter-spacing: -0.01em;
+}
+
+.cardSubtitle {
+  font-size: 0.875rem !important;
+  color: #6B7280;
+}
+
+.metaBanner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #FEF9EE;
+  border: 1px solid #FDE68A;
+  border-radius: 10px;
+  padding: 10px 16px;
+  font-size: 0.8125rem;
+  color: #92400E;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.metaHint {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+}
+
+.spotlightRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.spotlightLeft {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+  flex: 1 1 280px;
+}
+
+/* Podium Badges */
+.rankBadge {
+  min-width: 32px;
+  height: 32px;
+  padding: 0 8px;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.rankGold {
+  background: linear-gradient(135deg, #FEF08A 0%, #DCA43E 100%);
+  color: #78350F;
+  border: 1px solid #EAB308;
+  box-shadow: 0 1px 3px rgba(220, 164, 62, 0.3);
+}
+
+.rankSilver {
+  background: linear-gradient(135deg, #F1F5F9 0%, #CBD5E1 100%);
+  color: #334155;
+  border: 1px solid #94A3B8;
+}
+
+.rankBronze {
+  background: linear-gradient(135deg, #FFEDD5 0%, #FB923C 100%);
+  color: #7C2D12;
+  border: 1px solid #F97316;
+}
+
+.rankStandard {
+  background: #F3F4F6;
+  color: #6B7280;
+  border: 1px solid #E5E7EB;
+}
+
+.avatar {
+  width: 44px !important;
+  height: 44px !important;
+  border-radius: 10px !important;
+  border: 1px solid #E8EAEF !important;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.artistMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.artistName {
+  font-size: 0.9375rem !important;
+  font-weight: 700 !important;
+  color: #111827;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.categoryPill {
+  background: #FAF4EF;
+  color: #B46A2C;
+  border: 1px solid #F2E4D6;
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+}
+
+.artistSubtitle {
+  font-size: 0.75rem !important;
+  color: #6B7280;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 420px;
+}
+
+.spotlightRight {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.orderControls {
+  display: flex;
+  align-items: center;
+  background: #F3F4F6;
+  border: 1px solid #E5E7EB;
+  border-radius: 6px;
+}
+
+.arrowBtn {
+  color: #4B5563 !important;
+  padding: 4px 6px !important;
+  transition: all 0.15s ease !important;
+}
+
+.arrowBtn:hover:not(:disabled) {
+  color: #B46A2C !important;
+  background: #FFFFFF !important;
+}
+
+.saveBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  background: #FAFAFC;
+  border: 1px solid #E8EAEF;
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-top: 12px;
+}
+
+.syncBadge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8125rem;
+  color: #059669;
+  font-weight: 600;
+}
+
+.primaryButton {
+  background: #B46A2C !important;
+  color: #FFFFFF !important;
+  font-weight: 600 !important;
+  font-size: 0.875rem !important;
+  text-transform: none !important;
+  border-radius: 8px !important;
+  padding: 8px 20px !important;
+  box-shadow: 0 1px 2px rgba(180, 106, 44, 0.2) !important;
+  transition: all 0.15s ease !important;
+}
+
+.primaryButton:hover:not(:disabled) {
+  background: #9A5B26 !important;
+  box-shadow: 0 4px 12px rgba(180, 106, 44, 0.25) !important;
+}
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 50px 24px;
+  text-align: center;
+  gap: 14px;
+  background: #FAFAFC;
+  border-radius: 12px;
+  border: 1px dashed #D1D5DB;
+}
+
+.emptyIconWrapper {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #FEF9EE;
+  color: #DCA43E;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .card {
+    padding: 16px;
+  }
+
+  .spotlightRow {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .spotlightRight {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .saveBar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

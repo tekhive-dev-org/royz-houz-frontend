@@ -7,6 +7,7 @@ import {
   Linkedin,
   MessageCircle,
 } from "lucide-react";
+import { getTalentMediaPath } from "@/components/talents/TalentVideoPlayer/talentVideoUtils";
 import styles from "./ShareModal.module.css";
 
 /**
@@ -15,7 +16,7 @@ import styles from "./ShareModal.module.css";
 export function ShareModal({
   isOpen = false,
   onClose,
-  talent = { name: "Julius Ayomide" },
+  talent = {},
   video,
   shareType = "profile",
   title,
@@ -45,8 +46,9 @@ export function ShareModal({
 
   const isVideoShare = shareType === "video" || Boolean(video);
 
+  const videoPath = getTalentMediaPath(talent, video);
   const defaultUrl = isVideoShare
-    ? `https://royzhouz.com/talents/${talent.slug || talent.id || "talent"}/video/${video?.id || "reel"}`
+    ? `https://royzhouz.com${videoPath || "/talents"}`
     : `https://royzhouz.com/talents/${talent.slug || talent.id || "talent"}`;
 
   const currentUrl =
@@ -59,12 +61,12 @@ export function ShareModal({
   const modalSubtitle =
     subtitle ||
     (isVideoShare
-      ? `Share "${video?.title || "this video"}" by ${talent.name} with your network`
-      : `Share ${talent.name}'s profile with your network`);
+      ? `Share "${video?.title || "this video"}" by ${talent.name || "this talent"} with your network`
+      : `Share ${talent.name ? `${talent.name}'s` : "this talent's"} profile with your network`);
 
   const shareText = isVideoShare
-    ? `Check out "${video?.title || "this video"}" by ${talent.name} on RoyzHouz!`
-    : `Check out ${talent.name}'s creative profile on RoyzHouz!`;
+    ? `Check out "${video?.title || "this video"}" by ${talent.name || "this talent"} on RoyzHouz!`
+    : `Check out ${talent.name ? `${talent.name}'s` : "this talent's"} creative profile on RoyzHouz!`;
 
   const handleCopyLink = async () => {
     try {

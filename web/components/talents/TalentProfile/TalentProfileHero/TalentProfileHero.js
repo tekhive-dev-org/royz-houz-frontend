@@ -38,30 +38,40 @@ export function TalentProfileHero({ talent }) {
         </nav>
 
         {/* Category Badge */}
-        <div className={styles.categoryBadgeWrapper}>
-          <span className={styles.categoryBadge}>{talent.badge || talent.category}</span>
-        </div>
+        {(talent.badge || talent.category) && (
+          <div className={styles.categoryBadgeWrapper}>
+            <span className={styles.categoryBadge}>{talent.badge || talent.category}</span>
+          </div>
+        )}
 
         {/* Talent Name */}
         <h1 className={styles.talentName}>{talent.name}</h1>
 
-        {/* Subtitle / Specialty & Location */}
-        <p className={styles.talentSubtitle}>{talent.subtitle}</p>
+        {/* Genre & Location */}
+        {[talent.genre || talent.category, talent.location].filter(Boolean).length > 0 && (
+          <p className={styles.talentSubtitle}>
+            {[talent.genre || talent.category, talent.location].filter(Boolean).join(" • ")}
+          </p>
+        )}
 
         {/* Rating & Followers Meta Row */}
         <div className={styles.metaRow}>
-          <div className={styles.ratingGroup}>
-            {[...Array(5)].map((_, i) => (
-              <span key={i} className={styles.starFilled} aria-hidden="true">
-                ★
-              </span>
-            ))}
-            <span className="ml-1 text-white font-bold">{talent.rating}</span>
-          </div>
+          {talent.rating !== undefined && talent.rating !== null && talent.rating !== "" && (
+            <div className={styles.ratingGroup}>
+              {[...Array(Math.min(5, Math.max(0, Math.round(Number(talent.rating)) || 0)))].map((_, i) => (
+                <span key={i} className={styles.starFilled} aria-hidden="true">
+                  ★
+                </span>
+              ))}
+              <span className="ml-1 text-white font-bold">{talent.rating}</span>
+            </div>
+          )}
 
-          <span className={styles.followersCount}>
-            {talent.followers} followers
-          </span>
+          {talent.followers && (
+            <span className={styles.followersCount}>
+              {talent.followers} followers
+            </span>
+          )}
         </div>
       </div>
     </section>

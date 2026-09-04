@@ -1,10 +1,16 @@
 import Link from "next/link";
+import { HOMEPAGE_SUPPORT_MOVEMENT_CONTENT } from "@/constants/homepageContent";
 import styles from "./SupportMovement.module.css";
 
 /**
  * Support the Movement donation CTA section component.
  */
-export function SupportMovement() {
+export function SupportMovement({ content }) {
+  const supportContent = {
+    ...HOMEPAGE_SUPPORT_MOVEMENT_CONTENT,
+    ...content,
+    cta: { ...HOMEPAGE_SUPPORT_MOVEMENT_CONTENT.cta, ...content?.cta },
+  };
   return (
     <section className={styles.section} id="support-movement">
       <div className={styles.container}>
@@ -14,25 +20,24 @@ export function SupportMovement() {
             {/* Tagline / Sub-badge */}
             <div className={styles.badgeRow}>
               <span className={styles.badgeLine} aria-hidden="true" />
-              <span>SUPPORT THE MOVEMENT</span>
+              <span>{supportContent.badge}</span>
             </div>
 
             {/* Main Headline */}
             <h2 className={styles.headline}>
-              YOUR SUPPORT MAKES A DIFFERENCE TO AFRICA&apos;S CREATIVE FUTURE
+              {supportContent.headline}
             </h2>
 
             {/* Description */}
             <p className={styles.description}>
-              Every donation funds mentorship programmes, creative workshops, and
-              scholarships for Africa&apos;s next generation.
+              {supportContent.description}
             </p>
           </div>
 
           {/* Right Column: Make A Donation CTA Button */}
           <div className={styles.rightCol}>
-            <Link href="/donate" className={styles.donateBtn}>
-              Make A Donation
+            <Link href={supportContent.cta.href} className={styles.donateBtn}>
+              {supportContent.cta.label}
             </Link>
           </div>
         </div>

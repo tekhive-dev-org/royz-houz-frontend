@@ -1,0 +1,27 @@
+.page {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  min-height: 60vh;
+  padding: 24px;
+}
+
+.card {
+  max-width: 520px;
+  padding: 32px;
+  text-align: center;
+}
+
+.title {
+  color: #172033;
+  font-weight: 700;
+}
+
+.description {
+  color: #667085;
+  margin-top: 10px;
+}
+
+.action {
+  margin-top: 22px !important;
+}

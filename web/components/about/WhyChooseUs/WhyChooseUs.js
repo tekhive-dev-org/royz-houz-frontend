@@ -1,4 +1,5 @@
 import { MISSION_VISION_CARDS, IMPACT_METRICS } from "@/constants/about";
+import { WHY_CHOOSE_US_CONTENT } from "@/constants/aboutContent";
 import { MissionCard } from "./MissionCard";
 import { ProgressMetric } from "./ProgressMetric";
 import styles from "./WhyChooseUs.module.css";
@@ -6,7 +7,15 @@ import styles from "./WhyChooseUs.module.css";
 /**
  * WhyChooseUs section component displaying mission, vision, headline and key capability metrics.
  */
-export function WhyChooseUs() {
+export function WhyChooseUs({
+  content = WHY_CHOOSE_US_CONTENT,
+  cards = MISSION_VISION_CARDS,
+  metrics = IMPACT_METRICS,
+} = {}) {
+  const sectionContent = { ...WHY_CHOOSE_US_CONTENT, ...(content || {}) };
+  const missionVisionCards = Array.isArray(cards) ? cards : MISSION_VISION_CARDS;
+  const impactMetrics = Array.isArray(metrics) ? metrics : IMPACT_METRICS;
+
   return (
     <section className={styles.section} id="why-choose-us">
       <div className={styles.container}>
@@ -14,29 +23,23 @@ export function WhyChooseUs() {
         <div className={styles.topGrid}>
           {/* Left Column */}
           <div className={styles.leftCol}>
-            <span className={styles.badge}>WHY CHOOSE US</span>
-            <h2 className={styles.headline}>
-              We Connect Africa’s Creative Talent With Opportunities To Grow.
-            </h2>
-            <p className={styles.description}>
-              We create a space where Africa’s creative talent can be discovered,
-              celebrated, and connected with meaningful opportunities that inspire growth,
-              collaboration, and lasting impact.
-            </p>
+            <span className={styles.badge}>{sectionContent.badge}</span>
+            <h2 className={styles.headline}>{sectionContent.headline}</h2>
+            <p className={styles.description}>{sectionContent.description}</p>
           </div>
 
           {/* Right Column: Mission and Vision Cards */}
           <div className={styles.cardsCol}>
-            {MISSION_VISION_CARDS.map((card) => (
-              <MissionCard key={card.id} item={card} />
+            {missionVisionCards.map((card, index) => (
+              <MissionCard key={card?.id || index} item={card} />
             ))}
           </div>
         </div>
 
         {/* Bottom Row: 3 Progress Metrics */}
         <div className={styles.metricsGrid}>
-          {IMPACT_METRICS.map((metric) => (
-            <ProgressMetric key={metric.id} metric={metric} />
+          {impactMetrics.map((metric, index) => (
+            <ProgressMetric key={metric?.id || index} metric={metric} />
           ))}
         </div>
       </div>

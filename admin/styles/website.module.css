@@ -1,0 +1,98 @@
+.pageTitle {
+  color: #111827;
+  font-weight: 800;
+  font-size: 1.75rem !important;
+  letter-spacing: -0.025em;
+}
+
+.pageDescription {
+  color: #4B5563;
+  margin-top: 6px;
+  max-width: 720px;
+  font-size: 0.9375rem;
+}
+
+.tabs {
+  border-bottom: 1px solid #E8EAEF;
+  margin-top: 24px;
+}
+
+.tabPanel {
+  padding-top: 28px;
+}
+
+.sectionHeader {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.sectionTitle {
+  color: #111827;
+  font-weight: 700;
+  font-size: 1.125rem !important;
+}
+
+.sectionDescription {
+  color: #6B7280;
+  margin-top: 2px;
+  font-size: 0.875rem;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+.empty {
+  color: #6B7280;
+  padding: 40px 24px;
+  text-align: center;
+  border-radius: 12px;
+  border: 1px dashed #D1D5DB;
+  background: #FAFBFC;
+  font-size: 0.875rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 760px;
+  padding: 28px;
+  background: #FFFFFF;
+  border: 1px solid #E8EAEF;
+  border-radius: 14px;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.itemMeta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+  flex-wrap: wrap;
+}
+
+.itemBadge {
+  background: #F3F4F6;
+  color: #4B5563;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-family: monospace;
+}
+
+.itemUrl {
+  color: #6B7280;
+  font-size: 0.8125rem;
+  font-family: monospace;
+}

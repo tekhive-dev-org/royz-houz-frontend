@@ -12,10 +12,13 @@ import styles from "./MediaPodcasts.module.css";
  */
 export function MediaPodcasts({
   podcasts,
+  spotlightPodcasts,
   onPodcastClick,
   onViewAll,
   isFullView = false,
+  pageContent = {},
 }) {
+  const labels = { beyondTitle: "Beyond the Spotlight", beyondSubtitle: "Hear the untold stories, creative journeys, and perspectives behind Africa's most inspiring voices.", title: "Podcasts", subtitle: "Conversations that inform, inspire and empower creatives.", ...pageContent };
   const [currentPage, setCurrentPage] = useState(1);
   const [perPage, setPerPage] = useState(6);
 
@@ -42,18 +45,18 @@ export function MediaPodcasts({
               <div className={styles.titleRow}>
                 <div className={styles.accentBar} aria-hidden="true" />
                 <h2 id="beyond-spotlight-heading" className={styles.title}>
-                  Beyond the Spotlight
+                  {labels.beyondTitle}
                 </h2>
               </div>
             </div>
             <p className={styles.subtitle}>
-              Hear the untold stories, creative journeys, and perspectives behind Africa&apos;s most inspiring voices.
+              {labels.beyondSubtitle}
             </p>
           </div>
 
           {/* 3 Featured Spotlight Video Cards */}
           <div className={styles.beyondGrid}>
-            {MEDIA_BEYOND_SPOTLIGHT_PODCASTS.map((item) => (
+            {(spotlightPodcasts || MEDIA_BEYOND_SPOTLIGHT_PODCASTS).slice(0, 3).map((item) => (
               <article
                 key={item.id}
                 onClick={() => onPodcastClick?.(item)}
@@ -85,7 +88,7 @@ export function MediaPodcasts({
 
                 {/* Video Details */}
                 <div className={styles.beyondContent}>
-                  <span className={styles.categoryPill}>{item.category}</span>
+                  <span className={styles.categoryPill}>{item.spotlightCategory || item.category}</span>
                   <h3 className={styles.beyondTitle}>{item.title}</h3>
                   <div className={styles.beyondMetaRow}>
                     <span className={styles.beyondHost}>{item.host}</span>
@@ -104,12 +107,12 @@ export function MediaPodcasts({
               <div className={styles.titleRow}>
                 <div className={styles.accentBar} aria-hidden="true" />
                 <h2 id="podcasts-heading" className={styles.title}>
-                  Podcasts
+                  {labels.title}
                 </h2>
               </div>
             </div>
             <p className={styles.subtitle}>
-              Conversations that inform, inspire and empower creatives.
+              {labels.subtitle}
             </p>
           </div>
 

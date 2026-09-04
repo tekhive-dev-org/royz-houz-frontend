@@ -6,6 +6,7 @@ import { TalentProfileTabs } from "./TalentProfileTabs";
 import { TalentProfileSidebar } from "./TalentProfileSidebar";
 import { ShareModal } from "./ShareModal";
 import { TalentCTA } from "../TalentCTA";
+import { isTalentAvailableForBooking } from "./talentProfileData";
 import styles from "./TalentProfile.module.css";
 
 /**
@@ -17,8 +18,13 @@ export function TalentProfile({ talent }) {
 
   if (!talent) return null;
 
+  const isBookingAvailable = isTalentAvailableForBooking(talent);
+
   const handleBookClick = () => {
-    router.push(`/talents/${talent.slug || talent.id}/book`);
+    const talentIdentifier = talent.slug || talent.id;
+    if (!isBookingAvailable || !talentIdentifier) return;
+
+    router.push(`/talents/${talentIdentifier}/book`);
   };
 
   return (

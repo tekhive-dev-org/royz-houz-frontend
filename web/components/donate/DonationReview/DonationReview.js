@@ -23,10 +23,10 @@ export function DonationReview({
   donationData,
   onBack,
   onUpdateData,
-  onPaymentSuccess,
-  onPaymentFailure,
+  onRecordDonation,
 }) {
   const [isProcessing, setIsProcessing] = useState(false);
+  const [submissionError, setSubmissionError] = useState("");
 
   // Edit Donor Info State
   const [isEditingInfo, setIsEditingInfo] = useState(false);
@@ -65,15 +65,18 @@ export function DonationReview({
     setIsEditingInfo(false);
   };
 
-  const handlePayment = () => {
+  const handlePayment = async () => {
+    if (isProcessing || !onRecordDonation) return;
+
     setIsProcessing(true);
-    // Simulate Paystack payment processing
-    setTimeout(() => {
+    setSubmissionError("");
+    try {
+      await onRecordDonation();
+    } catch (error) {
+      setSubmissionError(error?.message || "We could not record your donation request. Please try again.");
+    } finally {
       setIsProcessing(false);
-      if (onPaymentSuccess) {
-        onPaymentSuccess();
-      }
-    }, 1600);
+    }
   };
 
   const amountNumber = donationData?.amount || 25000;
@@ -171,27 +174,16 @@ export function DonationReview({
                 disabled={isProcessing}
                 className={styles.payBtn}
               >
-                <span>{isProcessing ? "Connecting to Paystack..." : "Continue to secure payment"}</span>
+                <span>{isProcessing ? "Submitting donation request..." : "Submit donation request"}</span>
                 {!isProcessing && <ArrowRight className="w-4 h-4" />}
               </button>
 
-              {/* Test failure simulation link */}
-              {onPaymentFailure && (
-                <div className="flex justify-center -mt-2">
-                  <button
-                    type="button"
-                    onClick={onPaymentFailure}
-                    className="text-[11px] text-[#868C98] hover:text-rose-600 transition-colors underline cursor-pointer"
-                  >
-                    Simulate Payment Failure Response
-                  </button>
-                </div>
-              )}
+              {submissionError && <p className={styles.submissionError} role="alert">{submissionError}</p>}
 
-              {/* Redirect Notice */}
+              {/* Request status notice */}
               <div className={styles.redirectNotice}>
                 <Lock className="w-3.5 h-3.5 text-[#868C98]" />
-                <span>You will be redirected paystack to complete your payment</span>
+                <span>Your request will remain pending until payment is verified.</span>
               </div>
             </div>
           </div>

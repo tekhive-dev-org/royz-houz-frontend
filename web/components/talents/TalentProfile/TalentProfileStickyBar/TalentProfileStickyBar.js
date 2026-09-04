@@ -1,3 +1,4 @@
+import { isTalentAvailableForBooking } from "../talentProfileData";
 import styles from "./TalentProfileStickyBar.module.css";
 
 /**
@@ -5,6 +6,7 @@ import styles from "./TalentProfileStickyBar.module.css";
  */
 export function TalentProfileStickyBar({ talent, onBookClick, onShareClick }) {
   // const [isFollowing, setIsFollowing] = useState(false);
+  const isBookingAvailable = isTalentAvailableForBooking(talent);
 
   return (
     <div className={styles.bar} role="toolbar" aria-label="Talent Quick Actions">
@@ -35,6 +37,8 @@ export function TalentProfileStickyBar({ talent, onBookClick, onShareClick }) {
           <button
             type="button"
             onClick={onBookClick}
+            disabled={!isBookingAvailable}
+            aria-disabled={!isBookingAvailable}
             className={styles.btnPrimary}
           >
             Book Talent

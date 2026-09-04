@@ -1,0 +1,68 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 8px;
+}
+
+.row {
+  display: flex;
+  gap: 12px;
+}
+
+.mediaButton {
+  flex-shrink: 0;
+  margin-top: 8px;
+}
+
+.header {
+  align-items: flex-start;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.pageTitle {
+  color: #172033;
+  font-weight: 700;
+}
+
+.pageDescription {
+  color: #667085;
+  margin-top: 8px;
+  max-width: 720px;
+}
+
+.headerActions {
+  display: flex;
+  gap: 8px;
+}
+
+.empty {
+  color: #667085;
+  padding: 24px;
+  text-align: center;
+}
+
+.chips {
+  display: flex;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.preview {
+  background: #f6f7f9;
+  border: 1px solid #e7e9ee;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  max-height: 60vh;
+  overflow: auto;
+  padding: 16px;
+}
+
+@media (max-width: 599px) {
+  .row {
+    flex-direction: column;
+    gap: 12px;
+  }
+}

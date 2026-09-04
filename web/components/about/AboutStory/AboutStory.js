@@ -1,20 +1,19 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Check } from "lucide-react";
+import { ABOUT_STORY_CONTENT } from "@/constants/aboutContent";
 import { LeaderCard } from "./LeaderCard";
 import styles from "./AboutStory.module.css";
-
-const CHECKLIST_ITEMS = [
-  "Creative Growth & Support",
-  "Professional Talent Booking",
-  "Events & Creative Experiences",
-  "Creative Talent Discovery",
-];
 
 /**
  * AboutStory section component detailing Royz Houz mission, checklist, team and leader card.
  */
-export function AboutStory() {
+export function AboutStory({ content = ABOUT_STORY_CONTENT } = {}) {
+  const story = { ...ABOUT_STORY_CONTENT, ...(content || {}) };
+  const checklistItems = Array.isArray(story.checklistItems)
+    ? story.checklistItems
+    : ABOUT_STORY_CONTENT.checklistItems;
+
   return (
     <section className={styles.section} id="about-story">
       <div className={styles.container}>
@@ -22,7 +21,7 @@ export function AboutStory() {
 
           {/* Left Column: Leader Spotlight Card */}
           <div className={styles.leaderCol}>
-            <LeaderCard />
+            <LeaderCard content={story.leader} />
           </div>
 
           {/* Right Column: Mission Story, Checklist, & Team Image */}
@@ -30,21 +29,18 @@ export function AboutStory() {
             {/* Tagline / Sub-badge */}
             <div className={styles.badgeRow}>
               <span className={styles.badgeLine} aria-hidden="true" />
-              <span>ABOUT ROYZ HOUZ</span>
+              <span>{story.badge}</span>
             </div>
 
             {/* Headline */}
             <h2 className={styles.headline}>
-              Bridging African Talent With The
-              <span className={styles.headlineAccent}>World Creating Impact</span>
+              {story.headline}
+              <span className={styles.headlineAccent}>{story.headlineAccent}</span>
             </h2>
 
             {/* Lead Narrative */}
             <p className={styles.leadDescription}>
-              Royz Houz is a dynamic african organization committed to discovering,
-              developing and empowering creatives, talents while driving positive change
-              in communities through entertainment, education and innovation. We are the
-              bridge between African talent and the world.
+              {story.leadDescription}
             </p>
 
             {/* Inner Split: Checklist & Team Image */}
@@ -52,14 +48,12 @@ export function AboutStory() {
               {/* Checklist & CTA */}
               <div className={styles.checklistCol}>
                 <p className={styles.subDescription}>
-                  Today, Royz Houz is home to over 500 of Africa&apos;s most exceptional
-                  creatives across music, film, fashion, visual art, dance, photography,
-                  and innovation.
+                  {story.subDescription}
                 </p>
 
                 <ul className={styles.checklist}>
-                  {CHECKLIST_ITEMS.map((item) => (
-                    <li key={item} className={styles.checkItem}>
+                  {checklistItems.map((item, index) => (
+                    <li key={item || index} className={styles.checkItem}>
                       <Check className={styles.checkIcon} aria-hidden="true" />
                       <span>{item}</span>
                     </li>
@@ -67,8 +61,8 @@ export function AboutStory() {
                 </ul>
 
                 <div>
-                  <Link href="/talents" className={styles.ctaBtn}>
-                    Explore Talents
+                  <Link href={story.ctaHref} className={styles.ctaBtn}>
+                    {story.ctaLabel}
                   </Link>
                 </div>
               </div>
@@ -76,8 +70,8 @@ export function AboutStory() {
               {/* Team Collaboration Image */}
               <div className={styles.teamImageWrapper}>
                 <Image
-                  src="/assets/img/about/team.jpg"
-                  alt="Royz Houz Creative Team collaborating"
+                  src={story.teamImage}
+                  alt={story.teamImageAlt}
                   fill
                   sizes="(max-width: 768px) 100vw, 400px"
                   className={styles.teamImage}

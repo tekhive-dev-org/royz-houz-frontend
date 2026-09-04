@@ -157,7 +157,15 @@
 }
 
 .quantityCount {
-  @apply text-base sm:text-lg font-bold text-[#0A0D14] min-w-[20px] text-center;
+  @apply text-base sm:text-lg font-bold text-[#0A0D14] min-w-[20px] text-center bg-transparent border-0 outline-none;
+  width: 32px;
+  appearance: textfield;
+}
+
+.quantityCount::-webkit-outer-spin-button,
+.quantityCount::-webkit-inner-spin-button {
+  appearance: none;
+  margin: 0;
 }
 
 /* Continue Button */

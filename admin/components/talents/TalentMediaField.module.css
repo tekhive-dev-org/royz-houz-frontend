@@ -1,0 +1,47 @@
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.hiddenInput {
+  display: none;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.uploadButton {
+  background: #B46A2C !important;
+  text-transform: none !important;
+}
+
+.uploadButton:hover {
+  background: #9A5B26 !important;
+}
+
+.libraryButton {
+  border-color: #B46A2C !important;
+  color: #B46A2C !important;
+  text-transform: none !important;
+}
+
+.progress {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.progress :global(.MuiLinearProgress-root) {
+  border-radius: 999px;
+}
+
+@media (max-width: 479px) {
+  .actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}

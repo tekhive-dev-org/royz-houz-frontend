@@ -54,3 +54,18 @@ body {
   background: #B46A2C;
   border-radius: 3px;
 }
+
+/* Global rotating loader animation for media players and interactive spinners */
+@keyframes royzSpin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.royz-spin {
+  animation: royzSpin 0.8s linear infinite !important;
+  transform-origin: center center !important;
+}

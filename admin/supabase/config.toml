@@ -1,0 +1,36 @@
+# Royz Houz admin dashboard — local Supabase CLI configuration.
+#
+# This file intentionally does not contain a remote project reference or any
+# credential. Link a local checkout to the approved shared remote project with
+# `supabase link --project-ref <remote-project-ref>` when instructed.
+#
+# admin/supabase/migrations owns administrative extensions only. It must not
+# duplicate foundational public website/content objects owned by web.
+
+[api]
+enabled = true
+port = 55321
+schemas = ["public", "graphql_public"]
+extra_search_path = ["public", "extensions"]
+max_rows = 1000
+
+[db]
+port = 55322
+major_version = 15
+
+[studio]
+enabled = true
+port = 55323
+
+[inbucket]
+enabled = true
+port = 55324
+
+[auth]
+enabled = true
+site_url = "http://localhost:3001"
+additional_redirect_urls = ["http://localhost:3001/**"]
+
+[storage]
+enabled = true
+file_size_limit = "50MiB"

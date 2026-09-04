@@ -6,7 +6,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "content:export": "node ./scripts/export-constants-records.mjs",
+    "content:import": "node ./scripts/import-constants-to-supabase.mjs",
+    "test:adapters": "node --import ./scripts/tests/register-alias.mjs --test ./scripts/tests/content-adapters.test.mjs",
+    "test:security": "node --import ./scripts/tests/register-alias.mjs --test ./scripts/tests/security-critical-paths.test.mjs",
+    "test:smoke": "node ./scripts/smoke-test.mjs"
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",

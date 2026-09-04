@@ -1,5 +1,5 @@
 import { Search, ChevronDown } from "lucide-react";
-import { MEDIA_FILTER_TABS } from "@/constants/media";
+
 import styles from "./MediaFilters.module.css";
 
 /**
@@ -12,12 +12,21 @@ export function MediaFilters({
   onSearchChange,
   sortBy,
   onSortChange,
+  pageContent = {},
 }) {
+  const labels = { all: "All Media", videos: "Videos", music: "Music", podcasts: "Podcasts", gallery: "Gallery", ...pageContent };
+  const tabs = [
+    { id: "all", label: labels.all },
+    { id: "videos", label: labels.videos },
+    { id: "music", label: labels.music },
+    { id: "podcasts", label: labels.podcasts },
+    { id: "gallery", label: labels.gallery },
+  ];
   return (
     <div className={styles.filterContainer} aria-label="Media Filters">
       {/* Category Filter Pills */}
       <div className={styles.tabsRow} role="tablist">
-        {MEDIA_FILTER_TABS.map((tab) => {
+        {tabs.map((tab) => {
           const isActive = activeTab === tab.id;
           return (
             <button
@@ -43,7 +52,7 @@ export function MediaFilters({
           <Search className={styles.searchIcon} />
           <input
             type="text"
-            placeholder="Search events..."
+            placeholder={labels.searchPlaceholder || "Search media..."}
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
             className={styles.searchInput}
@@ -59,9 +68,9 @@ export function MediaFilters({
             className={styles.sortSelect}
             aria-label="Sort media"
           >
-            <option value="date">Sort: Date</option>
-            <option value="latest">Sort: Latest</option>
-            <option value="popular">Sort: Most Popular</option>
+            <option value="date">{labels.sortDate || "Sort: Date"}</option>
+            <option value="latest">{labels.sortLatest || "Sort: Latest"}</option>
+            <option value="popular">{labels.sortPopular || "Sort: Most Popular"}</option>
           </select>
           <ChevronDown className={styles.sortChevron} />
         </div>

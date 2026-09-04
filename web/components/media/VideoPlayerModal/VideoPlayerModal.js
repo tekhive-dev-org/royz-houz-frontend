@@ -1,9 +1,11 @@
 import { useEffect } from "react";
 import { X } from "lucide-react";
+import { VideoPlayerHero } from "@/components/talents/TalentVideoPlayer/VideoPlayerHero";
 import styles from "./VideoPlayerModal.module.css";
 
 /**
- * VideoPlayerModal component providing seamless video streaming playback in an atmospheric overlay.
+ * VideoPlayerModal component providing seamless, fast, optimized video streaming
+ * playback matching the primary media player.
  */
 export function VideoPlayerModal({ isOpen, onClose, video }) {
   useEffect(() => {
@@ -24,6 +26,15 @@ export function VideoPlayerModal({ isOpen, onClose, video }) {
 
   if (!isOpen || !video) return null;
 
+  const mediaItem = {
+    title: video.title || "Stories Beyond the Page",
+    subtitle: video.subtitle || "",
+    thumbnail: video.coverImage || video.thumbnail || "",
+    videoUrl: video.videoUrl || video.url || video.src,
+    duration: video.duration || "",
+    mediaType: "video",
+  };
+
   return (
     <div
       className={styles.modalOverlay}
@@ -39,16 +50,14 @@ export function VideoPlayerModal({ isOpen, onClose, video }) {
           className={styles.closeBtn}
           aria-label="Close video player"
         >
-          <X className="w-6 h-6 text-white" />
+          <X className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
         </button>
 
-        <div className={styles.videoWrapper}>
-          <iframe
-            src={video.videoUrl || "https://www.youtube.com/embed/dQw4w9WgXcQ"}
-            title={video.title || "Royz House Media Video"}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-            className={styles.iframe}
+        <div className={styles.videoHeroContainer}>
+          <VideoPlayerHero
+            media={mediaItem}
+            autoPlay={true}
+            onEnded={onClose}
           />
         </div>
 
@@ -68,3 +77,4 @@ export function VideoPlayerModal({ isOpen, onClose, video }) {
 }
 
 export default VideoPlayerModal;
+

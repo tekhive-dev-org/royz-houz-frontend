@@ -8,9 +8,9 @@ import styles from "./TalentBooking.module.css";
 export function Step4Confirmed({ talent, formData }) {
   const router = useRouter();
 
-  const talentName = talent?.name || "Zara Diallo";
+  const talentName = talent?.name || "the talent";
   const userEmail = formData?.email || "your email";
-  const refCode = formData?.bookingReference || "RH-MSJ4K0B0";
+  const refCode = formData?.bookingReference || "";
 
   const handleReturnToProfile = () => {
     if (talent?.slug || talent?.id) {

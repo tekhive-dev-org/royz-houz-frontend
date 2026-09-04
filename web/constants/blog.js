@@ -92,7 +92,7 @@ export const BLOG_ARTICLES = [
     badge: "PREMIUM",
     format: "PODCAST",
     readTime: "6min read",
-    date: "February 29 2026",
+    date: "February 28, 2026",
     author: "Patrick Godson",
     image: "/assets/img/blog/post-camera.jpg",
     excerpt:
@@ -173,4 +173,4 @@ export const BLOG_MULTIMEDIA = {
   ],
 };
 
-export const LATEST_BLOG_POSTS = BLOG_ARTICLES.slice(0, 3);
+export const LATEST_BLOG_POSTS = BLOG_ARTICLES;

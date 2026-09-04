@@ -7,28 +7,52 @@ import { VideoPlayerModal } from "../../media";
 /**
  * BlogMultimedia component displaying featured video and 3 distinct stacked playlist cards.
  */
-export function BlogMultimedia({ multimedia = BLOG_MULTIMEDIA }) {
-  const [selectedVideoIndex, setSelectedVideoIndex] = useState(1); // Default to middle active card matching SVG design
+export function BlogMultimedia({ multimedia }) {
+  const data = multimedia?.playlist?.length || multimedia?.mainVideo?.videoUrl ? multimedia : BLOG_MULTIMEDIA;
+  const [selectedVideoIndex, setSelectedVideoIndex] = useState(0);
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
+  const [activeVideo, setActiveVideo] = useState(null);
 
-  const currentPlaylistItem =
-    multimedia.playlist?.[selectedVideoIndex] || multimedia.playlist?.[0];
+  const playlist = data?.playlist || [];
+  const currentPlaylistItem = playlist[selectedVideoIndex] || playlist[0] || {};
+  const mainVideo = data?.mainVideo || {};
+  const tagline = data?.sectionTagline || mainVideo.tagline || "FROM ROYZ HOUZ";
+  const title = mainVideo.title || "Stories Beyond the Page";
+  const subtitle =
+    mainVideo.subtitle ||
+    "Discover powerful stories, inspiring conversations and creative perspectives that bring the people, talent and experiences behind Royz Houz to life.";
+
+  const handlePlayMainVideo = () => {
+    setActiveVideo({
+      title: mainVideo.title || "Stories Beyond the Page",
+      subtitle: mainVideo.subtitle || tagline,
+      videoUrl: mainVideo.videoUrl || currentPlaylistItem?.videoUrl || "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    });
+    setIsVideoModalOpen(true);
+  };
+
+  const handlePlayPlaylistItem = (item, idx) => {
+    setSelectedVideoIndex(idx);
+    setActiveVideo({
+      title: item.title || `Story #${idx + 1}`,
+      subtitle: `${item.category || ""} ${item.duration ? `• ${item.duration}` : ""}`.trim(),
+      videoUrl: item.videoUrl || mainVideo.videoUrl || "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    });
+    setIsVideoModalOpen(true);
+  };
 
   return (
-    <section className={styles.section} aria-label="Stories Beyond the Page">
+    <section className={styles.section} aria-label={title}>
       <div className={styles.container}>
         {/* Section Header with dual accent lines */}
         <div className={styles.headerArea}>
           <div className={styles.tagline}>
             <span className={styles.accentLine} aria-hidden="true" />
-            <span className={styles.tagText}>FROM ROYZ HOUZ</span>
+            <span className={styles.tagText}>{tagline}</span>
             <span className={styles.accentLine} aria-hidden="true" />
           </div>
-          <h2 className={styles.title}>{multimedia.mainVideo?.title || "Stories Beyond the Page"}</h2>
-          <p className={styles.subtitle}>
-            {multimedia.mainVideo?.subtitle ||
-              "Discover powerful stories, inspiring conversations and creative perspectives that bring the people, talent and experiences behind Royz Houz to life."}
-          </p>
+          <h2 className={styles.title}>{title}</h2>
+          <p className={styles.subtitle}>{subtitle}</p>
         </div>
 
         {/* Video Player + 3 Stacked Cards Layout */}
@@ -36,20 +60,20 @@ export function BlogMultimedia({ multimedia = BLOG_MULTIMEDIA }) {
           {/* Left Column: Big Video Thumbnail */}
           <div
             className={styles.videoCard}
-            onClick={() => setIsVideoModalOpen(true)}
+            onClick={handlePlayMainVideo}
             role="button"
             tabIndex={0}
             aria-label="Play featured video"
             onKeyDown={(e) => {
               if (e.key === "Enter" || e.key === " ") {
                 e.preventDefault();
-                setIsVideoModalOpen(true);
+                handlePlayMainVideo();
               }
             }}
           >
             <Image
-              src={multimedia.mainVideo?.coverImage || "/assets/img/blog/beyond-page-video.jpg"}
-              alt={currentPlaylistItem?.title || "Video Story"}
+              src={mainVideo.coverImage || "/assets/img/blog/beyond-page-video.jpg"}
+              alt={mainVideo.title || currentPlaylistItem?.title || "Video Story"}
               fill
               sizes="(max-width: 1024px) 100vw, 60vw"
               className={styles.videoCoverImage}
@@ -76,17 +100,14 @@ export function BlogMultimedia({ multimedia = BLOG_MULTIMEDIA }) {
 
           {/* Right Column: 3 Distinct Stacked Story Cards */}
           <div className={styles.cardsStack}>
-            {multimedia.playlist?.map((item, idx) => {
+            {playlist.map((item, idx) => {
               const isActive = idx === selectedVideoIndex;
 
               return (
                 <button
                   key={item.id || idx}
                   type="button"
-                  onClick={() => {
-                    setSelectedVideoIndex(idx);
-                    setIsVideoModalOpen(true);
-                  }}
+                  onClick={() => handlePlayPlaylistItem(item, idx)}
                   className={`${styles.storyCard} ${
                     isActive ? styles.storyCardActive : styles.storyCardInactive
                   }`}
@@ -138,14 +159,14 @@ export function BlogMultimedia({ multimedia = BLOG_MULTIMEDIA }) {
       </div>
 
       {/* Interactive Video Player Modal */}
-      {isVideoModalOpen && (
+      {isVideoModalOpen && activeVideo && (
         <VideoPlayerModal
           isOpen={isVideoModalOpen}
-          onClose={() => setIsVideoModalOpen(false)}
-          video={{
-            title: currentPlaylistItem?.title || multimedia.mainVideo?.title,
-            videoUrl: currentPlaylistItem?.videoUrl || multimedia.mainVideo?.videoUrl || "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+          onClose={() => {
+            setIsVideoModalOpen(false);
+            setActiveVideo(null);
           }}
+          video={activeVideo}
         />
       )}
     </section>

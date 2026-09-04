@@ -83,10 +83,11 @@
   height: 100vh !important;
   border-radius: 0 !important;
   background-color: #000000 !important;
-  z-index: 9999 !important;
+  z-index: 99999 !important;
+  overflow: hidden !important;
 }
 
-@media (max-width: 768px) and (orientation: portrait) {
+@media (max-width: 900px) and (orientation: portrait) {
   .fullscreenLandscape {
     width: 100vh !important;
     height: 100vw !important;
@@ -95,13 +96,68 @@
     left: 0 !important;
     transform-origin: top left !important;
     transform: rotate(90deg) translateY(-100%) !important;
-    z-index: 9999 !important;
+    z-index: 99999 !important;
     border-radius: 0 !important;
+    overflow: hidden !important;
   }
+}
+
+.videoMedia {
+  @apply absolute inset-0 w-full h-full border-0 object-contain bg-black;
+}
+
+.audioMediaElement {
+  @apply invisible;
+}
+
+.audioBackdrop {
+  @apply absolute inset-0 flex items-center justify-center overflow-hidden bg-slate-950;
+}
+
+.audioBackdrop::after {
+  content: "";
+  @apply absolute inset-0 bg-black/55 backdrop-blur-xl;
+}
+
+.audioArtwork {
+  @apply object-cover scale-110 opacity-60;
+}
+
+.audioIdentity {
+  @apply relative z-10 flex max-w-[80%] flex-col items-center text-center text-white;
+}
+
+.audioIcon {
+  @apply mb-3 flex h-14 w-14 items-center justify-center rounded-full border border-white/25 bg-black/35 shadow-xl backdrop-blur-sm;
+}
+
+.audioIcon svg {
+  @apply h-6 w-6;
+}
+
+.audioType {
+  @apply mb-1 text-[10px] font-bold uppercase tracking-[0.18em] text-white/65;
+}
+
+.audioTitle {
+  @apply line-clamp-2 text-lg font-bold sm:text-2xl;
+}
+
+.youtubePlayerMount {
+  @apply absolute inset-0 w-full h-full bg-black;
+}
+
+.youtubePlayerMount iframe {
+  @apply w-full h-full border-0;
+  pointer-events: none;
 }
 
 .videoImage {
   @apply object-cover object-center transition-opacity duration-300;
+}
+
+.mediaUnavailable {
+  @apply absolute inset-0 z-10 flex items-center justify-center bg-black/50 text-sm font-medium text-white/80;
 }
 
 .videoGradientOverlay {
@@ -117,7 +173,68 @@
 }
 
 .controlsBar {
-  @apply absolute bottom-0 inset-x-0 z-20 px-3 sm:px-5 lg:px-6 pb-3 sm:pb-4 lg:pb-5 pt-6 sm:pt-8 flex flex-col gap-2.5 sm:gap-3.5 transition-opacity duration-300;
+  @apply absolute bottom-0 inset-x-0 z-20 px-3 sm:px-5 lg:px-6 pb-3 sm:pb-4 lg:pb-5 pt-6 sm:pt-8 flex flex-col gap-2.5 sm:gap-3.5;
+}
+
+/* Smooth fade states for controls, gradient, and triggers */
+.controlsVisible {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.controlsHidden {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.cursorHidden {
+  cursor: none !important;
+}
+
+/* Rotating buffering/loading spinner state */
+@keyframes spinPlayerLoader {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinnerContainer {
+  @apply absolute inset-0 z-30 flex items-center justify-center pointer-events-none;
+}
+
+.spinnerBackdrop {
+  @apply flex items-center justify-center w-14 h-14 sm:w-18 sm:h-18 rounded-full bg-black/75 backdrop-blur-md border border-white/20 shadow-2xl;
+}
+
+.spinnerRotator {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  transform-origin: center center !important;
+  animation-name: spinPlayerLoader;
+  animation-duration: 0.8s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform;
+}
+
+.spinnerIcon {
+  width: 2.25rem !important;
+  height: 2.25rem !important;
+  color: #C8781A !important;
+  display: block;
+}
+
+@media (min-width: 640px) {
+  .spinnerIcon {
+    width: 2.75rem !important;
+    height: 2.75rem !important;
+  }
 }
 
 .progressContainer {
@@ -156,20 +273,93 @@
   @apply flex items-center gap-1.5 sm:gap-2.5 lg:gap-3 shrink-0;
 }
 
-.volumeContainer {
-  @apply hidden md:flex items-center gap-1.5;
+.volumeControl {
+  @apply flex items-center gap-1 sm:gap-1.5 shrink-0;
 }
 
-.volumeTrack {
-  @apply relative w-12 sm:w-16 lg:w-20 h-[3px] bg-white/40 rounded-full cursor-pointer flex items-center;
+.volumeSlider {
+  @apply relative flex items-center w-14 sm:w-20 lg:w-24 h-6;
 }
 
-.volumeFill {
-  @apply absolute left-0 top-0 bottom-0 bg-[#C8781A] rounded-full;
+.volumeProgress,
+.volumeRange {
+  @apply absolute inset-x-0 w-full;
 }
 
-.volumeThumb {
-  @apply absolute -top-[3.5px] w-2.5 h-2.5 bg-[#C8781A] rounded-full shadow -translate-x-1/2 pointer-events-none;
+.volumeProgress {
+  appearance: none;
+  height: 4px;
+  border: 0;
+  border-radius: 9999px;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.volumeProgress::-webkit-progress-bar {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.volumeProgress::-webkit-progress-value {
+  background: #C8781A;
+  border-radius: 9999px;
+}
+
+.volumeProgress::-moz-progress-bar {
+  background: #C8781A;
+  border-radius: 9999px;
+}
+
+.volumeRange {
+  appearance: none;
+  height: 24px;
+  margin: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.volumeRange::-webkit-slider-runnable-track {
+  height: 4px;
+  background: transparent;
+}
+
+.volumeRange::-webkit-slider-thumb {
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  margin-top: -4px;
+  border: 2px solid #FFFFFF;
+  border-radius: 50%;
+  background: #C8781A;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.45);
+}
+
+.volumeRange::-moz-range-track {
+  height: 4px;
+  background: transparent;
+}
+
+.volumeRange::-moz-range-thumb {
+  width: 10px;
+  height: 10px;
+  border: 2px solid #FFFFFF;
+  border-radius: 50%;
+  background: #C8781A;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.45);
+}
+
+.volumeRange:focus-visible {
+  outline: 2px solid #FFFFFF;
+  outline-offset: 3px;
+  border-radius: 9999px;
+}
+
+.volumeRange:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.volumeValue {
+  @apply hidden lg:inline-block w-8 text-right text-[10px] tabular-nums text-white/80;
 }
 
 .pillBadge {
@@ -191,6 +381,22 @@
 
 .videoTalentName {
   @apply text-sm text-[#525866] font-normal;
+}
+
+.metaRow {
+  @apply flex items-center gap-2 sm:gap-3 flex-wrap mt-1;
+}
+
+.metaBadgeGroup {
+  @apply flex items-center gap-2 flex-wrap text-xs text-[#525866];
+}
+
+.metaBadge {
+  @apply inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-slate-100 text-[#525866] text-xs font-medium;
+}
+
+.metaBadgeCategory {
+  @apply inline-flex items-center px-2.5 py-0.5 rounded-full bg-[#FAF4EF] text-[#B46A2C] text-[11px] font-semibold uppercase tracking-wider;
 }
 
 .actionBtnGroup {
@@ -227,7 +433,7 @@
 }
 
 .trackItem {
-  @apply flex items-center justify-between px-5 sm:px-6 py-4 sm:py-4.5 transition-all cursor-pointer select-none hover:bg-slate-50/70 border-l-[3px] border-l-transparent;
+  @apply flex w-full items-center justify-between border-0 bg-transparent px-5 sm:px-6 py-4 sm:py-4.5 text-left transition-all cursor-pointer select-none hover:bg-slate-50/70 border-l-[3px] border-l-transparent;
 }
 
 .trackItemActive {
@@ -300,6 +506,30 @@
   @apply text-[13px] font-normal text-[#525866] shrink-0;
 }
 
+.productionsEmpty {
+  @apply px-5 sm:px-6 py-8 text-center text-sm text-[#7A8392];
+}
+
+.productionsGroups {
+  @apply flex flex-col;
+}
+
+.productionGroup {
+  @apply flex flex-col;
+}
+
+.productionGroup + .productionGroup {
+  @apply mt-4 pt-4 border-t border-[#F0F1F4];
+}
+
+.productionGroupTitle {
+  @apply px-5 sm:px-6 py-3 text-[11px] font-bold uppercase tracking-[0.1em] text-[#7A8392] bg-[#FAFBFC];
+}
+
+.productionGroupTitle + .trackList {
+  @apply mt-0;
+}
+
 /* ── Sidebar Widget 1: Mini Talent Profile ───────────── */
 .profileCard {
   @apply bg-white border border-[#E2E4E9] rounded-[12px] overflow-hidden shadow-2xs flex flex-col;
@@ -346,16 +576,74 @@
   @apply bg-white border border-[#E2E4E9] rounded-[12px] p-5 sm:p-6 shadow-2xs flex flex-col;
 }
 
-.widgetHeading {
-  @apply text-base font-bold text-[#0A0D14] pb-4 mb-4 border-b border-[#E2E4E9];
+.nowPlayingSection {
+  @apply flex flex-col gap-2.5 pb-5 mb-4 border-b border-[#E2E4E9];
+}
+
+.nowPlayingHeading,
+.nowPlayingHeader {
+  @apply text-[11px] font-bold uppercase tracking-[0.12em] text-[#B46A2C];
+}
+
+.nowPlayingItem,
+.nowPlayingRow {
+  @apply flex items-center justify-between gap-3 rounded-[10px] border border-[#E7CDB6] bg-[#FAF4EF] p-3 shadow-2xs;
+}
+
+.nowPlayingLeft {
+  @apply flex items-center gap-3 min-w-0 flex-1;
+}
+
+.nowPlayingThumb {
+  @apply relative w-14 h-14 rounded-[8px] overflow-hidden bg-slate-900 shrink-0 shadow-sm;
+}
+
+.nowPlayingDetails {
+  @apply flex flex-col min-w-0 flex-1;
+}
+
+.nowPlayingTitle {
+  @apply text-[13.5px] font-bold text-[#0A0D14] leading-snug line-clamp-1 mb-0.5;
+}
+
+.nowPlayingArtist {
+  @apply text-xs text-[#525866] font-normal truncate mb-1;
+}
+
+.nowPlayingLabel {
+  @apply inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-[#B46A2C];
+}
+
+.nowPlayingPulse {
+  @apply inline-block w-1.5 h-1.5 rounded-full bg-[#B46A2C] animate-pulse shrink-0;
+}
+
+.nowPlayingDuration {
+  @apply text-xs font-semibold text-[#8C4E18] bg-[#F2DEC9] px-2 py-0.5 rounded-[4px] shrink-0 self-center tracking-tight;
+}
+
+.queueHeadingRow {
+  @apply flex items-center justify-between mb-4;
+}
+
+.queueHeading {
+  @apply text-base font-bold text-[#0A0D14];
+}
+
+.queueCount {
+  @apply inline-flex items-center justify-center min-w-6 h-6 px-1.5 rounded-full bg-slate-100 text-[11px] font-bold text-[#525866];
 }
 
 .upNextList {
   @apply flex flex-col gap-4;
 }
 
+.upNextEmpty {
+  @apply py-4 text-center text-xs leading-relaxed text-[#7A8392];
+}
+
 .upNextItem {
-  @apply flex items-center justify-between gap-3 cursor-pointer hover:bg-slate-50/80 p-1.5 -mx-1.5 rounded-lg transition-colors;
+  @apply flex items-center justify-between gap-3 cursor-pointer hover:bg-slate-50/80 p-1.5 -mx-1.5 rounded-lg transition-colors border-l-2 border-l-transparent;
 }
 
 .upNextItem:hover .upNextTitle {
@@ -380,6 +668,10 @@
 
 .upNextArtist {
   @apply text-xs text-[#525866] font-normal truncate;
+}
+
+.nowPlayingLabel {
+  @apply text-[10px] font-bold uppercase tracking-wide text-[#B46A2C];
 }
 
 .upNextDuration {

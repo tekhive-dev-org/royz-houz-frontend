@@ -4,18 +4,10 @@ import styles from "./TalentProfileTabs.module.css";
  * AboutTab rendering Biography, Award & Recognition, and Key Achievements.
  */
 export function AboutTab({ talent }) {
-  const awards = talent?.awards || [
-    "African Music Award Nominee 2023",
-    "Best New Artist — Lagos Sound Fest",
-    "Royz House Excellence Award",
-  ];
-
-  const achievements = talent?.achievements || [
-    "Performed at AFRIMMA 2023",
-    "Featured on BBC Africa",
-    "4M+ streams on debut EP",
-    "Brand ambassador — Lagos Fashion Week",
-  ];
+  const awards = Array.isArray(talent?.awards) ? talent.awards : [];
+  const achievements = Array.isArray(talent?.achievements)
+    ? talent.achievements
+    : [];
 
   return (
     <div className={styles.aboutSection} role="tabpanel" aria-label="About Talent">

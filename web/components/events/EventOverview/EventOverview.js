@@ -13,7 +13,7 @@ import styles from "./EventOverview.module.css";
 /**
  * EventOverview component composing full event overview & recap page layout.
  */
-export function EventOverview({ event }) {
+export function EventOverview({ event, popularEvents = [] }) {
   const ticketRef = useRef(null);
   const isPast = Boolean(event?.isPast || event?.categoryTag === "PAST EVENTS");
 
@@ -76,7 +76,7 @@ export function EventOverview({ event }) {
 
       {/* 3. Bottom Popular Events / Also on the Calendar Section */}
       <div id="popular-events-section">
-        <EventPopularEvents />
+        <EventPopularEvents events={popularEvents} />
       </div>
     </div>
   );

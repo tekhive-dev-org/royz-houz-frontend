@@ -6,20 +6,24 @@
 }
 
 .modalContent {
-  @apply relative w-full max-w-4xl bg-black rounded-[20px] overflow-hidden border border-white/10 shadow-2xl flex flex-col;
+  @apply relative w-full max-w-5xl bg-black rounded-[20px] overflow-hidden border border-white/10 shadow-2xl flex flex-col;
   animation: scaleUp 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .closeBtn {
-  @apply absolute top-4 right-4 z-10 p-2.5 rounded-full bg-black/60 hover:bg-black/90 border border-white/20 text-white transition-colors cursor-pointer;
+  @apply absolute top-3 right-3 z-40 p-2 sm:p-2.5 rounded-full bg-black/70 hover:bg-black/95 border border-white/20 text-white transition-colors cursor-pointer shadow-md;
 }
 
-.videoWrapper {
-  @apply relative w-full pt-[56.25%] bg-black;
+.videoHeroContainer {
+  @apply relative w-full bg-black overflow-hidden;
 }
 
 .iframe {
   @apply absolute inset-0 w-full h-full border-0;
+}
+
+.videoElement {
+  @apply absolute inset-0 w-full h-full object-contain bg-black;
 }
 
 .videoMeta {

@@ -1,0 +1,111 @@
+.bannerGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.statCard {
+  background: #FFFFFF;
+  border: 1px solid #E8EAEF;
+  border-radius: 14px;
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02), 0 4px 12px -2px rgba(0, 0, 0, 0.03);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.statCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px -4px rgba(180, 106, 44, 0.08), 0 2px 6px -1px rgba(0, 0, 0, 0.04);
+  border-color: #D9C3B0;
+}
+
+.statCard::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: transparent;
+}
+
+.statCardCopper::before { background: #B46A2C; }
+.statCardEmerald::before { background: #10B981; }
+.statCardGold::before { background: #DCA43E; }
+.statCardIndigo::before { background: #6366F1; }
+
+.iconWrapper {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.iconCopper { background: #FAF4EF; color: #B46A2C; }
+.iconEmerald { background: #ECFDF5; color: #059669; }
+.iconGold { background: #FEF9EE; color: #DCA43E; }
+.iconIndigo { background: #EEF2FF; color: #4F46E5; }
+
+.statInfo {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.statLabel {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #6B7280;
+  margin-bottom: 4px;
+}
+
+.statValue {
+  font-size: 1.625rem;
+  font-weight: 800;
+  color: #111827;
+  line-height: 1.2;
+}
+
+.statSubtext {
+  font-size: 0.75rem;
+  color: #9CA3AF;
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 640px) {
+  .bannerGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  .statCard {
+    padding: 14px 16px;
+    gap: 12px;
+  }
+  .iconWrapper {
+    width: 40px;
+    height: 40px;
+  }
+  .statValue {
+    font-size: 1.35rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .bannerGrid {
+    grid-template-columns: 1fr;
+  }
+}

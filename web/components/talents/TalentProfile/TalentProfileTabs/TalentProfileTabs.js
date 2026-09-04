@@ -10,8 +10,12 @@ import styles from "./TalentProfileTabs.module.css";
  * TalentProfileTabs component orchestrating category-specific tab navigation and contents.
  */
 export function TalentProfileTabs({ talent }) {
-  const tabs = talent?.tabs || ["ABOUT", "GALLERY", "VIDEOS"];
-  const [activeTab, setActiveTab] = useState(tabs[0] || "ABOUT");
+  const tabs = Array.isArray(talent?.tabs)
+    ? talent.tabs
+        .map((tab) => String(tab).trim().toUpperCase())
+        .filter(Boolean)
+    : [];
+  const [activeTab, setActiveTab] = useState(tabs[0] || null);
 
   const renderTabContent = () => {
     switch (activeTab) {
@@ -26,7 +30,7 @@ export function TalentProfileTabs({ talent }) {
       case "PUBLICATIONS":
         return <PublicationsTab talent={talent} />;
       default:
-        return <AboutTab talent={talent} />;
+        return null;
     }
   };
 

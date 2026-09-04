@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Star, CheckCircle2, ChevronLeft, ChevronRight } from "lucide-react";
+import { formatDate } from "@/utils/dateFormatter";
 import styles from "./ProductReviews.module.css";
 
 const REVIEWS_DATA = [
@@ -7,7 +8,7 @@ const REVIEWS_DATA = [
     id: 1,
     author: "Ayomide B.",
     verified: true,
-    date: "12 Oct 2024",
+    date: "October 12, 2024",
     rating: 5,
     title: "Better Than Expected",
     content:
@@ -18,7 +19,7 @@ const REVIEWS_DATA = [
     id: 2,
     author: "Faith C.",
     verified: true,
-    date: "08 Oct 2024",
+    date: "October 8, 2024",
     rating: 5,
     title: "So versatile",
     content:
@@ -29,7 +30,7 @@ const REVIEWS_DATA = [
     id: 3,
     author: "Omowumi F.",
     verified: true,
-    date: "01 Oct 2024",
+    date: "October 1, 2024",
     rating: 5,
     title: "Rich Color & Structure",
     content:
@@ -40,7 +41,7 @@ const REVIEWS_DATA = [
     id: 4,
     author: "Zainab A.",
     verified: true,
-    date: "28 Sep 2024",
+    date: "September 28, 2024",
     rating: 5,
     title: "My New Favorite Top",
     content:
@@ -51,7 +52,7 @@ const REVIEWS_DATA = [
     id: 5,
     author: "Grace E.",
     verified: true,
-    date: "20 Sep 2024",
+    date: "September 20, 2024",
     rating: 5,
     title: "Huge thumbs up for quality",
     content:

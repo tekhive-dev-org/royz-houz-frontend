@@ -1,0 +1,26 @@
+.breadcrumbs {
+  color: #6B7280;
+  min-width: 0;
+  font-size: 0.8125rem;
+}
+
+.homeLink {
+  align-items: center;
+  color: #6B7280;
+  display: inline-flex;
+  gap: 6px;
+  font-weight: 500;
+  transition: color 0.15s ease;
+}
+
+.homeLink:hover {
+  color: #B46A2C;
+}
+
+.current {
+  color: #111827;
+  font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

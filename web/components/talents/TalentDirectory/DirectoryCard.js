@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { isTalentAvailableForBooking } from "../TalentProfile/talentProfileData";
 import styles from "./TalentDirectory.module.css";
 
 /**
@@ -8,6 +9,7 @@ import styles from "./TalentDirectory.module.css";
  */
 export function DirectoryCard({ talent, onBook }) {
   const profileUrl = `/talents/${talent.slug || talent.id}`;
+  const isBookingAvailable = isTalentAvailableForBooking(talent);
 
   return (
     <article className={styles.card} aria-label={`${talent.name} - ${talent.category}`}>
@@ -57,8 +59,12 @@ export function DirectoryCard({ talent, onBook }) {
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
-              onBook && onBook(talent);
+              if (isBookingAvailable) {
+                onBook?.(talent);
+              }
             }}
+            disabled={!isBookingAvailable}
+            aria-disabled={!isBookingAvailable}
             className={styles.bookBtn}
           >
             Book

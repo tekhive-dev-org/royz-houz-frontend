@@ -1,7 +1,7 @@
-import MediaWatchDetailPage, { getStaticProps as getDetailProps } from "./[mediaId]";
-
-export default MediaWatchDetailPage;
+export default function MediaWatchIndex() {
+  return null;
+}
 
 export async function getStaticProps() {
-  return getDetailProps({ params: { mediaId: "the-beat-behind-the-hit" } });
+  return { notFound: true, revalidate: 60 };
 }

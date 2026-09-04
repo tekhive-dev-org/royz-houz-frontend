@@ -2,30 +2,36 @@ import Image from "next/image";
 import Link from "next/link";
 import styles from "./BlogArticles.module.css";
 import { BLOG_ARTICLES } from "../../../constants/blog";
+import { formatDate } from "@/utils/dateFormatter";
 
 /**
  * BlogArticles component rendering the 6 curated stories matching vector card design.
  */
-export function BlogArticles({ articles = BLOG_ARTICLES }) {
+export function BlogArticles({ articles, _categories, headerData }) {
+  const postList = articles && articles.length > 0 ? articles : BLOG_ARTICLES;
+  const tagline = headerData?.sectionTagline || "LATEST STORIES";
+  const title = headerData?.sectionTitle || "Stories, Voices & Ideas That Matter";
+  const subtitle =
+    headerData?.sectionSubtitle ||
+    "Discover inspiring stories, fresh perspectives and creative voices that celebrate the talent, culture and ideas shaping Royz Houz.";
+
   return (
-    <section className={styles.section} aria-label="Latest Stories">
+    <section className={styles.section} aria-label={title}>
       <div className={styles.container}>
         {/* Section Header with dual accent lines */}
         <div className={styles.headerArea}>
           <div className={styles.tagline}>
             <span className={styles.accentLine} aria-hidden="true" />
-            <span className={styles.tagText}>LATEST STORIES</span>
+            <span className={styles.tagText}>{tagline}</span>
             <span className={styles.accentLine} aria-hidden="true" />
           </div>
-          <h2 className={styles.title}>Stories, Voices &amp; Ideas That Matter</h2>
-          <p className={styles.subtitle}>
-            Discover inspiring stories, fresh perspectives and creative voices that celebrate the talent, culture and ideas shaping Royz Houz.
-          </p>
+          <h2 className={styles.title}>{title}</h2>
+          <p className={styles.subtitle}>{subtitle}</p>
         </div>
 
         {/* 6 Articles Grid (3 cols) */}
         <div className={styles.grid}>
-          {articles.map((article) => (
+          {postList.map((article) => (
             <article key={article.id} className={styles.articleCard}>
               <Link href={`/blog/${article.slug}`} className={styles.cardLink}>
                 {/* Image container with inner border and margin */}
@@ -63,7 +69,7 @@ export function BlogArticles({ articles = BLOG_ARTICLES }) {
                     </span>
                     <span className={styles.formatBracket}>[ {article.format} ]</span>
                   </div>
-                  <span className={styles.dateText}>{article.date}</span>
+                  <span className={styles.dateText}>{formatDate(article.date) || article.date}</span>
                 </div>
 
                 {/* Divider Line */}

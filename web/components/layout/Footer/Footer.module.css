@@ -104,6 +104,12 @@
   @apply px-6 py-2.5 rounded-xl bg-[#B46A2C] hover:bg-[#995222] text-white font-medium text-xs transition-all shadow-md shadow-[#B46A2C]/20 active:scale-95 shrink-0;
 }
 
+.errorText {
+  color: #fca5a5;
+  font-size: 0.75rem;
+  margin-top: 6px;
+}
+
 .successText {
   @apply text-xs text-emerald-400 font-medium mt-2 pl-2 text-center lg:text-left;
 }

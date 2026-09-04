@@ -1,0 +1,34 @@
+.page {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 24px;
+}
+
+.card {
+  border: 1px solid #e7e9ee;
+  max-width: 520px;
+  padding: 36px;
+  width: 100%;
+}
+
+.eyebrow {
+  color: #b46a2c;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.title {
+  color: #172033;
+  font-weight: 700;
+}
+
+.description {
+  color: #667085;
+}
+
+.button {
+  align-self: flex-start;
+  margin-top: 8px;
+}

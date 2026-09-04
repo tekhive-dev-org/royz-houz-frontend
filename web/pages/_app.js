@@ -1,6 +1,8 @@
+import "@splidejs/react-splide/css";
 import "@/styles/globals.css";
 import { Lato } from "next/font/google";
 import { Layout } from "@/components/layout/Layout";
+import { usePublicContentRealtime } from "@/hooks/usePublicContentRealtime";
 
 const lato = Lato({
   subsets: ["latin"],
@@ -10,6 +12,8 @@ const lato = Lato({
 });
 
 export default function App({ Component, pageProps }) {
+  usePublicContentRealtime();
+
   // Support custom page layouts if specified, otherwise apply global Layout
   const getLayout = Component.getLayout || ((page) => <Layout>{page}</Layout>);
 

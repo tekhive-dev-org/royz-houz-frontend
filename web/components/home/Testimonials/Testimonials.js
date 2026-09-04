@@ -1,6 +1,6 @@
 import { Splide, SplideSlide } from "@splidejs/react-splide";
-import "@splidejs/react-splide/css/core";
-import { TESTIMONIALS } from "@/constants/testimonials";
+import "@splidejs/react-splide/css";
+import { HOMEPAGE_TESTIMONIALS_CONTENT } from "@/constants/homepageContent";
 import { TestimonialCard } from "./TestimonialCard";
 import styles from "./Testimonials.module.css";
 
@@ -12,9 +12,10 @@ const SPLIDE_OPTIONS = {
   pagination: true,
   arrows: false,
   autoplay: true,
-  interval: 6000,
+  interval: 5000,
   pauseOnHover: true,
   pauseOnFocus: true,
+  resetProgress: false,
   speed: 700,
   easing: "cubic-bezier(0.25, 0.46, 0.45, 0.94)",
   drag: true,
@@ -24,7 +25,11 @@ const SPLIDE_OPTIONS = {
   },
 };
 
-export function Testimonials() {
+export function Testimonials({ content }) {
+  const sectionContent = { ...HOMEPAGE_TESTIMONIALS_CONTENT, ...content };
+  const testimonials = Array.isArray(sectionContent.testimonials)
+    ? sectionContent.testimonials
+    : HOMEPAGE_TESTIMONIALS_CONTENT.testimonials;
   return (
     <section className={styles.section} id="testimonials">
       <div className={styles.container}>
@@ -34,17 +39,16 @@ export function Testimonials() {
           {/* Sub-badge Tagline */}
           <div className={styles.badgeRow}>
             <span className={styles.badgeLine} aria-hidden="true" />
-            <span>TESTIMONIALS</span>
+            <span>{sectionContent.badge}</span>
             <span className={styles.badgeLine} aria-hidden="true" />
           </div>
 
           {/* Headline */}
-          <h2 className={styles.title}>Impact - changing Stories</h2>
+          <h2 className={styles.title}>{sectionContent.title}</h2>
 
           {/* Subheadline */}
           <p className={styles.description}>
-            Explore the stories and experiences of members who have connected, and
-            found meaningful opportunities.
+            {sectionContent.description}
           </p>
         </div>
 
@@ -52,11 +56,11 @@ export function Testimonials() {
         <div className={styles.carouselWrapper}>
           <Splide
             options={SPLIDE_OPTIONS}
-            aria-label="Member testimonials carousel"
+            aria-label={sectionContent.carouselAriaLabel}
             className={styles.carousel}
           >
-            {TESTIMONIALS.map((item) => (
-              <SplideSlide key={item.id}>
+            {testimonials.map((item, index) => (
+              <SplideSlide key={item?.id || index}>
                 <TestimonialCard testimonial={item} />
               </SplideSlide>
             ))}

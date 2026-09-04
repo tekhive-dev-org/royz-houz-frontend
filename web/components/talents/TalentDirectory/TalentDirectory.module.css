@@ -121,7 +121,7 @@
 }
 
 .bookBtn {
-  @apply w-[54px] sm:w-[73px] h-[24px] sm:h-[28px] rounded-[4px] bg-[#B46A2C] hover:bg-[#9E5820] active:scale-95 text-white font-bold text-[10px] sm:text-xs tracking-wide shadow-sm transition-all flex items-center justify-center cursor-pointer select-none;
+  @apply w-[54px] sm:w-[73px] h-[24px] sm:h-[28px] rounded-[4px] bg-[#B46A2C] hover:bg-[#9E5820] active:scale-95 text-white font-bold text-[10px] sm:text-xs tracking-wide shadow-sm transition-all flex items-center justify-center cursor-pointer select-none disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-[#B46A2C] disabled:active:scale-100;
 }
 
 /* ── Fully Responsive Pagination Controls ────────────── */

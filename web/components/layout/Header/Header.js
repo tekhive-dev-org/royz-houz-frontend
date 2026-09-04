@@ -4,7 +4,18 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { Search, Menu, X, Instagram } from "lucide-react";
 import { XIcon, YoutubeIcon } from "@/components/common/SocialIcons";
+import { useGlobalLayout } from "@/hooks/useGlobalLayout";
 import styles from "./Header.module.css";
+
+const DEFAULT_NAV_ITEMS = [
+  { label: "Home", href: "/" },
+  { label: "About Us", href: "/about" },
+  { label: "Talent Hub", href: "/talents" },
+  { label: "Events", href: "/events" },
+  { label: "Media", href: "/media" },
+  { label: "Blog", href: "/blog" },
+  { label: "Contact", href: "/contact" },
+];
 
 export function Header() {
   const router = useRouter();
@@ -13,16 +24,16 @@ export function Header() {
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
-  const navItems = [
-    { label: "Home", href: "/" },
-    { label: "About Us", href: "/about" },
-    { label: "Talent Hub", href: "/talents" },
-    { label: "Events", href: "/events" },
-    { label: "Media", href: "/media" },
-    { label: "Blog", href: "/blog" },
-    // { label: "Store", href: "/merchandise" },
-    { label: "Contact", href: "/contact" },
-  ];
+  const { navigation, socialLinks } = useGlobalLayout();
+  const navItems =
+    navigation && navigation.length > 0
+      ? navigation.map((item) => ({ label: item.label, href: item.href }))
+      : DEFAULT_NAV_ITEMS;
+
+  const instagramUrl = socialLinks?.find((s) => s.platform === "instagram")?.url || "https://instagram.com";
+  const xUrl = socialLinks?.find((s) => s.platform === "x" || s.platform === "twitter")?.url || "https://x.com";
+  const youtubeUrl = socialLinks?.find((s) => s.platform === "youtube")?.url || "https://youtube.com";
+
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
@@ -105,7 +116,7 @@ export function Header() {
           {/* Social Icons */}
           <div className={styles.socialGroup}>
             <a
-              href="https://instagram.com"
+              href={instagramUrl}
               target="_blank"
               rel="noreferrer"
               className={styles.socialLink}
@@ -114,7 +125,7 @@ export function Header() {
               <Instagram className="w-4 h-4" />
             </a>
             <a
-              href="https://x.com"
+              href={xUrl}
               target="_blank"
               rel="noreferrer"
               className={styles.socialLink}
@@ -123,7 +134,7 @@ export function Header() {
               <XIcon className="w-3.5 h-3.5" />
             </a>
             <a
-              href="https://youtube.com"
+              href={youtubeUrl}
               target="_blank"
               rel="noreferrer"
               className={styles.socialLink}
@@ -194,13 +205,13 @@ export function Header() {
 
           <div className={styles.mobileDrawerFooter}>
             <div className={styles.mobileSocialGroup}>
-              <a href="https://instagram.com" target="_blank" rel="noreferrer">
+              <a href={instagramUrl} target="_blank" rel="noreferrer" aria-label="Instagram">
                 <Instagram className="w-5 h-5" />
               </a>
-              <a href="https://x.com" target="_blank" rel="noreferrer">
+              <a href={xUrl} target="_blank" rel="noreferrer" aria-label="X">
                 <XIcon className="w-4 h-4" />
               </a>
-              <a href="https://youtube.com" target="_blank" rel="noreferrer">
+              <a href={youtubeUrl} target="_blank" rel="noreferrer" aria-label="YouTube">
                 <YoutubeIcon className="w-5 h-5" />
               </a>
             </div>

@@ -2,40 +2,52 @@ import { useState } from "react";
 import styles from "./ArticleCommentForm.module.css";
 
 /**
- * ArticleCommentForm provides an interactive form matching the 1026x364 vector specification.
+ * ArticleCommentForm submits comments through the moderated public endpoint.
  */
-export function ArticleCommentForm({ onAddComment }) {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    comment: "",
-  });
+export function ArticleCommentForm({ postId }) {
+  const [formData, setFormData] = useState({ name: "", email: "", comment: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submittedMessage, setSubmittedMessage] = useState("");
+  const [formError, setFormError] = useState("");
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((previous) => ({ ...previous, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!formData.name.trim() || !formData.comment.trim()) return;
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    if (!postId || !formData.name.trim() || !formData.email.trim() || !formData.comment.trim()) return;
 
     setIsSubmitting(true);
-    setTimeout(() => {
-      if (onAddComment) {
-        onAddComment({
-          author: formData.name,
-          email: formData.email,
-          content: formData.comment,
-        });
+    setSubmittedMessage("");
+    setFormError("");
+
+    try {
+      const response = await fetch("/api/blog/comments", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          postId,
+          authorName: formData.name.trim(),
+          authorEmail: formData.email.trim(),
+          body: formData.comment.trim(),
+        }),
+      });
+
+      const payload = await response.json().catch(() => null);
+      if (!response.ok || !payload?.success) {
+        setFormError(payload?.error?.message || "We could not submit your comment. Please try again.");
+        return;
       }
+
       setFormData({ name: "", email: "", comment: "" });
+      setSubmittedMessage("Thank you! Your comment has been submitted for moderation.");
+    } catch {
+      setFormError("We could not submit your comment. Please try again.");
+    } finally {
       setIsSubmitting(false);
-      setSubmittedMessage("Thank you! Your comment has been posted.");
-      setTimeout(() => setSubmittedMessage(""), 4000);
-    }, 400);
+    }
   };
 
   return (
@@ -43,7 +55,6 @@ export function ArticleCommentForm({ onAddComment }) {
       <h3 className={styles.heading}>Leave a Comment</h3>
 
       <form onSubmit={handleSubmit} className={styles.form}>
-        {/* Name and Email Row */}
         <div className={styles.inputRow}>
           <div className={styles.fieldGroup}>
             <label htmlFor="commentName" className={styles.label}>
@@ -78,7 +89,6 @@ export function ArticleCommentForm({ onAddComment }) {
           </div>
         </div>
 
-        {/* Comment Textarea */}
         <div className={styles.fieldGroup}>
           <label htmlFor="commentContent" className={styles.label}>
             Comment <span className={styles.required}>*</span>
@@ -95,13 +105,8 @@ export function ArticleCommentForm({ onAddComment }) {
           />
         </div>
 
-        {/* Action Button & Confirmation Message */}
         <div className={styles.actionRow}>
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className={styles.submitBtn}
-          >
+          <button type="submit" disabled={isSubmitting} className={styles.submitBtn}>
             {isSubmitting ? "POSTING..." : "POST COMMENT"}
           </button>
 
@@ -110,6 +115,7 @@ export function ArticleCommentForm({ onAddComment }) {
               {submittedMessage}
             </p>
           )}
+          {formError && <p className={styles.errorMessage} role="alert">{formError}</p>}
         </div>
       </form>
     </section>

@@ -1,0 +1,158 @@
+.header {
+  align-items: flex-start;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  gap: 20px;
+}
+
+.title {
+  color: #111827;
+  font-weight: 800;
+  font-size: 1.75rem !important;
+  letter-spacing: -0.025em;
+}
+
+.description {
+  color: #4B5563;
+  margin-top: 6px;
+  max-width: 720px;
+  font-size: 0.9375rem;
+}
+
+.filters {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.searchInput {
+  flex: 1;
+  min-width: 240px;
+  background: #FFFFFF;
+}
+
+.statusFilter {
+  min-width: 170px;
+  background: #FFFFFF;
+}
+
+.tableContainer {
+  border: 1px solid #E8EAEF;
+  border-radius: 14px;
+  background: #FFFFFF;
+  margin-bottom: 32px;
+  overflow: hidden;
+}
+
+.eventCell {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.dateBadge {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #FAF4EF 0%, #F2E4D6 100%);
+  border: 1px solid rgba(180, 106, 44, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #B46A2C;
+}
+
+.dateMonth {
+  font-size: 0.625rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  line-height: 1;
+}
+
+.dateDay {
+  font-size: 1.125rem;
+  font-weight: 900;
+  line-height: 1;
+  margin-top: 2px;
+}
+
+.eventMeta {
+  display: flex;
+  flex-direction: column;
+}
+
+.eventTitle {
+  font-weight: 700;
+  color: #111827;
+}
+
+.eventSlug {
+  font-size: 0.75rem;
+  color: #6B7280;
+  font-family: monospace;
+}
+
+.categoryTag {
+  background: #FAF4EF;
+  color: #B46A2C;
+  border: 1px solid #F2E4D6;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.featuredSection {
+  margin-top: 32px;
+  padding: 24px;
+  background: #FFFFFF;
+  border: 1px solid #E8EAEF;
+  border-radius: 14px;
+}
+
+.sectionTitle {
+  color: #111827;
+  font-weight: 700;
+  font-size: 1.125rem !important;
+  margin-bottom: 14px;
+}
+
+.row {
+  display: flex;
+  gap: 16px;
+}
+
+/* MUI/row display rules must not override tab panel visibility. */
+.row[hidden],
+.tabPanel[hidden],
+.tabField[hidden] {
+  display: none !important;
+}
+
+.preview {
+  background: #0B0C10;
+  color: #D1D5DB;
+  border: 1px solid #232736;
+  border-radius: 10px;
+  font-family: monospace;
+  font-size: 0.8125rem;
+  max-height: 60vh;
+  overflow: auto;
+  padding: 16px;
+}
+
+@media (max-width: 599px) {
+  .header {
+    flex-direction: column;
+  }
+  
+  .row,
+  .filters {
+    flex-direction: column;
+  }
+}

@@ -2,10 +2,16 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { X } from "lucide-react";
+import { HOMEPAGE_OUR_IMPACT_CONTENT } from "@/constants/homepageContent";
 import styles from "./OurImpact.module.css";
 
-export function OurImpact() {
+export function OurImpact({ content }) {
   const [isVideoOpen, setIsVideoOpen] = useState(false);
+  const impact = {
+    ...HOMEPAGE_OUR_IMPACT_CONTENT,
+    ...content,
+    cta: { ...HOMEPAGE_OUR_IMPACT_CONTENT.cta, ...content?.cta },
+  };
 
   return (
     <section className={styles.section}>
@@ -17,25 +23,25 @@ export function OurImpact() {
             {/* Category Sub-badge */}
             <div className={styles.badgeRow}>
               <span className={styles.badgeLine} />
-              <span>OUR IMPACT</span>
+              <span>{impact.badge}</span>
               <span className={styles.badgeLine} />
             </div>
 
             {/* Headline */}
             <h2 className={styles.headline}>
-              Creating Opportunities
-              <span className={styles.headlineAccent}>Transforming Lives.</span>
+              {impact.headline}
+              <span className={styles.headlineAccent}>{impact.headlineAccent}</span>
             </h2>
 
             {/* Description */}
             <p className={styles.description}>
-              Through education, mentorship, creative programs and community initiatives, we are empowering the next generation to rise, create and lead.
+              {impact.description}
             </p>
 
             {/* Support Our Mission CTA */}
             <div>
-              <Link href="/about" className={styles.ctaBtn}>
-                Support Our Mission
+              <Link href={impact.cta.href} className={styles.ctaBtn}>
+                {impact.cta.label}
               </Link>
             </div>
           </div>
@@ -52,11 +58,11 @@ export function OurImpact() {
                   setIsVideoOpen(true);
                 }
               }}
-              aria-label="Play Impact Story Video"
+              aria-label={impact.videoAriaLabel}
             >
               <Image
-                src="/assets/img/impact.jpg"
-                alt="Empowering African Youth through Education and Mentorship"
+                src={impact.image}
+                alt={impact.imageAlt}
                 fill
                 sizes="(max-width: 1024px) 100vw, 50vw"
                 className={styles.videoThumbnail}
@@ -66,8 +72,8 @@ export function OurImpact() {
               <div className={styles.videoOverlay}>
                 <div className={styles.playBtn}>
                   <Image
-                    src="/assets/icons/playbtn.png"
-                    alt="Play video"
+                    src={impact.playImage}
+                    alt={impact.playImageAlt}
                     width={64}
                     height={64}
                     className={styles.playImage}
@@ -92,8 +98,8 @@ export function OurImpact() {
               <X className="w-5 h-5 text-white" />
             </button>
             <iframe
-              src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ?autoplay=1"
-              title="RoyzHouse Impact Story"
+              src={impact.videoUrl}
+              title={impact.videoTitle}
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
               className={styles.iframe}

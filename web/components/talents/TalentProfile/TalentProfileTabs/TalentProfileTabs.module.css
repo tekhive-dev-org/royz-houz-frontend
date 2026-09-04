@@ -178,7 +178,15 @@
 }
 
 .trackCard {
-  @apply flex items-center justify-between px-3.5 sm:px-4 py-3 rounded-[10px] border border-[#E2E4E9] bg-black/[0.01] hover:bg-slate-50/80 transition-all cursor-pointer select-none;
+  @apply flex w-full items-center justify-between px-3.5 sm:px-4 py-3 rounded-[10px] border border-[#E2E4E9] bg-black/[0.01] hover:bg-slate-50/80 transition-all cursor-pointer select-none text-left;
+}
+
+.trackCard:disabled {
+  @apply cursor-not-allowed opacity-60 hover:bg-black/[0.01];
+}
+
+.trackCard:focus-visible {
+  @apply outline-2 outline-offset-2 outline-[#B46A2C];
 }
 
 .trackCardActive {

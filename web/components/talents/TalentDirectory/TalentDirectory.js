@@ -1,15 +1,15 @@
 import { useState, useMemo } from "react";
 import { useRouter } from "next/router";
-import { TALENT_DIRECTORY_ITEMS } from "@/constants/talents";
 import { CategoryFilter } from "./CategoryFilter";
 import { DirectoryCard } from "./DirectoryCard";
 import { Pagination } from "./Pagination";
+import { isTalentAvailableForBooking } from "../TalentProfile/talentProfileData";
 import styles from "./TalentDirectory.module.css";
 
 /**
  * TalentDirectory component orchestrating filtering, grid rendering, and pagination.
  */
-export function TalentDirectory({ searchQuery = "" }) {
+export function TalentDirectory({ talents = [], searchQuery = "", categories }) {
   const [activeCategory, setActiveCategory] = useState("all");
   const [sortBy, setSortBy] = useState("date");
   const [currentPage, setCurrentPage] = useState(1);
@@ -17,24 +17,27 @@ export function TalentDirectory({ searchQuery = "" }) {
 
   // Filter talents by category and optional search query
   const filteredTalents = useMemo(() => {
-    return TALENT_DIRECTORY_ITEMS.filter((item) => {
+    return talents.filter((item) => {
       // Category filter
       const matchesCategory =
         activeCategory === "all" ||
         item.categoryKey === activeCategory ||
-        item.category.toLowerCase() === activeCategory.toLowerCase();
+        item.category?.toLowerCase() === activeCategory.toLowerCase() ||
+        item.profession?.toLowerCase() === activeCategory.toLowerCase() ||
+        item.primaryCategoryId === activeCategory ||
+        (Array.isArray(item.categoryIds) && item.categoryIds.includes(activeCategory));
 
       // Search query filter
       const matchesSearch =
         !searchQuery ||
-        item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item.subtitle.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item.bio.toLowerCase().includes(searchQuery.toLowerCase());
+        item.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.category?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.subtitle?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.bio?.toLowerCase().includes(searchQuery.toLowerCase());
 
       return matchesCategory && matchesSearch;
     });
-  }, [activeCategory, searchQuery]);
+  }, [activeCategory, searchQuery, talents]);
 
   // Sort talents
   const sortedTalents = useMemo(() => {
@@ -57,7 +60,10 @@ export function TalentDirectory({ searchQuery = "" }) {
   const router = useRouter();
 
   const handleBook = (talent) => {
-    router.push(`/talents/${talent.slug || talent.id}/book`);
+    const talentIdentifier = talent?.slug || talent?.id;
+    if (!isTalentAvailableForBooking(talent) || !talentIdentifier) return;
+
+    router.push(`/talents/${talentIdentifier}/book`);
   };
 
   const handleCategorySelect = (catId) => {
@@ -70,6 +76,7 @@ export function TalentDirectory({ searchQuery = "" }) {
       <div className={styles.container}>
         {/* Category Filter & Meta Bar */}
         <CategoryFilter
+          categories={categories}
           activeCategory={activeCategory}
           onSelectCategory={handleCategorySelect}
           totalCount={sortedTalents.length}

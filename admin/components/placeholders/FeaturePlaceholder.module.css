@@ -1,0 +1,40 @@
+.chip {
+  background: #fff3e8 !important;
+  color: #b54708 !important;
+  font-weight: 600;
+}
+
+.title {
+  color: #172033;
+  font-weight: 700;
+  margin-top: 12px;
+}
+
+.description {
+  color: #667085;
+  margin-top: 8px;
+  max-width: 640px;
+}
+
+.card {
+  align-items: flex-start;
+  border: 1px solid #e7e9ee;
+  display: flex;
+  gap: 16px;
+  max-width: 640px;
+  padding: 20px;
+}
+
+.cardIcon {
+  color: #b46a2c;
+}
+
+.cardTitle {
+  color: #172033;
+  font-weight: 600;
+}
+
+.cardDescription {
+  color: #667085;
+  margin-top: 4px;
+}

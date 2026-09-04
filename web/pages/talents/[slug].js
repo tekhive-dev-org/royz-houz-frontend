@@ -1,8 +1,8 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { TALENT_DIRECTORY_ITEMS } from "@/constants/talents";
-import { getTalentBySlug } from "@/utils/talentHelpers";
 import { TalentProfile } from "@/components/talents";
+import { getTalentBySlug, listTalents } from "@/services/content/talentService";
 
 export default function TalentDetailPage({ talent }) {
   const router = useRouter();
@@ -15,7 +15,7 @@ export default function TalentDetailPage({ talent }) {
     );
   }
 
-  const currentTalent = talent || TALENT_DIRECTORY_ITEMS[0];
+  const currentTalent = talent;
 
   return (
     <>
@@ -43,29 +43,34 @@ export default function TalentDetailPage({ talent }) {
 }
 
 export async function getStaticPaths() {
-  const paths = TALENT_DIRECTORY_ITEMS.map((item) => ({
-    params: { slug: item.slug || item.id },
-  }));
+  let talents = TALENT_DIRECTORY_ITEMS;
+
+  try {
+    const result = await listTalents();
+    if (result.success) talents = result.data;
+  } catch {
+    // Known public route slugs keep the build resilient when Supabase is unavailable.
+  }
 
   return {
-    paths,
+    paths: talents
+      .map((talent) => talent.slug || talent.id)
+      .filter(Boolean)
+      .map((slug) => ({ params: { slug } })),
     fallback: "blocking",
   };
 }
 
 export async function getStaticProps({ params }) {
-  const talent = getTalentBySlug(params?.slug);
+  try {
+    const result = await getTalentBySlug(params?.slug);
+    if (!result.success) return { notFound: true, revalidate: 60 };
 
-  if (!talent) {
     return {
-      notFound: true,
+      props: { talent: result.data },
+      revalidate: 60,
     };
+  } catch {
+    return { notFound: true, revalidate: 60 };
   }
-
-  return {
-    props: {
-      talent,
-    },
-    revalidate: 60,
-  };
 }

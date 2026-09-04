@@ -1,14 +1,15 @@
 import Image from "next/image";
 import Link from "next/link";
 import { MapPin, ChevronRight } from "lucide-react";
-import { POPULAR_CALENDAR_EVENTS } from "@/constants/events";
+
 import styles from "./EventPopularEvents.module.css";
 
 /**
  * EventPopularEvents component rendering upcoming calendar events at the bottom of the page.
  */
-export function EventPopularEvents({ events = POPULAR_CALENDAR_EVENTS }) {
-  const displayEvents = events && events.length > 0 ? events : POPULAR_CALENDAR_EVENTS;
+export function EventPopularEvents({ events = [] }) {
+  const displayEvents = Array.isArray(events) ? events : [];
+  if (!displayEvents.length) return null;
 
   return (
     <section className={styles.section} aria-label="Popular Events">

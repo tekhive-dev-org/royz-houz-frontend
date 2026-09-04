@@ -8,8 +8,10 @@ import {
 } from "@/components/talents";
 import { Breadcrumb } from "@/components/common";
 import { Testimonials } from "@/components/home";
+import { TALENT_CATEGORIES, TALENT_DIRECTORY_ITEMS, TRENDING_TALENTS } from "@/constants/talents";
+import { getTrendingTalents, listTalentCategories, listTalents } from "@/services/content/talentService";
 
-export default function TalentsPage() {
+export default function TalentsPage({ talents, trendingTalents, categories }) {
   const [searchQuery, setSearchQuery] = useState("");
 
   const handleSearch = (query) => {
@@ -45,10 +47,10 @@ export default function TalentsPage() {
       />
 
       {/* Trending Now Section */}
-      <TrendingTalents />
+      <TrendingTalents talents={trendingTalents} />
 
       {/* Talent Hub Catalog & Directory Section */}
-      <TalentDirectory searchQuery={searchQuery} />
+      <TalentDirectory talents={talents} searchQuery={searchQuery} categories={categories} />
 
       {/* Talent Call to Action Section */}
       <TalentCTA />
@@ -56,4 +58,30 @@ export default function TalentsPage() {
     </>
   );
 }
+
+export async function getStaticProps() {
+  try {
+    const [result, trendingResult, categoriesResult] = await Promise.all([
+      listTalents(),
+      getTrendingTalents({ limit: 4 }),
+      listTalentCategories(),
+    ]);
+    const talents = result.success ? result.data : TALENT_DIRECTORY_ITEMS;
+    const trendingTalents = trendingResult.success ? trendingResult.data : TRENDING_TALENTS;
+    const categories = categoriesResult.success
+      ? [{ id: "all", label: "All" }, ...categoriesResult.data]
+      : TALENT_CATEGORIES;
+
+    return {
+      props: { talents, trendingTalents, categories },
+      revalidate: 60,
+    };
+  } catch {
+    return {
+      props: { talents: TALENT_DIRECTORY_ITEMS, trendingTalents: TRENDING_TALENTS, categories: TALENT_CATEGORIES },
+      revalidate: 60,
+    };
+  }
+}
+
 

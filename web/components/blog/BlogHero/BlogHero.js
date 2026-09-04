@@ -7,11 +7,18 @@ import { BLOG_HERO_SLIDES } from "../../../constants/blog";
 /**
  * BlogHero component with background carousel transition and exact minimalist long-arrow navigation controls.
  */
-export function BlogHero({ slides = BLOG_HERO_SLIDES }) {
+export function BlogHero({ slides, hero }) {
+  const activeSlides =
+    hero?.slides && hero.slides.length > 0
+      ? hero.slides
+      : slides && slides.length > 0
+      ? slides
+      : BLOG_HERO_SLIDES;
+
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
 
-  const total = slides.length;
+  const total = activeSlides.length;
 
   const handleNext = useCallback(() => {
     setCurrentIndex((prev) => (prev + 1) % total);
@@ -29,7 +36,7 @@ export function BlogHero({ slides = BLOG_HERO_SLIDES }) {
     return () => clearInterval(timer);
   }, [isPaused, total, handleNext]);
 
-  const currentSlide = slides[currentIndex] || slides[0];
+  const currentSlide = activeSlides[currentIndex] || activeSlides[0] || {};
 
   return (
     <section
@@ -40,7 +47,7 @@ export function BlogHero({ slides = BLOG_HERO_SLIDES }) {
     >
       {/* Background Image Carousel Slides */}
       <div className={styles.backgroundContainer}>
-        {slides.map((slide, idx) => (
+        {activeSlides.map((slide, idx) => (
           <div
             key={slide.id || idx}
             className={`${styles.slideImageWrapper} ${
@@ -48,7 +55,7 @@ export function BlogHero({ slides = BLOG_HERO_SLIDES }) {
             }`}
           >
             <Image
-              src={slide.backgroundImage}
+              src={slide.backgroundImage || "/assets/img/blog/blog-hero-1.jpg"}
               alt={slide.titleHighlight || "Blog Hero"}
               fill
               sizes="100vw"

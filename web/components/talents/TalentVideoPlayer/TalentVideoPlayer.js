@@ -1,119 +1,156 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { ChevronLeft } from "lucide-react";
 import { VideoPlayerHero } from "./VideoPlayerHero";
 import { VideoPlayerMeta } from "./VideoPlayerMeta";
-import { ProductionCredits } from "./ProductionCredits";
+import { TalentProductions } from "./TalentProductions";
 import { TalentMiniProfile } from "./TalentMiniProfile";
 import { UpNextVideos } from "./UpNextVideos";
 import { MoreTalents } from "./MoreTalents";
 import { ShareModal } from "../TalentProfile/ShareModal";
 import { ReportModal } from "@/components/common";
+import { submitContentReportRequest } from "@/services/contentReportApi";
 import styles from "./TalentVideoPlayer.module.css";
-
-function parseDurationToSeconds(str) {
-  if (!str) return 214;
-  const clean = String(str).trim();
-  if (clean.includes(":")) {
-    const parts = clean.split(":");
-    return (parseInt(parts[0], 10) || 0) * 60 + (parseInt(parts[1], 10) || 0);
-  }
-  if (clean.includes("min")) {
-    return (parseInt(clean, 10) || 4) * 60;
-  }
-  return 214;
-}
+import {
+  buildTalentMediaQueue,
+  getTalentMediaPath,
+  parseMediaDurationToSeconds,
+} from "./talentVideoUtils";
+import { useMediaViewTracker } from "./useMediaViewTracker";
 
 /**
- * TalentVideoPlayer root orchestrator layout for video player pages.
+ * TalentVideoPlayer root orchestrator for the unified productions media player.
+ * Plays both published videos (video) and published music (audio) in one queue.
  */
 export function TalentVideoPlayer({
-  talent = {
-    name: "Julius Ayomide",
-    category: "Music Producer",
-    followers: "98K",
-    bio: "Julius Ayomide is a creative music producer and beatmaker specializing in Afrobeats, Hip-Hop, and contemporary African sounds.",
-    image: "/assets/img/talents/julius.jpg",
-    coverImage: "/assets/img/talents/amara.jpg",
-    slug: "julius-ayomide",
-  },
-  video = {
-    id: "prod-reel",
-    title: "The Sound Architect",
-    thumbnail: "/assets/img/talents/producer-hero.jpg",
-  },
+  talent,
+  media,
   breadcrumbRoot = { label: "Talent Hub", href: "/talents" },
 }) {
+  const router = useRouter();
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
 
-  // Get portfolio items list from talent data
-  const portfolioItems =
-    talent.videoReel?.portfolioItems ||
-    talent.musicTracks || [];
+  const [activeMedia, setActiveMedia] = useState(null);
+  const [shouldAutoPlay, setShouldAutoPlay] = useState(false);
+  const [detectedDuration, setDetectedDuration] = useState(null);
 
-  // Default active track is either the item marked isActive or index 0
-  const initialTrack =
-    portfolioItems.find((item) => item.isActive) ||
-    portfolioItems[0] ||
-    null;
+  useEffect(() => {
+    setActiveMedia(null);
+    setShouldAutoPlay(false);
+    setDetectedDuration(null);
+  }, [media?.id, media?.slug]);
 
-  const [activeTrack, setActiveTrack] = useState(initialTrack);
+  const handleDurationDetected = useCallback((durationSecs) => {
+    if (durationSecs && Number.isFinite(durationSecs) && durationSecs > 0) {
+      setDetectedDuration((prev) => {
+        if (prev && Math.abs(prev - durationSecs) < 0.5) return prev;
+        return durationSecs;
+      });
+    }
+  }, []);
 
-  // Synchronize current video on the main player with the active track
-  const currentVideo = {
-    ...video,
-    id: activeTrack?.id || video.id,
-    title: activeTrack?.title || video.title,
-    thumbnail:
-      activeTrack?.thumbnail ||
-      talent.videoReel?.thumbnail ||
-      video.thumbnail,
-    duration:
-      parseDurationToSeconds(activeTrack?.duration || activeTrack?.readTime) ||
-      video.duration ||
-      214,
+  const currentMedia = activeMedia
+    ? {
+        ...media,
+        ...activeMedia,
+        thumbnail:
+          activeMedia.thumbnail || media.thumbnail || talent.coverImage || talent.image || "",
+        videoUrl: activeMedia.videoUrl || "",
+        trackUrl: activeMedia.trackUrl || "",
+        mediaType: activeMedia.mediaType || "video",
+        duration:
+          detectedDuration ||
+          parseMediaDurationToSeconds(activeMedia.duration || activeMedia.readTime) ||
+          parseMediaDurationToSeconds(media.duration) ||
+          0,
+        displayDuration:
+          activeMedia.displayDuration ||
+          media.displayDuration ||
+          "",
+      }
+    : {
+        ...media,
+        thumbnail: media.thumbnail || talent.coverImage || talent.image || "",
+        mediaType: media.mediaType || "video",
+        duration:
+          detectedDuration ||
+          parseMediaDurationToSeconds(media.duration || media.readTime) ||
+          0,
+        displayDuration:
+          media.displayDuration ||
+          "",
+      };
+
+  const { views: liveViews, recordPlaybackView } = useMediaViewTracker(currentMedia);
+
+  const isMediaWatch = breadcrumbRoot?.href === "/media" || talent?.slug === "media";
+  const resolveMediaPath = (item) => {
+    if (!item) return null;
+    const mediaSlug = item.slug || item.id;
+    if (isMediaWatch) {
+      return `/media/watch/${encodeURIComponent(mediaSlug)}`;
+    }
+    return getTalentMediaPath(talent, item);
   };
+
+  const mediaQueue = buildTalentMediaQueue(talent, currentMedia).map((item) => ({
+    ...item,
+    href: resolveMediaPath(item) || "#",
+  }));
+  const videoItems = mediaQueue.filter((item) => item.mediaType !== "music");
+  const musicItems = mediaQueue.filter((item) => item.mediaType === "music");
 
   const [activeMobileTab, setActiveMobileTab] = useState("playlist");
 
-  // Determine category-specific playlist tab label for mobile
-  const categoryUpper = (talent.category || "").toUpperCase();
-  const getMobileTabLabel = () => {
-    if (categoryUpper === "MUSICIAN") return "Playlist";
-    if (categoryUpper === "ACTOR") return "Filmography";
-    if (categoryUpper === "DANCER") return "Reel";
-    if (categoryUpper === "INFLUENCER") return "Portfolio";
-    if (categoryUpper === "WRITER") return "Portfolio";
-    return "Credits";
-  };
-
-  const handleSelectTrack = (track) => {
-    setActiveTrack(track);
+  const handleSelectMedia = (item) => {
+    setActiveMedia(item);
+    setShouldAutoPlay(true);
+    const targetPath = resolveMediaPath(item);
+    if (targetPath && targetPath !== "#") {
+      void router.replace(targetPath, undefined, { shallow: true, scroll: false });
+    }
   };
 
   const handleSelectUpNext = (upNextItem) => {
-    // Check if there is a matching track in portfolioItems
-    const matchingTrack = portfolioItems.find(
-      (item) =>
-        item.id === upNextItem.id ||
-        item.title?.toLowerCase() === upNextItem.title?.toLowerCase()
-    );
-
-    if (matchingTrack) {
-      setActiveTrack(matchingTrack);
-    } else {
-      setActiveTrack({
-        id: upNextItem.id,
-        title: upNextItem.title,
-        thumbnail: upNextItem.thumbnail,
-        duration: upNextItem.duration,
-        subtitle: upNextItem.artist,
-      });
+    setActiveMedia(upNextItem);
+    setShouldAutoPlay(true);
+    const mediaPath = resolveMediaPath(upNextItem);
+    if (mediaPath && mediaPath !== "#") {
+      void router.replace(mediaPath, undefined, { shallow: true, scroll: false });
     }
 
     if (typeof window !== "undefined" && window.innerWidth < 768) {
       window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
+
+  const handleSubmitReport = (report) =>
+    submitContentReportRequest({
+      ...report,
+      targetType: currentMedia.databaseId ? "media_asset" : "talent_media",
+      targetId: currentMedia.databaseId || talent.id,
+      talentId: talent.id,
+      targetKey: currentMedia.slug,
+      targetTitle: currentMedia.title,
+    });
+
+  const handlePlaybackEnded = () => {
+    const currentIndex = mediaQueue.findIndex(
+      (item) => String(item.id) === String(currentMedia.id)
+    );
+    const nextItem =
+      currentIndex >= 0 && mediaQueue.length > 1
+        ? mediaQueue[(currentIndex + 1) % mediaQueue.length]
+        : null;
+    if (!nextItem || String(nextItem.id) === String(currentMedia.id)) return;
+
+    setActiveMedia(nextItem);
+    setShouldAutoPlay(true);
+    const mediaPath = resolveMediaPath(nextItem);
+    if (mediaPath && mediaPath !== "#") {
+      void router.replace(mediaPath, undefined, { shallow: true, scroll: false });
     }
   };
 
@@ -137,18 +174,25 @@ export function TalentVideoPlayer({
           </Link>
           <span>/</span>
           <span className={styles.breadcrumbCurrent}>
-            {currentVideo.title}
+            {currentMedia.title}
           </span>
         </nav>
 
         {/* Main 2-Column Layout Grid */}
         <div className={styles.layoutGrid}>
-          {/* Left Column: Video Player, Meta & Tabbed Content on Mobile */}
+          {/* Left Column: Media Player, Meta & Tabbed Content on Mobile */}
           <div className={styles.mainColumn}>
-            <VideoPlayerHero video={currentVideo} />
+            <VideoPlayerHero
+              media={currentMedia}
+              autoPlay={shouldAutoPlay}
+              onEnded={handlePlaybackEnded}
+              onDurationDetected={handleDurationDetected}
+              onPlaybackStart={recordPlaybackView}
+            />
             <VideoPlayerMeta
-              title={currentVideo.title}
+              title={currentMedia.title}
               talent={talent}
+              media={{ ...currentMedia, views: liveViews || currentMedia.views }}
               onShareClick={() => setIsShareModalOpen(true)}
               onReportClick={() => setIsReportModalOpen(true)}
             />
@@ -157,7 +201,7 @@ export function TalentVideoPlayer({
             <div
               className={styles.mobileTabNav}
               role="tablist"
-              aria-label="Video Player Mobile Views"
+              aria-label="Productions Player Mobile Views"
             >
               <button
                 type="button"
@@ -168,13 +212,13 @@ export function TalentVideoPlayer({
                   activeMobileTab === "playlist" ? styles.mobileTabBtnActive : ""
                 }`}
               >
-                <span>{getMobileTabLabel()}</span>
+                <span>Productions</span>
                 <span
                   className={`${styles.mobileTabBadge} ${
                     activeMobileTab === "playlist" ? styles.mobileTabBadgeActive : ""
                   }`}
                 >
-                  {portfolioItems.length}
+                  {mediaQueue.length}
                 </span>
               </button>
 
@@ -193,35 +237,39 @@ export function TalentVideoPlayer({
                     activeMobileTab === "profile" ? styles.mobileTabBadgeActive : ""
                   }`}
                 >
-                  {(talent.videoReel?.upNextVideos || []).length}
+                  {mediaQueue.length}
                 </span>
               </button>
             </div>
 
-            {/* Desktop View: Always Show ProductionCredits in Left Column */}
+            {/* Desktop View: Published productions */}
             <div className="hidden lg:block">
-              <ProductionCredits
+              <TalentProductions
                 talent={talent}
-                activeTrackId={activeTrack?.id}
-                onSelectTrack={handleSelectTrack}
+                videos={videoItems}
+                music={musicItems}
+                activeMediaId={currentMedia.id}
+                onSelectMedia={handleSelectMedia}
               />
             </div>
 
             {/* Mobile View: Conditionally Render Active Tab Content */}
             {activeMobileTab === "playlist" ? (
               <div className="block lg:hidden">
-                <ProductionCredits
+                <TalentProductions
                   talent={talent}
-                  activeTrackId={activeTrack?.id}
-                  onSelectTrack={handleSelectTrack}
+                  videos={videoItems}
+                  music={musicItems}
+                  activeMediaId={currentMedia.id}
+                  onSelectMedia={handleSelectMedia}
                 />
               </div>
             ) : (
               <div className="flex flex-col gap-6 lg:hidden">
                 <TalentMiniProfile talent={talent} />
                 <UpNextVideos
-                  videos={talent.videoReel?.upNextVideos}
-                  activeVideoId={currentVideo.id}
+                  videos={mediaQueue}
+                  activeVideoId={currentMedia.id}
                   onSelectVideo={handleSelectUpNext}
                 />
                 <MoreTalents
@@ -237,8 +285,8 @@ export function TalentVideoPlayer({
           <div className={styles.sidebarColumn}>
             <TalentMiniProfile talent={talent} />
             <UpNextVideos
-              videos={talent.videoReel?.upNextVideos}
-              activeVideoId={currentVideo.id}
+              videos={mediaQueue}
+              activeVideoId={currentMedia.id}
               onSelectVideo={handleSelectUpNext}
             />
             <MoreTalents
@@ -250,20 +298,21 @@ export function TalentVideoPlayer({
         </div>
       </div>
 
-      {/* Video Share Modal Dialog */}
+      {/* Share Modal Dialog */}
       <ShareModal
         isOpen={isShareModalOpen}
         onClose={() => setIsShareModalOpen(false)}
         talent={talent}
-        video={currentVideo}
-        shareType="video"
+        video={currentMedia}
+        shareType={currentMedia.mediaType === "music" ? "music" : "video"}
       />
 
       {/* Report Content Modal Dialog */}
       <ReportModal
         isOpen={isReportModalOpen}
         onClose={() => setIsReportModalOpen(false)}
-        targetTitle={currentVideo.title}
+        targetTitle={currentMedia.title}
+        onSubmit={handleSubmitReport}
       />
     </div>
   );

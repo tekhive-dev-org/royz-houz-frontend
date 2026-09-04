@@ -22,6 +22,8 @@ export function Step5ReviewSubmit({
   onBack,
   onEditStep,
   isSubmitting = false,
+  hasSubmitted = false,
+  submissionError = "",
 }) {
   const [hasConfirmed, setHasConfirmed] = useState(Boolean(formData.confirmedAccuracy));
   const [consentError, setConsentError] = useState("");
@@ -34,7 +36,7 @@ export function Step5ReviewSubmit({
     }
     setConsentError("");
     updateFormData({ confirmedAccuracy: true });
-    onSubmit();
+    if (!isSubmitting && !hasSubmitted) onSubmit();
   };
 
   const opportunitiesLabels = {
@@ -356,6 +358,11 @@ export function Step5ReviewSubmit({
           <span>I confirm that all information provided is accurate and complete</span>
         </label>
         {consentError && <span className={styles.errorMessage}>{consentError}</span>}
+        {submissionError && (
+          <span className={styles.errorMessage} role="alert">
+            {submissionError}
+          </span>
+        )}
       </div>
 
       {/* Navigation Buttons */}
@@ -367,10 +374,17 @@ export function Step5ReviewSubmit({
         <button
           type="button"
           onClick={handleSubmit}
-          disabled={isSubmitting}
+          disabled={isSubmitting || hasSubmitted}
+          aria-busy={isSubmitting}
           className={styles.submitBtn}
         >
-          <span>{isSubmitting ? "Submitting..." : "Submit Application"}</span>
+          <span>
+            {isSubmitting
+              ? "Submitting..."
+              : hasSubmitted
+              ? "Application Submitted"
+              : "Submit Application"}
+          </span>
           <ChevronRight className="w-4 h-4" />
         </button>
       </div>

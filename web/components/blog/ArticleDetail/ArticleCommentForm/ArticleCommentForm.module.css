@@ -49,6 +49,11 @@
   animation: fadeIn 0.3s ease-out;
 }
 
+.errorMessage {
+  @apply text-xs text-rose-600 font-semibold;
+  animation: fadeIn 0.3s ease-out;
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;

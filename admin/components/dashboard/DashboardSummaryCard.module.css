@@ -1,0 +1,107 @@
+.card {
+  background: #FFFFFF;
+  border: 1px solid #E8EAEF;
+  border-radius: 14px;
+  padding: 22px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 140px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(180, 106, 44, 0.08);
+  border-color: rgba(180, 106, 44, 0.35);
+}
+
+.topRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.iconCircle {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #FAF4EF 0%, #F2E4D6 100%);
+  border: 1px solid rgba(180, 106, 44, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.icon {
+  color: #B46A2C;
+  font-size: 1.3rem !important;
+}
+
+.label {
+  color: #4B5563;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.valueRow {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-top: 14px;
+}
+
+.value {
+  color: #111827;
+  font-weight: 800;
+  font-size: 2rem !important;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.trendBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: #ECFDF5;
+  color: #059669;
+  font-size: 0.6875rem;
+  font-weight: 700;
+}
+
+.lockedCard {
+  background: #F9FAFB;
+  border-style: dashed;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.lockedIconWrap {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #E5E7EB;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6B7280;
+  margin-bottom: 6px;
+}
+
+.lockedLabel {
+  color: #374151;
+  font-weight: 600;
+}
+
+.lockedHint {
+  color: #9CA3AF;
+}

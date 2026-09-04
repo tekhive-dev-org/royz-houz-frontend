@@ -1,0 +1,20 @@
+export const DEFAULT_MEDIA_PAGE_CONTENT = {
+  seo: { title: "Media & Highlights | Royz House", description: "Explore inspiring videos, podcast conversations, original music tracks, and photo galleries from Royz House." },
+  hero: {
+    badge: "FEATURED NOW",
+    title: "BEYOND THE STAGE:",
+    highlightTitle: "STORIES OF RESILIENCE\nAND EXCELLENCE.",
+    description: "We discover. We develop. We empower. Together, we are a legacy that transforms lives and communities.",
+    duration: "22:45",
+    views: "440K views",
+    authorName: "Amara Nwosu",
+    authorAvatar: "/assets/img/talents/david.jpg",
+    bgImage: "/assets/img/talent-hero.jpg",
+  },
+  filters: { all: "All Media", videos: "Videos", music: "Music", podcasts: "Podcasts", gallery: "Gallery", searchPlaceholder: "Search media...", sortDate: "Sort: Date", sortLatest: "Sort: Latest", sortPopular: "Sort: Most Popular" },
+  videos: { title: "Videos", fullTitle: "Latest Videos", subtitle: "Watch inspiring stories, performances, interviews and more.", viewAllLabel: "View all videos" },
+  podcasts: { beyondTitle: "Beyond the Spotlight", beyondSubtitle: "Hear the untold stories, creative journeys, and perspectives behind Africa's most inspiring voices.", title: "Podcasts", subtitle: "Conversations that inform, inspire and empower creatives." },
+  music: { discoverTitle: "Discover New Sounds", discoverSubtitle: "Explore emerging voices and unique sounds shaping the evolving music scene.", spotlightTitle: "Music Spotlight", spotlightSubtitle: "Go beyond the spotlight and discover the people behind this creative excellence." },
+  gallery: { title: "Through The Lens", subtitle: "Visual stories capturing moments from across Nigeria.", fullSubtitle: "Capturing moments that tell our stories", viewAllLabel: "View all photos" },
+  cta: { heading: "Are you a talented individual?", subheading: "Join the Royz Houz family. Let's build your future together!", buttonLabel: "Apply Now", buttonHref: "/talents" },
+};
