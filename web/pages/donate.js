@@ -7,6 +7,7 @@ import {
   PaymentSuccess,
 } from "@/components/donate";
 import { listDonationCampaigns } from "@/services/content/donationCampaignService";
+import { getDonationPageSettings } from "@/services/content/donationPageService";
 
 /**
  * Donate page assembles the public donation-request flow:
@@ -14,15 +15,16 @@ import { listDonationCampaigns } from "@/services/content/donationCampaignServic
  * 2. 'review'  -> 2-Column Review (Summary + Donor Details with Edit)
  * 3. 'success' -> Pending request confirmation; payment is not processed here.
  */
-export default function DonatePage({ campaigns = null }) {
+export default function DonatePage({ campaigns = null, pageSettings = null }) {
   const [step, setStep] = useState("form"); // 'form' | 'review' | 'success' | 'failure'
 
   const defaultCause = campaigns?.[0]?.title || "Career skill development";
   const defaultSlug = campaigns?.[0]?.slug || "career-skill-development";
+  const defaultAmount = pageSettings?.giving?.defaultAmount || 25000;
 
   const [donationData, setDonationData] = useState({
-    frequency: "one-time",
-    amount: 25000,
+    frequency: pageSettings?.giving?.frequencies?.[0]?.id || "one-time",
+    amount: defaultAmount,
     customAmount: "",
     cause: defaultCause,
     campaignSlug: defaultSlug,
@@ -59,14 +61,16 @@ export default function DonatePage({ campaigns = null }) {
         donorEmail: donationData.email.trim(),
         donorPhone: donationData.phone.trim() || null,
         amount: donationData.amount,
-        currency: "NGN",
+        currency: pageSettings?.giving?.currency || "NGN",
         frequency: donationData.frequency,
       }),
     });
     const payload = await response.json().catch(() => null);
 
     if (!response.ok || !payload?.success) {
-      throw new Error(payload?.error?.message || "We could not record your donation request. Please try again.");
+      throw new Error(
+        payload?.error?.message || "We could not record your donation request. Please try again."
+      );
     }
 
     setDonationData((previous) => ({ ...previous, recordId: payload.data?.id || null }));
@@ -80,32 +84,35 @@ export default function DonatePage({ campaigns = null }) {
     setDonationData(updatedData);
   };
 
+  const seoTitle =
+    pageSettings?.seo?.title || "Donate & Empower African Creatives — Royz House";
+  const seoDescription =
+    pageSettings?.seo?.description ||
+    "Together we can create opportunities and change lives. Support young African creatives and talents through Royz House foundation.";
+  const seoOgImage = pageSettings?.seo?.ogImage || "/assets/img/donate-hero.jpg";
+
   return (
     <>
       <Head>
-        <title>Donate &amp; Empower African Creatives — Royz House</title>
-        <meta
-          name="description"
-          content="Together we can create opportunities and change lives. Support young African creatives and talents through Royz House foundation."
-        />
-        <meta property="og:title" content="Donate & Empower African Creatives — Royz House" />
-        <meta
-          property="og:description"
-          content="Your support empowers talents, creates opportunities, and builds a better future."
-        />
+        <title>{seoTitle}</title>
+        <meta name="description" content={seoDescription} />
+        <meta property="og:title" content={seoTitle} />
+        <meta property="og:description" content={seoDescription} />
+        <meta property="og:image" content={seoOgImage} />
         <meta property="og:type" content="website" />
       </Head>
 
       <main className="min-h-screen bg-[#FBFBFC]">
         {step === "form" && (
           <>
-            {/* Hero Section */}
-            <DonateHero />
+            {/* Hero Section (Controlled by Donation Page Studio) */}
+            <DonateHero hero={pageSettings?.hero} />
 
             {/* Donation & Information Form */}
             <DonationForm
               initialData={donationData}
               campaigns={campaigns}
+              giving={pageSettings?.giving}
               onProceedToReview={handleProceedToReview}
             />
           </>
@@ -114,6 +121,7 @@ export default function DonatePage({ campaigns = null }) {
         {step === "review" && (
           <DonationReview
             donationData={donationData}
+            review={pageSettings?.review}
             onBack={handleBackToForm}
             onUpdateData={handleUpdateData}
             onRecordDonation={handleRecordDonationRequest}
@@ -123,11 +131,11 @@ export default function DonatePage({ campaigns = null }) {
         {step === "success" && (
           <PaymentSuccess
             donationData={donationData}
+            confirmation={pageSettings?.confirmation}
             onDonateAgain={handleBackToForm}
             onGoHome={handleBackToForm}
           />
         )}
-
       </main>
     </>
   );
@@ -135,15 +143,30 @@ export default function DonatePage({ campaigns = null }) {
 
 export async function getStaticProps() {
   try {
-    const result = await listDonationCampaigns();
-    const campaigns = result.success && result.data.length > 0 ? result.data : null;
+    const [campaignsRes, pageSettingsRes] = await Promise.allSettled([
+      listDonationCampaigns(),
+      getDonationPageSettings(),
+    ]);
+
+    const campaigns =
+      campaignsRes.status === "fulfilled" &&
+      campaignsRes.value?.success &&
+      campaignsRes.value.data.length > 0
+        ? campaignsRes.value.data
+        : null;
+
+    const pageSettings =
+      pageSettingsRes.status === "fulfilled" && pageSettingsRes.value?.success
+        ? pageSettingsRes.value.data
+        : null;
+
     return {
-      props: { campaigns },
+      props: { campaigns, pageSettings },
       revalidate: 60,
     };
   } catch {
     return {
-      props: { campaigns: null },
+      props: { campaigns: null, pageSettings: null },
       revalidate: 60,
     };
   }

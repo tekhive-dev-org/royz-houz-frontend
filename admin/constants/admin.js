@@ -9,6 +9,7 @@ export const ADMIN_NAVIGATION = [
   { id: "media", label: "Media Content", href: "/media", icon: "media", group: "Content" },
   { id: "seo", label: "SEO", href: "/seo", icon: "search", group: "Content" },
   { id: "donations", label: "Donations", href: "/donations", icon: "donations", group: "Operations" },
+  { id: "payments", label: "Ticket Payments", href: "/payments", icon: "payments", group: "Operations" },
   { id: "contacts", label: "Contacts", href: "/contacts", icon: "contacts", group: "Operations" },
   { id: "newsletter", label: "Newsletter", href: "/newsletter", icon: "newsletter", group: "Operations" },
   { id: "reports", label: "Content Reports", href: "/reports", icon: "reports", group: "Operations" },

@@ -1,12 +1,17 @@
 .breadcrumbs {
-  color: #6B7280;
+  color: #94a3b8;
   min-width: 0;
   font-size: 0.8125rem;
 }
 
+.breadcrumbs :global(.MuiBreadcrumbs-separator) {
+  color: rgba(255, 255, 255, 0.3) !important;
+  margin: 0 8px;
+}
+
 .homeLink {
   align-items: center;
-  color: #6B7280;
+  color: #94a3b8;
   display: inline-flex;
   gap: 6px;
   font-weight: 500;
@@ -14,12 +19,13 @@
 }
 
 .homeLink:hover {
-  color: #B46A2C;
+  color: #dca43e;
 }
 
 .current {
-  color: #111827;
-  font-weight: 700;
+  color: #ffffff;
+  font-weight: 600;
+  letter-spacing: -0.01em;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

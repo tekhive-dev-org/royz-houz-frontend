@@ -1,21 +1,13 @@
-import { useEffect } from "react";
-import { Check, X, Download } from "lucide-react";
+import { useEffect, useState } from "react";
+import { ArrowRight, Check, Copy, Mail, Ticket, X } from "lucide-react";
 import styles from "./PaymentModals.module.css";
 
-/**
- * PaymentSuccessModal component displayed upon successful Paystack payment verification.
- */
-export function PaymentSuccessModal({
-  isOpen,
-  onClose,
-  orderData,
-  onDownloadTicket,
-}) {
+export function PaymentSuccessModal({ isOpen, onClose, orderData, onDownloadTicket }) {
+  const [copied, setCopied] = useState(false);
+
   useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (e.key === "Escape" && isOpen) {
-        onClose?.();
-      }
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape" && isOpen) onClose?.();
     };
     if (isOpen) {
       document.body.style.overflow = "hidden";
@@ -29,107 +21,72 @@ export function PaymentSuccessModal({
 
   if (!isOpen) return null;
 
-  const reference = orderData?.reference || "RH-" + Math.floor(100000 + Math.random() * 900000);
-  const attendeeName = orderData?.formData
-    ? `${orderData.formData.firstName} ${orderData.formData.lastName}`.trim()
-    : "Bisola Jeladine";
-  const attendeeEmail = orderData?.formData?.email || "bisolajeladine994@gmail.com";
-  const tierName = orderData?.tier?.name || "Standard";
+  const reference = orderData?.reference || "—";
+  const customer = orderData?.customer || orderData?.formData || {};
+  const attendeeName = [customer.firstName, customer.lastName].filter(Boolean).join(" ") || "Ticket holder";
+  const attendeeEmail = customer.email || "your email address";
+  const tierName = orderData?.tier?.name || orderData?.tierName || "Event ticket";
   const quantity = orderData?.quantity || 1;
-  const eventTitle = orderData?.eventTitle || "Fashion Forward: Abuja";
-  const grandTotal = orderData?.grandTotal || 86000;
+  const eventTitle = orderData?.eventTitle || "Your RoyzHouz event";
+  const amount = orderData?.grandTotal ?? (Number(orderData?.amountKobo) ? Number(orderData.amountKobo) / 100 : null);
+
+  async function copyReference() {
+    if (!reference || reference === "—") return;
+    try {
+      await navigator.clipboard.writeText(reference);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 1800);
+    } catch {
+      setCopied(false);
+    }
+  }
 
   return (
-    <div
-      className={styles.modalOverlay}
-      onClick={onClose}
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="success-modal-title"
-    >
-      <div className={styles.modalCard} onClick={(e) => e.stopPropagation()}>
-        {/* Top Close Button */}
-        <button
-          type="button"
-          onClick={onClose}
-          className={styles.closeBtn}
-          aria-label="Close modal"
-        >
-          <X className="w-5 h-5 text-[#525866]" />
+    <div className={styles.modalOverlay} onClick={onClose} role="dialog" aria-modal="true" aria-labelledby="success-modal-title">
+      <div className={`${styles.modalCard} ${styles.successCard}`} onClick={(event) => event.stopPropagation()}>
+        <div className={styles.successGlow} aria-hidden="true" />
+        <button type="button" onClick={onClose} className={styles.closeBtn} aria-label="Close confirmation">
+          <X className="h-5 w-5" />
         </button>
 
-        {/* Success Icon */}
-        <div className={styles.successIconWrapper}>
-          <div className={styles.successIconInner}>
-            <Check className="w-8 h-8 text-emerald-600 stroke-[3]" />
-          </div>
+        <div className={styles.successIconWrapper} aria-hidden="true">
+          <div className={styles.successIconInner}><Check className="h-8 w-8 stroke-3" /></div>
         </div>
 
-        {/* Header Content */}
         <div className={styles.headerContent}>
-          <h2 id="success-modal-title" className={styles.modalTitle}>
-            Payment Successful!
-          </h2>
+          <span className={styles.successEyebrow}>PAYMENT CONFIRMED</span>
+          <h2 id="success-modal-title" className={styles.modalTitle}>You&apos;re all set.</h2>
           <p className={styles.modalSubtitle}>
-            Your booking is confirmed. We&apos;ve sent your e-ticket and receipt to{" "}
-            <span className={styles.highlightText}>{attendeeEmail}</span>.
+            Your place at <strong>{eventTitle}</strong> is secured. Your confirmation has been sent to <span className={styles.highlightText}>{attendeeEmail}</span>.
           </p>
         </div>
 
-        {/* Order Details Receipt Box */}
-        <div className={styles.receiptBox}>
-          <div className={styles.receiptRow}>
-            <span className={styles.receiptLabel}>Order Reference</span>
-            <span className={styles.receiptRefCode}>#{reference}</span>
+        <div className={styles.ticketReceipt}>
+          <div className={styles.ticketReceiptTop}>
+            <div className={styles.ticketMark}><Ticket className="h-5 w-5" /></div>
+            <div>
+              <span className={styles.ticketLabel}>YOUR TICKET</span>
+              <strong className={styles.ticketEvent}>{eventTitle}</strong>
+            </div>
+            <span className={styles.paidBadge}><Check className="h-3 w-3" /> PAID</span>
           </div>
-
-          <div className={styles.receiptDivider} />
-
-          <div className={styles.receiptRow}>
-            <span className={styles.receiptLabel}>Event</span>
-            <span className={styles.receiptValue}>{eventTitle}</span>
-          </div>
-
-          <div className={styles.receiptRow}>
-            <span className={styles.receiptLabel}>Ticket Type</span>
-            <span className={styles.receiptValue}>
-              {tierName} Ticket × {quantity}
-            </span>
-          </div>
-
-          <div className={styles.receiptRow}>
-            <span className={styles.receiptLabel}>Attendee</span>
-            <span className={styles.receiptValue}>{attendeeName}</span>
-          </div>
-
-          <div className={styles.receiptDivider} />
-
-          <div className={styles.receiptRow}>
-            <span className={styles.receiptTotalLabel}>Amount Paid</span>
-            <span className={styles.receiptTotalValue}>
-              ₦{grandTotal.toLocaleString()}
-            </span>
+          <div className={styles.ticketPerforation} aria-hidden="true" />
+          <div className={styles.ticketGrid}>
+            <div><span className={styles.receiptLabel}>ATTENDEE</span><strong>{attendeeName}</strong></div>
+            <div><span className={styles.receiptLabel}>TICKET TYPE</span><strong>{tierName} × {quantity}</strong></div>
+            <div><span className={styles.receiptLabel}>AMOUNT PAID</span><strong>{amount === null ? "Confirmed" : `₦${Number(amount).toLocaleString("en-NG")}`}</strong></div>
+            <div><span className={styles.receiptLabel}>REFERENCE</span><strong className={styles.ticketReference}>{reference}</strong></div>
           </div>
         </div>
 
-        {/* Action Buttons */}
-        <div className={styles.actionsColumn}>
-          <button
-            type="button"
-            onClick={onDownloadTicket || onClose}
-            className={styles.primarySuccessBtn}
-          >
-            <Download className="w-4 h-4" />
-            <span>DOWNLOAD E-TICKET (PDF)</span>
-          </button>
+        <div className={styles.confirmationNote}><Mail className="h-4 w-4" /><span>Keep your confirmation email handy when you arrive.</span></div>
 
-          <button
-            type="button"
-            onClick={onClose}
-            className={styles.secondaryBtn}
-          >
-            <span>Back to Event Details</span>
-          </button>
+        <div className={styles.actionsColumn}>
+          {onDownloadTicket ? (
+            <button type="button" onClick={onDownloadTicket} className={styles.primarySuccessBtn}><Ticket className="h-4 w-4" /><span>DOWNLOAD E-TICKET</span><ArrowRight className="h-4 w-4" /></button>
+          ) : null}
+          <button type="button" onClick={copyReference} className={styles.secondaryBtn}><Copy className="h-4 w-4" /><span>{copied ? "REFERENCE COPIED" : "COPY REFERENCE"}</span></button>
+          <button type="button" onClick={onClose} className={styles.textActionBtn}>Back to event details <ArrowRight className="h-4 w-4" /></button>
         </div>
       </div>
     </div>

@@ -66,9 +66,10 @@ export async function getFeaturedTalents(options = {}) {
 }
 
 export async function getTrendingTalents(options = {}) {
-  const result = await listTalents({ ...options, featured: true });
+  const result = await listTalents(options);
   if (!result.success) return result;
-  return serviceSuccess(result.data.map(toTrendingTalent), "Trending talents loaded successfully", result.pagination);
+  const trending = result.data.filter((talent) => talent.isHot);
+  return serviceSuccess(trending.map(toTrendingTalent), "Trending talents loaded successfully", result.pagination);
 }
 
 export async function listTalentCategories({ client } = {}) {

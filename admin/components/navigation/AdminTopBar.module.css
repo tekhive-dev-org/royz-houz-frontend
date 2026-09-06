@@ -1,12 +1,13 @@
 .appBar {
-  background: rgba(255, 255, 255, 0.88) !important;
-  backdrop-filter: blur(14px) !important;
-  -webkit-backdrop-filter: blur(14px) !important;
-  border-bottom: 1px solid #E8EAEF !important;
-  color: #111827 !important;
+  background: #0B0E17 !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  color: #FFFFFF !important;
   left: 272px !important;
   width: calc(100% - 272px) !important;
   transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2) !important;
 }
 
 .toolbar {
@@ -35,62 +36,91 @@
   align-items: center;
   gap: 6px;
   padding: 4px 10px;
-  border-radius: 20px;
-  background: #ECFDF5;
-  border: 1px solid rgba(16, 185, 129, 0.2);
+  border-radius: 9999px;
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.28);
 }
 
-.statusDot {
+.statusDotPing {
   width: 6px;
   height: 6px;
   border-radius: 50%;
   background: #10B981;
-  box-shadow: 0 0 6px rgba(16, 185, 129, 0.6);
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.3);
 }
 
 .statusLabel {
-  color: #065F46;
+  color: #34D399;
   font-size: 0.6875rem;
   font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
 
+.publicSiteBtn {
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+  color: #E2E8F0 !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  background: #161C2C !important;
+  border-radius: 8px !important;
+  padding: 4px 12px !important;
+  text-transform: none !important;
+  transition: all 0.15s ease !important;
+}
+
+.publicSiteBtn:hover {
+  background: #1E2538 !important;
+  color: #FFFFFF !important;
+  border-color: rgba(220, 164, 62, 0.4) !important;
+}
+
 .iconBtn {
-  border: 1px solid #E8EAEF !important;
-  border-radius: 9px !important;
-  color: #4B5563 !important;
-  padding: 8px !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 8px !important;
+  color: #94A3B8 !important;
+  padding: 7px !important;
+  background: #161C2C !important;
+  transition: all 0.15s ease !important;
 }
 
 .iconBtn:hover {
-  background: #F3F4F6 !important;
-  border-color: #D1D5DB !important;
+  background: #1E2538 !important;
+  color: #FFFFFF !important;
+  border-color: rgba(255, 255, 255, 0.25) !important;
 }
 
 .menuButton {
   display: none !important;
+  color: #CBD5E1 !important;
+}
+
+.menuButton:hover {
+  color: #FFFFFF !important;
 }
 
 .accountButton {
-  border: 1px solid #E8EAEF !important;
-  border-radius: 10px !important;
-  padding: 4px 10px 4px 6px !important;
-  color: #1F2937 !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 8px !important;
+  padding: 4px 8px 4px 5px !important;
+  color: #FFFFFF !important;
+  background: #161C2C !important;
   display: flex;
   align-items: center;
   gap: 8px;
+  text-transform: none !important;
+  transition: all 0.15s ease !important;
 }
 
 .accountButton:hover {
-  background: #F9FAFB !important;
-  border-color: #D1D5DB !important;
+  background: #1E2538 !important;
+  border-color: rgba(220, 164, 62, 0.4) !important;
 }
 
 .avatar {
-  width: 32px !important;
-  height: 32px !important;
-  font-size: 0.75rem !important;
+  width: 30px !important;
+  height: 30px !important;
+  font-size: 0.725rem !important;
   font-weight: 700 !important;
   background: linear-gradient(135deg, #B46A2C 0%, #7B3E1B 100%) !important;
   color: #FFFFFF !important;
@@ -106,38 +136,85 @@
 .accountName {
   font-size: 0.8125rem;
   font-weight: 600;
-  color: #111827;
+  color: #FFFFFF;
   line-height: 1.2;
-  max-width: 140px;
+  max-width: 130px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.accountRole {
-  font-size: 0.6875rem;
-  color: #6B7280;
-  line-height: 1.2;
-  text-transform: capitalize;
+.accountRoleBadge {
+  font-size: 0.625rem;
+  font-weight: 700;
+  color: #DCA43E;
+  background: rgba(220, 164, 62, 0.15);
+  padding: 1px 5px;
+  border-radius: 4px;
+  margin-top: 2px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.chevronIcon {
+  color: #94A3B8;
+  transition: transform 0.15s ease;
+}
+
+.accountButton:hover .chevronIcon {
+  color: #FFFFFF;
+}
+
+.dropdownPaper {
+  background: #111522 !important;
+  border-radius: 12px !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5) !important;
+  color: #FFFFFF !important;
+  margin-top: 6px !important;
+  min-width: 220px !important;
+}
+
+.dropdownPaper :global(.MuiDivider-root) {
+  border-color: rgba(255, 255, 255, 0.08) !important;
 }
 
 .menuHeader {
-  padding: 10px 16px;
+  padding: 12px 16px 8px;
 }
 
 .accountMenuProfile {
-  padding: 10px 16px 8px;
-  min-width: 180px;
+  padding: 12px 16px 10px;
+}
+
+.accountMenuProfile :global(.MuiTypography-subtitle2) {
+  color: #FFFFFF !important;
+}
+
+.accountMenuProfile :global(.MuiTypography-caption) {
+  color: #94A3B8 !important;
 }
 
 .emptyMenuItem {
-  color: #9CA3AF !important;
+  color: #64748B !important;
   font-size: 0.8125rem !important;
 }
 
 .menuItemIcon {
   margin-right: 10px;
-  color: #6B7280;
+  color: #DCA43E;
+}
+
+.dropdownPaper :global(.MuiMenuItem-root) {
+  color: #E2E8F0 !important;
+  font-size: 0.875rem !important;
+  padding: 10px 16px !important;
+  transition: background 0.15s ease !important;
+}
+
+.dropdownPaper :global(.MuiMenuItem-root:hover) {
+  background: rgba(255, 255, 255, 0.06) !important;
+  color: #FFFFFF !important;
 }
 
 @media (max-width: 959px) {
@@ -159,11 +236,15 @@
   }
 }
 
-@media (max-width: 599px) {
+@media (max-width: 640px) {
   .accountMeta {
     display: none;
   }
-  
+
+  .publicSiteBtn {
+    display: none !important;
+  }
+
   .accountButton {
     padding: 4px !important;
   }

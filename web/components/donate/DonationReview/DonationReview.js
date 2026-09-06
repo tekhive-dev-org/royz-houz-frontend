@@ -21,10 +21,21 @@ const COUNTRY_CODES = [
  */
 export function DonationReview({
   donationData,
+  review = {},
   onBack,
   onUpdateData,
   onRecordDonation,
 }) {
+  const reviewTitle = review?.title || "Review Your Donation";
+  const reviewSubtitle =
+    review?.subtitle || "Please confirm your donation details before proceedings to secure payment.";
+  const trustTitle = review?.trustTitle || "Your Donation is Secured";
+  const trustDescription =
+    review?.trustDescription ||
+    "We use industry-standard security and paystack to process your payment safely.";
+  const pendingNotice =
+    review?.pendingNotice || "Your request will remain pending until payment is verified.";
+
   const [isProcessing, setIsProcessing] = useState(false);
   const [submissionError, setSubmissionError] = useState("");
 
@@ -103,10 +114,8 @@ export function DonationReview({
         <div className={styles.header}>
           <span className={styles.accentBar} aria-hidden="true" />
           <div>
-            <h2 className={styles.title}>Review Your Donation</h2>
-            <p className={styles.subtitle}>
-              Please confirm your donation details before proceedings to secure payment.
-            </p>
+            <h2 className={styles.title}>{reviewTitle}</h2>
+            <p className={styles.subtitle}>{reviewSubtitle}</p>
           </div>
         </div>
 
@@ -183,7 +192,7 @@ export function DonationReview({
               {/* Request status notice */}
               <div className={styles.redirectNotice}>
                 <Lock className="w-3.5 h-3.5 text-[#868C98]" />
-                <span>Your request will remain pending until payment is verified.</span>
+                <span>{pendingNotice}</span>
               </div>
             </div>
           </div>
@@ -238,11 +247,8 @@ export function DonationReview({
                 <ShieldCheck className="w-5 h-5 text-emerald-600" />
               </div>
               <div className={styles.securedBody}>
-                <h4 className={styles.securedTitle}>Your Donation is Secured</h4>
-                <p className={styles.securedDesc}>
-                  We use industry - standard security and paystack to process your
-                  payment safely.
-                </p>
+                <h4 className={styles.securedTitle}>{trustTitle}</h4>
+                <p className={styles.securedDesc}>{trustDescription}</p>
               </div>
             </div>
           </div>

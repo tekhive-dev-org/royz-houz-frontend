@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined";
 import CampaignOutlinedIcon from "@mui/icons-material/CampaignOutlined";
 import CommentOutlinedIcon from "@mui/icons-material/CommentOutlined";
@@ -20,6 +21,7 @@ import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import StorefrontOutlinedIcon from "@mui/icons-material/StorefrontOutlined";
 import VolunteerActivismOutlinedIcon from "@mui/icons-material/VolunteerActivismOutlined";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
+import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import { Box, Divider, Drawer, List, ListItemButton, ListItemIcon, ListItemText, Typography } from "@mui/material";
 import { ADMIN_NAVIGATION_GROUPS } from "@/constants/admin";
 import { useAdminNavigation } from "@/hooks/useAdminNavigation";
@@ -39,6 +41,7 @@ const ICONS = {
   language: LanguageOutlinedIcon,
   media: PermMediaOutlinedIcon,
   newsletter: MailOutlineOutlinedIcon,
+  payments: ReceiptLongOutlinedIcon,
   people: GroupOutlinedIcon,
   reports: ReportProblemOutlinedIcon,
   bookings: EventAvailableOutlinedIcon,
@@ -53,24 +56,29 @@ function SidebarContent({ onNavigate }) {
 
   return (
     <Box className={styles.content}>
+      {/* Brand Header with Real Logo */}
       <Box className={styles.brand}>
-        <Box className={styles.brandLogoRow}>
-          <div className={styles.logoBadge}>
-            <span className={styles.logoInitial}>RH</span>
+        <Link href="/" className={styles.brandLink} onClick={onNavigate}>
+          <div className={styles.logoContainer}>
+            <Image
+              src="/logo.png"
+              alt="Royz House Logo"
+              width={38}
+              height={38}
+              className={styles.logoImage}
+              priority
+            />
           </div>
-          <Box>
-            <Typography component="p" variant="overline" className={styles.brandEyebrow}>
-              ROYZ HOUZ
-            </Typography>
-            <Typography component="p" variant="h6" className={styles.brandTitle}>
-              Admin Studio
-            </Typography>
+          <Box className={styles.brandTextGroup}>
+            <span className={styles.brandEyebrow}>ROYZ HOUZ</span>
+            <span className={styles.brandTitle}>Admin Studio</span>
           </Box>
-        </Box>
+        </Link>
       </Box>
 
       <Divider className={styles.divider} />
 
+      {/* Navigation Groups */}
       <Box component="nav" aria-label="Admin navigation" className={styles.navigation}>
         {ADMIN_NAVIGATION_GROUPS.map((group) => {
           const items = navigation.filter((item) => item.group === group);
@@ -101,6 +109,7 @@ function SidebarContent({ onNavigate }) {
                         primaryTypographyProps={{
                           variant: "body2",
                           fontWeight: item.active ? 600 : 400,
+                          fontSize: "0.84rem",
                         }}
                       />
                       {item.active && <span className={styles.activePillIndicator} />}
@@ -113,16 +122,20 @@ function SidebarContent({ onNavigate }) {
         })}
       </Box>
 
-      {/* Footer Shortcut to Public Web */}
+      {/* Sidebar Footer */}
       <Box className={styles.sidebarFooter}>
+        <div className={styles.statusRow}>
+          <FiberManualRecordIcon className={styles.liveDot} />
+          <span className={styles.statusText}>Enterprise Production</span>
+        </div>
         <a
           href="http://localhost:3000"
           target="_blank"
           rel="noreferrer"
           className={styles.viewSiteBtn}
         >
-          <span>View Live Site</span>
-          <OpenInNewIcon fontSize="inherit" />
+          <span>View Public Site</span>
+          <OpenInNewIcon fontSize="inherit" className={styles.openIcon} />
         </a>
       </Box>
     </Box>

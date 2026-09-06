@@ -403,6 +403,38 @@
   font-weight: 700;
 }
 
+.inviteLinkBox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #FFFFFF;
+  border: 1px solid #E8EAEF;
+  border-radius: 8px;
+  padding: 6px 10px;
+  margin: 10px 0 6px;
+}
+
+.inviteLinkText {
+  font-family: monospace;
+  font-size: 0.8125rem;
+  color: #111827;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+}
+
+.copyButton {
+  background: #B46A2C !important;
+  color: #FFFFFF !important;
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+  padding: 4px 10px !important;
+  border-radius: 6px !important;
+  white-space: nowrap;
+}
+
 @media (max-width: 640px) {
   .filtersRow {
     grid-template-columns: 1fr;

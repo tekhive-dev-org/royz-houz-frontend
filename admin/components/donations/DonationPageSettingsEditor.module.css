@@ -1,0 +1,78 @@
+.container {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid #E2E8F0;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.title {
+  font-weight: 700 !important;
+  color: #0F172A;
+}
+
+.subtitle {
+  color: #64748B;
+  margin-top: 2px;
+}
+
+.saveButton {
+  background: #B46A2C !important;
+  color: #FFFFFF !important;
+  font-weight: 600 !important;
+}
+
+.saveButton:hover {
+  background: #9A5B26 !important;
+}
+
+.tabs {
+  padding: 0 16px;
+  background: #FAFAFC;
+  border-bottom: 1px solid #E2E8F0;
+}
+
+.tabPanel {
+  padding: 28px 24px;
+}
+
+.sectionHeader {
+  margin-bottom: 6px;
+}
+
+.row {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.presetEditorCard {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 10px;
+  padding: 16px 20px;
+}
+
+.presetChipsWrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 640px) {
+  .row {
+    flex-direction: column;
+    gap: 16px;
+  }
+}

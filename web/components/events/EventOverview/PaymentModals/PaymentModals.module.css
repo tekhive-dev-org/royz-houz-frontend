@@ -11,6 +11,15 @@
   animation: scaleUp 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+.successCard {
+  @apply overflow-hidden;
+}
+
+.successGlow {
+  @apply absolute -top-24 left-1/2 h-48 w-64 -translate-x-1/2 rounded-full bg-[#FFF1DC] blur-3xl;
+  pointer-events: none;
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -41,7 +50,11 @@
 }
 
 .successIconInner {
-  @apply w-16 h-16 rounded-full bg-emerald-50 border-[6px] border-emerald-100/70 flex items-center justify-center shadow-xs;
+  @apply relative z-10 w-16 h-16 rounded-full bg-[#C8781A] border-[6px] border-[#FFE6C2] flex items-center justify-center text-white shadow-lg;
+}
+
+.successEyebrow {
+  @apply text-[10px] font-extrabold tracking-[0.22em] text-[#C8781A];
 }
 
 .failureIconWrapper {
@@ -67,6 +80,51 @@
 
 .highlightText {
   @apply font-semibold text-[#0A0D14];
+}
+
+.ticketReceipt {
+  @apply relative overflow-hidden rounded-[18px] border border-[#EAD7BE] bg-[#FFFBF6] text-left;
+}
+
+.ticketReceiptTop {
+  @apply flex items-center gap-3 p-4 sm:p-5;
+}
+
+.ticketMark {
+  @apply flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#C8781A] text-white;
+}
+
+.ticketLabel,
+.receiptLabel {
+  @apply block text-[9px] font-extrabold tracking-[0.16em] text-[#8B735A];
+}
+
+.ticketEvent {
+  @apply mt-0.5 block max-w-[220px] truncate text-sm font-extrabold text-[#0A0D14];
+}
+
+.paidBadge {
+  @apply ml-auto flex items-center gap-1 rounded-full bg-[#E9F8EF] px-2.5 py-1 text-[9px] font-extrabold tracking-wider text-[#16844A];
+}
+
+.ticketPerforation {
+  @apply border-t border-dashed border-[#E3CBAA];
+}
+
+.ticketGrid {
+  @apply grid grid-cols-2 gap-x-4 gap-y-4 p-4 sm:p-5;
+}
+
+.ticketGrid strong {
+  @apply mt-1 block truncate text-xs font-bold text-[#0A0D14];
+}
+
+.ticketReference {
+  @apply font-mono text-[10px] text-[#C8781A];
+}
+
+.confirmationNote {
+  @apply flex items-center justify-center gap-2 text-xs text-[#6B6258];
 }
 
 /* Receipt Details Box */
@@ -129,5 +187,9 @@
 }
 
 .secondaryBtn {
-  @apply w-full py-3 rounded-[12px] border border-[#E2E4E9] bg-white hover:bg-slate-50 active:scale-[0.99] text-xs sm:text-sm font-semibold text-[#525866] transition-colors cursor-pointer;
+  @apply w-full py-3 rounded-[12px] border border-[#E2E4E9] bg-white hover:bg-slate-50 active:scale-[0.99] text-xs sm:text-sm font-semibold text-[#525866] transition-colors cursor-pointer flex items-center justify-center gap-2;
+}
+
+.textActionBtn {
+  @apply flex items-center justify-center gap-1.5 text-xs font-bold text-[#525866] transition-colors hover:text-[#C8781A] cursor-pointer;
 }

@@ -37,14 +37,26 @@ const COUNTRY_CODES = [
  * - Left side: Giving Options (Frequency, Amount, Custom Amount, Cause)
  * - Right side: Information Form (Full Name, Email, Phone Number, Submit CTA, Security Badge)
  */
-export function DonationForm({ initialData, campaigns, onProceedToReview }) {
+export function DonationForm({ initialData, campaigns, giving = {}, onProceedToReview }) {
   const causeList =
     campaigns && campaigns.length > 0
       ? campaigns.map((c) => c.title)
       : CAUSES;
 
-  const [frequency, setFrequency] = useState(initialData?.frequency || "one-time");
-  const [amount, setAmount] = useState(initialData?.amount || 25000);
+  const frequencies =
+    giving?.frequencies && giving.frequencies.length > 0 ? giving.frequencies : FREQUENCIES;
+  const presetAmounts =
+    giving?.presetAmounts && giving.presetAmounts.length > 0
+      ? giving.presetAmounts
+      : PRESET_AMOUNTS;
+  const defaultInitialAmount = giving?.defaultAmount || 25000;
+  const givingTitle = giving?.title || "Make A Donation";
+  const givingSubtitle = giving?.subtitle || "Choose how you would like to give.";
+  const currencySymbol = giving?.currencySymbol || "₦";
+  const securityNote = giving?.securityNote || "Your donation is secured and encrypted.";
+
+  const [frequency, setFrequency] = useState(initialData?.frequency || frequencies[0]?.id || "one-time");
+  const [amount, setAmount] = useState(initialData?.amount || defaultInitialAmount);
   const [customAmount, setCustomAmount] = useState(initialData?.customAmount || "");
   const [cause, setCause] = useState(initialData?.cause || causeList[0]);
 
@@ -125,14 +137,14 @@ export function DonationForm({ initialData, campaigns, onProceedToReview }) {
             <div className={styles.header}>
               <span className={styles.accentBar} aria-hidden="true" />
               <div>
-                <h2 className={styles.title}>Make A Donation</h2>
-                <p className={styles.subtitle}>Choose how you would like to give.</p>
+                <h2 className={styles.title}>{givingTitle}</h2>
+                <p className={styles.subtitle}>{givingSubtitle}</p>
               </div>
             </div>
 
             {/* Step 1: Frequency Tabs (55px high) */}
             <div className={styles.freqRow}>
-              {FREQUENCIES.map((f) => {
+              {frequencies.map((f) => {
                 const isActive = frequency === f.id;
                 return (
                   <button
@@ -152,10 +164,10 @@ export function DonationForm({ initialData, campaigns, onProceedToReview }) {
             {/* Step 2: Choose an Amount (55px high) */}
             <div className={styles.formGroup}>
               <label className={styles.sectionLabel}>
-                Choose an Amount <span className={styles.nairaSymbol}>₦</span>
+                Choose an Amount <span className={styles.nairaSymbol}>{currencySymbol}</span>
               </label>
               <div className={styles.amountGrid}>
-                {PRESET_AMOUNTS.map((val) => {
+                {presetAmounts.map((val) => {
                   const isSelected = amount === val && !customAmount;
                   return (
                     <button
@@ -166,7 +178,7 @@ export function DonationForm({ initialData, campaigns, onProceedToReview }) {
                         isSelected ? styles.amountBtnActive : styles.amountBtnInactive
                       }`}
                     >
-                      ₦{val.toLocaleString()}
+                      {currencySymbol}{val.toLocaleString()}
                     </button>
                   );
                 })}
@@ -329,7 +341,7 @@ export function DonationForm({ initialData, campaigns, onProceedToReview }) {
               {/* Security Guarantee Note */}
               <div className={styles.securityNote}>
                 <ShieldCheck className="w-4 h-4 text-[#868C98]" />
-                <span>Your donation is secured and encrypted.</span>
+                <span>{securityNote}</span>
               </div>
             </div>
           </div>

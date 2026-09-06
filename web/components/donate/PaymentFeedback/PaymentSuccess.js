@@ -16,9 +16,21 @@ import styles from "./PaymentSuccess.module.css";
  */
 export function PaymentSuccess({
   donationData,
+  confirmation = {},
   onDonateAgain,
 }) {
   const [copied, setCopied] = useState(false);
+
+  const badge = confirmation?.badge || "Donation Request Received";
+  const title = confirmation?.title || "Thank You for Your Generosity!";
+  const subtitle =
+    confirmation?.subtitle ||
+    "Your donation request is pending payment verification. We'll contact you with next steps.";
+  const impactText =
+    confirmation?.impactText ||
+    "100% of your contribution goes directly towards equipment, training programs, and mentorship for emerging creative talents across Africa.";
+  const disclaimer =
+    confirmation?.disclaimer || "Payment is not confirmed until it has been verified by Royz House.";
 
   const amountNumber = donationData?.amount || 25000;
   const formattedAmount = `₦${amountNumber.toLocaleString()}`;
@@ -66,14 +78,10 @@ export function PaymentSuccess({
 
         {/* ── Title & Message ────────────────────────── */}
         <div className={styles.textHeader}>
-          <span className={styles.badgeSuccess}>Donation Request Received</span>
-          <h2 className={styles.title}>Thank You for Your Generosity!</h2>
+          <span className={styles.badgeSuccess}>{badge}</span>
+          <h2 className={styles.title}>{title}</h2>
           <p className={styles.subtitle}>
-            Your donation request is pending payment verification. We&apos;ll contact{" "}
-            <span className={styles.highlightEmail}>
-              {donationData?.email || "you"}
-            </span>
-            {" "}with next steps.
+            {subtitle}
           </p>
         </div>
 
@@ -153,9 +161,7 @@ export function PaymentSuccess({
         <div className={styles.impactBanner}>
           <HeartHandshake className="w-5 h-5 text-[#B46A2C] shrink-0 mt-0.5" />
           <p className={styles.impactText}>
-            <strong>Your impact is already at work:</strong> 100% of your
-            contribution goes directly towards equipment, training programs, and
-            mentorship for emerging creative talents across Africa.
+            <strong>Your impact is already at work:</strong> {impactText}
           </p>
         </div>
 
@@ -183,7 +189,7 @@ export function PaymentSuccess({
         {/* ── Footer Link ────────────────────────────── */}
         <div className={styles.footerNote}>
           <ShieldCheck className="w-4 h-4 text-[#868C98]" />
-          <span>Payment is not confirmed until it has been verified by Royz House.</span>
+          <span>{disclaimer}</span>
         </div>
       </div>
     </div>

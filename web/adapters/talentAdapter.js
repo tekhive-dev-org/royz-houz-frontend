@@ -53,8 +53,8 @@ export function toTalentDirectoryItem(row) {
     subtitle: body.subtitle || row.summary || "",
     bio: body.bio || row.summary || "",
     location: row.location || body.location || "",
-    image: body.image || TALENT_IMAGE_FALLBACK,
-    coverImage: body.coverImage || body.image || TALENT_COVER_IMAGE_FALLBACK,
+    image: body.image || body.avatar || body.profileImage || body.profile_image || TALENT_IMAGE_FALLBACK,
+    coverImage: body.coverImage || body.cover_image || body.image || body.avatar || body.profileImage || TALENT_COVER_IMAGE_FALLBACK,
 
     isHot: Boolean(body.isHot),
   };

@@ -27,6 +27,7 @@ export const ADMIN_REALTIME_TABLES = [
   "donation_records",
   "contact_submissions",
   "newsletter_subscriptions",
+  "event_ticket_orders",
   "join_applications",
   "content_reports",
   "booking_requests",

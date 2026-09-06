@@ -23,10 +23,9 @@ export function EventTicketSelector({
   const [quantity, setQuantity] = useState(1);
 
   const selectedTier = tiers.find((t) => t.id === selectedTierId) || defaultTier;
-  const availableQuantity = Number(selectedTier?.available);
-  const maxQuantity = Number.isFinite(availableQuantity) && availableQuantity > 0
-    ? Math.min(10, availableQuantity)
-    : 10;
+  const hasLimitedAvailability = selectedTier?.available !== null && selectedTier?.available !== undefined && selectedTier?.available !== "";
+  const availableQuantity = hasLimitedAvailability ? Math.max(0, Math.floor(Number(selectedTier.available) || 0)) : null;
+  const maxQuantity = hasLimitedAvailability ? Math.min(10, availableQuantity) : 10;
 
   // Form State for Step 2
   const [formData, setFormData] = useState({
@@ -46,7 +45,7 @@ export function EventTicketSelector({
   // Modals state
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [showFailureModal, setShowFailureModal] = useState(false);
-  const [orderReceipt, setOrderReceipt] = useState(null);
+
 
   const handleIncrement = () => setQuantity((prev) => Math.min(prev + 1, maxQuantity));
   const handleDecrement = () => setQuantity((prev) => Math.max(prev - 1, 1));
@@ -101,7 +100,11 @@ export function EventTicketSelector({
     }
   };
 
-  const handlePay = () => {
+  const handlePay = async () => {
+    if (hasLimitedAvailability && availableQuantity < quantity) {
+      setShowFailureModal(true);
+      return;
+    }
     if (!agreeTerms) {
       setTermsError(true);
       return;
@@ -110,26 +113,30 @@ export function EventTicketSelector({
     setIsProcessing(true);
 
     const orderPayload = {
-      reference: "RH-" + Math.floor(100000 + Math.random() * 900000),
-      tier: selectedTier,
+      eventSlug: event?.slug,
+      tierId: selectedTier?.id,
       quantity,
-      formData,
-      ticketSubtotal,
-      serviceFee,
-      grandTotal,
-      eventTitle: event?.title || "Fashion Forward: Abuja",
+      customer: formData,
     };
 
-    if (onProceed) {
-      onProceed(orderPayload);
+    try {
+      if (onProceed) {
+        await onProceed(orderPayload);
+        return;
+      }
+      const response = await fetch("/api/events/payment/initialize", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(orderPayload),
+      });
+      const body = await response.json().catch(() => null);
+      if (!response.ok || !body?.success || !body.data?.authorizationUrl) {
+        throw new Error(body?.error?.message || "Unable to start Paystack checkout.");
+      }
+      window.location.assign(body.data.authorizationUrl);
+    } catch (error) {
       setIsProcessing(false);
-    } else {
-      // Simulate Paystack popup / flow completion
-      setTimeout(() => {
-        setIsProcessing(false);
-        setOrderReceipt(orderPayload);
-        setShowSuccessModal(true);
-      }, 1000);
+      setShowFailureModal(true);
     }
   };
 
@@ -280,11 +287,11 @@ export function EventTicketSelector({
                     <div className={styles.tierInfo}>
                       <div className={styles.tierTitleRow}>
                         <span className={styles.tierName}>{tier.name}</span>
-                        {tier.badge && (
+                        {tier.available !== null && tier.available !== undefined && tier.available !== "" ? (
                           <span className={styles.tierBadge}>
-                            {tier.badge}
+                            {Math.max(0, Number(tier.available) || 0).toLocaleString("en-NG")} LEFT
                           </span>
-                        )}
+                        ) : null}
                       </div>
 
                       {/* Feature Checkmarks list */}
@@ -371,8 +378,9 @@ export function EventTicketSelector({
             type="button"
             onClick={handleContinueToDetails}
             className={styles.continueBtn}
+            disabled={hasLimitedAvailability && availableQuantity === 0}
           >
-            <span>CONTINUE TO DETAILS →</span>
+            <span>{hasLimitedAvailability && availableQuantity === 0 ? "SOLD OUT" : "CONTINUE TO DETAILS →"}</span>
           </button>
         </>
       )}
@@ -683,7 +691,7 @@ export function EventTicketSelector({
           setShowSuccessModal(false);
           setCurrentStep(1);
         }}
-        orderData={orderReceipt}
+        orderData={null}
       />
 
       {/* Payment Failure Modal */}

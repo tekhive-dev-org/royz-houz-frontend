@@ -35,6 +35,8 @@ import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import CheckIcon from "@mui/icons-material/Check";
 import { StatusChip } from "@/components/settings/StatusChip";
 import { AdminLoadingState } from "@/components/feedback/AdminLoadingState";
 import { ConfirmationDialog } from "@/components/feedback/ConfirmationDialog";
@@ -67,6 +69,8 @@ export function AccessControlAdmin({ actorUserId }) {
   const [inviteEmail, setInviteEmail] = useState("");
   const [inviteRole, setInviteRole] = useState("");
   const [inviteToken, setInviteToken] = useState(null);
+  const [copiedLink, setCopiedLink] = useState(false);
+  const [copiedToken, setCopiedToken] = useState(false);
 
   const requestIdRef = useRef(0);
   const filterDebounceTimerRef = useRef(null);
@@ -566,26 +570,125 @@ export function AccessControlAdmin({ actorUserId }) {
         </DialogActions>
       </Dialog>
 
-      <Dialog open={inviteOpen} onClose={() => { setInviteOpen(false); setInviteToken(null); }} fullWidth maxWidth="sm">
-        <DialogTitle>Invite administrator</DialogTitle>
+      <Dialog
+        open={inviteOpen}
+        onClose={() => {
+          setInviteOpen(false);
+          setInviteToken(null);
+          setCopiedLink(false);
+          setCopiedToken(false);
+        }}
+        fullWidth
+        maxWidth="sm"
+      >
+        <DialogTitle>Invite Administrator</DialogTitle>
         <DialogContent>
           <Stack spacing={2} sx={{ pt: 1 }}>
-            <TextField label="Email" value={inviteEmail} onChange={(e) => setInviteEmail(e.target.value)} fullWidth required />
-            <TextField label="Role" select value={inviteRole} onChange={(e) => setInviteRole(e.target.value)} fullWidth required>
-              {roles.map((role) => <MenuItem key={role.id} value={role.id}>{role.name}</MenuItem>)}
+            <TextField
+              label="Email"
+              type="email"
+              placeholder="invitee@royzhouz.com"
+              value={inviteEmail}
+              onChange={(e) => setInviteEmail(e.target.value)}
+              fullWidth
+              required
+              disabled={Boolean(inviteToken)}
+            />
+            <TextField
+              label="Role"
+              select
+              value={inviteRole}
+              onChange={(e) => setInviteRole(e.target.value)}
+              fullWidth
+              required
+              disabled={Boolean(inviteToken)}
+            >
+              {roles.map((role) => (
+                <MenuItem key={role.id} value={role.id}>
+                  {role.name}
+                </MenuItem>
+              ))}
             </TextField>
+
             {inviteToken ? (
               <Paper elevation={0} className={styles.tokenCard}>
-                <Typography variant="subtitle2">Share this one-time token with the invitee:</Typography>
-                <Typography variant="body2" className={styles.tokenText}>{inviteToken}</Typography>
-                <Typography variant="caption" color="text.secondary">It is shown once and only its hash is stored.</Typography>
+                <Typography variant="subtitle2" sx={{ fontWeight: 700, color: "#111827" }}>
+                  Invitation URL Generated
+                </Typography>
+                <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5, mb: 1.5 }}>
+                  Share this secure onboarding link with the invitee. It guides them through setting their display name and security password (expires in 7 days).
+                </Typography>
+
+                <Box className={styles.inviteLinkBox}>
+                  <span className={styles.inviteLinkText}>
+                    {typeof window !== "undefined"
+                      ? `${window.location.origin}/accept-invite?token=${inviteToken}`
+                      : `/accept-invite?token=${inviteToken}`}
+                  </span>
+                  <Button
+                    size="small"
+                    startIcon={copiedLink ? <CheckIcon fontSize="small" /> : <ContentCopyIcon fontSize="small" />}
+                    onClick={() => {
+                      if (typeof window !== "undefined" && navigator.clipboard) {
+                        navigator.clipboard.writeText(`${window.location.origin}/accept-invite?token=${inviteToken}`);
+                        setCopiedLink(true);
+                        setTimeout(() => setCopiedLink(false), 2000);
+                      }
+                    }}
+                    className={styles.copyButton}
+                  >
+                    {copiedLink ? "Copied!" : "Copy Link"}
+                  </Button>
+                </Box>
+
+                <Box sx={{ mt: 2, pt: 1.5, borderTop: "1px dashed #E8EAEF" }}>
+                  <Typography variant="caption" color="text.secondary" sx={{ display: "block", mb: 0.5 }}>
+                    Manual Token:
+                  </Typography>
+                  <Stack direction="row" alignItems="center" spacing={1}>
+                    <Typography variant="body2" className={styles.tokenText} sx={{ py: 0 }}>
+                      {inviteToken}
+                    </Typography>
+                    <Tooltip title={copiedToken ? "Copied" : "Copy token"}>
+                      <IconButton
+                        size="small"
+                        onClick={() => {
+                          if (typeof navigator !== "undefined" && navigator.clipboard) {
+                            navigator.clipboard.writeText(inviteToken);
+                            setCopiedToken(true);
+                            setTimeout(() => setCopiedToken(false), 2000);
+                          }
+                        }}
+                      >
+                        {copiedToken ? <CheckIcon fontSize="small" sx={{ color: "#10B981" }} /> : <ContentCopyIcon fontSize="small" />}
+                      </IconButton>
+                    </Tooltip>
+                  </Stack>
+                </Box>
               </Paper>
             ) : null}
           </Stack>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => { setInviteOpen(false); setInviteToken(null); }}>Close</Button>
-          {!inviteToken ? <Button variant="contained" onClick={createInvitation}>Create invitation</Button> : null}
+          <Button
+            onClick={() => {
+              setInviteOpen(false);
+              setInviteToken(null);
+              setCopiedLink(false);
+              setCopiedToken(false);
+            }}
+          >
+            {inviteToken ? "Done" : "Cancel"}
+          </Button>
+          {!inviteToken ? (
+            <Button
+              variant="contained"
+              onClick={createInvitation}
+              disabled={!inviteEmail.trim() || !inviteRole}
+            >
+              Generate Invitation
+            </Button>
+          ) : null}
         </DialogActions>
       </Dialog>
     </Box>

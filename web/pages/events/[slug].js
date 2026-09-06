@@ -53,26 +53,7 @@ export default function EventDetailPage({ event, popularEvents }) {
   );
 }
 
-export async function getStaticPaths() {
-  try {
-    const result = await listEvents();
-    const paths = result.success
-      ? result.data.map((event) => ({ params: { slug: event.slug } }))
-      : [];
-
-    return {
-      paths,
-      fallback: "blocking",
-    };
-  } catch {
-    return {
-      paths: [],
-      fallback: "blocking",
-    };
-  }
-}
-
-export async function getStaticProps({ params }) {
+export async function getServerSideProps({ params }) {
   try {
     const [result, popularResult] = await Promise.all([
       getEventBySlug(params?.slug),
@@ -80,7 +61,7 @@ export async function getStaticProps({ params }) {
     ]);
 
     if (!result.success || !result.data) {
-      return { notFound: true, revalidate: 60 };
+      return { notFound: true };
     }
 
     return {
@@ -88,9 +69,8 @@ export async function getStaticProps({ params }) {
         event: result.data,
         popularEvents: popularResult.success ? popularResult.data.filter((item) => item.isPopular && item.slug !== result.data.slug) : [],
       },
-      revalidate: 60,
     };
   } catch {
-    return { notFound: true, revalidate: 60 };
+    return { notFound: true };
   }
 }

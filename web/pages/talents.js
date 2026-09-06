@@ -8,7 +8,7 @@ import {
 } from "@/components/talents";
 import { Breadcrumb } from "@/components/common";
 import { Testimonials } from "@/components/home";
-import { TALENT_CATEGORIES, TALENT_DIRECTORY_ITEMS, TRENDING_TALENTS } from "@/constants/talents";
+
 import { getTrendingTalents, listTalentCategories, listTalents } from "@/services/content/talentService";
 
 export default function TalentsPage({ talents, trendingTalents, categories }) {
@@ -66,11 +66,19 @@ export async function getStaticProps() {
       getTrendingTalents({ limit: 4 }),
       listTalentCategories(),
     ]);
-    const talents = result.success ? result.data : TALENT_DIRECTORY_ITEMS;
-    const trendingTalents = trendingResult.success ? trendingResult.data : TRENDING_TALENTS;
+    const talents = result.success ? result.data : [];
+    const talentsBySlug = new Map(talents.map((talent) => [talent.slug, talent]));
+    const trendingTalents = trendingResult.success
+      ? trendingResult.data.map((talent) => {
+          const directoryTalent = talentsBySlug.get(talent.slug);
+          return directoryTalent
+            ? { ...talent, image: directoryTalent.image, alt: directoryTalent.alt || talent.alt }
+            : talent;
+        })
+      : [];
     const categories = categoriesResult.success
       ? [{ id: "all", label: "All" }, ...categoriesResult.data]
-      : TALENT_CATEGORIES;
+      : [{ id: "all", label: "All" }];
 
     return {
       props: { talents, trendingTalents, categories },
@@ -78,7 +86,7 @@ export async function getStaticProps() {
     };
   } catch {
     return {
-      props: { talents: TALENT_DIRECTORY_ITEMS, trendingTalents: TRENDING_TALENTS, categories: TALENT_CATEGORIES },
+      props: { talents: [], trendingTalents: [], categories: [{ id: "all", label: "All" }] },
       revalidate: 60,
     };
   }

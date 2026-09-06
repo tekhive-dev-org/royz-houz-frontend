@@ -295,3 +295,64 @@ test("validators: creation schemas permit optional slugs for backend unique auto
   assert.doesNotThrow(() => campaignSchema.parse({ title: "New Donation Campaign" }));
 });
 
+test("validators: invitation schemas enforce strong security constraints", async () => {
+  const { inviteVerifySchema, inviteAcceptSchema } = await import("../../validators/accessControl.js");
+
+  // Verify schema requires non-empty token
+  assert.doesNotThrow(() => inviteVerifySchema.parse({ token: "a_valid_invitation_token_12345" }));
+  assert.throws(() => inviteVerifySchema.parse({ token: "short" }));
+  assert.throws(() => inviteVerifySchema.parse({}));
+
+  // Accept schema requires strong password & valid name
+  assert.doesNotThrow(() =>
+    inviteAcceptSchema.parse({
+      token: "a_valid_invitation_token_12345",
+      displayName: "Jane Doe",
+      password: "StrongPassword123!",
+    })
+  );
+
+  // Rejects weak passwords
+  assert.throws(() =>
+    inviteAcceptSchema.parse({
+      token: "a_valid_invitation_token_12345",
+      displayName: "Jane Doe",
+      password: "alllowercase123", // Missing uppercase
+    })
+  );
+  assert.throws(() =>
+    inviteAcceptSchema.parse({
+      token: "a_valid_invitation_token_12345",
+      displayName: "Jane Doe",
+      password: "ALLUPPERCASE123", // Missing lowercase
+    })
+  );
+  assert.throws(() =>
+    inviteAcceptSchema.parse({
+      token: "a_valid_invitation_token_12345",
+      displayName: "Jane Doe",
+      password: "NoDigitsPassword!", // Missing number
+    })
+  );
+  assert.throws(() =>
+    inviteAcceptSchema.parse({
+      token: "a_valid_invitation_token_12345",
+      displayName: "Jane Doe",
+      password: "short", // Too short
+    })
+  );
+});
+
+test("accessControlService: verifyInvitation rejects empty or invalid tokens", async () => {
+  const { verifyInvitation } = await import("../../services/server/accessControlService.js");
+
+  const emptyResult = await verifyInvitation(createMockSupabase(authorizedScenario()), { token: "" });
+  assert.strictEqual(emptyResult.success, false);
+  assert.strictEqual(emptyResult.error.code, "INVALID_TOKEN");
+
+  const nullResult = await verifyInvitation(createMockSupabase(authorizedScenario()), { token: null });
+  assert.strictEqual(nullResult.success, false);
+  assert.strictEqual(nullResult.error.code, "INVALID_TOKEN");
+});
+
+

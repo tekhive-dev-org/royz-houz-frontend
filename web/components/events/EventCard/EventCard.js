@@ -28,10 +28,10 @@ export function EventCard({ event, isPast: isPastProp }) {
     ? `${pastDate} · ${event.location}`
     : event.location;
 
+  // Card navigation must always use this event's canonical detail route.
+  // ticketLink is a purchase/external URL and must not replace the event slug.
   const eventOverviewUrl = isPast
-    ? event.recapLink || "#"
-    : event.ticketLink && event.ticketLink !== "#"
-    ? event.ticketLink
+    ? event.recapLink || `/events/${event.slug || event.id}`
     : `/events/${event.slug || event.id}`;
 
   return (

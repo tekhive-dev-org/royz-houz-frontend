@@ -3,113 +3,232 @@
   display: flex;
   justify-content: center;
   min-height: 100vh;
-  padding: 24px;
-  background: radial-gradient(circle at top, #181B26 0%, #0B0C10 100%);
+  padding: 32px 20px;
+  background: #0B0E17;
   position: relative;
-  overflow: hidden;
-}
-
-.page::before {
-  content: "";
-  position: absolute;
-  top: -20%;
-  right: -10%;
-  width: 500px;
-  height: 500px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(180, 106, 44, 0.15) 0%, rgba(0,0,0,0) 70%);
-  filter: blur(40px);
-  pointer-events: none;
-}
-
-.page::after {
-  content: "";
-  position: absolute;
-  bottom: -20%;
-  left: -10%;
-  width: 500px;
-  height: 500px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(220, 164, 62, 0.1) 0%, rgba(0,0,0,0) 70%);
-  filter: blur(40px);
-  pointer-events: none;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 36px 36px;
 }
 
 .card {
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
-  background: rgba(24, 27, 38, 0.85) !important;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-radius: 20px !important;
-  box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.5) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  background: #111522 !important;
+  border-radius: 16px !important;
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.05) !important;
   color: #FFFFFF;
   max-width: 440px;
-  padding: 40px;
+  padding: 36px 32px;
   width: 100%;
   position: relative;
   z-index: 1;
 }
 
-.logoBadge {
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
-  background: linear-gradient(135deg, #B46A2C 0%, #7B3E1B 100%);
+.headerArea {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.logoContainer {
+  width: 60px;
+  height: 60px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 6px 16px rgba(180, 106, 44, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
   margin-bottom: 16px;
+  overflow: hidden;
 }
 
-.logoInitial {
-  font-family: 'Lato', sans-serif;
-  font-weight: 900;
-  font-size: 1.25rem;
-  color: #FFFFFF;
+.logoImg {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
 }
 
 .eyebrow {
   color: #DCA43E !important;
   font-weight: 800 !important;
-  letter-spacing: 0.15em !important;
+  font-size: 0.6875rem !important;
+  letter-spacing: 0.14em !important;
+  line-height: 1.1;
+  text-transform: uppercase !important;
 }
 
 .title {
   color: #FFFFFF !important;
   font-weight: 800 !important;
-  font-size: 1.75rem !important;
+  font-size: 1.65rem !important;
   margin-top: 4px;
   letter-spacing: -0.02em;
+  line-height: 1.2;
 }
 
 .description {
-  color: #9CA3AF !important;
-  margin-top: 6px;
+  color: #94A3B8 !important;
+  margin-top: 8px;
+  font-size: 0.84rem !important;
+  line-height: 1.5;
+  max-width: 360px;
 }
 
-.darkInput :global(.MuiOutlinedInput-root) {
-  background: rgba(255, 255, 255, 0.04);
+.alert {
+  border-radius: 8px !important;
+  font-size: 0.8125rem !important;
+}
+
+.formField {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: left;
+}
+
+.fieldLabel {
+  font-size: 0.775rem;
+  font-weight: 600;
+  color: #CBD5E1;
+  letter-spacing: 0.02em;
+}
+
+.textInput :global(.MuiOutlinedInput-root) {
+  background: #161C2C;
   color: #FFFFFF;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  transition: all 0.15s ease;
 }
 
-.darkInput :global(.MuiOutlinedInput-notchedOutline) {
-  border-color: rgba(255, 255, 255, 0.15);
+.textInput :global(.MuiOutlinedInput-notchedOutline) {
+  border-color: rgba(255, 255, 255, 0.12);
 }
 
-.darkInput :global(.MuiInputLabel-root) {
-  color: #9CA3AF;
+.textInput :global(.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline) {
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.textInput :global(.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline) {
+  border-color: #B46A2C;
+  box-shadow: 0 0 0 3px rgba(180, 106, 44, 0.2);
+}
+
+.adornmentIcon {
+  color: #64748B;
+}
+
+.visibilityBtn {
+  color: #64748B !important;
+}
+
+.visibilityBtn:hover {
+  color: #CBD5E1 !important;
 }
 
 .submitButton {
-  min-height: 46px;
-  margin-top: 8px;
-  font-size: 0.9375rem !important;
+  background: #B46A2C !important;
+  color: #FFFFFF !important;
+  font-weight: 700 !important;
+  font-size: 0.875rem !important;
+  text-transform: none !important;
+  border-radius: 8px !important;
+  min-height: 44px;
+  margin-top: 6px;
+  box-shadow: 0 2px 8px rgba(180, 106, 44, 0.35) !important;
+  transition: all 0.15s ease !important;
+}
+
+.submitButton:hover {
+  background: #9A5B26 !important;
+  box-shadow: 0 4px 12px rgba(180, 106, 44, 0.5) !important;
+}
+
+.formUtilityRow {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: -6px;
+}
+
+.forgotLink {
+  color: #DCA43E;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.forgotLink:hover {
+  color: #F3D489;
+  text-decoration: underline;
+}
+
+.inviteHelpRow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8125rem;
+  color: #94A3B8;
+  margin-top: 4px;
+}
+
+.inviteHelpLink {
+  color: #DCA43E;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.inviteHelpLink:hover {
+  color: #F3D489;
+  text-decoration: underline;
+}
+
+.footerBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding-top: 4px;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.securityNote {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.725rem;
+  color: #64748B;
+  text-align: center;
+}
+
+.shieldIcon {
+  font-size: 0.95rem !important;
+  color: #10B981;
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.775rem;
+  font-weight: 600;
+  color: #94A3B8;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.backLink:hover {
+  color: #FFFFFF;
 }
 
 @media (max-width: 480px) {
   .card {
-    padding: 30px 22px;
+    padding: 28px 20px;
   }
 }

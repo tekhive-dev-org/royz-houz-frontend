@@ -10,11 +10,13 @@
   --brand-gold: #DCA43E;
   --brand-gold-muted: rgba(220, 164, 62, 0.15);
   
-  /* Dark Obsidian Elements */
-  --obsidian-bg: #0B0C10;
-  --obsidian-surface: #12141C;
-  --obsidian-card: #181B26;
-  --obsidian-border: #232736;
+  /* Dark Obsidian Elements (Chrome, Navigation & Auth) */
+  --obsidian-bg: #0B0E17;
+  --obsidian-surface: #111522;
+  --obsidian-card: #161C2C;
+  --obsidian-hover: #1E2538;
+  --obsidian-border: rgba(255, 255, 255, 0.08);
+  --obsidian-border-subtle: rgba(255, 255, 255, 0.12);
   
   /* Light Neutral Content Area */
   --bg-page: #F8F9FB;

@@ -49,6 +49,11 @@ export const ADMIN_FEATURES = {
     description: "Contact submissions and workflow.",
     readPermission: "contacts.read",
   },
+  payments: {
+    label: "Ticket Payments",
+    description: "Event ticket orders and Paystack payment records.",
+    readPermission: "events.create",
+  },
   newsletter: {
     label: "Newsletter",
     description: "Newsletter subscribers and audience status.",

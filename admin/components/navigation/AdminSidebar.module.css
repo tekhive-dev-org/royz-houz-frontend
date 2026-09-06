@@ -4,8 +4,8 @@
 }
 
 .paper {
-  background: #0B0C10 !important;
-  border-right: 1px solid rgba(255, 255, 255, 0.07) !important;
+  background: #0B0E17 !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
   box-sizing: border-box;
   color: #FFFFFF;
   width: 272px;
@@ -18,60 +18,74 @@
 }
 
 .brand {
-  padding: 24px 20px 20px;
+  padding: 20px 18px 18px;
 }
 
-.brandLogoRow {
+.brandLink {
   display: flex;
   align-items: center;
   gap: 12px;
+  text-decoration: none;
+  color: inherit;
+  transition: opacity 0.15s ease;
 }
 
-.logoBadge {
-  width: 40px;
-  height: 40px;
+.brandLink:hover {
+  opacity: 0.92;
+}
+
+.logoContainer {
+  width: 42px;
+  height: 42px;
   border-radius: 10px;
-  background: linear-gradient(135deg, #B46A2C 0%, #7B3E1B 100%);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 12px rgba(180, 106, 44, 0.35);
-  border: 1px solid rgba(255, 255, 255, 0.15);
   flex-shrink: 0;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
-.logoInitial {
-  font-family: 'Lato', sans-serif;
-  font-weight: 900;
-  font-size: 1rem;
-  color: #FFFFFF;
-  letter-spacing: 0.05em;
+.logoImage {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
+.brandTextGroup {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
 }
 
 .brandEyebrow {
   color: #DCA43E;
-  font-size: 0.6875rem;
+  font-size: 0.65rem;
   font-weight: 800;
-  letter-spacing: 0.15em;
-  line-height: 1;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  line-height: 1.1;
 }
 
 .brandTitle {
   color: #FFFFFF;
   font-weight: 700;
   font-size: 1.05rem;
-  margin-top: 4px;
   letter-spacing: -0.01em;
+  margin-top: 3px;
+  line-height: 1.2;
 }
 
 .divider {
-  border-color: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(255, 255, 255, 0.07) !important;
 }
 
 .navigation {
   flex: 1;
   overflow-y: auto;
-  padding: 16px 12px 24px;
+  padding: 16px 12px 20px;
 }
 
 .group {
@@ -79,36 +93,36 @@
 }
 
 .groupLabel {
-  color: #6B7280;
+  color: #64748B;
   display: block;
-  font-size: 0.6875rem;
+  font-size: 0.675rem;
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.08em;
   padding: 0 12px 6px;
   text-transform: uppercase;
 }
 
 .navigationItem {
-  border-radius: 9px !important;
-  color: #9CA3AF !important;
-  margin-bottom: 3px !important;
-  min-height: 40px;
-  padding: 8px 14px !important;
+  border-radius: 8px !important;
+  color: #94A3B8 !important;
+  margin-bottom: 2px !important;
+  min-height: 38px;
+  padding: 7px 12px !important;
   position: relative;
-  transition: all 0.16s ease !important;
+  transition: all 0.15s ease !important;
 }
 
 .navigationItem:global(.Mui-selected),
 .navigationItem:global(.Mui-selected:hover) {
-  background: linear-gradient(90deg, rgba(180, 106, 44, 0.22) 0%, rgba(180, 106, 44, 0.08) 100%) !important;
+  background: rgba(180, 106, 44, 0.14) !important;
   color: #FFFFFF !important;
   border-left: 3px solid #B46A2C;
-  padding-left: 11px !important;
+  padding-left: 9px !important;
 }
 
 .navigationItem:hover {
-  background: rgba(255, 255, 255, 0.05) !important;
-  color: #E5E7EB !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+  color: #F1F5F9 !important;
 }
 
 .navigationIcon {
@@ -116,39 +130,84 @@
   min-width: 32px !important;
 }
 
+.navigationItem:global(.Mui-selected) .navigationIcon {
+  color: #DCA43E !important;
+}
+
 .activePillIndicator {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
   border-radius: 50%;
   background: #DCA43E;
-  box-shadow: 0 0 8px #DCA43E;
+  box-shadow: 0 0 6px #DCA43E;
   margin-left: auto;
 }
 
 .sidebarFooter {
-  padding: 16px 20px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(0, 0, 0, 0.2);
+  padding: 14px 16px 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  background: rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.statusRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 2px;
+}
+
+.liveDot {
+  font-size: 0.55rem !important;
+  color: #10B981;
+  animation: pulseDot 2s infinite ease-in-out;
+}
+
+@keyframes pulseDot {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(0.85);
+  }
+}
+
+.statusText {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: #64748B;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 .viewSiteBtn {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 14px;
+  padding: 8px 12px;
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  color: #D1D5DB;
-  font-size: 0.8125rem;
+  color: #CBD5E1;
+  font-size: 0.775rem;
   font-weight: 500;
-  transition: all 0.18s ease;
+  text-decoration: none;
+  transition: all 0.15s ease;
 }
 
 .viewSiteBtn:hover {
-  background: rgba(180, 106, 44, 0.15);
+  background: rgba(180, 106, 44, 0.16);
   border-color: rgba(180, 106, 44, 0.4);
   color: #FFFFFF;
+}
+
+.openIcon {
+  font-size: 0.85rem !important;
+  color: #94A3B8;
 }
 
 .mobileDrawer {

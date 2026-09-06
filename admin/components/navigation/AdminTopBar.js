@@ -1,9 +1,26 @@
 import { useState } from "react";
+import Link from "next/link";
 import MenuIcon from "@mui/icons-material/Menu";
 import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import ShieldOutlinedIcon from "@mui/icons-material/ShieldOutlined";
-import { AppBar, Avatar, Badge, Box, Button, IconButton, Menu, MenuItem, Toolbar, Tooltip, Typography, Divider } from "@mui/material";
+import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
+import OpenInNewOutlinedIcon from "@mui/icons-material/OpenInNewOutlined";
+import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDownOutlined";
+import {
+  AppBar,
+  Avatar,
+  Badge,
+  Box,
+  Button,
+  Divider,
+  IconButton,
+  Menu,
+  MenuItem,
+  Toolbar,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 import { useAdminAuth } from "@/components/auth/AdminAuthProvider";
 import { AdminBreadcrumbs } from "./AdminBreadcrumbs";
 import styles from "./AdminTopBar.module.css";
@@ -36,22 +53,42 @@ export function AdminTopBar({ onOpenNavigation }) {
   return (
     <AppBar component="header" elevation={0} position="fixed" className={styles.appBar}>
       <Toolbar className={styles.toolbar}>
+        {/* Left Side: Mobile Menu + Breadcrumbs */}
         <Box className={styles.breadcrumbArea}>
           <Tooltip title="Open navigation">
-            <IconButton className={styles.menuButton} onClick={onOpenNavigation} aria-label="Open navigation">
-              <MenuIcon />
+            <IconButton
+              className={styles.menuButton}
+              onClick={onOpenNavigation}
+              aria-label="Open navigation drawer"
+            >
+              <MenuIcon fontSize="small" />
             </IconButton>
           </Tooltip>
           <AdminBreadcrumbs />
         </Box>
 
+        {/* Right Side: Operational Status + Actions + User Account */}
         <Box className={styles.actions}>
-          {/* Live Status Badge */}
-          <Box className={styles.statusPill}>
-            <span className={styles.statusDot} />
-            <span className={styles.statusLabel}>Live System</span>
-          </Box>
+          {/* Operational Status Indicator */}
+          <div className={styles.statusPill}>
+            <span className={styles.statusDotPing} />
+            <span className={styles.statusLabel}>Live Operational</span>
+          </div>
 
+          {/* Quick Link to Public Site */}
+          <Button
+            component="a"
+            href="http://localhost:3000"
+            target="_blank"
+            rel="noreferrer"
+            size="small"
+            endIcon={<OpenInNewOutlinedIcon fontSize="inherit" />}
+            className={styles.publicSiteBtn}
+          >
+            Public Site
+          </Button>
+
+          {/* Notifications Trigger */}
           <Tooltip title="Notifications">
             <IconButton
               aria-label="Open notifications"
@@ -67,23 +104,24 @@ export function AdminTopBar({ onOpenNavigation }) {
             </IconButton>
           </Tooltip>
 
-          <Tooltip title="Account profile">
-            <Button
-              className={styles.accountButton}
-              aria-controls={accountAnchor ? "admin-account-menu" : undefined}
-              aria-expanded={Boolean(accountAnchor)}
-              aria-haspopup="menu"
-              onClick={(event) => setAccountAnchor(event.currentTarget)}
-            >
-              <Avatar className={styles.avatar}>{initials}</Avatar>
-              <Box className={styles.accountMeta}>
-                <span className={styles.accountName}>{admin?.displayName || "Administrator"}</span>
-                <span className={styles.accountRole}>{admin?.role || "Admin"}</span>
-              </Box>
-            </Button>
-          </Tooltip>
+          {/* User Account Profile Pill */}
+          <Button
+            className={styles.accountButton}
+            aria-controls={accountAnchor ? "admin-account-menu" : undefined}
+            aria-expanded={Boolean(accountAnchor)}
+            aria-haspopup="menu"
+            onClick={(event) => setAccountAnchor(event.currentTarget)}
+          >
+            <Avatar className={styles.avatar}>{initials}</Avatar>
+            <Box className={styles.accountMeta}>
+              <span className={styles.accountName}>{admin?.displayName || "Administrator"}</span>
+              <span className={styles.accountRoleBadge}>{admin?.role || "Admin"}</span>
+            </Box>
+            <KeyboardArrowDownOutlinedIcon fontSize="small" className={styles.chevronIcon} />
+          </Button>
         </Box>
 
+        {/* Notifications Menu */}
         <Menu
           id="admin-notification-menu"
           anchorEl={notificationAnchor}
@@ -92,16 +130,20 @@ export function AdminTopBar({ onOpenNavigation }) {
           MenuListProps={{ "aria-labelledby": "admin-notification-menu" }}
           transformOrigin={{ horizontal: "right", vertical: "top" }}
           anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+          PaperProps={{ className: styles.dropdownPaper }}
         >
           <Box className={styles.menuHeader}>
-            <Typography variant="subtitle2" fontWeight={700}>Notifications</Typography>
+            <Typography variant="subtitle2" fontWeight={700}>
+              Administrative Notifications
+            </Typography>
           </Box>
           <Divider />
           <MenuItem disabled className={styles.emptyMenuItem}>
-            No new activity notifications
+            No new activity alerts
           </MenuItem>
         </Menu>
 
+        {/* Account Menu */}
         <Menu
           id="admin-account-menu"
           anchorEl={accountAnchor}
@@ -110,19 +152,29 @@ export function AdminTopBar({ onOpenNavigation }) {
           MenuListProps={{ "aria-labelledby": "admin-account-menu" }}
           transformOrigin={{ horizontal: "right", vertical: "top" }}
           anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+          PaperProps={{ className: styles.dropdownPaper }}
         >
           <Box className={styles.accountMenuProfile}>
-            <Typography variant="subtitle2" fontWeight={700}>{admin?.displayName || "Administrator"}</Typography>
-            <Typography variant="caption" color="text.secondary">{admin?.email || "admin@royzhouz.com"}</Typography>
+            <Typography variant="subtitle2" fontWeight={700}>
+              {admin?.displayName || "Administrator"}
+            </Typography>
+            <Typography variant="caption" color="text.secondary">
+              {admin?.email || "admin@royzhouz.com"}
+            </Typography>
           </Box>
           <Divider />
-          <MenuItem onClick={closeAccountMenu} component="a" href="/users-and-roles">
+          <MenuItem onClick={closeAccountMenu} component={Link} href="/users-and-roles">
             <ShieldOutlinedIcon fontSize="small" className={styles.menuItemIcon} />
             Roles &amp; Permissions
           </MenuItem>
-          <MenuItem onClick={handleSignOut} sx={{ color: "#EF4444" }}>
+          <MenuItem onClick={closeAccountMenu} component={Link} href="/settings">
+            <SettingsOutlinedIcon fontSize="small" className={styles.menuItemIcon} />
+            Platform Settings
+          </MenuItem>
+          <Divider />
+          <MenuItem onClick={handleSignOut} sx={{ color: "#DC2626 !important" }}>
             <LogoutOutlinedIcon fontSize="small" className={styles.menuItemIcon} />
-            Sign out
+            Sign Out
           </MenuItem>
         </Menu>
       </Toolbar>
