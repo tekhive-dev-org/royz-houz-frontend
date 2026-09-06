@@ -10,7 +10,7 @@ export function MerchandiseComingSoon() {
         Merchandise Management — Coming Soon.
       </Typography>
       <Typography variant="body1" className={styles.description}>
-        Merchandise administration is not available yet. This area will remain a preview only and does not connect to Supabase or expose product, inventory, or order features.
+        Merchandise administration is not available yet. This area is a preview only and does not include product, inventory, or order features.
       </Typography>
 
       <Paper elevation={0} className={styles.card}>

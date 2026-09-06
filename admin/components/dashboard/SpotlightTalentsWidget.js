@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Link from "next/link";
 import { Button, Paper, Typography } from "@mui/material";
 import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
@@ -21,12 +22,63 @@ function getTalentMeta(talent) {
     }
     if (typeof b === "object" && b !== null) {
       if (b.category) category = b.category;
-      if (b.role) category = b.role;
-      if (b.avatar || b.image) avatarUrl = b.avatar || b.image;
+      else if (b.role) category = b.role;
+      else if (b.profession) category = b.profession;
+
+      avatarUrl =
+        b.image ||
+        b.avatar ||
+        b.coverImage ||
+        b.cover_image ||
+        b.photo ||
+        (Array.isArray(b.galleryImages) && b.galleryImages.length > 0 ? b.galleryImages[0] : null);
     }
   }
 
+  if (!avatarUrl && talent) {
+    avatarUrl = talent.image || talent.avatar || talent.cover_image;
+  }
+
+  if (typeof avatarUrl === "string") {
+    avatarUrl = avatarUrl.trim();
+    if (
+      avatarUrl.length > 0 &&
+      !avatarUrl.startsWith("http://") &&
+      !avatarUrl.startsWith("https://") &&
+      !avatarUrl.startsWith("/") &&
+      !avatarUrl.startsWith("data:")
+    ) {
+      avatarUrl = `/${avatarUrl}`;
+    }
+  } else {
+    avatarUrl = null;
+  }
+
   return { category, avatarUrl };
+}
+
+function TalentAvatar({ src, name }) {
+  const [loadError, setLoadError] = useState(false);
+  const initial = (name || "T").trim().charAt(0).toUpperCase() || "T";
+
+  if (!src || loadError) {
+    return (
+      <div className={styles.avatarPlaceholder} aria-label={name}>
+        {initial}
+      </div>
+    );
+  }
+
+  return (
+    /* eslint-disable-next-line @next/next/no-img-element */
+    <img
+      src={src}
+      alt={name || "Talent profile photo"}
+      className={styles.avatarImg}
+      onError={() => setLoadError(true)}
+      loading="lazy"
+    />
+  );
 }
 
 export function SpotlightTalentsWidget({ talents = [] }) {
@@ -74,17 +126,15 @@ export function SpotlightTalentsWidget({ talents = [] }) {
         <div className={styles.talentList}>
           {talents.slice(0, 3).map((talent) => {
             const { category, avatarUrl } = getTalentMeta(talent);
-            const initial = (talent.title || "T").charAt(0).toUpperCase();
 
             return (
               <div key={talent.id} className={styles.talentItem}>
                 <div className={styles.avatarWrap}>
-                  {avatarUrl ? (
-                    /* eslint-disable-next-line @next/next/no-img-element */
-                    <img src={avatarUrl} alt={talent.title} className={styles.avatarImg} />
-                  ) : (
-                    <div className={styles.avatarPlaceholder}>{initial}</div>
-                  )}
+                  <TalentAvatar
+                    key={`${talent.id}-${avatarUrl || "none"}`}
+                    src={avatarUrl}
+                    name={talent.title}
+                  />
                 </div>
 
                 <div className={styles.talentInfo}>

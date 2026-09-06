@@ -197,6 +197,7 @@ export async function getDashboardSummary(userId, range, { client } = {}) {
       .from("talents")
       .select("id, title, slug, body, status, featured, sort_order")
       .eq("status", "published")
+      .order("featured", { ascending: false })
       .order("sort_order", { ascending: true })
       .limit(4),
     supabase
