@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import MenuIcon from "@mui/icons-material/Menu";
 import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
@@ -22,13 +23,20 @@ import {
   Typography,
 } from "@mui/material";
 import { useAdminAuth } from "@/components/auth/AdminAuthProvider";
+import { useAdminNavigation } from "@/hooks/useAdminNavigation";
 import { AdminBreadcrumbs } from "./AdminBreadcrumbs";
 import styles from "./AdminTopBar.module.css";
 
 export function AdminTopBar({ onOpenNavigation }) {
   const { admin, signOut } = useAdminAuth();
+  const navigation = useAdminNavigation();
   const [notificationAnchor, setNotificationAnchor] = useState(null);
   const [accountAnchor, setAccountAnchor] = useState(null);
+
+  const activeItem =
+    navigation.find((item) => item.active) ||
+    navigation.find((item) => item.href === "/") ||
+    { label: "Dashboard" };
 
   function closeNotificationMenu() {
     setNotificationAnchor(null);
@@ -53,8 +61,8 @@ export function AdminTopBar({ onOpenNavigation }) {
   return (
     <AppBar component="header" elevation={0} position="fixed" className={styles.appBar}>
       <Toolbar className={styles.toolbar}>
-        {/* Left Side: Mobile Menu + Breadcrumbs */}
-        <Box className={styles.breadcrumbArea}>
+        {/* Left Side: Mobile Menu + Mobile Brand Lockup + Desktop Breadcrumbs */}
+        <Box className={styles.leftSection}>
           <Tooltip title="Open navigation">
             <IconButton
               className={styles.menuButton}
@@ -64,18 +72,47 @@ export function AdminTopBar({ onOpenNavigation }) {
               <MenuIcon fontSize="small" />
             </IconButton>
           </Tooltip>
-          <AdminBreadcrumbs />
+
+          {/* Mobile-Only Branded Identity Lockup */}
+          <Link href="/" className={styles.mobileBrandLockup} aria-label="Royz Houz Admin Studio">
+            <div className={styles.mobileLogoBox}>
+              <Image
+                src="/logo.png"
+                alt="Royz Houz"
+                width={20}
+                height={20}
+                className={styles.mobileLogoImg}
+                priority
+              />
+            </div>
+            <div className={styles.mobileBrandMeta}>
+              <span className={styles.mobileBrandEyebrow}>ROYZ HOUZ</span>
+              <span className={styles.mobileSectionTitle}>{activeItem.label}</span>
+            </div>
+          </Link>
+
+          {/* Desktop Breadcrumbs */}
+          <Box className={styles.desktopBreadcrumbs}>
+            <AdminBreadcrumbs />
+          </Box>
         </Box>
 
         {/* Right Side: Operational Status + Actions + User Account */}
         <Box className={styles.actions}>
-          {/* Operational Status Indicator */}
+          {/* Operational Status: Desktop Full Pill & Mobile Micro Pulse Badge */}
           <div className={styles.statusPill}>
             <span className={styles.statusDotPing} />
             <span className={styles.statusLabel}>Live Operational</span>
           </div>
 
-          {/* Quick Link to Public Site */}
+          <Tooltip title="System Status: Operational">
+            <div className={styles.mobileStatusBadge} aria-label="System Operational">
+              <span className={styles.statusDotPing} />
+              <span className={styles.mobileStatusText}>Live</span>
+            </div>
+          </Tooltip>
+
+          {/* Quick Link to Public Site (Desktop Button + Mobile Icon Button) */}
           <Button
             component="a"
             href="http://localhost:3000"
@@ -87,6 +124,19 @@ export function AdminTopBar({ onOpenNavigation }) {
           >
             Public Site
           </Button>
+
+          <Tooltip title="Open Public Site (New Tab)">
+            <IconButton
+              component="a"
+              href="http://localhost:3000"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Open Public Site"
+              className={styles.mobilePublicBtn}
+            >
+              <OpenInNewOutlinedIcon fontSize="small" />
+            </IconButton>
+          </Tooltip>
 
           {/* Notifications Trigger */}
           <Tooltip title="Notifications">
@@ -111,8 +161,11 @@ export function AdminTopBar({ onOpenNavigation }) {
             aria-expanded={Boolean(accountAnchor)}
             aria-haspopup="menu"
             onClick={(event) => setAccountAnchor(event.currentTarget)}
+            aria-label="Account settings"
           >
-            <Avatar className={styles.avatar}>{initials}</Avatar>
+            <div className={styles.avatarWrapper}>
+              <Avatar className={styles.avatar}>{initials}</Avatar>
+            </div>
             <Box className={styles.accountMeta}>
               <span className={styles.accountName}>{admin?.displayName || "Administrator"}</span>
               <span className={styles.accountRoleBadge}>{admin?.role || "Admin"}</span>
@@ -133,8 +186,11 @@ export function AdminTopBar({ onOpenNavigation }) {
           PaperProps={{ className: styles.dropdownPaper }}
         >
           <Box className={styles.menuHeader}>
-            <Typography variant="subtitle2" fontWeight={700}>
+            <Typography variant="subtitle2" fontWeight={700} sx={{ color: "#FFFFFF" }}>
               Administrative Notifications
+            </Typography>
+            <Typography variant="caption" sx={{ color: "#94A3B8" }}>
+              System alerts &amp; audit stream
             </Typography>
           </Box>
           <Divider />
@@ -155,12 +211,20 @@ export function AdminTopBar({ onOpenNavigation }) {
           PaperProps={{ className: styles.dropdownPaper }}
         >
           <Box className={styles.accountMenuProfile}>
-            <Typography variant="subtitle2" fontWeight={700}>
-              {admin?.displayName || "Administrator"}
-            </Typography>
-            <Typography variant="caption" color="text.secondary">
-              {admin?.email || "admin@royzhouz.com"}
-            </Typography>
+            <div className={styles.menuProfileHeader}>
+              <div className={styles.avatarWrapper}>
+                <Avatar className={styles.avatar}>{initials}</Avatar>
+              </div>
+              <div className={styles.menuProfileInfo}>
+                <Typography variant="subtitle2" fontWeight={700} sx={{ color: "#FFFFFF", lineHeight: 1.2 }}>
+                  {admin?.displayName || "Administrator"}
+                </Typography>
+                <Typography variant="caption" sx={{ color: "#94A3B8" }}>
+                  {admin?.email || "admin@royzhouz.com"}
+                </Typography>
+              </div>
+            </div>
+            <span className={styles.accountRoleBadgeMenu}>{admin?.role || "Super Admin"}</span>
           </Box>
           <Divider />
           <MenuItem onClick={closeAccountMenu} component={Link} href="/users-and-roles">
@@ -172,8 +236,8 @@ export function AdminTopBar({ onOpenNavigation }) {
             Platform Settings
           </MenuItem>
           <Divider />
-          <MenuItem onClick={handleSignOut} sx={{ color: "#DC2626 !important" }}>
-            <LogoutOutlinedIcon fontSize="small" className={styles.menuItemIcon} />
+          <MenuItem onClick={handleSignOut} sx={{ color: "#EF4444 !important", fontWeight: 600 }}>
+            <LogoutOutlinedIcon fontSize="small" className={styles.menuItemIconDanger} />
             Sign Out
           </MenuItem>
         </Menu>
@@ -181,3 +245,4 @@ export function AdminTopBar({ onOpenNavigation }) {
     </AppBar>
   );
 }
+

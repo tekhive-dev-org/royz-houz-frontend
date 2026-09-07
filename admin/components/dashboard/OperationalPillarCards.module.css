@@ -176,11 +176,43 @@
 @media (max-width: 1200px) {
   .container {
     grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
   }
 }
 
 @media (max-width: 640px) {
   .container {
     grid-template-columns: 1fr;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .card {
+    padding: 14px 16px;
+    border-radius: 10px;
+  }
+
+  .topRow {
+    margin-bottom: 10px;
+  }
+
+  .iconWrapper {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+  }
+
+  .count {
+    font-size: 1.625rem;
+  }
+
+  .detail {
+    font-size: 0.75rem;
+  }
+
+  .footerRow {
+    margin-top: 12px;
+    padding-top: 10px;
   }
 }
+

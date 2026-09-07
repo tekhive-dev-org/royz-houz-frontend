@@ -22,7 +22,8 @@ import StorefrontOutlinedIcon from "@mui/icons-material/StorefrontOutlined";
 import VolunteerActivismOutlinedIcon from "@mui/icons-material/VolunteerActivismOutlined";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
-import { Box, Divider, Drawer, List, ListItemButton, ListItemIcon, ListItemText, Typography } from "@mui/material";
+import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
+import { Box, Divider, Drawer, IconButton, List, ListItemButton, ListItemIcon, ListItemText, Typography } from "@mui/material";
 import { ADMIN_NAVIGATION_GROUPS } from "@/constants/admin";
 import { useAdminNavigation } from "@/hooks/useAdminNavigation";
 import styles from "./AdminSidebar.module.css";
@@ -51,7 +52,7 @@ const ICONS = {
   store: StorefrontOutlinedIcon,
 };
 
-function SidebarContent({ onNavigate }) {
+function SidebarContent({ onNavigate, onClose }) {
   const navigation = useAdminNavigation();
 
   return (
@@ -74,6 +75,16 @@ function SidebarContent({ onNavigate }) {
             <span className={styles.brandTitle}>Admin Studio</span>
           </Box>
         </Link>
+        {onClose && (
+          <IconButton
+            onClick={onClose}
+            className={styles.closeBtn}
+            aria-label="Close navigation"
+            size="small"
+          >
+            <CloseOutlinedIcon fontSize="small" />
+          </IconButton>
+        )}
       </Box>
 
       <Divider className={styles.divider} />
@@ -152,7 +163,8 @@ export function AdminSidebar({ mobile = false, open = false, onClose }) {
       className={mobile ? styles.mobileDrawer : styles.desktopDrawer}
       PaperProps={{ className: styles.paper }}
     >
-      <SidebarContent onNavigate={mobile ? onClose : undefined} />
+      <SidebarContent onNavigate={mobile ? onClose : undefined} onClose={mobile ? onClose : undefined} />
     </Drawer>
   );
 }
+

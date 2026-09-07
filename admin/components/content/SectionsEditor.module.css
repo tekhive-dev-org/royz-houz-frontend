@@ -1,18 +1,9 @@
-.form {
+.container {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  padding-top: 8px;
-}
-
-.row {
-  display: flex;
-  gap: 12px;
-}
-
-.mediaButton {
-  flex-shrink: 0;
-  margin-top: 8px;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
 }
 
 .header {
@@ -20,34 +11,76 @@
   display: flex;
   justify-content: space-between;
   margin-bottom: 24px;
+  gap: 16px;
 }
 
 .pageTitle {
-  color: #172033;
-  font-weight: 700;
+  color: #111827;
+  font-weight: 800;
+  font-size: clamp(1.35rem, 3.5vw, 1.75rem) !important;
+  letter-spacing: -0.025em;
+  line-height: 1.25;
 }
 
 .pageDescription {
-  color: #667085;
-  margin-top: 8px;
+  color: #4B5563;
+  margin-top: 6px;
   max-width: 720px;
+  font-size: 0.9375rem;
+  line-height: 1.5;
 }
 
 .headerActions {
   display: flex;
-  gap: 8px;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.actionBtn {
+  min-height: 38px;
+  font-weight: 600 !important;
 }
 
 .empty {
-  color: #667085;
-  padding: 24px;
+  color: #6B7280;
+  padding: 36px 20px;
   text-align: center;
+  border-radius: 12px;
+  border: 1px dashed #D1D5DB;
+  background: #FAFBFC;
+  font-size: 0.875rem;
 }
 
 .chips {
   display: flex;
   gap: 6px;
-  margin-top: 4px;
+  margin-top: 6px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 8px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.row {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  align-items: flex-start;
+}
+
+.mediaButton {
+  flex-shrink: 0;
+  margin-top: 8px;
+  min-height: 40px;
+  white-space: nowrap;
 }
 
 .preview {
@@ -58,11 +91,44 @@
   max-height: 60vh;
   overflow: auto;
   padding: 16px;
+  max-width: 100%;
+  word-break: break-all;
+  white-space: pre-wrap;
+  box-sizing: border-box;
 }
 
-@media (max-width: 599px) {
+@media (max-width: 640px) {
+  .header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+    margin-bottom: 18px;
+  }
+
+  .headerActions {
+    width: 100%;
+    display: flex;
+    gap: 8px;
+  }
+
+  .headerActions > button,
+  .actionBtn {
+    flex: 1;
+    min-height: 40px;
+  }
+
   .row {
     flex-direction: column;
     gap: 12px;
   }
+
+  .mediaButton {
+    margin-top: 0;
+    width: 100%;
+  }
+
+  .empty {
+    padding: 28px 16px;
+  }
 }
+

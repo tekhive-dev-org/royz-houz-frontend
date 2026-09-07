@@ -63,7 +63,18 @@ export function ContentReportDialog({ report, assignees, open, saving, canModera
   if (!report) return null;
 
   return (
-    <Dialog open={open} onClose={saving ? undefined : onClose} maxWidth="sm" fullWidth>
+    <Dialog
+      open={open}
+      onClose={saving ? undefined : onClose}
+      maxWidth="sm"
+      fullWidth
+      PaperProps={{
+        sx: {
+          m: { xs: 1.5, sm: 3 },
+          width: { xs: "calc(100% - 24px)", sm: "auto" },
+        },
+      }}
+    >
       <DialogTitle>Review content report</DialogTitle>
       <DialogContent dividers>
         <Stack spacing={2.5}>

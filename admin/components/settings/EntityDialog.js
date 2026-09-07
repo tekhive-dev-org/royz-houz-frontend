@@ -45,13 +45,26 @@ export function EntityDialog({ open, onClose, onSubmit, title, fields = [], sele
   }
 
   return (
-    <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
-      <DialogTitle sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", pb: 1.5, pt: 2.5, px: 3 }}>
-        <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+    <Dialog
+      open={open}
+      onClose={onClose}
+      fullWidth
+      maxWidth="sm"
+      PaperProps={{
+        sx: {
+          m: { xs: 1.5, sm: 3 },
+          width: { xs: "calc(100% - 24px)", sm: "auto" },
+          borderRadius: { xs: "12px", sm: "16px" },
+          maxHeight: { xs: "calc(100% - 24px)", sm: "calc(100% - 64px)" },
+        },
+      }}
+    >
+      <DialogTitle sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", pb: 1.5, pt: { xs: 2, sm: 2.5 }, px: { xs: 2, sm: 3 }, gap: 1 }}>
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, minWidth: 0 }}>
           <Box
             sx={{
-              width: 36,
-              height: 36,
+              width: { xs: 32, sm: 36 },
+              height: { xs: 32, sm: 36 },
               borderRadius: "8px",
               background: "linear-gradient(135deg, #FAF4EF 0%, #F2E4D6 100%)",
               border: "1px solid rgba(180, 106, 44, 0.2)",
@@ -59,22 +72,23 @@ export function EntityDialog({ open, onClose, onSubmit, title, fields = [], sele
               alignItems: "center",
               justifyContent: "center",
               color: "#B46A2C",
+              flexShrink: 0,
             }}
           >
             <EditNoteOutlinedIcon fontSize="small" />
           </Box>
-          <Typography variant="h6" fontWeight={700}>
+          <Typography variant="h6" fontWeight={700} sx={{ fontSize: { xs: "1.05rem", sm: "1.25rem" }, wordBreak: "break-word" }}>
             {title}
           </Typography>
         </Box>
-        <IconButton size="small" onClick={onClose} aria-label="Close dialog">
+        <IconButton size="small" onClick={onClose} aria-label="Close dialog" sx={{ flexShrink: 0 }}>
           <CloseIcon fontSize="small" />
         </IconButton>
       </DialogTitle>
       
       <Divider />
 
-      <DialogContent sx={{ px: 3, py: 2.5 }}>
+      <DialogContent sx={{ px: { xs: 2, sm: 3 }, py: { xs: 2, sm: 2.5 } }}>
         <form id="entity-dialog-form" onSubmit={handleSubmit}>
           <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
             {fields.map((field) => (
@@ -129,7 +143,18 @@ export function EntityDialog({ open, onClose, onSubmit, title, fields = [], sele
 
       <Divider />
 
-      <DialogActions sx={{ px: 3, py: 2 }}>
+      <DialogActions
+        sx={{
+          px: { xs: 2, sm: 3 },
+          py: { xs: 1.5, sm: 2 },
+          flexDirection: { xs: "column-reverse", sm: "row" },
+          gap: { xs: 1, sm: 1.5 },
+          "& > button": {
+            width: { xs: "100%", sm: "auto" },
+            minHeight: { xs: "40px", sm: "36px" },
+          },
+        }}
+      >
         <Button onClick={onClose} color="inherit">
           Cancel
         </Button>

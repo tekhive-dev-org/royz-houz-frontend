@@ -29,9 +29,21 @@ export function MediaPicker({ open, type, onClose, onSelect }) {
   }, [open, type]);
 
   return (
-    <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
-      <DialogTitle>Select {type}</DialogTitle>
-      <DialogContent>
+    <Dialog
+      open={open}
+      onClose={onClose}
+      fullWidth
+      maxWidth="sm"
+      PaperProps={{
+        sx: {
+          m: { xs: 1.5, sm: 3 },
+          width: { xs: "calc(100% - 24px)", sm: "auto" },
+          borderRadius: { xs: "12px", sm: "16px" },
+        },
+      }}
+    >
+      <DialogTitle sx={{ px: { xs: 2, sm: 3 }, pt: { xs: 2, sm: 2.5 } }}>Select {type}</DialogTitle>
+      <DialogContent sx={{ px: { xs: 2, sm: 3 } }}>
         <TextField
           fullWidth
           size="small"
@@ -56,8 +68,10 @@ export function MediaPicker({ open, type, onClose, onSelect }) {
           </List>
         )}
       </DialogContent>
-      <DialogActions>
-        <Button onClick={onClose}>Cancel</Button>
+      <DialogActions sx={{ px: { xs: 2, sm: 3 }, py: 1.5 }}>
+        <Button onClick={onClose} sx={{ width: { xs: "100%", sm: "auto" }, minHeight: "40px" }}>
+          Cancel
+        </Button>
       </DialogActions>
     </Dialog>
   );

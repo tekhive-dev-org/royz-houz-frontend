@@ -7,39 +7,62 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+  min-height: 250px;
+  box-sizing: border-box;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
 }
+
 
 .header {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   margin-bottom: 16px;
   padding-bottom: 14px;
   border-bottom: 1px solid #F1F5F9;
+  gap: 10px;
 }
 
 .titleRow {
   display: flex;
-  align-items: center;
-  gap: 12px;
+  align-items: flex-start;
+  gap: 10px;
+  min-width: 0;
+  flex: 1;
+}
+
+.titleWrapper {
+  min-width: 0;
+  flex: 1;
+  overflow: hidden;
 }
 
 .headerIcon {
   color: #2563EB;
-  font-size: 1.5rem !important;
+  font-size: 1.4rem !important;
+  flex-shrink: 0;
+  margin-top: 1px;
 }
 
 .title {
   color: #0F172A !important;
   font-weight: 700 !important;
   font-size: 1.05rem !important;
-  line-height: 1.2 !important;
+  line-height: 1.25 !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .subtitle {
   color: #64748B !important;
   font-size: 0.775rem !important;
   display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .viewAllBtn {
@@ -48,11 +71,14 @@
   color: #2563EB !important;
   text-transform: none !important;
   padding: 4px 8px !important;
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .viewAllBtn:hover {
   background: #EFF6FF !important;
 }
+
 
 .eventList {
   display: flex;
@@ -64,12 +90,17 @@
 .eventItem {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
   padding: 10px 14px;
   border-radius: 10px;
   background: #F8FAFC;
   border: 1px solid #EDF2F7;
   transition: all 0.15s ease;
+  min-height: 64px;
+  box-sizing: border-box;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
 }
 
 .eventItem:hover {
@@ -110,12 +141,16 @@
 .eventInfo {
   flex: 1;
   min-width: 0;
+  overflow: hidden;
 }
 
 .eventTitleRow {
   display: flex;
   align-items: center;
   gap: 8px;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
   margin-bottom: 3px;
 }
 
@@ -127,6 +162,8 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  min-width: 0;
+  flex: 0 1 auto;
 }
 
 .featuredBadge {
@@ -137,13 +174,16 @@
   padding: 1px 6px;
   border-radius: 4px;
   text-transform: uppercase;
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .metaRow {
   display: flex;
   align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
+  gap: 10px;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .metaItem {
@@ -152,11 +192,14 @@
   gap: 4px;
   color: #64748B;
   font-size: 0.75rem;
+  min-width: 0;
+  flex-shrink: 1;
 }
 
 .metaIcon {
   font-size: 0.85rem !important;
   color: #94A3B8;
+  flex-shrink: 0;
 }
 
 .metaText {
@@ -175,7 +218,11 @@
   border-radius: 6px;
   transition: all 0.15s ease;
   border: 1px solid transparent;
+  flex-shrink: 0;
+  white-space: nowrap;
+  margin-left: 8px;
 }
+
 
 .editLink:hover {
   background: #FFFFFF;
@@ -207,3 +254,52 @@
   color: #334155 !important;
   border-radius: 6px !important;
 }
+
+@media (max-width: 640px) {
+  .card {
+    padding: 16px 14px;
+    min-height: 230px;
+  }
+
+  .header {
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    gap: 8px;
+  }
+
+  .eventItem {
+    padding: 8px 10px;
+    gap: 10px;
+    min-height: 58px;
+  }
+
+  .dateBadge {
+    width: 38px;
+    height: 42px;
+  }
+
+  .dateDay {
+    font-size: 1rem;
+  }
+
+  .eventTitle {
+    font-size: 0.8125rem;
+  }
+
+  .metaRow {
+    gap: 8px;
+  }
+
+  .metaText {
+    max-width: 95px;
+  }
+
+  .editLink {
+    padding: 4px 8px;
+    min-height: 28px;
+    display: inline-flex;
+    align-items: center;
+  }
+}
+
+

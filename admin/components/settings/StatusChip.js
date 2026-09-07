@@ -53,6 +53,8 @@ export function StatusChip({ status = "draft" }) {
         letterSpacing: "0.04em",
         lineHeight: 1.6,
         userSelect: "none",
+        flexShrink: 0,
+        whiteSpace: "nowrap",
       }}
     >
       <Box

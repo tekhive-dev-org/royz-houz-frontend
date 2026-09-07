@@ -2,24 +2,31 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
 }
 
 .header {
   margin-bottom: 4px;
+  width: 100%;
+  min-width: 0;
 }
 
 .title {
   color: #111827;
   font-weight: 800;
-  font-size: 1.75rem !important;
+  font-size: clamp(1.35rem, 3.5vw, 1.75rem) !important;
   letter-spacing: -0.025em;
+  line-height: 1.25 !important;
 }
 
 .description {
   color: #4B5563;
   margin-top: 6px;
   max-width: 720px;
-  font-size: 0.9375rem;
+  font-size: clamp(0.85rem, 2vw, 0.9375rem);
 }
 
 /* Controls Bar */
@@ -32,6 +39,9 @@
   flex-direction: column;
   gap: 14px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
 }
 
 .filtersGrid {
@@ -39,6 +49,8 @@
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 12px;
   align-items: center;
+  width: 100%;
+  min-width: 0;
 }
 
 .searchInput {
@@ -126,6 +138,9 @@
   border-radius: 12px;
   background: #FFFFFF;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  width: 100%;
+  max-width: 100%;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
 }
 
@@ -219,4 +234,27 @@
   gap: 16px;
   justify-content: flex-end;
   margin-top: 10px;
+  width: 100%;
+}
+
+@media (max-width: 640px) {
+  .controlsBar {
+    padding: 12px 14px;
+  }
+
+  .filtersGrid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .pagination {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .pagination button {
+    width: 100% !important;
+    min-height: 40px !important;
+  }
 }

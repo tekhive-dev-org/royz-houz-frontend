@@ -64,6 +64,7 @@
   display: flex;
   flex-direction: column;
   min-width: 0;
+  flex: 1;
 }
 
 .statLabel {
@@ -83,6 +84,7 @@
   font-weight: 800 !important;
   color: #111827;
   line-height: 1.2;
+  word-break: break-word;
 }
 
 .statSubtext {
@@ -108,6 +110,9 @@
   .statCard {
     padding: 12px 14px;
     gap: 10px;
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
   }
   .iconWrapper {
     width: 38px;
@@ -117,3 +122,10 @@
     font-size: 1.25rem !important;
   }
 }
+
+@media (max-width: 440px) {
+  .bannerGrid {
+    grid-template-columns: 1fr;
+  }
+}
+

@@ -4,7 +4,7 @@ import styles from "./MerchandiseComingSoon.module.css";
 
 export function MerchandiseComingSoon() {
   return (
-    <Box>
+    <Box className={styles.container}>
       <Chip label="Coming soon" size="small" className={styles.chip} />
       <Typography component="h1" variant="h4" className={styles.title}>
         Merchandise Management — Coming Soon.

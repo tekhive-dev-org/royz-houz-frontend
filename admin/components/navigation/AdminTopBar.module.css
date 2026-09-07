@@ -1,36 +1,111 @@
 .appBar {
-  background: #0B0E17 !important;
-  backdrop-filter: blur(12px) !important;
-  -webkit-backdrop-filter: blur(12px) !important;
+  background: rgba(11, 14, 23, 0.92) !important;
+  backdrop-filter: blur(16px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
   color: #FFFFFF !important;
   left: 272px !important;
   width: calc(100% - 272px) !important;
-  transition: all 0.2s ease;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2) !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.4), 0 1px 0 rgba(220, 164, 62, 0.1) inset !important;
+  z-index: 1100 !important;
 }
 
 .toolbar {
   justify-content: space-between;
   min-height: 64px !important;
   padding: 0 24px !important;
+  box-sizing: border-box;
 }
 
-.breadcrumbArea,
+.leftSection,
 .actions {
   align-items: center;
   display: flex;
 }
 
-.breadcrumbArea {
+.leftSection {
   gap: 12px;
   min-width: 0;
 }
 
 .actions {
-  gap: 12px;
+  gap: 10px;
 }
 
+/* Mobile Menu Button */
+.menuButton {
+  display: none !important;
+  color: #CBD5E1 !important;
+}
+
+/* Mobile-Only Branded Identity Lockup */
+.mobileBrandLockup {
+  display: none;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  min-width: 0;
+  transition: opacity 0.15s ease;
+}
+
+.mobileBrandLockup:active {
+  opacity: 0.85;
+}
+
+.mobileLogoBox {
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+  background: #161C2C;
+  border: 1px solid rgba(220, 164, 62, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 14px rgba(180, 106, 44, 0.22);
+  flex-shrink: 0;
+}
+
+.mobileLogoImg {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  display: block;
+}
+
+.mobileBrandMeta {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.mobileBrandEyebrow {
+  font-size: 0.5875rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: #DCA43E;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.mobileSectionTitle {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  line-height: 1.25;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 140px;
+}
+
+/* Desktop Breadcrumbs */
+.desktopBreadcrumbs {
+  display: block;
+  min-width: 0;
+}
+
+/* Status Pill (Desktop) */
 .statusPill {
   display: flex;
   align-items: center;
@@ -46,7 +121,8 @@
   height: 6px;
   border-radius: 50%;
   background: #10B981;
-  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.3);
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.35), 0 0 8px rgba(16, 185, 129, 0.6);
+  flex-shrink: 0;
 }
 
 .statusLabel {
@@ -57,6 +133,27 @@
   text-transform: uppercase;
 }
 
+/* Mobile Status Micro Badge */
+.mobileStatusBadge {
+  display: none;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 9px;
+  border-radius: 9999px;
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.28);
+  cursor: default;
+}
+
+.mobileStatusText {
+  color: #34D399;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* Public Site Buttons */
 .publicSiteBtn {
   font-size: 0.75rem !important;
   font-weight: 600 !important;
@@ -75,13 +172,34 @@
   border-color: rgba(220, 164, 62, 0.4) !important;
 }
 
+.mobilePublicBtn {
+  display: none !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 9px !important;
+  color: #94A3B8 !important;
+  padding: 6px !important;
+  background: #161C2C !important;
+  transition: all 0.15s ease !important;
+  width: 36px !important;
+  height: 36px !important;
+}
+
+.mobilePublicBtn:hover {
+  background: #1E2538 !important;
+  color: #DCA43E !important;
+  border-color: rgba(220, 164, 62, 0.45) !important;
+}
+
+/* Notifications Button */
 .iconBtn {
   border: 1px solid rgba(255, 255, 255, 0.12) !important;
-  border-radius: 8px !important;
+  border-radius: 9px !important;
   color: #94A3B8 !important;
   padding: 7px !important;
   background: #161C2C !important;
   transition: all 0.15s ease !important;
+  width: 38px !important;
+  height: 38px !important;
 }
 
 .iconBtn:hover {
@@ -90,19 +208,11 @@
   border-color: rgba(255, 255, 255, 0.25) !important;
 }
 
-.menuButton {
-  display: none !important;
-  color: #CBD5E1 !important;
-}
-
-.menuButton:hover {
-  color: #FFFFFF !important;
-}
-
+/* Account Button */
 .accountButton {
   border: 1px solid rgba(255, 255, 255, 0.12) !important;
-  border-radius: 8px !important;
-  padding: 4px 8px 4px 5px !important;
+  border-radius: 10px !important;
+  padding: 3px 8px 3px 4px !important;
   color: #FFFFFF !important;
   background: #161C2C !important;
   display: flex;
@@ -115,14 +225,26 @@
 .accountButton:hover {
   background: #1E2538 !important;
   border-color: rgba(220, 164, 62, 0.4) !important;
+  box-shadow: 0 0 12px rgba(180, 106, 44, 0.2) !important;
+}
+
+.avatarWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  padding: 1.5px;
+  background: linear-gradient(135deg, #DCA43E 0%, #B46A2C 100%);
+  flex-shrink: 0;
 }
 
 .avatar {
-  width: 30px !important;
-  height: 30px !important;
+  width: 28px !important;
+  height: 28px !important;
   font-size: 0.725rem !important;
-  font-weight: 700 !important;
-  background: linear-gradient(135deg, #B46A2C 0%, #7B3E1B 100%) !important;
+  font-weight: 800 !important;
+  background: #161C2C !important;
   color: #FFFFFF !important;
 }
 
@@ -165,14 +287,18 @@
   color: #FFFFFF;
 }
 
+/* Dropdown Menus */
 .dropdownPaper {
-  background: #111522 !important;
-  border-radius: 12px !important;
+  background: rgba(17, 21, 34, 0.96) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border-radius: 14px !important;
   border: 1px solid rgba(255, 255, 255, 0.12) !important;
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5) !important;
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(220, 164, 62, 0.15) !important;
   color: #FFFFFF !important;
-  margin-top: 6px !important;
-  min-width: 220px !important;
+  margin-top: 8px !important;
+  min-width: 240px !important;
+  max-width: calc(100vw - 24px) !important;
 }
 
 .dropdownPaper :global(.MuiDivider-root) {
@@ -180,24 +306,44 @@
 }
 
 .menuHeader {
-  padding: 12px 16px 8px;
+  padding: 14px 16px 10px;
 }
 
 .accountMenuProfile {
-  padding: 12px 16px 10px;
+  padding: 14px 16px 12px;
 }
 
-.accountMenuProfile :global(.MuiTypography-subtitle2) {
-  color: #FFFFFF !important;
+.menuProfileHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 4px;
 }
 
-.accountMenuProfile :global(.MuiTypography-caption) {
-  color: #94A3B8 !important;
+.menuProfileInfo {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.accountRoleBadgeMenu {
+  display: inline-block;
+  margin-top: 6px;
+  font-size: 0.625rem;
+  font-weight: 700;
+  color: #DCA43E;
+  background: rgba(220, 164, 62, 0.15);
+  border: 1px solid rgba(220, 164, 62, 0.3);
+  padding: 2px 7px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
 .emptyMenuItem {
   color: #64748B !important;
   font-size: 0.8125rem !important;
+  padding: 14px 16px !important;
 }
 
 .menuItemIcon {
@@ -205,18 +351,25 @@
   color: #DCA43E;
 }
 
+.menuItemIconDanger {
+  margin-right: 10px;
+  color: #EF4444;
+}
+
 .dropdownPaper :global(.MuiMenuItem-root) {
   color: #E2E8F0 !important;
   font-size: 0.875rem !important;
   padding: 10px 16px !important;
-  transition: background 0.15s ease !important;
+  transition: all 0.15s ease !important;
+  min-height: 44px !important;
 }
 
 .dropdownPaper :global(.MuiMenuItem-root:hover) {
-  background: rgba(255, 255, 255, 0.06) !important;
+  background: rgba(255, 255, 255, 0.07) !important;
   color: #FFFFFF !important;
 }
 
+/* Tablet & Mobile Breakpoints */
 @media (max-width: 959px) {
   .appBar {
     left: 0 !important;
@@ -225,27 +378,113 @@
 
   .toolbar {
     padding: 0 16px !important;
+    min-height: 60px !important;
   }
 
   .menuButton {
     display: inline-flex !important;
+    width: 38px !important;
+    height: 38px !important;
+    padding: 7px !important;
+    border-radius: 10px !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: #F1F5F9 !important;
+  }
+
+  .menuButton:hover {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border-color: rgba(220, 164, 62, 0.45) !important;
+    color: #FFFFFF !important;
+    box-shadow: 0 0 12px rgba(180, 106, 44, 0.25) !important;
+  }
+
+  .desktopBreadcrumbs {
+    display: none;
+  }
+
+  .mobileBrandLockup {
+    display: flex;
   }
 
   .statusPill {
     display: none;
   }
-}
 
-@media (max-width: 640px) {
-  .accountMeta {
-    display: none;
+  .mobileStatusBadge {
+    display: flex;
   }
 
   .publicSiteBtn {
     display: none !important;
   }
 
-  .accountButton {
-    padding: 4px !important;
+  .mobilePublicBtn {
+    display: inline-flex !important;
   }
 }
+
+@media (max-width: 640px) {
+  .toolbar {
+    padding: 0 12px !important;
+    min-height: 56px !important;
+  }
+
+  .leftSection {
+    gap: 8px;
+    min-width: 0;
+  }
+
+  .actions {
+    gap: 6px;
+  }
+
+  .accountMeta {
+    display: none;
+  }
+
+  .accountButton {
+    padding: 2px !important;
+    min-width: 36px !important;
+    height: 36px !important;
+    border-radius: 9px !important;
+  }
+
+  .iconBtn {
+    width: 36px !important;
+    height: 36px !important;
+    padding: 6px !important;
+  }
+
+  .mobilePublicBtn {
+    width: 36px !important;
+    height: 36px !important;
+    padding: 6px !important;
+  }
+
+  .chevronIcon {
+    display: none !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .mobileStatusBadge {
+    padding: 6px !important;
+  }
+
+  .mobileStatusText {
+    display: none;
+  }
+
+  .mobileSectionTitle {
+    max-width: 95px;
+  }
+}
+
+@media (max-width: 350px) {
+  .mobileLogoBox {
+    display: none;
+  }
+}
+
+

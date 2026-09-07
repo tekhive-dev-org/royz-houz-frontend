@@ -94,11 +94,29 @@ export function AdminDashboard() {
           ))}
           <Skeleton
             variant="rectangular"
-            height={200}
-            sx={{ borderRadius: "12px", gridColumn: "1 / -1", mt: 2 }}
+            height={180}
+            sx={{ borderRadius: "12px", gridColumn: "1 / -1" }}
+          />
+          <Box className={styles.skeletonSplitGrid} sx={{ gridColumn: "1 / -1" }}>
+            <Skeleton
+              variant="rectangular"
+              height={250}
+              sx={{ borderRadius: "12px" }}
+            />
+            <Skeleton
+              variant="rectangular"
+              height={250}
+              sx={{ borderRadius: "12px" }}
+            />
+          </Box>
+          <Skeleton
+            variant="rectangular"
+            height={240}
+            sx={{ borderRadius: "12px", gridColumn: "1 / -1" }}
           />
         </Box>
       ) : data ? (
+
         <>
           {/* 4 Core Strategic Operational Pillar KPI Cards */}
           <OperationalPillarCards cards={data.cards} />

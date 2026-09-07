@@ -74,54 +74,93 @@ export function RecentActivityTable({ activities = [], hidden = false }) {
           </Typography>
         </Box>
       ) : (
-        <TableContainer className={styles.tableWrap}>
-          <Table size="medium" aria-label="Recent administrative activity">
-            <TableHead>
-              <TableRow>
-                <TableCell>Action</TableCell>
-                <TableCell>Entity Type</TableCell>
-                <TableCell>Initiator</TableCell>
-                <TableCell align="right">Timestamp</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {activities.map((activity) => {
-                const style = getActionColor(activity.action);
-                return (
-                  <TableRow key={activity.id} className={styles.row}>
-                    <TableCell className={styles.actionCell}>
-                      <span
-                        className={styles.actionChip}
-                        style={{
-                          backgroundColor: style.bg,
-                          color: style.text,
-                          borderColor: style.border,
-                        }}
-                      >
-                        {activity.action}
-                      </span>
-                    </TableCell>
-                    <TableCell className={styles.entityCell}>
-                      <span className={styles.entityTag}>{activity.entityType}</span>
-                    </TableCell>
-                    <TableCell>
-                      <div className={styles.actorCell}>
-                        <div className={styles.actorAvatar}>
-                          {(activity.actor || "S")[0].toUpperCase()}
+        <>
+          {/* Desktop & Tablet Table View */}
+          <TableContainer className={styles.tableWrap}>
+            <Table size="medium" aria-label="Recent administrative activity">
+              <TableHead>
+                <TableRow>
+                  <TableCell>Action</TableCell>
+                  <TableCell>Entity Type</TableCell>
+                  <TableCell>Initiator</TableCell>
+                  <TableCell align="right">Timestamp</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {activities.map((activity) => {
+                  const style = getActionColor(activity.action);
+                  return (
+                    <TableRow key={activity.id} className={styles.row}>
+                      <TableCell className={styles.actionCell}>
+                        <span
+                          className={styles.actionChip}
+                          style={{
+                            backgroundColor: style.bg,
+                            color: style.text,
+                            borderColor: style.border,
+                          }}
+                        >
+                          {activity.action}
+                        </span>
+                      </TableCell>
+                      <TableCell className={styles.entityCell}>
+                        <span className={styles.entityTag}>{activity.entityType}</span>
+                      </TableCell>
+                      <TableCell>
+                        <div className={styles.actorCell}>
+                          <div className={styles.actorAvatar}>
+                            {(activity.actor || "S")[0].toUpperCase()}
+                          </div>
+                          <span className={styles.actorName}>{activity.actor || "System"}</span>
                         </div>
-                        <span className={styles.actorName}>{activity.actor || "System"}</span>
-                      </div>
-                    </TableCell>
-                    <TableCell align="right" className={styles.dateCell}>
+                      </TableCell>
+                      <TableCell align="right" className={styles.dateCell}>
+                        {formatActivityDate(activity.createdAt)}
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            </Table>
+          </TableContainer>
+
+          {/* Mobile Screen Card View (< 640px) */}
+          <Box className={styles.mobileList}>
+            {activities.map((activity) => {
+              const style = getActionColor(activity.action);
+              return (
+                <div key={activity.id} className={styles.mobileCard}>
+                  <div className={styles.mobileCardHeader}>
+                    <span
+                      className={styles.actionChip}
+                      style={{
+                        backgroundColor: style.bg,
+                        color: style.text,
+                        borderColor: style.border,
+                      }}
+                    >
+                      {activity.action}
+                    </span>
+                    <span className={styles.entityTag}>{activity.entityType}</span>
+                    <span className={styles.mobileDate}>
                       {formatActivityDate(activity.createdAt)}
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
-        </TableContainer>
+                    </span>
+                  </div>
+                  <div className={styles.mobileCardBody}>
+                    <div className={styles.actorCell}>
+                      <div className={styles.actorAvatar}>
+                        {(activity.actor || "S")[0].toUpperCase()}
+                      </div>
+                      <span className={styles.actorName}>{activity.actor || "System"}</span>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </Box>
+        </>
       )}
+
     </Paper>
   );
 }

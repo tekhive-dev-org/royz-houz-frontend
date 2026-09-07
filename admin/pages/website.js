@@ -107,7 +107,7 @@ function CollectionSection({ title, description, collection, fields, selectField
           <Typography variant="h6" className={styles.sectionTitle}>{title}</Typography>
           <Typography variant="body2" className={styles.sectionDescription}>{description}</Typography>
         </Box>
-        <Button startIcon={<AddIcon />} variant="contained" size="small" onClick={openCreate}>
+        <Button startIcon={<AddIcon />} variant="contained" size="small" onClick={openCreate} className={styles.addBtn}>
           Add Entry
         </Button>
       </Box>
@@ -211,9 +211,9 @@ export default function WebsiteSettingsPage() {
             fields={NAV_FIELDS}
             selectFields={NAV_SELECTS}
             renderPrimary={(item) => (
-              <Box>
-                <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                  <Typography variant="body2" fontWeight={700}>{item.label}</Typography>
+              <Box sx={{ minWidth: 0, width: "100%" }}>
+                <Box sx={{ display: "flex", alignItems: "center", gap: 1, flexWrap: "wrap" }}>
+                  <Typography variant="body2" fontWeight={700} sx={{ wordBreak: "break-word" }}>{item.label}</Typography>
                   <StatusChip status={item.status} />
                 </Box>
                 <Box className={styles.itemMeta}>
@@ -235,14 +235,14 @@ export default function WebsiteSettingsPage() {
               fields={FOOTER_SECTION_FIELDS}
               selectFields={[]}
               renderPrimary={(item) => (
-                <Box>
-                  <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                    <Typography variant="body2" fontWeight={700}>{item.title}</Typography>
+                <Box sx={{ minWidth: 0, width: "100%" }}>
+                  <Box sx={{ display: "flex", alignItems: "center", gap: 1, flexWrap: "wrap" }}>
+                    <Typography variant="body2" fontWeight={700} sx={{ wordBreak: "break-word" }}>{item.title}</Typography>
                     <StatusChip status={item.status} />
                   </Box>
                   <Box className={styles.itemMeta}>
                     <span className={styles.itemBadge}>slug: {item.slug}</span>
-                    {item.summary && <Typography variant="caption" color="text.secondary">{item.summary}</Typography>}
+                    {item.summary && <Typography variant="caption" color="text.secondary" sx={{ wordBreak: "break-word" }}>{item.summary}</Typography>}
                   </Box>
                 </Box>
               )}
@@ -267,9 +267,9 @@ export default function WebsiteSettingsPage() {
                   : []
               }
               renderPrimary={(item) => (
-                <Box>
-                  <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                    <Typography variant="body2" fontWeight={700}>{item.label}</Typography>
+                <Box sx={{ minWidth: 0, width: "100%" }}>
+                  <Box sx={{ display: "flex", alignItems: "center", gap: 1, flexWrap: "wrap" }}>
+                    <Typography variant="body2" fontWeight={700} sx={{ wordBreak: "break-word" }}>{item.label}</Typography>
                     <StatusChip status={item.status} />
                   </Box>
                   <Box className={styles.itemMeta}>
@@ -290,9 +290,9 @@ export default function WebsiteSettingsPage() {
             fields={SOCIAL_FIELDS}
             selectFields={SOCIAL_SELECTS}
             renderPrimary={(item) => (
-              <Box>
-                <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                  <Typography variant="body2" fontWeight={700} sx={{ textTransform: "capitalize" }}>
+              <Box sx={{ minWidth: 0, width: "100%" }}>
+                <Box sx={{ display: "flex", alignItems: "center", gap: 1, flexWrap: "wrap" }}>
+                  <Typography variant="body2" fontWeight={700} sx={{ textTransform: "capitalize", wordBreak: "break-word" }}>
                     {item.platform}
                   </Typography>
                   <StatusChip status={item.status} />
@@ -301,7 +301,7 @@ export default function WebsiteSettingsPage() {
                   <span className={styles.itemUrl}>{item.url}</span>
                   <span className={styles.itemBadge}>{item.placement}</span>
                   {item.label && item.label !== item.platform && (
-                    <Typography variant="caption" color="text.secondary">({item.label})</Typography>
+                    <Typography variant="caption" color="text.secondary" sx={{ wordBreak: "break-word" }}>({item.label})</Typography>
                   )}
                 </Box>
               </Box>
@@ -321,14 +321,14 @@ export default function WebsiteSettingsPage() {
             fields={SETTING_FIELDS}
             selectFields={[]}
             renderPrimary={(item) => (
-              <Box>
-                <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                  <Typography variant="body2" fontWeight={700}>{item.title}</Typography>
+              <Box sx={{ minWidth: 0, width: "100%" }}>
+                <Box sx={{ display: "flex", alignItems: "center", gap: 1, flexWrap: "wrap" }}>
+                  <Typography variant="body2" fontWeight={700} sx={{ wordBreak: "break-word" }}>{item.title}</Typography>
                   <StatusChip status={item.status} />
                 </Box>
                 <Box className={styles.itemMeta}>
                   <span className={styles.itemBadge}>key: {item.slug}</span>
-                  {item.summary && <Typography variant="caption" color="text.secondary">{item.summary}</Typography>}
+                  {item.summary && <Typography variant="caption" color="text.secondary" sx={{ wordBreak: "break-word" }}>{item.summary}</Typography>}
                 </Box>
               </Box>
             )}

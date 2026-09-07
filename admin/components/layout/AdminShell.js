@@ -27,7 +27,7 @@ export function AdminShell({ children }) {
         />
 
         <Box component="main" className={styles.main}>
-          <Toolbar />
+          <Toolbar className={styles.toolbarSpacer} />
           <Box className={styles.content}>
             <AdminRouteGuard>
               <AdminErrorBoundary>{children}</AdminErrorBoundary>

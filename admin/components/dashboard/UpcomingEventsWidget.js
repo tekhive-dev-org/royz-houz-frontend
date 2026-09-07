@@ -23,15 +23,16 @@ export function UpcomingEventsWidget({ events = [] }) {
       <div className={styles.header}>
         <div className={styles.titleRow}>
           <EventOutlinedIcon className={styles.headerIcon} />
-          <div>
+          <div className={styles.titleWrapper}>
             <Typography component="h2" variant="h6" className={styles.title}>
               Live Production Schedule
             </Typography>
             <Typography variant="caption" className={styles.subtitle}>
-              Upcoming showcases, concerts & appearances
+              Upcoming showcases, concerts &amp; appearances
             </Typography>
           </div>
         </div>
+
 
         <Button
           component={Link}

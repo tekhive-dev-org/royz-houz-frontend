@@ -63,12 +63,22 @@
 .tableWrap {
   border-radius: 10px;
   border: 1px solid #E8EAEF;
-  overflow: hidden;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.tableWrap :global(table) {
+  min-width: 540px;
+}
+
+.mobileList {
+  display: none;
 }
 
 .row:hover {
   background: #F9FAFB !important;
 }
+
 
 .actionCell {
   padding: 12px 16px !important;
@@ -128,3 +138,54 @@
   font-size: 0.8125rem !important;
   white-space: nowrap;
 }
+
+@media (max-width: 640px) {
+  .card {
+    padding: 16px 14px;
+    border-radius: 12px;
+  }
+
+  .header {
+    margin-bottom: 14px;
+  }
+
+  .tableWrap {
+    display: none;
+  }
+
+  .mobileList {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .mobileCard {
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: #F8FAFC;
+    border: 1px solid #EDF2F7;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .mobileCardHeader {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .mobileDate {
+    font-size: 0.725rem;
+    color: #94A3B8;
+    margin-left: auto;
+  }
+
+  .mobileCardBody {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+

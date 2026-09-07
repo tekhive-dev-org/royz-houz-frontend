@@ -138,17 +138,17 @@ export function SectionsEditor({ type, title, description }) {
   }
 
   return (
-    <Box>
+    <Box className={styles.container}>
       <Box className={styles.header}>
         <Box>
           <Typography variant="h4" className={styles.pageTitle}>{title}</Typography>
           <Typography variant="body1" className={styles.pageDescription}>{description}</Typography>
         </Box>
         <Box className={styles.headerActions}>
-          <Button variant="outlined" size="small" startIcon={<Visibility />} onClick={openPreview}>
+          <Button variant="outlined" size="small" startIcon={<Visibility />} onClick={openPreview} className={styles.actionBtn}>
             Preview
           </Button>
-          <Button variant="contained" size="small" startIcon={<Add />} onClick={openCreate}>
+          <Button variant="contained" size="small" startIcon={<Add />} onClick={openCreate} className={styles.actionBtn}>
             Add section
           </Button>
         </Box>
@@ -172,9 +172,11 @@ export function SectionsEditor({ type, title, description }) {
           onEdit={openEdit}
           onDelete={(item) => collection.remove(item.id)}
           renderPrimary={(item) => (
-            <Box>
-              <Typography variant="body2" fontWeight={600}>{item.title}</Typography>
-              <Typography variant="caption" color="text.secondary">{item.slug} · order {item.sort_order}</Typography>
+            <Box sx={{ minWidth: 0, width: "100%" }}>
+              <Typography variant="body2" fontWeight={700} sx={{ wordBreak: "break-word" }}>{item.title}</Typography>
+              <Typography variant="caption" color="text.secondary" sx={{ wordBreak: "break-word", display: "block", mt: 0.25 }}>
+                {item.slug} · order {item.sort_order}
+              </Typography>
               <Box className={styles.chips}>
                 <StatusChip status={item.status} />
                 {item.featured === false ? <StatusChip status="hidden" /> : null}
@@ -184,13 +186,39 @@ export function SectionsEditor({ type, title, description }) {
         />
       )}
 
-      <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)} fullWidth maxWidth="md">
-        <DialogTitle>{editing?.id ? "Edit section" : "Add section"}</DialogTitle>
-        <DialogContent>
+      <Dialog
+        open={dialogOpen}
+        onClose={() => setDialogOpen(false)}
+        fullWidth
+        maxWidth="md"
+        PaperProps={{
+          sx: {
+            m: { xs: 1.5, sm: 3 },
+            width: { xs: "calc(100% - 24px)", sm: "auto" },
+            borderRadius: { xs: "12px", sm: "16px" },
+            maxHeight: { xs: "calc(100% - 24px)", sm: "calc(100% - 64px)" },
+          },
+        }}
+      >
+        <DialogTitle sx={{ px: { xs: 2, sm: 3 }, pt: { xs: 2, sm: 2.5 }, pb: 1.5, fontWeight: 700 }}>
+          {editing?.id ? "Edit section" : "Add section"}
+        </DialogTitle>
+        <DialogContent sx={{ px: { xs: 2, sm: 3 }, py: { xs: 1.5, sm: 2 } }}>
           <SectionForm value={editing || EMPTY_SECTION} onChange={setEditing} onPickMedia={(type) => { setMediaType(type); setMediaPickerOpen(true); }} />
         </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setDialogOpen(false)}>Cancel</Button>
+        <DialogActions
+          sx={{
+            px: { xs: 2, sm: 3 },
+            py: { xs: 1.5, sm: 2 },
+            flexDirection: { xs: "column-reverse", sm: "row" },
+            gap: { xs: 1, sm: 1.5 },
+            "& > button": {
+              width: { xs: "100%", sm: "auto" },
+              minHeight: { xs: "40px", sm: "36px" },
+            },
+          }}
+        >
+          <Button onClick={() => setDialogOpen(false)} color="inherit">Cancel</Button>
           <Button variant="outlined" onClick={() => submit({ ...editing, status: "draft" })}>Save draft</Button>
           <Button variant="contained" onClick={() => submit({ ...editing, status: "published" })}>Publish</Button>
         </DialogActions>
@@ -210,13 +238,27 @@ export function SectionsEditor({ type, title, description }) {
         }}
       />
 
-      <Dialog open={previewOpen} onClose={() => setPreviewOpen(false)} fullWidth maxWidth="md">
-        <DialogTitle>Public preview data</DialogTitle>
-        <DialogContent>
+      <Dialog
+        open={previewOpen}
+        onClose={() => setPreviewOpen(false)}
+        fullWidth
+        maxWidth="md"
+        PaperProps={{
+          sx: {
+            m: { xs: 1.5, sm: 3 },
+            width: { xs: "calc(100% - 24px)", sm: "auto" },
+            borderRadius: { xs: "12px", sm: "16px" },
+          },
+        }}
+      >
+        <DialogTitle sx={{ px: { xs: 2, sm: 3 }, pt: { xs: 2, sm: 2.5 } }}>Public preview data</DialogTitle>
+        <DialogContent sx={{ px: { xs: 2, sm: 3 } }}>
           <pre className={styles.preview}>{JSON.stringify(previewData, null, 2)}</pre>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setPreviewOpen(false)}>Close</Button>
+        <DialogActions sx={{ px: { xs: 2, sm: 3 }, py: 1.5 }}>
+          <Button onClick={() => setPreviewOpen(false)} sx={{ width: { xs: "100%", sm: "auto" }, minHeight: "40px" }}>
+            Close
+          </Button>
         </DialogActions>
       </Dialog>
     </Box>

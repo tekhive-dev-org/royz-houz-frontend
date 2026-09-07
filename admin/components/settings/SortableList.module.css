@@ -2,6 +2,8 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+  width: 100%;
+  max-width: 100%;
 }
 
 .item {
@@ -15,6 +17,9 @@
   transition: transform 0.2s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
   user-select: none;
   cursor: grab;
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .item:hover {
@@ -78,11 +83,14 @@
   padding: 2px 8px;
   border-radius: 6px;
   font-family: monospace;
+  flex-shrink: 0;
 }
 
 .content {
   flex: 1;
   min-width: 0;
+  overflow: hidden;
+  word-break: break-word;
 }
 
 .actions {
@@ -106,6 +114,12 @@
   color: #4B5563 !important;
   padding: 6px !important;
   background: #FFFFFF !important;
+  min-width: 32px;
+  min-height: 32px;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: all 0.15s ease !important;
 }
 
 .iconBtn:hover {
@@ -119,3 +133,70 @@
   border-color: #FECACA !important;
   color: #DC2626 !important;
 }
+
+@media (max-width: 640px) {
+  .item {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    padding: 12px 14px;
+  }
+
+  .leftCol {
+    align-items: flex-start;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .dragHandle {
+    margin-top: 2px;
+    padding: 6px;
+  }
+
+  .indexBadge {
+    margin-top: 2px;
+  }
+
+  .actions {
+    margin-left: 0;
+    padding-top: 10px;
+    border-top: 1px solid #F1F5F9;
+    justify-content: flex-end;
+    width: 100%;
+    gap: 8px;
+  }
+
+  .keyboardHint {
+    display: none;
+  }
+
+  .iconBtn {
+    min-width: 38px !important;
+    min-height: 38px !important;
+    padding: 7px !important;
+  }
+}
+
+@media (max-width: 400px) {
+  .item {
+    padding: 10px 12px;
+    gap: 10px;
+  }
+
+  .leftCol {
+    gap: 8px;
+  }
+
+  .actions {
+    gap: 6px;
+    justify-content: space-between;
+  }
+
+  .iconBtn {
+    min-width: 36px !important;
+    min-height: 36px !important;
+    flex: 1;
+    max-width: 54px;
+  }
+}
+

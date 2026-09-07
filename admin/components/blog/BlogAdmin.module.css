@@ -1,16 +1,26 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
 .header {
   align-items: flex-start;
   display: flex;
   justify-content: space-between;
   margin-bottom: 24px;
-  gap: 20px;
+  gap: 16px;
+  width: 100%;
 }
 
 .title {
   color: #111827;
   font-weight: 800;
-  font-size: 1.75rem !important;
+  font-size: clamp(1.35rem, 3.5vw, 1.75rem) !important;
   letter-spacing: -0.025em;
+  line-height: 1.25;
 }
 
 .description {
@@ -18,11 +28,20 @@
   margin-top: 6px;
   max-width: 720px;
   font-size: 0.9375rem;
+  line-height: 1.5;
 }
 
 .tabs {
   border-bottom: 1px solid #E8EAEF;
   margin-bottom: 24px;
+  min-height: 48px;
+}
+
+.tabs :global(.MuiTab-root) {
+  min-height: 48px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: none;
 }
 
 .filters {
@@ -30,6 +49,7 @@
   gap: 12px;
   margin-bottom: 20px;
   flex-wrap: wrap;
+  width: 100%;
 }
 
 .searchInput {
@@ -48,13 +68,18 @@
   border-radius: 14px;
   background: #FFFFFF;
   margin-bottom: 28px;
-  overflow: hidden;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
+  width: 100%;
 }
 
 .articleCell {
   display: flex;
   align-items: center;
   gap: 12px;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .coverImage {
@@ -64,22 +89,27 @@
   object-fit: cover;
   border: 1px solid #E8EAEF;
   background: #F3F4F6;
+  flex-shrink: 0;
 }
 
 .articleMeta {
   display: flex;
   flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .articleTitle {
   font-weight: 700;
   color: #111827;
+  word-break: break-word;
 }
 
 .articleSlug {
   font-size: 0.75rem;
   color: #6B7280;
   font-family: monospace;
+  word-break: break-all;
 }
 
 .categoryTag {
@@ -90,6 +120,7 @@
   border-radius: 6px;
   font-size: 0.75rem;
   font-weight: 600;
+  flex-shrink: 0;
 }
 
 .commentBody {
@@ -98,11 +129,13 @@
   color: #374151;
   font-size: 0.875rem;
   line-height: 1.4;
+  word-break: break-word;
 }
 
 .row {
   display: flex;
   gap: 16px;
+  width: 100%;
 }
 
 .preview {
@@ -115,15 +148,36 @@
   max-height: 60vh;
   overflow: auto;
   padding: 16px;
+  max-width: 100%;
+  word-break: break-all;
+  white-space: pre-wrap;
+  box-sizing: border-box;
 }
 
-@media (max-width: 599px) {
+@media (max-width: 640px) {
   .header {
     flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+    margin-bottom: 18px;
+  }
+
+  .header button,
+  .header a {
+    width: 100%;
+    min-height: 40px;
   }
   
   .row,
   .filters {
     flex-direction: column;
+    gap: 10px;
+  }
+
+  .searchInput,
+  .statusFilter {
+    width: 100%;
+    min-width: 0;
   }
 }
+

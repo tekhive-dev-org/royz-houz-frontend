@@ -2,6 +2,10 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
 }
 
 .header {
@@ -11,20 +15,23 @@
   margin-bottom: 4px;
   gap: 20px;
   flex-wrap: wrap;
+  width: 100%;
+  min-width: 0;
 }
 
 .title {
   color: #111827;
   font-weight: 800;
-  font-size: 1.75rem !important;
+  font-size: clamp(1.35rem, 3.5vw, 1.75rem) !important;
   letter-spacing: -0.025em;
+  line-height: 1.25 !important;
 }
 
 .description {
   color: #4B5563;
   margin-top: 6px;
   max-width: 720px;
-  font-size: 0.9375rem;
+  font-size: clamp(0.85rem, 2vw, 0.9375rem);
 }
 
 .headerActions {
@@ -196,6 +203,9 @@
   border-radius: 12px;
   background: #FFFFFF;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  width: 100%;
+  max-width: 100%;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
 }
 
@@ -336,8 +346,10 @@
 /* Security Roles Grid */
 .rolesGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 16px;
+  width: 100%;
+  min-width: 0;
 }
 
 .roleCard {
@@ -350,6 +362,8 @@
   gap: 12px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
   transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+  min-width: 0;
+  box-sizing: border-box;
 }
 
 .roleCard:hover {
@@ -393,6 +407,8 @@
   border: 1px solid #F2E4D6;
   border-radius: 10px;
   padding: 16px;
+  min-width: 0;
+  box-sizing: border-box;
 }
 
 .tokenText {
@@ -412,6 +428,7 @@
   border-radius: 8px;
   padding: 6px 10px;
   margin: 10px 0 6px;
+  flex-wrap: wrap;
 }
 
 .inviteLinkText {
@@ -422,6 +439,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   flex: 1;
+  min-width: 140px;
 }
 
 .copyButton {
@@ -436,7 +454,41 @@
 }
 
 @media (max-width: 640px) {
+  .headerActions {
+    width: 100%;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .headerActions button {
+    width: 100% !important;
+    min-height: 40px !important;
+  }
+
   .filtersRow {
     grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .controlsBar {
+    padding: 12px 14px;
+  }
+
+  .rolesGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .permissionGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .inviteLinkBox {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .copyButton {
+    width: 100% !important;
+    min-height: 36px !important;
   }
 }

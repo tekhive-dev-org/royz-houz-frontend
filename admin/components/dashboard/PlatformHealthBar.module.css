@@ -96,6 +96,46 @@
     border-right: none;
     padding-right: 0;
     width: 100%;
-    margin-bottom: 8px;
+    margin-bottom: 4px;
   }
 }
+
+@media (max-width: 640px) {
+  .bar {
+    padding: 14px 14px;
+    margin-top: 20px;
+    gap: 12px;
+  }
+
+  .signalsGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    width: 100%;
+  }
+
+  .signalItem {
+    min-width: 0;
+  }
+
+  .signalText {
+    min-width: 0;
+    flex: 1;
+    justify-content: space-between;
+  }
+
+  .signalLabel {
+    font-size: 0.725rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+@media (max-width: 440px) {
+  .signalsGrid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+}
+

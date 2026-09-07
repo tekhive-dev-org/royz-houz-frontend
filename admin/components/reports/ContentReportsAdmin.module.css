@@ -2,6 +2,10 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
 }
 
 .header {
@@ -9,24 +13,30 @@
   display: flex;
   justify-content: space-between;
   gap: 16px;
+  width: 100%;
+  min-width: 0;
 }
 
 .title {
   color: #111827;
-  font-size: 1.75rem !important;
+  font-size: clamp(1.35rem, 3.5vw, 1.75rem) !important;
   font-weight: 800 !important;
   letter-spacing: -0.025em !important;
+  line-height: 1.25 !important;
 }
 
 .description {
   color: #4B5563;
   margin-top: 6px !important;
+  font-size: clamp(0.85rem, 2vw, 0.95rem) !important;
 }
 
 .statsGrid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 14px;
+  width: 100%;
+  min-width: 0;
 }
 
 .statCard {
@@ -37,6 +47,8 @@
   display: flex;
   gap: 12px;
   padding: 16px;
+  min-width: 0;
+  box-sizing: border-box;
 }
 
 .statCard span {
@@ -44,6 +56,8 @@
   display: flex;
   flex-direction: column;
   font-size: 0.75rem;
+  min-width: 0;
+  word-break: break-word;
 }
 
 .statCard strong {
@@ -58,12 +72,18 @@
   grid-template-columns: 2fr 1fr 1fr;
   gap: 12px;
   padding: 16px;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
 }
 
 .tableContainer {
   border: 1px solid #E8EAEF;
   border-radius: 12px !important;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  width: 100%;
+  max-width: 100%;
 }
 
 .table {
@@ -124,6 +144,8 @@
   border: 1px solid #E5E7EB;
   border-radius: 10px;
   padding: 14px;
+  min-width: 0;
+  word-break: break-word;
 }
 
 .privateBlock {
@@ -145,6 +167,7 @@
   color: #475569;
   margin-top: 8px !important;
   white-space: pre-wrap;
+  word-break: break-word;
 }
 
 .dialogActions {
@@ -157,8 +180,36 @@
 }
 
 @media (max-width: 800px) {
-  .statsGrid,
+  .statsGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .filters {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .statsGrid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .dialogActions {
+    flex-direction: column-reverse;
+    gap: 10px;
+    padding: 14px 16px !important;
+  }
+
+  .dialogActions button {
+    width: 100% !important;
+    margin: 0 !important;
+    min-height: 40px !important;
   }
 }

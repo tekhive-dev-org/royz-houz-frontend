@@ -47,9 +47,24 @@ function BookingDialog({ booking, assignees, open, canUpdate, saving, onClose, o
   if (!booking) return null;
 
   return (
-    <Dialog open={open} onClose={saving ? undefined : onClose} maxWidth="sm" fullWidth>
-      <DialogTitle>Booking request {booking.reference}</DialogTitle>
-      <DialogContent dividers>
+    <Dialog
+      open={open}
+      onClose={saving ? undefined : onClose}
+      maxWidth="sm"
+      fullWidth
+      PaperProps={{
+        sx: {
+          m: { xs: 1.5, sm: 3 },
+          width: { xs: "calc(100% - 24px)", sm: "auto" },
+          borderRadius: { xs: "12px", sm: "16px" },
+          maxHeight: { xs: "calc(100% - 24px)", sm: "calc(100% - 64px)" },
+        },
+      }}
+    >
+      <DialogTitle sx={{ px: { xs: 2, sm: 3 }, pt: { xs: 2, sm: 2.5 }, pb: 1.5, fontWeight: 700 }}>
+        Booking request {booking.reference}
+      </DialogTitle>
+      <DialogContent dividers sx={{ px: { xs: 2, sm: 3 }, py: { xs: 2, sm: 2.5 } }}>
         <Stack spacing={2}>
           <Box className={styles.detail}>
             <Typography variant="overline">Talent</Typography>
@@ -79,7 +94,18 @@ function BookingDialog({ booking, assignees, open, canUpdate, saving, onClose, o
           <TextField label="Internal notes" value={notes} disabled={!canUpdate} onChange={(event) => setNotes(event.target.value)} multiline minRows={3} helperText="Private administrative notes." />
         </Stack>
       </DialogContent>
-      <DialogActions>
+      <DialogActions
+        sx={{
+          px: { xs: 2, sm: 3 },
+          py: { xs: 1.5, sm: 2 },
+          flexDirection: { xs: "column-reverse", sm: "row" },
+          gap: { xs: 1, sm: 1.5 },
+          "& > button": {
+            width: { xs: "100%", sm: "auto" },
+            minHeight: { xs: "40px", sm: "36px" },
+          },
+        }}
+      >
         <Button onClick={onClose}>{canUpdate ? "Cancel" : "Close"}</Button>
         {canUpdate ? <Button variant="contained" disabled={saving} onClick={() => onSave({ id: booking.id, status, assignedTo: assignedTo || null, internalNotes: notes || null })} className={styles.primaryButton}>{saving ? "Saving…" : "Save changes"}</Button> : null}
       </DialogActions>

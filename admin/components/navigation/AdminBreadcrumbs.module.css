@@ -30,3 +30,22 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+@media (max-width: 640px) {
+  .breadcrumbs {
+    font-size: 0.75rem;
+  }
+
+  .breadcrumbs :global(.MuiBreadcrumbs-separator) {
+    margin: 0 4px;
+  }
+
+  .current {
+    max-width: 120px;
+  }
+
+  .homeLink span {
+    display: none;
+  }
+}
+

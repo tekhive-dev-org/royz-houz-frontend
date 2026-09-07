@@ -2,6 +2,9 @@
   display: flex;
   flex-direction: column;
   gap: 24px;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
 }
 
 .pageHeader {
@@ -10,14 +13,16 @@
   align-items: flex-start;
   flex-wrap: wrap;
   gap: 16px;
+  width: 100%;
 }
 
 .pageTitle {
   font-family: var(--font-heading, "Inter", sans-serif);
   font-weight: 800;
-  font-size: 1.85rem;
+  font-size: clamp(1.35rem, 3.5vw, 1.85rem) !important;
   color: #111827;
   letter-spacing: -0.02em;
+  line-height: 1.25;
 }
 
 .pageDescription {
@@ -25,6 +30,7 @@
   font-size: 0.95rem;
   margin-top: 4px;
   max-width: 680px;
+  line-height: 1.5;
 }
 
 .tabs {
@@ -37,6 +43,9 @@
 
 .tabPanel {
   margin-top: 8px;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
 }
 
 .card {
@@ -48,6 +57,9 @@
   display: flex;
   flex-direction: column;
   gap: 24px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .cardHeader {
@@ -73,8 +85,9 @@
 
 .formGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
   gap: 18px;
+  width: 100%;
 }
 
 .fullWidth {
@@ -89,6 +102,8 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .subSectionTitle {
@@ -104,6 +119,7 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
+  width: 100%;
 }
 
 .itemCard {
@@ -115,6 +131,8 @@
   flex-direction: column;
   gap: 12px;
   position: relative;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .itemHeader {
@@ -151,6 +169,8 @@
   padding: 20px;
   margin-top: 8px;
   border: 1px solid rgba(180, 106, 44, 0.3);
+  box-sizing: border-box;
+  word-break: break-word;
 }
 
 .previewBadge {
@@ -166,6 +186,7 @@
   font-size: 1.25rem;
   font-weight: 800;
   color: #FFFFFF;
+  word-break: break-word;
 }
 
 .previewAccent {
@@ -178,12 +199,14 @@
   font-size: 0.85rem;
   margin-top: 8px;
   line-height: 1.5;
+  word-break: break-word;
 }
 
 .checkItemRow {
   display: flex;
   align-items: center;
   gap: 8px;
+  width: 100%;
 }
 
 .deleteBtn {
@@ -208,3 +231,39 @@
   color: #059669;
   font-weight: 600;
 }
+
+@media (max-width: 640px) {
+  .card {
+    padding: 16px 14px;
+    border-radius: 12px;
+  }
+
+  .cardHeader,
+  .pageHeader {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .saveBar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .saveBar button,
+  .pageHeader button {
+    width: 100%;
+    min-height: 40px;
+  }
+
+  .subSection {
+    padding: 14px 12px;
+  }
+
+  .formGrid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+}
+

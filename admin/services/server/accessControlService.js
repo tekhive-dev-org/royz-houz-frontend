@@ -25,15 +25,15 @@ async function getRoleKeys(supabase, userId) {
 }
 
 async function countActiveSuperAdmins(supabase, excludeUserId) {
-  const { data } = await supabase
-    .from("admin_role_assignments")
-    .select("admin_user_id, admin_profiles(status)")
-    .eq("roles.role_key", "super_admin")
-    .is("revoked_at", null)
-    .eq("admin_profiles.status", "active");
-  const unique = new Set((data || []).map((row) => row.admin_user_id));
-  if (excludeUserId) unique.delete(excludeUserId);
-  return unique.size;
+  const { data: role, error: roleError } = await supabase.from("roles").select("id").eq("role_key", "super_admin").maybeSingle();
+  if (roleError || !role) return 0;
+  const { data: assignments, error: assignmentError } = await supabase.from("admin_role_assignments").select("admin_user_id").eq("role_id", role.id).is("revoked_at", null);
+  if (assignmentError || !assignments?.length) return 0;
+  const userIds = assignments.map((assignment) => assignment.admin_user_id).filter((id) => id !== excludeUserId);
+  if (!userIds.length) return 0;
+  const { data: activeProfiles, error: profileError } = await supabase.from("admin_profiles").select("user_id").in("user_id", userIds).eq("status", "active");
+  if (profileError) return 0;
+  return new Set((activeProfiles || []).map((profile) => profile.user_id)).size;
 }
 
 async function requireRoleChangeAllowed(supabase, actorUserId, targetUserId, nextRoleIds) {
@@ -214,7 +214,7 @@ export async function updateRoleAssignments(client, { actorUserId, userId, roleI
 
 export async function listInvitations(client) {
   const supabase = getClient(client);
-  const { data, error } = await supabase.from("admin_invitations").select("*, roles(role_key, name)").order("created_at", { ascending: false });
+  const { data, error } = await supabase.from("admin_invitations").select("*, roles(role_key, name)").eq("status", "pending").order("created_at", { ascending: false });
   if (error) return serviceFailure("QUERY_FAILED", "Unable to load invitations.");
   return serviceSuccess(data || []);
 }

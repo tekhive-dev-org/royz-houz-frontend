@@ -136,7 +136,7 @@ export function SettingsAdmin({ admin }) {
                   healthStatus?.ok ? styles.indicatorActive : styles.indicatorError
                 }`}
               />
-              <Box sx={{ flex: 1 }}>
+              <Box sx={{ flex: 1, minWidth: 0 }}>
                 <Typography variant="body2" fontWeight={600}>Liveness Check</Typography>
                 <Typography variant="caption" color="text.secondary">API server responds to HTTP requests</Typography>
               </Box>
@@ -145,6 +145,7 @@ export function SettingsAdmin({ admin }) {
                 label={healthStatus?.status || (isChecking ? "checking…" : "unknown")}
                 color={healthStatus?.ok ? "success" : "error"}
                 variant="outlined"
+                sx={{ flexShrink: 0 }}
               />
             </Box>
 
@@ -154,7 +155,7 @@ export function SettingsAdmin({ admin }) {
                   readinessStatus?.ok ? styles.indicatorActive : styles.indicatorWarning
                 }`}
               />
-              <Box sx={{ flex: 1 }}>
+              <Box sx={{ flex: 1, minWidth: 0 }}>
                 <Typography variant="body2" fontWeight={600}>Production Readiness</Typography>
                 <Typography variant="caption" color="text.secondary">Required environment variables verified</Typography>
               </Box>
@@ -163,6 +164,7 @@ export function SettingsAdmin({ admin }) {
                 label={readinessStatus?.status || (isChecking ? "checking…" : "unknown")}
                 color={readinessStatus?.ok ? "success" : "warning"}
                 variant="outlined"
+                sx={{ flexShrink: 0 }}
               />
             </Box>
           </Stack>
@@ -172,26 +174,26 @@ export function SettingsAdmin({ admin }) {
         <Paper elevation={0} className={styles.card}>
           <Box className={styles.cardHeader}>
             <Typography variant="h6" className={styles.cardTitle}>Services & Integrations</Typography>
-            <Chip size="small" label="Active" color="success" icon={<CheckCircleOutlineIcon fontSize="small" />} />
+            <Chip size="small" label="Active" color="success" icon={<CheckCircleOutlineIcon fontSize="small" />} sx={{ flexShrink: 0 }} />
           </Box>
           <Divider />
           <Stack spacing={2}>
             <Box className={styles.statusRow}>
-              <StorageOutlinedIcon color="primary" fontSize="small" />
-              <Box sx={{ flex: 1 }}>
+              <StorageOutlinedIcon color="primary" fontSize="small" sx={{ flexShrink: 0 }} />
+              <Box sx={{ flex: 1, minWidth: 0 }}>
                 <Typography variant="body2" fontWeight={600}>Supabase Platform</Typography>
                 <Typography variant="caption" color="text.secondary">Auth, PostgreSQL Database & Storage</Typography>
               </Box>
-              <Chip size="small" label="Connected" color="success" variant="outlined" />
+              <Chip size="small" label="Connected" color="success" variant="outlined" sx={{ flexShrink: 0 }} />
             </Box>
 
             <Box className={styles.statusRow}>
-              <CloudDoneOutlinedIcon color="primary" fontSize="small" />
-              <Box sx={{ flex: 1 }}>
+              <CloudDoneOutlinedIcon color="primary" fontSize="small" sx={{ flexShrink: 0 }} />
+              <Box sx={{ flex: 1, minWidth: 0 }}>
                 <Typography variant="body2" fontWeight={600}>Cloudinary Media</Typography>
                 <Typography variant="caption" color="text.secondary">Signed direct uploads & CDN delivery</Typography>
               </Box>
-              <Chip size="small" label="Enabled" color="success" variant="outlined" />
+              <Chip size="small" label="Enabled" color="success" variant="outlined" sx={{ flexShrink: 0 }} />
             </Box>
           </Stack>
         </Paper>
@@ -200,19 +202,19 @@ export function SettingsAdmin({ admin }) {
         <Paper elevation={0} className={styles.card}>
           <Box className={styles.cardHeader}>
             <Typography variant="h6" className={styles.cardTitle}>Current Session</Typography>
-            <Chip size="small" label="Authenticated" color="primary" />
+            <Chip size="small" label="Authenticated" color="primary" sx={{ flexShrink: 0 }} />
           </Box>
           <Divider />
           <Stack spacing={1.5}>
-            <Box>
+            <Box sx={{ minWidth: 0 }}>
               <Typography variant="caption" color="text.secondary">Admin User ID</Typography>
               <Typography variant="body2" fontWeight={600} sx={{ wordBreak: "break-all", fontFamily: "monospace" }}>
                 {admin?.userId || "Active Session"}
               </Typography>
             </Box>
-            <Box>
+            <Box sx={{ minWidth: 0 }}>
               <Typography variant="caption" color="text.secondary">Role / Status</Typography>
-              <Box sx={{ display: "flex", gap: 1, mt: 0.5 }}>
+              <Box sx={{ display: "flex", gap: 1, mt: 0.5, flexWrap: "wrap" }}>
                 <Chip size="small" label={admin?.status || "active"} color="success" />
                 {admin?.roles?.map((role) => (
                   <Chip key={role} size="small" label={role} variant="outlined" />

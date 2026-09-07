@@ -508,7 +508,18 @@ export function AccessControlAdmin({ actorUserId }) {
         </Box>
       ) : null}
 
-      <Dialog open={Boolean(assignFor)} onClose={() => setAssignFor(null)} fullWidth maxWidth="sm">
+      <Dialog
+        open={Boolean(assignFor)}
+        onClose={() => setAssignFor(null)}
+        fullWidth
+        maxWidth="sm"
+        PaperProps={{
+          sx: {
+            m: { xs: 1.5, sm: 3 },
+            width: { xs: "calc(100% - 24px)", sm: "auto" },
+          },
+        }}
+      >
         <DialogTitle>Edit roles — {assignFor?.displayName}</DialogTitle>
         <DialogContent>
           <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
@@ -518,7 +529,7 @@ export function AccessControlAdmin({ actorUserId }) {
             {roles.map((role) => <MenuItem key={role.id} value={role.id}>{role.name}</MenuItem>)}
           </TextField>
         </DialogContent>
-        <DialogActions>
+        <DialogActions sx={{ px: 3, pb: 2.5, flexDirection: { xs: "column-reverse", sm: "row" }, gap: { xs: 1, sm: 0 }, "& button": { width: { xs: "100%", sm: "auto" }, minHeight: 40 } }}>
           <Button onClick={() => setAssignFor(null)}>Cancel</Button>
           <Button variant="contained" onClick={saveAssignments}>Save assignments</Button>
         </DialogActions>
@@ -533,7 +544,18 @@ export function AccessControlAdmin({ actorUserId }) {
         onConfirm={applyStatus}
       />
 
-      <Dialog open={roleDialogOpen} onClose={() => setRoleDialogOpen(false)} fullWidth maxWidth="md">
+      <Dialog
+        open={roleDialogOpen}
+        onClose={() => setRoleDialogOpen(false)}
+        fullWidth
+        maxWidth="md"
+        PaperProps={{
+          sx: {
+            m: { xs: 1.5, sm: 3 },
+            width: { xs: "calc(100% - 24px)", sm: "auto" },
+          },
+        }}
+      >
         <DialogTitle>{editingRole ? `Edit role — ${editingRole.name}` : "New role"}</DialogTitle>
         <DialogContent>
           <Stack spacing={2} sx={{ pt: 1 }}>
@@ -564,7 +586,7 @@ export function AccessControlAdmin({ actorUserId }) {
             </Box>
           </Stack>
         </DialogContent>
-        <DialogActions>
+        <DialogActions sx={{ px: 3, pb: 2.5, flexDirection: { xs: "column-reverse", sm: "row" }, gap: { xs: 1, sm: 0 }, "& button": { width: { xs: "100%", sm: "auto" }, minHeight: 40 } }}>
           <Button onClick={() => setRoleDialogOpen(false)}>Cancel</Button>
           <Button variant="contained" onClick={saveRole}>Save role</Button>
         </DialogActions>
@@ -580,6 +602,12 @@ export function AccessControlAdmin({ actorUserId }) {
         }}
         fullWidth
         maxWidth="sm"
+        PaperProps={{
+          sx: {
+            m: { xs: 1.5, sm: 3 },
+            width: { xs: "calc(100% - 24px)", sm: "auto" },
+          },
+        }}
       >
         <DialogTitle>Invite Administrator</DialogTitle>
         <DialogContent>
@@ -669,7 +697,7 @@ export function AccessControlAdmin({ actorUserId }) {
             ) : null}
           </Stack>
         </DialogContent>
-        <DialogActions>
+        <DialogActions sx={{ px: 3, pb: 2.5, flexDirection: { xs: "column-reverse", sm: "row" }, gap: { xs: 1, sm: 0 }, "& button": { width: { xs: "100%", sm: "auto" }, minHeight: 40 } }}>
           <Button
             onClick={() => {
               setInviteOpen(false);

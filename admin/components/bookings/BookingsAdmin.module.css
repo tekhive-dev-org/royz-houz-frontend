@@ -1,12 +1,92 @@
-.container { display:flex; flex-direction:column; gap:20px; }
-.header { display:flex; justify-content:space-between; align-items:flex-start; gap:16px; }
-.title { color:#111827; font-size:1.75rem !important; font-weight:800 !important; }
-.description { color:#4B5563; margin-top:6px !important; }
-.filters { display:grid; grid-template-columns:2fr 1fr; gap:12px; padding:16px; border:1px solid #E8EAEF; border-radius:12px !important; }
-.table { border:1px solid #E8EAEF; border-radius:12px !important; overflow-x:auto; }
-.capitalize { text-transform:capitalize; }
-.empty { color:#64748B !important; padding:36px !important; }
-.detail { border:1px solid #E5E7EB; border-radius:10px; padding:14px; }
-.preformatted { white-space:pre-wrap; margin-top:8px !important; }
-.primaryButton { background:#B46A2C !important; text-transform:none !important; }
-@media (max-width:700px) { .filters { grid-template-columns:1fr; } }
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  width: 100%;
+}
+
+.title {
+  color: #111827;
+  font-size: clamp(1.35rem, 3.5vw, 1.75rem) !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.025em;
+  line-height: 1.25;
+}
+
+.description {
+  color: #4B5563;
+  margin-top: 6px !important;
+  line-height: 1.5;
+}
+
+.filters {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid #E8EAEF;
+  border-radius: 12px !important;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.table {
+  border: 1px solid #E8EAEF;
+  border-radius: 12px !important;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  width: 100%;
+  max-width: 100%;
+}
+
+.capitalize {
+  text-transform: capitalize;
+}
+
+.empty {
+  color: #64748B !important;
+  padding: 36px !important;
+}
+
+.detail {
+  border: 1px solid #E5E7EB;
+  border-radius: 10px;
+  padding: 14px;
+  word-break: break-word;
+}
+
+.preformatted {
+  white-space: pre-wrap;
+  margin-top: 8px !important;
+  word-break: break-word;
+}
+
+.primaryButton {
+  background: #B46A2C !important;
+  text-transform: none !important;
+  font-weight: 600 !important;
+}
+
+@media (max-width: 640px) {
+  .header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .filters {
+    grid-template-columns: 1fr;
+    padding: 12px;
+  }
+}
+

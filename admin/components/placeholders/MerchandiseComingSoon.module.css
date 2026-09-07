@@ -1,3 +1,10 @@
+.container {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
 .chip {
   background: #fff3e8 !important;
   color: #b54708 !important;
@@ -6,30 +13,46 @@
 
 .title {
   color: #172033;
-  font-weight: 700;
-  margin-top: 12px;
+  font-weight: 800 !important;
+  margin-top: 12px !important;
+  font-size: clamp(1.35rem, 3.5vw, 1.75rem) !important;
+  line-height: 1.25 !important;
+  letter-spacing: -0.025em !important;
 }
 
 .description {
   color: #667085;
-  margin-top: 8px;
+  margin-top: 8px !important;
   max-width: 640px;
+  font-size: clamp(0.85rem, 2vw, 0.95rem) !important;
+  line-height: 1.5 !important;
 }
 
 .card {
   align-items: center;
   border: 1px solid #e7e9ee;
+  border-radius: 12px !important;
   display: flex;
   gap: 12px;
   margin-top: 24px;
   max-width: 640px;
+  width: 100%;
   padding: 18px;
+  box-sizing: border-box;
 }
 
 .cardIcon {
   color: #b46a2c;
+  flex-shrink: 0;
 }
 
 .cardText {
   color: #667085;
+}
+
+@media (max-width: 640px) {
+  .card {
+    padding: 14px 16px;
+    gap: 10px;
+  }
 }

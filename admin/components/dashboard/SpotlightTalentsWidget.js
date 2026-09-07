@@ -74,6 +74,8 @@ function TalentAvatar({ src, name }) {
     <img
       src={src}
       alt={name || "Talent profile photo"}
+      width={42}
+      height={42}
       className={styles.avatarImg}
       onError={() => setLoadError(true)}
       loading="lazy"
@@ -87,12 +89,12 @@ export function SpotlightTalentsWidget({ talents = [] }) {
       <div className={styles.header}>
         <div className={styles.titleRow}>
           <GroupsOutlinedIcon className={styles.headerIcon} />
-          <div>
+          <div className={styles.titleWrapper}>
             <Typography component="h2" variant="h6" className={styles.title}>
               Spotlight Talent Roster
             </Typography>
             <Typography variant="caption" className={styles.subtitle}>
-              Key represented creators & featured artists
+              Key represented creators &amp; featured artists
             </Typography>
           </div>
         </div>
@@ -107,6 +109,7 @@ export function SpotlightTalentsWidget({ talents = [] }) {
           View Roster
         </Button>
       </div>
+
 
       {talents.length === 0 ? (
         <div className={styles.emptyState}>

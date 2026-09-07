@@ -7,39 +7,62 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+  min-height: 250px;
+  box-sizing: border-box;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
 }
+
 
 .header {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   margin-bottom: 16px;
   padding-bottom: 14px;
   border-bottom: 1px solid #F1F5F9;
+  gap: 10px;
 }
 
 .titleRow {
   display: flex;
-  align-items: center;
-  gap: 12px;
+  align-items: flex-start;
+  gap: 10px;
+  min-width: 0;
+  flex: 1;
+}
+
+.titleWrapper {
+  min-width: 0;
+  flex: 1;
+  overflow: hidden;
 }
 
 .headerIcon {
   color: #B46A2C;
-  font-size: 1.5rem !important;
+  font-size: 1.4rem !important;
+  flex-shrink: 0;
+  margin-top: 1px;
 }
 
 .title {
   color: #0F172A !important;
   font-weight: 700 !important;
   font-size: 1.05rem !important;
-  line-height: 1.2 !important;
+  line-height: 1.25 !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .subtitle {
   color: #64748B !important;
   font-size: 0.775rem !important;
   display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .viewAllBtn {
@@ -48,11 +71,14 @@
   color: #B46A2C !important;
   text-transform: none !important;
   padding: 4px 8px !important;
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .viewAllBtn:hover {
   background: #FDF4EC !important;
 }
+
 
 .talentList {
   display: flex;
@@ -64,12 +90,17 @@
 .talentItem {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
   padding: 10px 14px;
   border-radius: 10px;
   background: #F8FAFC;
   border: 1px solid #EDF2F7;
   transition: all 0.15s ease;
+  min-height: 64px;
+  box-sizing: border-box;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
 }
 
 .talentItem:hover {
@@ -78,8 +109,8 @@
 }
 
 .avatarWrap {
-  width: 44px;
-  height: 44px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
   overflow: hidden;
   flex-shrink: 0;
@@ -118,12 +149,16 @@
 .talentInfo {
   flex: 1;
   min-width: 0;
+  overflow: hidden;
 }
 
 .talentNameRow {
   display: flex;
   align-items: center;
   gap: 8px;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
   margin-bottom: 2px;
 }
 
@@ -135,6 +170,8 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  min-width: 0;
+  flex: 0 1 auto;
 }
 
 .featuredBadge {
@@ -148,6 +185,8 @@
   padding: 1px 6px;
   border-radius: 4px;
   text-transform: uppercase;
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .starIcon {
@@ -172,7 +211,11 @@
   border-radius: 6px;
   transition: all 0.15s ease;
   border: 1px solid transparent;
+  flex-shrink: 0;
+  white-space: nowrap;
+  margin-left: 8px;
 }
+
 
 .profileLink:hover {
   background: #FFFFFF;
@@ -204,3 +247,45 @@
   color: #334155 !important;
   border-radius: 6px !important;
 }
+
+@media (max-width: 640px) {
+  .card {
+    padding: 16px 14px;
+    min-height: 230px;
+  }
+
+  .header {
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    gap: 8px;
+  }
+
+  .talentItem {
+    padding: 8px 10px;
+    gap: 10px;
+    min-height: 58px;
+  }
+
+  .avatarWrap {
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+  }
+
+  .talentName {
+    font-size: 0.8125rem;
+  }
+
+  .categoryBadge {
+    font-size: 0.725rem;
+  }
+
+  .profileLink {
+    padding: 4px 8px;
+    min-height: 28px;
+    display: inline-flex;
+    align-items: center;
+  }
+}
+
+
