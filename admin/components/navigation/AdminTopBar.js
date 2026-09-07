@@ -100,7 +100,7 @@ export function AdminTopBar({ onOpenNavigation }) {
         {/* Right Side: Operational Status + Actions + User Account */}
         <Box className={styles.actions}>
           {/* Operational Status: Desktop Full Pill & Mobile Micro Pulse Badge */}
-          <div className={styles.statusPill}>
+          {/* <div className={styles.statusPill}>
             <span className={styles.statusDotPing} />
             <span className={styles.statusLabel}>Live Operational</span>
           </div>
@@ -110,7 +110,7 @@ export function AdminTopBar({ onOpenNavigation }) {
               <span className={styles.statusDotPing} />
               <span className={styles.mobileStatusText}>Live</span>
             </div>
-          </Tooltip>
+          </Tooltip>*/}
 
           {/* Quick Link to Public Site (Desktop Button + Mobile Icon Button) */}
           <Button
