@@ -24,6 +24,7 @@ import StarIcon from "@mui/icons-material/Star";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import { StatusChip } from "@/components/settings/StatusChip";
 import styles from "./TalentsTable.module.css";
+import { formatTalentBookingPrice } from "@/utils/talents";
 
 function getTalentInitials(name = "") {
   if (!name) return "TH";
@@ -104,7 +105,7 @@ export function TalentDesktopTable({
             const followers = body.followers || "N/A";
             const location = item.location || body.location || "Africa";
             const isHot = Boolean(body.isHot);
-            const bookingPrice = body.bookingPrice;
+            const bookingPrice = formatTalentBookingPrice(body.bookingPrice);
             const availability = body.availability;
             const awardsCount = Array.isArray(body.awards) ? body.awards.length : 0;
 

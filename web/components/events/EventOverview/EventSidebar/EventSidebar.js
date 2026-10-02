@@ -80,12 +80,28 @@ export function EventSidebar({ event, selectedTier, onGetTickets }) {
     event?.startingPrice ||
     "₦45,000";
 
-  const spotsRemaining = event?.spotsRemaining || 195;
-  const totalSpots = event?.totalSpots || 800;
-  const progressPercent = Math.min(
-    Math.round(((totalSpots - spotsRemaining) / totalSpots) * 100),
-    100
-  );
+  const rawTotalSpots = event?.totalSpots;
+  const rawSpotsRemaining = event?.spotsRemaining;
+
+  const totalSpots =
+    typeof rawTotalSpots === "number" && rawTotalSpots > 0
+      ? rawTotalSpots
+      : rawTotalSpots !== "" && rawTotalSpots !== null && rawTotalSpots !== undefined && !Number.isNaN(Number(rawTotalSpots)) && Number(rawTotalSpots) > 0
+      ? Math.floor(Number(rawTotalSpots))
+      : null;
+
+  const spotsRemaining =
+    typeof rawSpotsRemaining === "number" && rawSpotsRemaining >= 0
+      ? rawSpotsRemaining
+      : rawSpotsRemaining !== "" && rawSpotsRemaining !== null && rawSpotsRemaining !== undefined && !Number.isNaN(Number(rawSpotsRemaining)) && Number(rawSpotsRemaining) >= 0
+      ? Math.floor(Number(rawSpotsRemaining))
+      : null;
+
+  const hasSpotsData = totalSpots !== null && totalSpots > 0 && spotsRemaining !== null;
+
+  const progressPercent = hasSpotsData
+    ? Math.min(Math.max(Math.round(((totalSpots - spotsRemaining) / totalSpots) * 100), 0), 100)
+    : 0;
 
   const venueName = event?.venueMap?.name || event?.venue || "Kumasi Cultural Centre";
   const venueAddress = event?.venueMap?.address || event?.location || "Kumasi Cultural Centre, Kumasi, Lagos";
@@ -151,21 +167,25 @@ export function EventSidebar({ event, selectedTier, onGetTickets }) {
               <span className={styles.priceSub}>/ ticket</span>
             </div>
 
-            <div className={styles.progressContainer}>
-              <div className={styles.progressLabelRow}>
-                <span className={styles.progressDot} />
-                <span className={styles.progressText}>
-                  {spotsRemaining} of {totalSpots} spots remaining
-                </span>
-              </div>
+            {hasSpotsData && (
+              <div className={styles.progressContainer}>
+                <div className={styles.progressLabelRow}>
+                  <span className={styles.progressDot} />
+                  <span className={styles.progressText}>
+                    {spotsRemaining === 0
+                      ? `0 of ${totalSpots} spots remaining (Sold Out)`
+                      : `${spotsRemaining} of ${totalSpots} spots remaining`}
+                  </span>
+                </div>
 
-              <div className={styles.progressBarTrack}>
-                <div
-                  className={styles.progressBarFill}
-                  style={{ width: `${progressPercent}%` }}
-                />
+                <div className={styles.progressBarTrack}>
+                  <div
+                    className={styles.progressBarFill}
+                    style={{ width: `${progressPercent}%` }}
+                  />
+                </div>
               </div>
-            </div>
+            )}
 
             <div className={styles.countdownSection}>
               <span className={styles.countdownHeader}>EVENT COUNTDOWN</span>

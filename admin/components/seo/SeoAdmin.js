@@ -32,6 +32,7 @@ import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import { StatusChip } from "@/components/settings/StatusChip";
 import { AdminLoadingState } from "@/components/feedback/AdminLoadingState";
 import { seoAdminApi } from "@/services/seoAdminApi";
+import { AdminTablePagination, useTablePagination } from "@/components/pagination";
 import { SeoStatsBanner } from "./SeoStatsBanner";
 import styles from "./SeoAdmin.module.css";
 
@@ -87,6 +88,14 @@ export function SeoAdmin() {
   const [isInitialLoading, setIsInitialLoading] = useState(true);
   const [isUpdating, setIsUpdating] = useState(false);
   const [error, setError] = useState(null);
+
+  const {
+    paginatedItems: paginatedRecords,
+    paginationProps,
+  } = useTablePagination(records, {
+    initialPageSize: 10,
+    itemLabel: "records",
+  });
   const [editing, setEditing] = useState(null);
   const [editForm, setEditForm] = useState({});
   const [preview, setPreview] = useState(null);
@@ -362,14 +371,14 @@ export function SeoAdmin() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {records.length === 0 ? (
+            {paginatedRecords.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={6} align="center" sx={{ py: 6, color: "#6B7280" }}>
                   No SEO records found matching your filters.
                 </TableCell>
               </TableRow>
             ) : (
-              records.map((record) => {
+              paginatedRecords.map((record) => {
                 const hasOverride = Boolean(record.seo && (record.seo.title || record.seo.summary));
                 const isNoIndex = Boolean(record.seo && record.seo.no_index);
 
@@ -432,6 +441,7 @@ export function SeoAdmin() {
           </TableBody>
         </Table>
       </TableContainer>
+      <AdminTablePagination {...paginationProps} />
 
       <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)} fullWidth maxWidth="md">
         <DialogTitle>SEO — {editing?.title}</DialogTitle>

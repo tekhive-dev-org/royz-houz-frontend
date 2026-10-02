@@ -18,13 +18,14 @@ import FilterListOffIcon from "@mui/icons-material/FilterListOff";
 import NoteAltOutlinedIcon from "@mui/icons-material/NoteAltOutlined";
 import ReceiptLongOutlinedIcon from "@mui/icons-material/ReceiptLongOutlined";
 import { StatusChip } from "@/components/settings/StatusChip";
+import { AdminTablePagination, useTablePagination } from "@/components/pagination";
 import styles from "./DonationRecordsTable.module.css";
 
 const RECORD_STATUS_PILLS = [
   { label: "All Records", value: "" },
-  { label: "Completed", value: "completed" },
+  { label: "Approved", value: "approved" },
   { label: "Pending", value: "pending" },
-  { label: "Cancelled", value: "cancelled" },
+  { label: "Rejected", value: "rejected" },
 ];
 
 export function DonationRecordsTable({
@@ -37,6 +38,10 @@ export function DonationRecordsTable({
   onResetFilters,
   onOpenNotes,
 }) {
+  const { paginatedItems, paginationProps } = useTablePagination(records, {
+    initialPageSize: 10,
+    itemLabel: "donations",
+  });
   return (
     <Box className={styles.wrapper}>
       {/* Controls Bar */}
@@ -72,9 +77,9 @@ export function DonationRecordsTable({
             className={styles.filterControl}
           >
             <MenuItem value="">All Records</MenuItem>
-            <MenuItem value="completed">Completed</MenuItem>
+            <MenuItem value="approved">Approved</MenuItem>
             <MenuItem value="pending">Pending</MenuItem>
-            <MenuItem value="cancelled">Cancelled</MenuItem>
+            <MenuItem value="rejected">Rejected</MenuItem>
           </TextField>
         </Box>
 
@@ -128,7 +133,7 @@ export function DonationRecordsTable({
                 Donor &amp; Contact
               </TableCell>
               <TableCell className={styles.tableHeadCell} style={{ width: "16%" }}>
-                Contribution Amount
+                Contribution Amount (₦)
               </TableCell>
               <TableCell className={styles.tableHeadCell} style={{ width: "14%" }}>
                 Frequency
@@ -155,8 +160,13 @@ export function DonationRecordsTable({
                 </TableCell>
               </TableRow>
             ) : (
-              records.map((r) => {
-                const initial = (r.donorName || "D").charAt(0).toUpperCase();
+              paginatedItems.map((r) => {
+                const donorName = r.donor_name || r.donorName || "Anonymous Patron";
+                const donorEmail = r.donor_email || r.donorEmail || "No email";
+                const donorPhone = r.donor_phone || r.donorPhone;
+                const internalNotes = r.internal_notes || r.internalNotes;
+                const isApproved = r.status === "approved" || r.status === "completed";
+                const initial = donorName.charAt(0).toUpperCase();
 
                 return (
                   <TableRow key={r.id} hover className={styles.tableRow}>
@@ -165,12 +175,10 @@ export function DonationRecordsTable({
                       <div className={styles.donorCell}>
                         <div className={styles.donorAvatar}>{initial}</div>
                         <div className={styles.donorMeta}>
-                          <span className={styles.donorName}>
-                            {r.donorName || "Anonymous Patron"}
-                          </span>
+                          <span className={styles.donorName}>{donorName}</span>
                           <span className={styles.donorEmail}>
-                            {r.donorEmail || "No email"}
-                            {r.donorPhone ? ` · ${r.donorPhone}` : ""}
+                            {donorEmail}
+                            {donorPhone ? ` · ${donorPhone}` : ""}
                           </span>
                         </div>
                       </div>
@@ -199,11 +207,18 @@ export function DonationRecordsTable({
                     <TableCell className={styles.tableCell}>
                       <StatusChip
                         status={
-                          r.status === "completed"
+                          isApproved
                             ? "published"
                             : r.status === "pending"
                             ? "draft"
                             : "archived"
+                        }
+                        label={
+                          isApproved
+                            ? "Approved"
+                            : r.status === "pending"
+                            ? "Pending"
+                            : "Rejected"
                         }
                       />
                     </TableCell>
@@ -212,14 +227,14 @@ export function DonationRecordsTable({
                     <TableCell align="right" className={styles.tableCell}>
                       <Tooltip
                         title={
-                          r.internalNotes ? `Notes: ${r.internalNotes}` : "Add staff note"
+                          internalNotes ? `Notes: ${internalNotes}` : "Add staff note"
                         }
                       >
                         <IconButton
                           size="small"
                           onClick={() => onOpenNotes(r)}
                           className={`${styles.notesBtn} ${
-                            r.internalNotes ? styles.notesBtnActive : ""
+                            internalNotes ? styles.notesBtnActive : ""
                           }`}
                           aria-label="Staff notes"
                         >
@@ -234,6 +249,7 @@ export function DonationRecordsTable({
           </TableBody>
         </Table>
       </TableContainer>
+      <AdminTablePagination {...paginationProps} />
     </Box>
   );
 }

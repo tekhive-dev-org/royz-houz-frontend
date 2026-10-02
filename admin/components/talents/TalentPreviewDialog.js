@@ -23,6 +23,7 @@ import MusicNoteOutlinedIcon from "@mui/icons-material/MusicNoteOutlined";
 import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
 import EventAvailableOutlinedIcon from "@mui/icons-material/EventAvailableOutlined";
 import styles from "./TalentsAdmin.module.css";
+import { formatTalentBookingPrice } from "@/utils/talents";
 
 export function TalentPreviewDialog({ preview, onClose }) {
   const [showRawJson, setShowRawJson] = useState(false);
@@ -43,7 +44,7 @@ export function TalentPreviewDialog({ preview, onClose }) {
   const coverImage = body.coverImage || body.image || "/assets/img/talents/producer-hero.jpg";
   const rating = body.rating ?? "";
   const followers = body.followers || "";
-  const startingRate = body.bookingPrice || body.startingRate || "";
+  const startingRate = formatTalentBookingPrice(body.bookingPrice || body.startingRate || "");
   const availability = body.availability || "Available for Booking";
   const isHot = Boolean(body.isHot);
   const isFeatured = Boolean(preview.featured);

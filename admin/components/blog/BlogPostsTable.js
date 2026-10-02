@@ -36,6 +36,7 @@ import StarIcon from "@mui/icons-material/Star";
 import ViewListIcon from "@mui/icons-material/ViewList";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import { StatusChip } from "@/components/settings/StatusChip";
+import { AdminTablePagination } from "@/components/pagination";
 import styles from "./BlogPostsTable.module.css";
 
 const STATUS_OPTIONS = [
@@ -67,7 +68,7 @@ export function BlogPostsTable({
   const [sortBy, setSortBy] = useState("default");
   const [featuredOnly, setFeaturedOnly] = useState(false);
   const [page, setPage] = useState(1);
-  const pageSize = 12;
+  const [pageSize, setPageSize] = useState(12);
 
   const categoryMap = useMemo(() => {
     const map = new Map();
@@ -487,36 +488,18 @@ export function BlogPostsTable({
             />
           )}
 
-          {/* Pagination */}
-          {totalPages > 1 && (
-            <Box className={styles.paginationBar}>
-              <span className={styles.paginationInfo}>
-                Showing {(currentPage - 1) * pageSize + 1}–
-                {Math.min(currentPage * pageSize, processedPosts.length)} of {processedPosts.length} articles
-              </span>
-              <Box className={styles.paginationControls}>
-                <Button
-                  size="small"
-                  className={styles.pageBtn}
-                  disabled={currentPage <= 1}
-                  onClick={() => setPage((p) => Math.max(1, p - 1))}
-                >
-                  Previous
-                </Button>
-                <span style={{ fontSize: "0.8125rem", color: "#4B5563", fontWeight: 600, padding: "0 6px" }}>
-                  Page {currentPage} of {totalPages}
-                </span>
-                <Button
-                  size="small"
-                  className={styles.pageBtn}
-                  disabled={currentPage >= totalPages}
-                  onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-                >
-                  Next
-                </Button>
-              </Box>
-            </Box>
-          )}
+          {/* SaaS Pagination */}
+          <AdminTablePagination
+            page={currentPage}
+            pageSize={pageSize}
+            totalItems={processedPosts.length}
+            onPageChange={setPage}
+            onPageSizeChange={(newSize) => {
+              setPageSize(newSize);
+              setPage(1);
+            }}
+            itemLabel="articles"
+          />
         </>
       )}
     </Paper>

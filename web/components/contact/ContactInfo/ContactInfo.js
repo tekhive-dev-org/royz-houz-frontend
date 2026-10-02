@@ -41,7 +41,11 @@ const CONTACT_REASONS = [
 /**
  * ContactInfo component with real-world standard international phone picker.
  */
-export function ContactInfo() {
+export function ContactInfo({ info = {} }) {
+  const reasonsList =
+    Array.isArray(info?.reasons) && info.reasons.length > 0
+      ? ["Select a reason", ...info.reasons.filter((r) => r !== "Select a reason")]
+      : CONTACT_REASONS;
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -442,7 +446,7 @@ export function ContactInfo() {
                   onChange={handleChange}
                   className={styles.formSelect}
                 >
-                  {CONTACT_REASONS.map((reason) => (
+                  {reasonsList.map((reason) => (
                     <option key={reason} value={reason === "Select a reason" ? "" : reason}>
                       {reason}
                     </option>

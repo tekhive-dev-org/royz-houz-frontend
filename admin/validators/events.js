@@ -39,6 +39,8 @@ export const eventSchema = z
     schedule: z.array(z.record(z.unknown())).max(100).optional(),
     faqs: z.array(z.record(z.unknown())).max(100).optional(),
     ticketTiers: z.array(z.record(z.unknown())).max(50).optional(),
+    totalSpots: z.preprocess((value) => (value === "" || value === null || value === undefined ? undefined : Number(value)), z.number().int().min(0).optional()),
+    spotsRemaining: z.preprocess((value) => (value === "" || value === null || value === undefined ? undefined : Number(value)), z.number().int().min(0).optional()),
     attendees: z.string().trim().max(160).optional(),
     recapLink: safeUrlSchema.optional(),
     venue: z.string().trim().max(500).optional(),

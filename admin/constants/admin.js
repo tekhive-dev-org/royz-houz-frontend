@@ -1,5 +1,6 @@
 export const ADMIN_NAVIGATION = [
   { id: "dashboard", label: "Dashboard", href: "/", icon: "dashboard", group: "Workspace" },
+  { id: "docs", label: "Documentation", href: "/docs", icon: "docs", group: "Workspace" },
   { id: "website", label: "Website", href: "/website", icon: "language", group: "Workspace" },
   { id: "homepage", label: "Homepage", href: "/homepage", icon: "home", group: "Content" },
   { id: "about", label: "About", href: "/about", icon: "info", group: "Content" },
@@ -7,6 +8,7 @@ export const ADMIN_NAVIGATION = [
   { id: "events", label: "Events", href: "/events", icon: "event", group: "Content" },
   { id: "blog", label: "Blog", href: "/blog", icon: "article", group: "Content" },
   { id: "media", label: "Media Content", href: "/media", icon: "media", group: "Content" },
+  { id: "testimonials", label: "Testimonials", href: "/testimonials", icon: "testimonials", group: "Content" },
   { id: "seo", label: "SEO", href: "/seo", icon: "search", group: "Content" },
   { id: "donations", label: "Donations", href: "/donations", icon: "donations", group: "Operations" },
   { id: "payments", label: "Ticket Payments", href: "/payments", icon: "payments", group: "Operations" },

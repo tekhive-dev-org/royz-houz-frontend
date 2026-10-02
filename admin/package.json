@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 3001",
+    "dev": "next dev",
     "build": "next build",
-    "start": "next start -p 3001",
+    "start": "next start",
     "lint": "next lint",
     "test:security": "node --import ./scripts/tests/register-alias.mjs --test ./scripts/tests/security-critical-paths.test.mjs",
     "test:smoke": "node ./scripts/smoke-test.mjs"

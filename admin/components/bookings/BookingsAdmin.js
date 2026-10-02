@@ -21,6 +21,7 @@ import {
 } from "@mui/material";
 import { bookingsApi } from "@/services/bookingsApi";
 import { AdminLoadingState } from "@/components/feedback/AdminLoadingState";
+import { AdminTablePagination } from "@/components/pagination";
 import styles from "./BookingsAdmin.module.css";
 
 const STATUSES = ["new", "reviewing", "contacted", "confirmed", "declined", "cancelled", "archived"];
@@ -120,6 +121,7 @@ export function BookingsAdmin({ canUpdate = false }) {
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState("");
   const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(12);
   const [pagination, setPagination] = useState(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -130,7 +132,7 @@ export function BookingsAdmin({ canUpdate = false }) {
     setError("");
     try {
       const [result, admins] = await Promise.all([
-        bookingsApi.list({ page, limit: 12, search, status }),
+        bookingsApi.list({ page, limit, search, status }),
         canUpdate ? bookingsApi.assignees() : Promise.resolve([]),
       ]);
       setItems(result.items);
@@ -147,7 +149,7 @@ export function BookingsAdmin({ canUpdate = false }) {
     const timer = setTimeout(() => void load(), 200);
     return () => clearTimeout(timer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page, search, status, canUpdate]);
+  }, [page, limit, search, status, canUpdate]);
 
   async function openBooking(item) {
     try {
@@ -197,7 +199,17 @@ export function BookingsAdmin({ canUpdate = false }) {
           </TableBody>
         </Table>
       </TableContainer>
-      {pagination?.totalPages > 1 ? <Stack direction="row" justifyContent="flex-end" alignItems="center" spacing={2}><Button disabled={page <= 1} onClick={() => setPage((value) => value - 1)}>Previous</Button><Typography>Page {page} of {pagination.totalPages}</Typography><Button disabled={page >= pagination.totalPages} onClick={() => setPage((value) => value + 1)}>Next</Button></Stack> : null}
+      <AdminTablePagination
+        page={page}
+        pageSize={limit}
+        totalItems={pagination?.total ?? items.length}
+        onPageChange={setPage}
+        onPageSizeChange={(newLimit) => {
+          setLimit(newLimit);
+          setPage(1);
+        }}
+        itemLabel="booking requests"
+      />
       <BookingDialog booking={selected} assignees={assignees} open={Boolean(selected)} canUpdate={canUpdate} saving={saving} onClose={() => setSelected(null)} onSave={saveBooking} />
     </Box>
   );

@@ -16,11 +16,11 @@ import SearchIcon from "@mui/icons-material/Search";
 import ClearIcon from "@mui/icons-material/Clear";
 import FilterListOffIcon from "@mui/icons-material/FilterListOff";
 import StarIcon from "@mui/icons-material/Star";
-import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import VolunteerActivismOutlinedIcon from "@mui/icons-material/VolunteerActivismOutlined";
 import { StatusChip } from "@/components/settings/StatusChip";
+import { AdminTablePagination, useTablePagination } from "@/components/pagination";
 import styles from "./CampaignsTable.module.css";
 
 const CAMPAIGN_STATUS_PILLS = [
@@ -42,6 +42,10 @@ export function CampaignsTable({
   onEdit,
   onArchive,
 }) {
+  const { paginatedItems, paginationProps } = useTablePagination(campaigns, {
+    initialPageSize: 10,
+    itemLabel: "campaigns",
+  });
   return (
     <Box className={styles.wrapper}>
       {/* Controls Bar */}
@@ -130,10 +134,10 @@ export function CampaignsTable({
           <TableHead>
             <TableRow className={styles.tableHeadRow}>
               <TableCell className={styles.tableHeadCell} style={{ width: "34%" }}>
-                Campaign &amp; Banner
+                Campaign
               </TableCell>
               <TableCell className={styles.tableHeadCell} style={{ width: "22%" }}>
-                Goal &amp; Progress
+                Goal &amp; Progress (₦)
               </TableCell>
               <TableCell className={styles.tableHeadCell} style={{ width: "14%" }}>
                 Status
@@ -157,37 +161,22 @@ export function CampaignsTable({
                 </TableCell>
               </TableRow>
             ) : (
-              campaigns.map((camp) => {
+              paginatedItems.map((camp) => {
                 const targetAmount = Number(camp.body?.targetAmount || camp.targetAmount || 0);
                 const campaignTotals = totals.campaigns?.[camp.id] || {};
-                const raised = campaignTotals.totalAmount || 0;
+                const raised = campaignTotals.totalAmount ?? campaignTotals.total ?? 0;
                 const percent =
                   targetAmount > 0
                     ? Math.min(100, Math.round((raised / targetAmount) * 100))
                     : 0;
-                const bannerUrl = camp.body?.image || camp.image;
-                const initial = (camp.title || "C").charAt(0).toUpperCase();
 
                 return (
                   <TableRow key={camp.id} hover className={styles.tableRow}>
-                    {/* Column 1: Campaign Profile & Cover Image */}
+                    {/* Column 1: Campaign Profile */}
                     <TableCell className={styles.tableCell}>
                       <div className={styles.campaignCell}>
-                        <div className={styles.coverThumbnail}>
-                          {bannerUrl ? (
-                            /* eslint-disable-next-line @next/next/no-img-element */
-                            <img
-                              src={bannerUrl}
-                              alt={camp.title}
-                              className={styles.coverImg}
-                            />
-                          ) : (
-                            <div className={styles.coverPlaceholder}>{initial}</div>
-                          )}
-                        </div>
                         <div className={styles.campaignMeta}>
                           <span className={styles.campaignTitle}>{camp.title}</span>
-                          <span className={styles.campaignSlug}>/donations/{camp.slug}</span>
                           {camp.summary && (
                             <p className={styles.campaignSummary}>{camp.summary}</p>
                           )}
@@ -237,19 +226,6 @@ export function CampaignsTable({
                     {/* Column 5: Actions Dock */}
                     <TableCell align="right" className={styles.tableCell}>
                       <Box className={styles.actionsDock}>
-                        <Tooltip title="View on Public Site">
-                          <IconButton
-                            size="small"
-                            component="a"
-                            href={`/donations/${camp.slug}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className={styles.actionBtn}
-                            aria-label={`View live ${camp.title}`}
-                          >
-                            <OpenInNewIcon fontSize="small" />
-                          </IconButton>
-                        </Tooltip>
                         <Tooltip title="Edit Campaign">
                           <IconButton
                             size="small"
@@ -281,6 +257,7 @@ export function CampaignsTable({
           </TableBody>
         </Table>
       </TableContainer>
+      <AdminTablePagination {...paginationProps} />
     </Box>
   );
 }

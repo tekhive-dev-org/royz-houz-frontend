@@ -33,6 +33,13 @@ export async function getRow(client, table, id, { select = "*" } = {}) {
   return serviceSuccess(data);
 }
 
+export async function getRowBySlug(client, table, slug, { select = "*" } = {}) {
+  const supabase = getClient(client);
+  const { data, error } = await supabase.from(table).select(select).eq("slug", slug).maybeSingle();
+  if (error) return serviceFailure("QUERY_FAILED", "Unable to load the record.");
+  return serviceSuccess(data || null);
+}
+
 function buildStatusPayload(status, scheduledAt) {
   const now = new Date().toISOString();
   if (status === "published") return { status, published_at: now, scheduled_at: null };
@@ -57,7 +64,16 @@ export async function upsertContentRow(
     ? await supabase.from(table).update(payload).eq(idColumn, row[idColumn]).select().single()
     : await supabase.from(table).insert(payload).select().single();
 
-  if (result.error) return serviceFailure("PERSIST_FAILED", "Unable to save the record.");
+  if (result.error) {
+    console.error(`[upsertContentRow] Database mutation failed on table "${table}":`, result.error);
+    if (result.error.code === "23505") {
+      return serviceFailure("CONFLICT", result.error.details || "A record with these unique properties already exists.");
+    }
+    if (result.error.code === "23514") {
+      return serviceFailure("VALIDATION_ERROR", `Validation constraint failed: ${result.error.details || result.error.message}`);
+    }
+    return serviceFailure("PERSIST_FAILED", result.error.message || "Unable to save the record.");
+  }
 
   try {
     await writeSuccessfulAdminMutationAudit(

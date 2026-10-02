@@ -114,7 +114,11 @@ export async function listRecords(client, { search, status, campaignId } = {}) {
     .from("donation_records")
     .select("id, reference, donation_campaign_id, donor_name, donor_email, donor_phone, amount, currency, frequency, status, approved_at, created_at, internal_notes, donation_campaigns(title, slug)");
 
-  if (status) query = query.eq("status", status);
+  if (status) {
+    const normalizedStatus =
+      status === "completed" ? "approved" : status === "cancelled" ? "rejected" : status;
+    query = query.eq("status", normalizedStatus);
+  }
   if (campaignId) query = query.eq("donation_campaign_id", campaignId);
   if (search) query = query.or(`donor_name.ilike.%${search}%,reference.ilike.%${search}%,donor_email.ilike.%${search}%`);
 
@@ -165,7 +169,8 @@ export async function getCampaignTotals(client, { campaignId } = {}) {
   const campaigns = Object.fromEntries(
     Object.entries(totals).map(([key, total]) => {
       const [currency, campaignIdValue] = key.split(":");
-      return [campaignIdValue, { currency, total: Math.round(total * 100) / 100 }];
+      const rounded = Math.round(total * 100) / 100;
+      return [campaignIdValue, { currency, total: rounded, totalAmount: rounded }];
     })
   );
 

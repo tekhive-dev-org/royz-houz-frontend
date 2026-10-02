@@ -20,6 +20,7 @@ import FilterListOffIcon from "@mui/icons-material/FilterListOff";
 import { AdminLoadingState } from "@/components/feedback/AdminLoadingState";
 import { accessControlApi } from "@/services/accessControlApi";
 import { AuditStatsBanner } from "./AuditStatsBanner";
+import { AdminTablePagination } from "@/components/pagination";
 import styles from "./AuditLogs.module.css";
 
 function getActionStyle(action = "") {
@@ -35,6 +36,7 @@ export function AuditLogs() {
   const [items, setItems] = useState([]);
   const [pagination, setPagination] = useState(null);
   const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(20);
   const [action, setAction] = useState("");
   const [actor, setActor] = useState("");
   const [entityType, setEntityType] = useState("");
@@ -54,7 +56,7 @@ export function AuditLogs() {
     try {
       const result = await accessControlApi.listAuditLogs({
         page,
-        limit: 20,
+        limit,
         action: action || undefined,
         actor: actor || undefined,
         entityType: entityType || undefined,
@@ -112,7 +114,7 @@ export function AuditLogs() {
       try {
         const result = await accessControlApi.listAuditLogs({
           page,
-          limit: 20,
+          limit,
           action: action || undefined,
           actor: actor || undefined,
           entityType: entityType || undefined,
@@ -139,7 +141,7 @@ export function AuditLogs() {
         clearTimeout(filterDebounceTimerRef.current);
       }
     };
-  }, [page, action, actor, entityType, from, to]);
+  }, [page, limit, action, actor, entityType, from, to]);
 
   if (isInitialLoading) return <AdminLoadingState />;
   if (error && !items.length) {
@@ -342,19 +344,18 @@ export function AuditLogs() {
         </Table>
       </TableContainer>
 
-      {pagination && pagination.totalPages > 1 ? (
-        <Box className={styles.pagination}>
-          <Button size="small" variant="outlined" disabled={page <= 1} onClick={() => setPage((current) => Math.max(1, current - 1))}>
-            Previous
-          </Button>
-          <Typography variant="caption" color="text.secondary">
-            Page {pagination.page} of {pagination.totalPages}
-          </Typography>
-          <Button size="small" variant="outlined" disabled={page >= pagination.totalPages} onClick={() => setPage((current) => current + 1)}>
-            Next
-          </Button>
-        </Box>
-      ) : null}
+      {/* SaaS Pagination */}
+      <AdminTablePagination
+        page={page}
+        pageSize={limit}
+        totalItems={pagination?.total ?? items.length}
+        onPageChange={setPage}
+        onPageSizeChange={(newLimit) => {
+          setLimit(newLimit);
+          setPage(1);
+        }}
+        itemLabel="audit records"
+      />
     </Box>
   );
 }

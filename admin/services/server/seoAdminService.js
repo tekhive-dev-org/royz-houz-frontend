@@ -166,7 +166,7 @@ export async function getDefaultSeo(client) {
   const supabase = getClient(client);
   const { data: setting, error: settingError } = await supabase
     .from("site_settings")
-    .select("id")
+    .select("id, status")
     .eq("slug", "default-seo")
     .maybeSingle();
 
@@ -180,25 +180,54 @@ export async function getDefaultSeo(client) {
     .maybeSingle();
 
   if (error) return serviceFailure("QUERY_FAILED", "Unable to load default SEO.");
-  return serviceSuccess(data || null);
+  if (!data) return serviceSuccess(null);
+
+  return serviceSuccess({
+    id: data.id,
+    title: data.title || "",
+    summary: data.summary || "",
+    canonicalPath: data.canonical_path || "",
+    ogTitle: data.og_title || "",
+    ogDescription: data.og_description || "",
+    ogImageUrl: data.og_image_url || "",
+    noIndex: Boolean(data.no_index),
+    noFollow: Boolean(data.no_follow),
+    structuredData: data.structured_data || null,
+    status: setting.status || "published",
+  });
 }
 
 export async function saveDefaultSeo(client, { actorUserId, seo }) {
   const supabase = getClient(client);
+  const status = seo.status || "published";
 
   const { data: setting, error: settingError } = await supabase
     .from("site_settings")
-    .upsert({ slug: "default-seo", title: "Default SEO", status: "published", published_at: new Date().toISOString() }, { onConflict: "slug" })
+    .upsert(
+      {
+        slug: "default-seo",
+        title: "Default SEO",
+        status,
+        published_at: status === "published" ? new Date().toISOString() : null,
+      },
+      { onConflict: "slug" }
+    )
     .select()
     .single();
+
   if (settingError || !setting) return serviceFailure("PERSIST_FAILED", "Unable to prepare default SEO.");
 
-  const existing = await supabase.from("seo_metadata").select("id").eq("site_settings_id", setting.id).maybeSingle();
+  const existing = await supabase
+    .from("seo_metadata")
+    .select("id")
+    .eq("site_settings_id", setting.id)
+    .maybeSingle();
+
   const row = {
     site_settings_id: setting.id,
     title: seo.title || null,
     summary: seo.summary || null,
-    canonical_path: seo.canonical || null,
+    canonical_path: seo.canonicalPath || seo.canonical || null,
     og_title: seo.ogTitle || null,
     og_description: seo.ogDescription || null,
     og_image_url: seo.ogImageUrl || null,
@@ -212,15 +241,36 @@ export async function saveDefaultSeo(client, { actorUserId, seo }) {
     ? await supabase.from("seo_metadata").update(row).eq("id", existing.data.id).select().single()
     : await supabase.from("seo_metadata").insert({ ...row, created_by: actorUserId }).select().single();
 
-  if (result.error) return serviceFailure("PERSIST_FAILED", "Unable to save default SEO.");
+  if (result.error) {
+    console.error("[saveDefaultSeo] DB error:", result.error);
+    return serviceFailure("PERSIST_FAILED", result.error.message || "Unable to save default SEO.");
+  }
 
   await writeSuccessfulAdminMutationAudit(
-    { actorUserId, action: existing.data ? "seo_metadata.update_default" : "seo_metadata.create_default", entityType: "seo_metadata", entityId: result.data.id },
+    {
+      actorUserId,
+      action: existing.data ? "seo_metadata.update_default" : "seo_metadata.create_default",
+      entityType: "seo_metadata",
+      entityId: result.data.id,
+    },
     { client: supabase }
   );
 
-  return serviceSuccess(result.data);
+  return serviceSuccess({
+    id: result.data.id,
+    title: result.data.title || "",
+    summary: result.data.summary || "",
+    canonicalPath: result.data.canonical_path || "",
+    ogTitle: result.data.og_title || "",
+    ogDescription: result.data.og_description || "",
+    ogImageUrl: result.data.og_image_url || "",
+    noIndex: Boolean(result.data.no_index),
+    noFollow: Boolean(result.data.no_follow),
+    structuredData: result.data.structured_data || null,
+    status: setting.status || "published",
+  });
 }
+
 
 export function buildSeoPreview({ title, description, canonical, siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "" }) {
   const absoluteCanonical = canonical ? (canonical.startsWith("/") ? `${siteUrl.replace(/\/$/, "")}${canonical}` : canonical) : "";

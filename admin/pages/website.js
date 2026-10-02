@@ -5,7 +5,6 @@ import ViewColumnOutlinedIcon from "@mui/icons-material/ViewColumnOutlined";
 import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import ContactMailOutlinedIcon from "@mui/icons-material/ContactMailOutlined";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
-import TuneOutlinedIcon from "@mui/icons-material/TuneOutlined";
 import { Alert, Box, Button, Tab, Tabs, Typography } from "@mui/material";
 import { EntityDialog } from "@/components/settings/EntityDialog";
 import { SortableList } from "@/components/settings/SortableList";
@@ -26,6 +25,7 @@ const NAV_SELECTS = [
   {
     name: "placement",
     label: "Placement Zone",
+    default: "header",
     options: [
       { value: "header", label: "Header (Main Navigation)" },
       { value: "utility", label: "Utility Bar" },
@@ -45,14 +45,29 @@ const FOOTER_LINK_FIELDS = [
 ];
 
 const SOCIAL_FIELDS = [
-  { name: "platform", label: "Platform (e.g. instagram, x, youtube, tiktok)", required: true },
-  { name: "url", label: "Profile / Channel URL", required: true },
-  { name: "label", label: "Display Label (Optional)" },
+  {
+    name: "platform",
+    label: "Platform (e.g. Instagram, TikTok, YouTube, X, Facebook)",
+    required: true,
+    helperText: "Platform name (will be automatically saved as a clean slug).",
+  },
+  {
+    name: "url",
+    label: "Profile / Channel URL",
+    required: true,
+    helperText: "Must be a valid URL starting with https://",
+  },
+  {
+    name: "label",
+    label: "Display Label (Optional)",
+    helperText: "Custom name shown to visitors (defaults to Platform name if blank).",
+  },
 ];
 const SOCIAL_SELECTS = [
   {
     name: "placement",
     label: "Display Zone",
+    default: "global",
     options: [
       { value: "global", label: "Global (Header & Footer)" },
       { value: "header", label: "Header Only" },
@@ -62,11 +77,6 @@ const SOCIAL_SELECTS = [
   },
 ];
 
-const SETTING_FIELDS = [
-  { name: "slug", label: "Configuration Key", required: true },
-  { name: "title", label: "Setting Title", required: true },
-  { name: "summary", label: "Description / Value" },
-];
 
 function CollectionSection({ title, description, collection, fields, selectFields, getKey, renderPrimary, onCreate }) {
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -172,12 +182,6 @@ export default function WebsiteSettingsPage() {
     reorder: siteApi.reorderSocialLinks,
     remove: siteApi.deleteSocialLink,
   });
-  const settings = useAdminCollection({
-    list: siteApi.listSettings,
-    save: siteApi.saveSetting,
-    reorder: async () => {},
-    remove: async () => {},
-  });
 
   return (
     <Box className="animate-fade-in">
@@ -198,7 +202,6 @@ export default function WebsiteSettingsPage() {
         <Tab icon={<ShareOutlinedIcon fontSize="small" />} iconPosition="start" label="Social Channels" />
         <Tab icon={<ContactMailOutlinedIcon fontSize="small" />} iconPosition="start" label="Contact Details" />
         <Tab icon={<SearchOutlinedIcon fontSize="small" />} iconPosition="start" label="Default SEO" />
-        <Tab icon={<TuneOutlinedIcon fontSize="small" />} iconPosition="start" label="General Settings" />
       </Tabs>
 
       <Box className={styles.tabPanel}>
@@ -311,29 +314,6 @@ export default function WebsiteSettingsPage() {
 
         {tab === 3 ? <ContactInfoPanel /> : null}
         {tab === 4 ? <SeoPanel /> : null}
-
-        {tab === 5 ? (
-          <CollectionSection
-            title="General Site Settings"
-            description="Named site configuration entities and global metadata."
-            collection={settings}
-            getKey={(item) => item.id}
-            fields={SETTING_FIELDS}
-            selectFields={[]}
-            renderPrimary={(item) => (
-              <Box sx={{ minWidth: 0, width: "100%" }}>
-                <Box sx={{ display: "flex", alignItems: "center", gap: 1, flexWrap: "wrap" }}>
-                  <Typography variant="body2" fontWeight={700} sx={{ wordBreak: "break-word" }}>{item.title}</Typography>
-                  <StatusChip status={item.status} />
-                </Box>
-                <Box className={styles.itemMeta}>
-                  <span className={styles.itemBadge}>key: {item.slug}</span>
-                  {item.summary && <Typography variant="caption" color="text.secondary" sx={{ wordBreak: "break-word" }}>{item.summary}</Typography>}
-                </Box>
-              </Box>
-            )}
-          />
-        ) : null}
       </Box>
     </Box>
   );

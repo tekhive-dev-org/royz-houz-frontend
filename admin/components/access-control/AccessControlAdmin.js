@@ -41,6 +41,7 @@ import { StatusChip } from "@/components/settings/StatusChip";
 import { AdminLoadingState } from "@/components/feedback/AdminLoadingState";
 import { ConfirmationDialog } from "@/components/feedback/ConfirmationDialog";
 import { accessControlApi } from "@/services/accessControlApi";
+import { AdminTablePagination, useTablePagination } from "@/components/pagination";
 import { AccessControlStatsBanner } from "./AccessControlStatsBanner";
 import styles from "./AccessControlAdmin.module.css";
 
@@ -59,6 +60,22 @@ export function AccessControlAdmin({ actorUserId }) {
   const [isInitialLoading, setIsInitialLoading] = useState(true);
   const [isUpdating, setIsUpdating] = useState(false);
   const [error, setError] = useState(null);
+
+  const {
+    paginatedItems: paginatedProfiles,
+    paginationProps: profilesPaginationProps,
+  } = useTablePagination(profiles, {
+    initialPageSize: 10,
+    itemLabel: "administrators",
+  });
+
+  const {
+    paginatedItems: paginatedInvitations,
+    paginationProps: invitationsPaginationProps,
+  } = useTablePagination(invitations, {
+    initialPageSize: 10,
+    itemLabel: "invitations",
+  });
   const [assignFor, setAssignFor] = useState(null);
   const [assignRoleIds, setAssignRoleIds] = useState([]);
   const [confirmStatus, setConfirmStatus] = useState(null);
@@ -329,14 +346,14 @@ export function AccessControlAdmin({ actorUserId }) {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {profiles.length === 0 ? (
+                {paginatedProfiles.length === 0 ? (
                   <TableRow>
                     <TableCell colSpan={4} align="center" sx={{ py: 6, color: "#6B7280" }}>
                       No administrators found matching criteria.
                     </TableCell>
                   </TableRow>
                 ) : (
-                  profiles.map((profile) => {
+                  paginatedProfiles.map((profile) => {
                     const name = profile.displayName || "Admin User";
                     const initial = name.charAt(0).toUpperCase();
 
@@ -417,6 +434,7 @@ export function AccessControlAdmin({ actorUserId }) {
               </TableBody>
             </Table>
           </TableContainer>
+          <AdminTablePagination {...profilesPaginationProps} />
         </Box>
       ) : null}
 
@@ -434,14 +452,14 @@ export function AccessControlAdmin({ actorUserId }) {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {invitations.length === 0 ? (
+                {paginatedInvitations.length === 0 ? (
                   <TableRow>
                     <TableCell colSpan={5} align="center" sx={{ py: 6, color: "#6B7280" }}>
                       No active invitations found. Click &quot;Invite Administrator&quot; to onboard staff.
                     </TableCell>
                   </TableRow>
                 ) : (
-                  invitations.map((invitation) => (
+                  paginatedInvitations.map((invitation) => (
                     <TableRow key={invitation.id} hover className={styles.tableRow}>
                       <TableCell className={styles.tableCell}>
                         <strong style={{ color: "#111827" }}>{invitation.email}</strong>
@@ -470,6 +488,7 @@ export function AccessControlAdmin({ actorUserId }) {
               </TableBody>
             </Table>
           </TableContainer>
+          <AdminTablePagination {...invitationsPaginationProps} />
         </Box>
       ) : null}
 

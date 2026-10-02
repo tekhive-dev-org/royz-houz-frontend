@@ -2,31 +2,8 @@ import { randomUUID } from "crypto";
 import { createSupabaseServiceRoleClient } from "@/lib/supabase/service-role";
 import { parseWithSchema } from "@/validators/common";
 import { initializeEventPaymentSchema, verifyEventPaymentSchema } from "@/validators/eventPayment";
+import { paystackRequest } from "./paystackClient";
 import { serviceFailure, serviceSuccess } from "./serviceUtils";
-
-const PAYSTACK_URL = "https://api.paystack.co";
-
-function getPaystackKey() {
-  if (!process.env.PAYSTACK_SECRET_KEY) throw new Error("Missing required server configuration: PAYSTACK_SECRET_KEY");
-  return process.env.PAYSTACK_SECRET_KEY;
-}
-
-async function paystackRequest(path, options = {}) {
-  try {
-    const response = await fetch(`${PAYSTACK_URL}${path}`, {
-      ...options,
-      headers: { Authorization: `Bearer ${getPaystackKey()}`, "Content-Type": "application/json", ...(options.headers || {}) },
-    });
-    const body = await response.json().catch(() => null);
-    if (!response.ok || !body?.status) return { success: false, error: "Paystack request failed." };
-    return { success: true, data: body.data };
-  } catch (error) {
-    if (error?.message?.includes("PAYSTACK_SECRET_KEY")) {
-      return { success: false, code: "PAYMENT_CONFIGURATION_ERROR", error: "Paystack is not configured on the server." };
-    }
-    return { success: false, code: "PAYMENT_PROVIDER_ERROR", error: "Unable to reach Paystack." };
-  }
-}
 
 function getTicketTier(event, tierId) {
   const tiers = Array.isArray(event.body?.ticketTiers) ? event.body.ticketTiers : [];
@@ -73,6 +50,38 @@ export async function verifyEventPayment(input, { client } = {}) {
   const supabase = client || createSupabaseServiceRoleClient();
   const { data, error } = await supabase.rpc("complete_event_ticket_payment", { p_reference: validation.data.reference, p_paystack_transaction_id: String(result.data.id) });
   if (error || !data) return serviceFailure({ code: "PAYMENT_COMPLETION_FAILED", message: "Payment was received but ticket confirmation is pending. Please contact support." });
+
+  // Sync event totalSpots, spotsRemaining, and ticketsSold in body to preserve the previous total and deduct remaining
+  try {
+    const { data: eventRow } = await supabase.from("events").select("id, body").eq("id", data.event_id).maybeSingle();
+    if (eventRow) {
+      const currentBody = eventRow.body || {};
+      const tiers = Array.isArray(currentBody.ticketTiers) ? currentBody.ticketTiers : [];
+      const remainingSum = tiers.reduce((acc, t) => acc + Math.max(0, Math.floor(Number(t.available) || 0)), 0);
+
+      const { data: allPaidOrders } = await supabase
+        .from("event_ticket_orders")
+        .select("quantity")
+        .eq("event_id", data.event_id)
+        .eq("status", "paid");
+
+      const totalSold = (allPaidOrders || []).reduce((acc, o) => acc + (Number(o.quantity) || 0), 0);
+      const previousTotal = Number(currentBody.totalSpots) || 0;
+      const totalCapacity = Math.max(previousTotal, remainingSum + totalSold);
+
+      const nextBody = {
+        ...currentBody,
+        totalSpots: totalCapacity,
+        spotsRemaining: remainingSum,
+        ticketsSold: totalSold,
+      };
+
+      await supabase.from("events").update({ body: nextBody, updated_at: new Date().toISOString() }).eq("id", data.event_id);
+    }
+  } catch {
+    // Non-fatal if body sync fails; payment was already verified and inventory decremented
+  }
+
   const { data: event } = await supabase.from("events").select("title,slug").eq("id", data.event_id).maybeSingle();
   return serviceSuccess({ reference: data.reference, eventTitle: event?.title || "RoyzHouz event", eventSlug: event?.slug || null, tierName: data.tier_name, quantity: data.quantity, amountKobo: data.amount_kobo, customer: data.customer }, "Payment confirmed and tickets reserved.");
 }

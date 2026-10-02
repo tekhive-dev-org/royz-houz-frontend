@@ -63,8 +63,31 @@ function normalizeTicketTiers(tiers) {
   });
 }
 
-function splitEvent(input) {
+function calculateTierCapacity(tiers) {
+  const list = Array.isArray(tiers) ? tiers : [];
+  const valid = list.filter((t) => t && t.available !== null && t.available !== undefined && t.available !== "");
+  if (valid.length === 0) return undefined;
+  return valid.reduce((sum, t) => sum + Math.max(0, Math.floor(Number(t.available) || 0)), 0);
+}
+
+function splitEvent(input, ticketsSold = 0) {
   const { id, slug, categoryIds, primaryCategoryId, status, scheduledAt, startsAt, endsAt, ...rest } = input;
+  const tierCapacity = calculateTierCapacity(rest.ticketTiers);
+  const effectiveSold = Math.max(
+    0,
+    Math.floor(Number(ticketsSold ?? rest.ticketsPurchased ?? rest.ticketsSold ?? rest.body?.ticketsSold ?? 0) || 0)
+  );
+
+  const spotsRemaining = tierCapacity !== undefined
+    ? tierCapacity
+    : (rest.spotsRemaining !== undefined && rest.spotsRemaining !== null && rest.spotsRemaining !== "" ? Number(rest.spotsRemaining) : undefined);
+
+  // Preserve the previous total capacity; remaining spots deduct from tier available inventory
+  const derivedTotal = (spotsRemaining !== undefined ? spotsRemaining : 0) + effectiveSold;
+  const totalSpots = rest.totalSpots !== undefined && rest.totalSpots !== null && rest.totalSpots !== ""
+    ? Math.max(Number(rest.totalSpots), derivedTotal)
+    : (derivedTotal > 0 ? derivedTotal : undefined);
+
   const body = {
     ...(rest.body || {}),
     description: rest.description,
@@ -88,6 +111,9 @@ function splitEvent(input) {
     schedule: rest.schedule,
     faqs: rest.faqs,
     ticketTiers: normalizeTicketTiers(rest.ticketTiers),
+    totalSpots,
+    spotsRemaining,
+    ticketsSold: effectiveSold,
     attendees: rest.attendees,
     recapLink: rest.recapLink,
     venue: rest.venue,
@@ -133,10 +159,22 @@ export async function listEvents(client, { search, category, status, featured } 
   if (!data || data.length === 0) return serviceSuccess([]);
 
   const eventIds = data.map((e) => e.id);
-  const { data: assignments } = await supabase
-    .from("event_category_assignments")
-    .select("event_id, event_category_id, is_primary")
-    .in("event_id", eventIds);
+  const [{ data: assignments }, { data: orders }] = await Promise.all([
+    supabase
+      .from("event_category_assignments")
+      .select("event_id, event_category_id, is_primary")
+      .in("event_id", eventIds),
+    supabase
+      .from("event_ticket_orders")
+      .select("event_id, quantity")
+      .in("event_id", eventIds)
+      .eq("status", "paid"),
+  ]);
+
+  const ticketCounts = {};
+  (orders || []).forEach((row) => {
+    ticketCounts[row.event_id] = (ticketCounts[row.event_id] || 0) + (Number(row.quantity) || 0);
+  });
 
   const categoryMap = {};
   const primaryMap = {};
@@ -146,11 +184,15 @@ export async function listEvents(client, { search, category, status, featured } 
     if (row.is_primary) primaryMap[row.event_id] = row.event_category_id;
   });
 
-  const enriched = data.map((e) => ({
-    ...e,
-    categoryIds: categoryMap[e.id] || [],
-    primaryCategoryId: primaryMap[e.id] || (categoryMap[e.id]?.[0] ?? null),
-  }));
+  const enriched = data.map((e) => {
+    const sold = ticketCounts[e.id] ?? (e.body?.ticketsSold ? Number(e.body.ticketsSold) : 0);
+    return {
+      ...e,
+      ticketsPurchased: sold,
+      categoryIds: categoryMap[e.id] || [],
+      primaryCategoryId: primaryMap[e.id] || (categoryMap[e.id]?.[0] ?? null),
+    };
+  });
 
   return serviceSuccess(enriched);
 }
@@ -182,7 +224,22 @@ export async function listEventCategories(client) {
 
 export async function saveEvent(client, { actorUserId, event }) {
   const supabase = getClient(client);
-  const split = splitEvent(event);
+
+  let ticketsSold = 0;
+  if (event.id) {
+    const { data: orders } = await supabase
+      .from("event_ticket_orders")
+      .select("quantity")
+      .eq("event_id", event.id)
+      .eq("status", "paid");
+    if (Array.isArray(orders)) {
+      ticketsSold = orders.reduce((sum, o) => sum + (Number(o.quantity) || 0), 0);
+    }
+  } else if (event.ticketsPurchased || event.ticketsSold || event.body?.ticketsSold) {
+    ticketsSold = Math.max(0, Math.floor(Number(event.ticketsPurchased ?? event.ticketsSold ?? event.body?.ticketsSold ?? 0) || 0));
+  }
+
+  const split = splitEvent(event, ticketsSold);
   const rawSlug = typeof event.slug === "string" && event.slug.trim() ? event.slug.trim() : "";
   const slugCandidate = rawSlug || event.title || "event";
   const slug = split.id && rawSlug ? rawSlug : await uniqueSlug(supabase, slugCandidate, split.id);

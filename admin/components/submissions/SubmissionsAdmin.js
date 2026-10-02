@@ -32,6 +32,7 @@ import { StatusChip } from "@/components/settings/StatusChip";
 import { AdminLoadingState } from "@/components/feedback/AdminLoadingState";
 import { submissionsApi } from "@/services/submissionsApi";
 import { SubmissionsStatsBanner } from "./SubmissionsStatsBanner";
+import { AdminTablePagination } from "@/components/pagination";
 import styles from "./SubmissionsAdmin.module.css";
 
 const STATUSES = [
@@ -68,6 +69,7 @@ export function SubmissionsAdmin({ module, title, description }) {
   const [admins, setAdmins] = useState([]);
   const [pagination, setPagination] = useState(null);
   const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(12);
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState("");
   const [isInitialLoading, setIsInitialLoading] = useState(true);
@@ -88,7 +90,7 @@ export function SubmissionsAdmin({ module, title, description }) {
     setError(null);
     try {
       const [{ items: data, pagination: paginationMeta }, adminList] = await Promise.all([
-        submissionsApi.list(module, { page, limit: 12, search, status }),
+        submissionsApi.list(module, { page, limit, search, status }),
         submissionsApi.listAdminUsers(),
       ]);
       setItems(data);
@@ -106,7 +108,7 @@ export function SubmissionsAdmin({ module, title, description }) {
     setIsUpdating(true);
     setError(null);
     try {
-      const { items: data, pagination: paginationMeta } = await submissionsApi.list(module, { page, limit: 12, search, status });
+      const { items: data, pagination: paginationMeta } = await submissionsApi.list(module, { page, limit, search, status });
       setItems(data);
       setPagination(paginationMeta);
     } catch (err) {
@@ -408,19 +410,18 @@ export function SubmissionsAdmin({ module, title, description }) {
         </Table>
       </TableContainer>
 
-          {pagination && pagination.pages > 1 && (
-            <Box className={styles.pagination}>
-              <Button size="small" variant="outlined" disabled={page <= 1} onClick={() => setPage(page - 1)}>
-                Previous
-              </Button>
-              <Typography variant="caption" color="text.secondary">
-                Page {page} of {pagination.pages}
-              </Typography>
-              <Button size="small" variant="outlined" disabled={page >= pagination.pages} onClick={() => setPage(page + 1)}>
-                Next
-              </Button>
-            </Box>
-          )}
+      {/* SaaS Pagination */}
+      <AdminTablePagination
+        page={page}
+        pageSize={limit}
+        totalItems={pagination?.total ?? items.length}
+        onPageChange={setPage}
+        onPageSizeChange={(newLimit) => {
+          setLimit(newLimit);
+          setPage(1);
+        }}
+        itemLabel={module === "contacts" ? "inquiries" : "applications"}
+      />
 
       {/* Inquiry Detail Modal Dialog */}
       {selected && (

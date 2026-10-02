@@ -81,7 +81,8 @@ export async function getEventBySlug(slug, { client } = {}) {
   const normalizedSlug = typeof slug === "string" ? slug.trim().toLowerCase() : "";
   if (!normalizedSlug) return serviceFailure({ code: "NOT_FOUND", message: "Event was not found." });
 
-  const { data, error } = await getContentClient(client)
+  const contentClient = getContentClient(client);
+  const { data, error } = await contentClient
     .from("events")
     .select("*")
     .eq("slug", normalizedSlug)
@@ -93,6 +94,34 @@ export async function getEventBySlug(slug, { client } = {}) {
   if (error) return serviceFailure({ code: "CONTENT_QUERY_FAILED", message: "Unable to load event." });
   if (!data) return serviceFailure({ code: "NOT_FOUND", message: "Event was not found." });
 
-  const [eventWithCategories] = await attachEventCategories(getContentClient(client), [data]);
+  let ticketsPurchased = 0;
+  try {
+    let orderClient = contentClient;
+    try {
+      const { createSupabaseServiceRoleClient } = await import("@/lib/supabase/service-role");
+      orderClient = createSupabaseServiceRoleClient();
+    } catch {
+      orderClient = contentClient;
+    }
+
+    const { data: orders } = await orderClient
+      .from("event_ticket_orders")
+      .select("quantity")
+      .eq("event_id", data.id)
+      .eq("status", "paid");
+
+    if (Array.isArray(orders) && orders.length > 0) {
+      ticketsPurchased = orders.reduce((sum, order) => sum + (Number(order.quantity) || 0), 0);
+    } else if (data.body?.ticketsSold !== undefined && data.body?.ticketsSold !== null) {
+      ticketsPurchased = Math.max(0, Math.floor(Number(data.body.ticketsSold) || 0));
+    }
+  } catch {
+    ticketsPurchased = Math.max(0, Math.floor(Number(data.body?.ticketsSold) || 0));
+  }
+
+  const [eventWithCategories] = await attachEventCategories(contentClient, [{
+    ...data,
+    ticketsPurchased,
+  }]);
   return serviceSuccess(toEventDetails(eventWithCategories), "Event loaded successfully");
 }

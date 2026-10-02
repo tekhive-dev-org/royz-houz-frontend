@@ -39,6 +39,11 @@ export const ADMIN_FEATURES = {
     description: "Media assets, collections, and uploads.",
     readPermission: "media.upload",
   },
+  testimonials: {
+    label: "Testimonials",
+    description: "Global testimonials, member stories, and reviews.",
+    readPermission: "homepage.read",
+  },
   donations: {
     label: "Donations",
     description: "Donation campaigns and records.",
@@ -93,5 +98,9 @@ export const ADMIN_FEATURES = {
     label: "Settings",
     description: "Administration preferences and configuration.",
     readPermission: "settings.read",
+  },
+  docs: {
+    label: "Documentation",
+    description: "Platform user manual, operational guides, and white paper.",
   },
 };

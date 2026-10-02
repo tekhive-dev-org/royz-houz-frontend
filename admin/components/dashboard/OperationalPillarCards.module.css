@@ -1,30 +1,51 @@
 .container {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: 16px;
   margin-bottom: 24px;
 }
 
+.spanPrimary {
+  grid-column: span 2;
+}
+
+.spanWorkflow {
+  grid-column: span 3;
+}
+
 .card {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   background: #FFFFFF;
-  border: 1px solid #E2E8F0;
-  border-radius: 12px;
-  padding: 18px 20px;
+  border: 1px solid rgba(226, 232, 240, 0.85);
+  border-radius: 14px;
+  padding: 20px 22px;
   text-decoration: none;
   color: inherit;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
-  position: relative;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03), 0 4px 12px -2px rgba(15, 23, 42, 0.02);
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
   overflow: hidden;
 }
 
+.card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: currentColor;
+  opacity: 0.95;
+  border-top-left-radius: 14px;
+  border-top-right-radius: 14px;
+}
+
 .card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.08);
-  border-color: #CBD5E1;
+  transform: translateY(-3px);
+  box-shadow: 0 14px 28px -6px rgba(15, 23, 42, 0.09), 0 4px 10px -2px rgba(15, 23, 42, 0.04);
+  border-color: rgba(203, 213, 225, 0.95);
 }
 
 .topRow {
@@ -32,72 +53,132 @@
   align-items: center;
   justify-content: space-between;
   margin-bottom: 14px;
+  gap: 8px;
 }
 
 .iconWrapper {
-  width: 36px;
-  height: 36px;
-  border-radius: 9px;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.15s ease;
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
 }
 
+.card:hover .iconWrapper {
+  transform: scale(1.06);
+}
+
+/* Accent Color Variations with Ambient Surface Glow */
+.accentGold {
+  color: #B46A2C;
+  background-image: radial-gradient(circle at 95% 0%, rgba(253, 244, 236, 0.75) 0%, transparent 55%);
+}
 .accentGold .iconWrapper {
   background: #FDF4EC;
   color: #B46A2C;
+  border: 1px solid #F8DFCE;
 }
 
+.accentBlue {
+  color: #2563EB;
+  background-image: radial-gradient(circle at 95% 0%, rgba(239, 246, 255, 0.75) 0%, transparent 55%);
+}
 .accentBlue .iconWrapper {
   background: #EFF6FF;
   color: #2563EB;
+  border: 1px solid #DBEAFE;
 }
 
+.accentPurple {
+  color: #7C3AED;
+  background-image: radial-gradient(circle at 95% 0%, rgba(245, 243, 255, 0.75) 0%, transparent 55%);
+}
+.accentPurple .iconWrapper {
+  background: #F5F3FF;
+  color: #7C3AED;
+  border: 1px solid #EDE9FE;
+}
+
+.accentGreen {
+  color: #059669;
+  background-image: radial-gradient(circle at 95% 0%, rgba(236, 253, 245, 0.75) 0%, transparent 55%);
+}
 .accentGreen .iconWrapper {
   background: #ECFDF5;
   color: #059669;
+  border: 1px solid #D1FAE5;
 }
 
+.accentAmber {
+  color: #D97706;
+  background-image: radial-gradient(circle at 95% 0%, rgba(254, 243, 199, 0.75) 0%, transparent 55%);
+}
 .accentAmber .iconWrapper {
   background: #FEF3C7;
   color: #D97706;
+  border: 1px solid #FDE68A;
 }
 
+/* Layered Status Badges with Micro Indicator Dot */
 .statusBadge {
   font-size: 0.6875rem;
   font-weight: 700;
-  padding: 3px 8px;
+  padding: 3px 10px;
   border-radius: 9999px;
   text-transform: uppercase;
   letter-spacing: 0.04em;
   display: inline-flex;
   align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.statusDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: currentColor;
+  flex-shrink: 0;
 }
 
 .tagNeutral {
   background: #F1F5F9;
   color: #475569;
+  border: 1px solid #E2E8F0;
 }
 
 .tagBlue {
-  background: #DBEAFE;
-  color: #1E40AF;
+  background: #EFF6FF;
+  color: #1D4ED8;
+  border: 1px solid #BFDBFE;
+}
+
+.tagPurple {
+  background: #F5F3FF;
+  color: #6D28D9;
+  border: 1px solid #DDD6FE;
 }
 
 .tagGreen {
-  background: #D1FAE5;
-  color: #065F46;
+  background: #ECFDF5;
+  color: #047857;
+  border: 1px solid #A7F3D0;
 }
 
 .tagWarning {
-  background: #FEE2E2;
-  color: #991B1B;
+  background: #FEF2F2;
+  color: #B91C1C;
+  border: 1px solid #FECACA;
 }
 
 .tagSuccess {
-  background: #D1FAE5;
-  color: #065F46;
+  background: #ECFDF5;
+  color: #047857;
+  border: 1px solid #A7F3D0;
 }
 
 .body {
@@ -118,7 +199,8 @@
   display: flex;
   align-items: baseline;
   gap: 8px;
-  margin-bottom: 4px;
+  margin-bottom: 2px;
+  flex-wrap: wrap;
 }
 
 .count {
@@ -127,26 +209,48 @@
   color: #0F172A;
   line-height: 1.1;
   letter-spacing: -0.03em;
+  font-feature-settings: "tnum";
 }
 
 .unit {
   font-size: 0.8125rem;
   font-weight: 600;
+  color: #64748B;
+}
+
+.chipsRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin: 8px 0 6px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.725rem;
+  font-weight: 600;
   color: #475569;
+  background: rgba(241, 245, 249, 0.8);
+  padding: 2px 8px;
+  border-radius: 6px;
+  border: 1px solid rgba(226, 232, 240, 0.7);
+  white-space: nowrap;
 }
 
 .detail {
   font-size: 0.775rem;
   color: #64748B;
   margin: 0;
-  line-height: 1.4;
+  line-height: 1.45;
 }
 
 .footerRow {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 16px;
+  margin-top: 14px;
   padding-top: 12px;
   border-top: 1px solid #F1F5F9;
 }
@@ -161,7 +265,7 @@
 .arrowIcon {
   font-size: 0.875rem !important;
   color: #94A3B8;
-  transition: transform 0.15s ease, color 0.15s ease;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), color 0.15s ease;
 }
 
 .card:hover .footerLink {
@@ -170,30 +274,55 @@
 
 .card:hover .arrowIcon {
   color: #0F172A;
-  transform: translateX(3px);
+  transform: translateX(4px);
 }
 
-@media (max-width: 1200px) {
+/* Tablet: 2 columns top row, 2 columns middle row, 1 full-width action hero on bottom */
+@media (max-width: 1024px) {
   .container {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 14px;
+  }
+
+  .spanPrimary {
+    grid-column: span 1;
+  }
+
+  .spanWorkflow {
+    grid-column: span 1;
+  }
+
+  .spanFullTablet {
+    grid-column: 1 / -1;
   }
 }
 
+/* Mobile: Compact, balanced 2-column executive grid with zero text clutter */
 @media (max-width: 640px) {
   .container {
-    grid-template-columns: 1fr;
-    gap: 12px;
-    margin-bottom: 20px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .spanPrimary,
+  .spanWorkflow,
+  .spanFullTablet {
+    grid-column: span 1;
+  }
+
+  .spanBoxOffice {
+    grid-column: 1 / -1;
   }
 
   .card {
-    padding: 14px 16px;
-    border-radius: 10px;
+    padding: 12px 13px;
+    border-radius: 11px;
   }
 
   .topRow {
-    margin-bottom: 10px;
+    margin-bottom: 8px;
+    gap: 6px;
   }
 
   .iconWrapper {
@@ -202,17 +331,76 @@
     border-radius: 8px;
   }
 
-  .count {
-    font-size: 1.625rem;
+  .iconWrapper :global(svg) {
+    font-size: 1.15rem !important;
   }
 
+  .statusBadge {
+    font-size: 0.625rem;
+    padding: 2px 7px;
+    letter-spacing: 0.02em;
+    gap: 4px;
+  }
+
+  .statusDot {
+    width: 5px;
+    height: 5px;
+  }
+
+  .title {
+    font-size: 0.65rem !important;
+    letter-spacing: 0.04em !important;
+    margin-bottom: 3px !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .metricRow {
+    gap: 4px;
+    margin-bottom: 2px;
+  }
+
+  .count {
+    font-size: 1.35rem;
+    letter-spacing: -0.02em;
+  }
+
+  .spanBoxOffice .count {
+    font-size: 1.45rem;
+  }
+
+  .unit {
+    display: none;
+  }
+
+  .chipsRow {
+    gap: 4px;
+    margin: 4px 0 0;
+  }
+
+  .chip {
+    font-size: 0.65rem;
+    padding: 1px 6px;
+    border-radius: 4px;
+  }
+
+  /* Eliminate static verbose descriptions on mobile to keep dashboard concise and uncluttered */
   .detail {
-    font-size: 0.75rem;
+    display: none;
   }
 
   .footerRow {
-    margin-top: 12px;
-    padding-top: 10px;
+    margin-top: 8px;
+    padding-top: 8px;
+  }
+
+  .footerLink {
+    font-size: 0.6875rem;
+  }
+
+  .arrowIcon {
+    font-size: 0.75rem !important;
   }
 }
 

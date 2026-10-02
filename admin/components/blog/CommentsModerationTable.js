@@ -18,6 +18,7 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import { StatusChip } from "@/components/settings/StatusChip";
+import { AdminTablePagination, useTablePagination } from "@/components/pagination";
 import styles from "./CommentsModerationTable.module.css";
 
 const COMMENT_FILTERS = [
@@ -34,6 +35,10 @@ export function CommentsModerationTable({
   onModerate,
   onDelete,
 }) {
+  const { paginatedItems, paginationProps } = useTablePagination(comments, {
+    initialPageSize: 10,
+    itemLabel: "comments",
+  });
   return (
     <Paper elevation={0} className={styles.card}>
       {/* Header with Quick Status Pills */}
@@ -113,7 +118,7 @@ export function CommentsModerationTable({
               </TableRow>
             </TableHead>
             <TableBody>
-              {comments.map((comment) => {
+              {paginatedItems.map((comment) => {
                 const authorName = comment.author_name || comment.author || "Anonymous Reader";
                 const authorEmail = comment.author_email || "No email provided";
                 const postTitle = comment.post_title || comment.post?.title || `Article #${comment.post_id || ""}`;
@@ -220,6 +225,8 @@ export function CommentsModerationTable({
           </Table>
         </TableContainer>
       )}
+
+      {comments.length > 0 && <AdminTablePagination {...paginationProps} />}
     </Paper>
   );
 }

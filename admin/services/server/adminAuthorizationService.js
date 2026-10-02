@@ -81,7 +81,7 @@ export async function getAdminPermissionKeys(userId, { client } = {}) {
   const now = new Date().toISOString();
   const { data, error } = await supabase
     .from("admin_role_assignments")
-    .select("role_id, expires_at, role_permissions(permissions(permission_key))")
+    .select("role_id, expires_at, roles(role_permissions(permissions(permission_key)))")
     .eq("admin_user_id", userId)
     .is("revoked_at", null)
     .or(`expires_at.is.null,expires_at.gt.${now}`);
@@ -90,7 +90,8 @@ export async function getAdminPermissionKeys(userId, { client } = {}) {
 
   const keys = new Set();
   for (const assignment of data) {
-    for (const relation of assignment.role_permissions || []) {
+    const list = assignment.roles?.role_permissions || assignment.role_permissions || [];
+    for (const relation of list) {
       if (relation.permissions?.permission_key) keys.add(relation.permissions.permission_key);
     }
   }

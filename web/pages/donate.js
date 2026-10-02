@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import Head from "next/head";
 import {
   DonateHero,
@@ -10,13 +11,15 @@ import { listDonationCampaigns } from "@/services/content/donationCampaignServic
 import { getDonationPageSettings } from "@/services/content/donationPageService";
 
 /**
- * Donate page assembles the public donation-request flow:
+ * Donate page assembles the public donation flow:
  * 1. 'form'    -> Split Hero + 2-Column Donation & Information Form
- * 2. 'review'  -> 2-Column Review (Summary + Donor Details with Edit)
- * 3. 'success' -> Pending request confirmation; payment is not processed here.
+ * 2. 'review'  -> 2-Column Review with Paystack secure checkout trigger
+ * 3. 'success' -> Verified Paystack donation receipt confirmation
  */
-export default function DonatePage({ campaigns = null, pageSettings = null }) {
+export default function DonatePage({ campaigns: initialCampaigns = null, pageSettings = null }) {
+  const router = useRouter();
   const [step, setStep] = useState("form"); // 'form' | 'review' | 'success' | 'failure'
+  const [campaigns, setCampaigns] = useState(initialCampaigns);
 
   const defaultCause = campaigns?.[0]?.title || "Career skill development";
   const defaultSlug = campaigns?.[0]?.slug || "career-skill-development";
@@ -31,7 +34,77 @@ export default function DonatePage({ campaigns = null, pageSettings = null }) {
     fullName: "Donald Lawrence",
     email: "donaldlawrence9@gmail.com",
     phone: "+234 465 126 2351",
+    recordId: null,
+    status: "pending",
   });
+
+  // Client-side fetch to ensure live raised amounts and progress are always up-to-date
+  useEffect(() => {
+    let isMounted = true;
+    fetch("/api/donations/campaigns")
+      .then((res) => res.json())
+      .then((payload) => {
+        if (isMounted && payload?.success && Array.isArray(payload.data) && payload.data.length > 0) {
+          setCampaigns(payload.data);
+        }
+      })
+      .catch(() => {});
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  // Verify and display confirmed donation receipt if returning with a reference query
+  useEffect(() => {
+    if (!router.isReady) return;
+    const ref =
+      typeof router.query.reference === "string"
+        ? router.query.reference
+        : typeof router.query.trxref === "string"
+        ? router.query.trxref
+        : "";
+
+    if (ref && ref.startsWith("RH-DON")) {
+      fetch("/api/donations/payment/verify", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ reference: ref }),
+      })
+        .then(async (response) => {
+          const payload = await response.json().catch(() => null);
+          if (response.ok && payload?.success && payload.data) {
+            setDonationData((prev) => ({
+              ...prev,
+              amount: payload.data.amount || prev.amount,
+              frequency: payload.data.frequency || prev.frequency,
+              cause: payload.data.campaignTitle || prev.cause,
+              campaignSlug: payload.data.campaignSlug || prev.campaignSlug,
+              fullName: payload.data.donorName || prev.fullName,
+              email: payload.data.donorEmail || prev.email,
+              phone: payload.data.donorPhone || prev.phone,
+              recordId: payload.data.reference,
+              status: "approved",
+            }));
+            setStep("success");
+
+            // Refresh campaigns so new donation immediately shows in progress bar
+            fetch("/api/donations/campaigns")
+              .then((res) => res.json())
+              .then((cPayload) => {
+                if (cPayload?.success && Array.isArray(cPayload.data) && cPayload.data.length > 0) {
+                  setCampaigns(cPayload.data);
+                }
+              })
+              .catch(() => {});
+
+            if (typeof window !== "undefined") {
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }
+          }
+        })
+        .catch(() => {});
+    }
+  }, [router.isReady, router.query.reference, router.query.trxref]);
 
   const handleProceedToReview = (data) => {
     setDonationData((prev) => ({
@@ -52,7 +125,7 @@ export default function DonatePage({ campaigns = null, pageSettings = null }) {
   };
 
   const handleRecordDonationRequest = async () => {
-    const response = await fetch("/api/donations/record", {
+    const response = await fetch("/api/donations/payment/initialize", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -69,15 +142,18 @@ export default function DonatePage({ campaigns = null, pageSettings = null }) {
 
     if (!response.ok || !payload?.success) {
       throw new Error(
-        payload?.error?.message || "We could not record your donation request. Please try again."
+        payload?.error?.message || "Unable to start Paystack checkout. Please try again."
       );
     }
 
-    setDonationData((previous) => ({ ...previous, recordId: payload.data?.id || null }));
-    setStep("success");
-    if (typeof window !== "undefined") {
-      window.scrollTo({ top: 0, behavior: "smooth" });
+    if (payload.data?.authorizationUrl) {
+      if (typeof window !== "undefined") {
+        window.location.href = payload.data.authorizationUrl;
+      }
+      return;
     }
+
+    throw new Error("Unable to connect to Paystack payment gateway.");
   };
 
   const handleUpdateData = (updatedData) => {

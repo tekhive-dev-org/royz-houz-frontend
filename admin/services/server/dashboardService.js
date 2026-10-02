@@ -10,14 +10,6 @@ function countQuery(supabase, table, filter) {
     .eq(filter.column, filter.value);
 }
 
-function dateGatedCountQuery(supabase, table, filter, range) {
-  return supabase
-    .from(table)
-    .select("*", { count: "exact", head: true })
-    .eq(filter.column, filter.value)
-    .gte("created_at", range.from);
-}
-
 async function countManyContentTables(supabase, status) {
   const results = await Promise.all(
     CONTENT_TABLES.map((table) => countQuery(supabase, table, { column: "status", value: status }))
@@ -56,13 +48,20 @@ const CARD_DEFINITIONS = [
   { key: "publishedContent", permission: null, label: "Published content" },
   { key: "draftContent", permission: null, label: "Draft content" },
   { key: "scheduledContent", permission: null, label: "Scheduled content" },
-  { key: "upcomingEvents", permission: "events.create", label: "Upcoming events" },
-  { key: "publishedBlogPosts", permission: "blog.create", label: "Published blog posts" },
-  { key: "pendingComments", permission: "comments.moderate", label: "Pending comments" },
   { key: "activeTalents", permission: "talents.create", label: "Active talents" },
+  { key: "upcomingEvents", permission: "events.create", label: "Upcoming events" },
+  { key: "totalEvents", permission: "events.create", label: "Total events" },
+  { key: "ticketRevenue", permission: "events.create", label: "Ticket sales revenue" },
+  { key: "paidTicketOrders", permission: "events.create", label: "Paid ticket orders" },
+  { key: "pendingTicketOrders", permission: "events.create", label: "Pending ticket orders" },
+  { key: "publishedBlogPosts", permission: "blog.create", label: "Published blog posts" },
   { key: "mediaAssets", permission: "media.upload", label: "Media assets" },
-  { key: "newContactSubmissions", permission: "contacts.read", label: "New contact submissions" },
-  { key: "newJoinApplications", permission: "applications.read", label: "New join applications" },
+  { key: "pendingBookings", permission: "bookings.read", label: "Pending booking requests" },
+  { key: "pendingContactSubmissions", permission: "contacts.read", label: "Pending contact submissions" },
+  { key: "newContactSubmissions", permission: "contacts.read", label: "Pending contact submissions" },
+  { key: "pendingJoinApplications", permission: "applications.read", label: "Pending join applications" },
+  { key: "newJoinApplications", permission: "applications.read", label: "Pending join applications" },
+  { key: "pendingComments", permission: "comments.moderate", label: "Pending comments" },
   { key: "donationRecords", permission: "donations.read", label: "Donation records" },
 ];
 
@@ -94,6 +93,10 @@ export async function getDashboardSummary(userId, range, { client } = {}) {
         const result = await countManyContentTables(supabase, "scheduled");
         return { key: card.key, value: result.failed ? null : result.total };
       }
+      case "activeTalents": {
+        const { count, error } = await countQuery(supabase, "talents", { column: "status", value: "published" });
+        return { key: card.key, value: error ? null : count || 0 };
+      }
       case "upcomingEvents": {
         const { count, error } = await supabase
           .from("events")
@@ -102,16 +105,29 @@ export async function getDashboardSummary(userId, range, { client } = {}) {
           .gte("starts_at", now.toISOString());
         return { key: card.key, value: error ? null : count || 0 };
       }
+      case "totalEvents": {
+        const { count, error } = await countQuery(supabase, "events", { column: "status", value: "published" });
+        return { key: card.key, value: error ? null : count || 0 };
+      }
+      case "ticketRevenue": {
+        const { data, error } = await supabase
+          .from("event_ticket_orders")
+          .select("amount_kobo")
+          .eq("status", "paid");
+        if (error) return { key: card.key, value: null };
+        const totalKobo = (data || []).reduce((sum, order) => sum + (order.amount_kobo || 0), 0);
+        return { key: card.key, value: Math.round(totalKobo / 100) };
+      }
+      case "paidTicketOrders": {
+        const { count, error } = await countQuery(supabase, "event_ticket_orders", { column: "status", value: "paid" });
+        return { key: card.key, value: error ? null : count || 0 };
+      }
+      case "pendingTicketOrders": {
+        const { count, error } = await countQuery(supabase, "event_ticket_orders", { column: "status", value: "pending" });
+        return { key: card.key, value: error ? null : count || 0 };
+      }
       case "publishedBlogPosts": {
         const { count, error } = await countQuery(supabase, "blog_posts", { column: "status", value: "published" });
-        return { key: card.key, value: error ? null : count || 0 };
-      }
-      case "pendingComments": {
-        const { count, error } = await countQuery(supabase, "blog_comments", { column: "status", value: "pending" });
-        return { key: card.key, value: error ? null : count || 0 };
-      }
-      case "activeTalents": {
-        const { count, error } = await countQuery(supabase, "talents", { column: "status", value: "published" });
         return { key: card.key, value: error ? null : count || 0 };
       }
       case "mediaAssets": {
@@ -121,22 +137,25 @@ export async function getDashboardSummary(userId, range, { client } = {}) {
           .in("status", ["published", "draft"]);
         return { key: card.key, value: error ? null : count || 0 };
       }
-      case "newContactSubmissions": {
-        const { count, error } = await dateGatedCountQuery(
-          supabase,
-          "contact_submissions",
-          { column: "status", value: "pending" },
-          { from: from.toISOString() }
-        );
+      case "pendingBookings": {
+        const { count, error } = await supabase
+          .from("booking_requests")
+          .select("*", { count: "exact", head: true })
+          .in("workflow_status", ["new", "reviewing"]);
         return { key: card.key, value: error ? null : count || 0 };
       }
+      case "pendingContactSubmissions":
+      case "newContactSubmissions": {
+        const { count, error } = await countQuery(supabase, "contact_submissions", { column: "status", value: "pending" });
+        return { key: card.key, value: error ? null : count || 0 };
+      }
+      case "pendingJoinApplications":
       case "newJoinApplications": {
-        const { count, error } = await dateGatedCountQuery(
-          supabase,
-          "join_applications",
-          { column: "status", value: "pending" },
-          { from: from.toISOString() }
-        );
+        const { count, error } = await countQuery(supabase, "join_applications", { column: "status", value: "pending" });
+        return { key: card.key, value: error ? null : count || 0 };
+      }
+      case "pendingComments": {
+        const { count, error } = await countQuery(supabase, "blog_comments", { column: "status", value: "pending" });
         return { key: card.key, value: error ? null : count || 0 };
       }
       case "donationRecords": {
@@ -160,37 +179,45 @@ export async function getDashboardSummary(userId, range, { client } = {}) {
     visible: cardVisibility.find((card) => card.key === result.key)?.visible ?? false,
   }));
 
-  // Fetch real operational admin widgets data safely
+  // Fetch real operational admin widgets data safely using exact column schemas
   const [
     pendingAppsRes,
     pendingCommentsRes,
     pendingContactsRes,
+    pendingBookingsRes,
     upcomingEventsRes,
     spotlightTalentsRes,
     recentArticlesRes,
   ] = await Promise.allSettled([
     supabase
       .from("join_applications")
-      .select("id, full_name, email, role, status, created_at")
+      .select("id, full_name, stage_name, email, talent_category, status, created_at")
       .eq("status", "pending")
       .order("created_at", { ascending: false })
       .limit(6),
     supabase
       .from("blog_comments")
-      .select("id, author_name, post_id, content, status, created_at")
+      .select("id, author_name, blog_post_id, body, status, created_at")
       .eq("status", "pending")
       .order("created_at", { ascending: false })
       .limit(6),
     supabase
       .from("contact_submissions")
-      .select("id, name, email, subject, message, status, created_at")
+      .select("id, first_name, last_name, email, reason, message, status, created_at")
       .eq("status", "pending")
       .order("created_at", { ascending: false })
       .limit(6),
     supabase
+      .from("booking_requests")
+      .select("id, reference, talent_name_snapshot, first_name, last_name, email, event_type, event_date, event_location, budget, workflow_status, created_at")
+      .in("workflow_status", ["new", "reviewing"])
+      .order("created_at", { ascending: false })
+      .limit(6),
+    supabase
       .from("events")
-      .select("id, title, slug, starts_at, venue_name, location, status, image, featured, body")
+      .select("id, title, slug, starts_at, venue_name, venue_address, status, featured, body")
       .eq("status", "published")
+      .gte("starts_at", now.toISOString())
       .order("starts_at", { ascending: true })
       .limit(4),
     supabase
@@ -208,6 +235,24 @@ export async function getDashboardSummary(userId, range, { client } = {}) {
   ]);
 
   const attentionItems = [];
+
+  if (pendingBookingsRes.status === "fulfilled" && Array.isArray(pendingBookingsRes.value?.data)) {
+    pendingBookingsRes.value.data.forEach((b) => {
+      const name = [b.first_name, b.last_name].filter(Boolean).join(" ");
+      attentionItems.push({
+        id: `booking-${b.id}`,
+        type: "booking",
+        typeLabel: "Talent Booking",
+        title: name ? `${name} (${b.talent_name_snapshot || "Talent"})` : (b.talent_name_snapshot || "Booking Request"),
+        subtitle: `${b.event_type || "Event"} on ${b.event_date || "TBD"} • ${b.event_location || "Location TBD"}`,
+        email: b.email,
+        createdAt: b.created_at,
+        href: "/bookings",
+        actionLabel: "Review Booking",
+      });
+    });
+  }
+
   if (pendingAppsRes.status === "fulfilled" && Array.isArray(pendingAppsRes.value?.data)) {
     pendingAppsRes.value.data.forEach((app) => {
       attentionItems.push({
@@ -215,7 +260,7 @@ export async function getDashboardSummary(userId, range, { client } = {}) {
         type: "application",
         typeLabel: "Creative Application",
         title: app.full_name || "Creative Candidate",
-        subtitle: app.role || "Talent Roster Applicant",
+        subtitle: app.stage_name ? `${app.stage_name} • ${app.talent_category}` : (app.talent_category || "Talent Roster Applicant"),
         email: app.email,
         createdAt: app.created_at,
         href: "/join-applications",
@@ -231,7 +276,7 @@ export async function getDashboardSummary(userId, range, { client } = {}) {
         type: "comment",
         typeLabel: "Reader Comment",
         title: c.author_name || "Community Reader",
-        subtitle: c.content ? (c.content.length > 75 ? c.content.slice(0, 75) + "…" : c.content) : "New article comment",
+        subtitle: c.body ? (c.body.length > 75 ? c.body.slice(0, 75) + "…" : c.body) : "New article comment",
         createdAt: c.created_at,
         href: "/blog",
         actionLabel: "Moderate Comment",
@@ -241,12 +286,13 @@ export async function getDashboardSummary(userId, range, { client } = {}) {
 
   if (pendingContactsRes.status === "fulfilled" && Array.isArray(pendingContactsRes.value?.data)) {
     pendingContactsRes.value.data.forEach((msg) => {
+      const name = [msg.first_name, msg.last_name].filter(Boolean).join(" ");
       attentionItems.push({
         id: `contact-${msg.id}`,
         type: "contact",
         typeLabel: "Public Inquiry",
-        title: msg.name || "Inquirer",
-        subtitle: msg.subject || (msg.message ? msg.message.slice(0, 75) + "…" : "Partnership or general request"),
+        title: name || "Inquirer",
+        subtitle: msg.reason || (msg.message ? (msg.message.length > 75 ? msg.message.slice(0, 75) + "…" : msg.message) : "General Inquiry"),
         email: msg.email,
         createdAt: msg.created_at,
         href: "/contacts",

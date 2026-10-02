@@ -63,7 +63,7 @@ export function UpcomingEventsWidget({ events = [] }) {
         <div className={styles.eventList}>
           {events.slice(0, 3).map((event) => {
             const date = formatEventDate(event.starts_at);
-            const venue = event.venue_name || event.location || "Venue TBA";
+            const venue = event.venue_name || event.venue_address || (event.body && event.body.location) || "Venue TBA";
 
             return (
               <div key={event.id} className={styles.eventItem}>

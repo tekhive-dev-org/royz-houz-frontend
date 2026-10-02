@@ -52,14 +52,27 @@ export const socialLinkSchema = z.object({
     .string()
     .trim()
     .min(1, "Platform name is required")
-    .max(80),
+    .max(80)
+    .transform((val) =>
+      val
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "")
+    )
+    .refine((val) => /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(val), {
+      message: "Platform slug must use lowercase alphanumeric characters and hyphens only (e.g. instagram, youtube, tiktok).",
+    }),
   url: requiredSafeUrlSchema,
-  placement: z.enum(["global", "header", "footer", "contact"]).default("global"),
+  placement: z
+    .enum(["global", "header", "footer", "contact"])
+    .default("global")
+    .or(z.literal("").transform(() => "global")),
   label: z.string().trim().max(160).nullable().optional(),
   sortOrder: z.number().int().min(0).optional(),
   sort_order: z.number().int().min(0).optional(),
   status: z.enum(["draft", "published", "scheduled", "archived"]).default("draft"),
 });
+
 
 export const siteSettingSchema = z.object({
   id: z.string().uuid().optional(),
@@ -79,11 +92,19 @@ export const siteSettingSchema = z.object({
 export const seoSchema = z.object({
   title: z.string().trim().min(1, "Title is required").max(200),
   summary: z.string().trim().max(500).nullable().optional(),
-  canonicalPath: z.string().trim().regex(/^\//, "Canonical path must start with /").max(300).nullable().optional(),
+  canonicalPath: z
+    .string()
+    .trim()
+    .max(300)
+    .refine((v) => !v || v.startsWith("/"), "Canonical path must start with / (e.g. / or /about)")
+    .nullable()
+    .optional()
+    .transform((v) => v || null),
   ogTitle: z.string().trim().max(200).nullable().optional(),
   ogDescription: z.string().trim().max(500).nullable().optional(),
   ogImageUrl: safeUrlSchema.nullable().optional(),
   noIndex: z.boolean().default(false),
+  status: z.enum(["draft", "published", "scheduled", "archived"]).optional().default("published"),
 });
 
 export const announcementSchema = z.object({

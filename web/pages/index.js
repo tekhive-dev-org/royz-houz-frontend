@@ -13,7 +13,36 @@ import {
 import { isHomepageSectionVisible } from "@/adapters/homepageAdapter";
 import { getHomepageContent } from "@/services/content/homepageService";
 
+const SECTION_COMPONENTS = {
+  hero: HeroSection,
+  featuredTalents: FeaturedTalents,
+  ourImpact: OurImpact,
+  upcomingEvents: UpcomingEvents,
+  mediaHighlight: MediaHighlight,
+  latestBlog: LatestBlog,
+  communityCta: CommunityCTA,
+  testimonials: Testimonials,
+  supportMovement: SupportMovement,
+};
+
+const DEFAULT_ORDER = [
+  "hero",
+  "featuredTalents",
+  "ourImpact",
+  "upcomingEvents",
+  "mediaHighlight",
+  "latestBlog",
+  "communityCta",
+  "testimonials",
+  "supportMovement",
+];
+
 export default function Home({ content = {} }) {
+  const order =
+    Array.isArray(content.sectionOrder) && content.sectionOrder.length > 0
+      ? content.sectionOrder
+      : DEFAULT_ORDER;
+
   return (
     <>
       <Head>
@@ -22,30 +51,15 @@ export default function Home({ content = {} }) {
           name="description"
           content="Building Africa's next generation of creatives, leaders & innovators."
         />
-        
       </Head>
 
-      {isHomepageSectionVisible(content, "hero") && <HeroSection content={content.hero} />}
-      {isHomepageSectionVisible(content, "featuredTalents") && (
-        <FeaturedTalents content={content.featuredTalents} />
-      )}
-      {isHomepageSectionVisible(content, "ourImpact") && <OurImpact content={content.ourImpact} />}
-      {isHomepageSectionVisible(content, "upcomingEvents") && (
-        <UpcomingEvents content={content.upcomingEvents} />
-      )}
-      {isHomepageSectionVisible(content, "mediaHighlight") && (
-        <MediaHighlight content={content.mediaHighlight} />
-      )}
-      {isHomepageSectionVisible(content, "latestBlog") && <LatestBlog content={content.latestBlog} />}
-      {isHomepageSectionVisible(content, "communityCta") && (
-        <CommunityCTA content={content.communityCta} />
-      )}
-      {isHomepageSectionVisible(content, "testimonials") && (
-        <Testimonials content={content.testimonials} />
-      )}
-      {isHomepageSectionVisible(content, "supportMovement") && (
-        <SupportMovement content={content.supportMovement} />
-      )}
+      {order.map((key) => {
+        const SectionComponent = SECTION_COMPONENTS[key];
+        if (!SectionComponent || !isHomepageSectionVisible(content, key)) {
+          return null;
+        }
+        return <SectionComponent key={key} content={content[key]} />;
+      })}
     </>
   );
 }

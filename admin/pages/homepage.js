@@ -12,8 +12,8 @@ export default function HomepageAdminPage() {
       </Head>
       <SectionsEditor
         type="homepage"
-        title="Homepage sections"
-        description="Manage homepage section order, copy, CTAs, and media without changing the public layout."
+        title="Homepage Section Studio"
+        description="Arrange section flow, customize headlines & CTAs, and control live visibility across the public landing page."
       />
     </>
   );

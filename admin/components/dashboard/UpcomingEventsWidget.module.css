@@ -257,33 +257,52 @@
 
 @media (max-width: 640px) {
   .card {
-    padding: 16px 14px;
-    min-height: 230px;
+    padding: 14px 14px;
+    min-height: auto;
+    border-radius: 11px;
   }
 
   .header {
-    margin-bottom: 12px;
-    padding-bottom: 12px;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    gap: 8px;
+  }
+
+  .title {
+    font-size: 0.95rem !important;
+  }
+
+  .subtitle {
+    font-size: 0.725rem !important;
+  }
+
+  .eventList {
     gap: 8px;
   }
 
   .eventItem {
     padding: 8px 10px;
     gap: 10px;
-    min-height: 58px;
+    min-height: 52px;
+    border-radius: 8px;
   }
 
   .dateBadge {
-    width: 38px;
-    height: 42px;
+    width: 36px;
+    height: 40px;
+    border-radius: 6px;
+  }
+
+  .dateMonth {
+    font-size: 0.575rem;
   }
 
   .dateDay {
-    font-size: 1rem;
+    font-size: 0.95rem;
   }
 
   .eventTitle {
-    font-size: 0.8125rem;
+    font-size: 0.8rem;
   }
 
   .metaRow {
@@ -291,15 +310,18 @@
   }
 
   .metaText {
-    max-width: 95px;
+    max-width: 120px;
+    font-size: 0.7rem;
   }
 
   .editLink {
-    padding: 4px 8px;
-    min-height: 28px;
+    padding: 3px 6px;
+    font-size: 0.7rem;
+    min-height: 26px;
     display: inline-flex;
     align-items: center;
   }
 }
+
 
 

@@ -38,7 +38,11 @@ export function BookingTalentCard({ talent, currentStep }) {
               {talentDetails}
             </span>
             <span className={styles.talentPrice}>
-              {bookingPrice ? `Booking from ${bookingPrice}` : "Contact for pricing"}
+              {bookingPrice
+                ? /contact/i.test(bookingPrice)
+                  ? bookingPrice
+                  : `Booking from ${bookingPrice}`
+                : "Contact for pricing"}
             </span>
           </>
         )}

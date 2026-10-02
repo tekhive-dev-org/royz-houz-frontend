@@ -183,7 +183,9 @@ export function DonationReview({
                 disabled={isProcessing}
                 className={styles.payBtn}
               >
-                <span>{isProcessing ? "Submitting donation request..." : "Submit donation request"}</span>
+                <span>
+                  {isProcessing ? "Connecting to Paystack..." : "Proceed to Paystack Payment"}
+                </span>
                 {!isProcessing && <ArrowRight className="w-4 h-4" />}
               </button>
 
@@ -192,7 +194,7 @@ export function DonationReview({
               {/* Request status notice */}
               <div className={styles.redirectNotice}>
                 <Lock className="w-3.5 h-3.5 text-[#868C98]" />
-                <span>{pendingNotice}</span>
+                <span>{pendingNotice || "You will be securely redirected to Paystack to complete your donation."}</span>
               </div>
             </div>
           </div>

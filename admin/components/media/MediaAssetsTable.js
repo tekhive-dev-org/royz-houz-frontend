@@ -25,6 +25,7 @@ import AudiotrackOutlinedIcon from "@mui/icons-material/AudiotrackOutlined";
 import ImageOutlinedIcon from "@mui/icons-material/ImageOutlined";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import { StatusChip } from "@/components/settings/StatusChip";
+import { AdminTablePagination, useTablePagination } from "@/components/pagination";
 import { MediaThumbnailCell } from "./MediaThumbnailCell";
 import styles from "./MediaAdmin.module.css";
 
@@ -52,7 +53,11 @@ function TypeBadge({ item }) {
   return <span className={`${styles.typeBadge} ${styles.typeBadgeVideo}`}><VideoLibraryOutlinedIcon sx={{ fontSize: 10 }} />Video</span>;
 }
 
-export function MediaAssetsTable({ items, onCreate, onEdit, onPreview, onArchive, isUpdating }) {
+export function MediaAssetsTable({ items = [], onCreate, onEdit, onPreview, onArchive, isUpdating }) {
+  const { paginatedItems, paginationProps } = useTablePagination(items, {
+    initialPageSize: 10,
+    itemLabel: "media assets",
+  });
   if (!items.length) {
     return (
       <Box className={styles.emptyState}>
@@ -96,7 +101,7 @@ export function MediaAssetsTable({ items, onCreate, onEdit, onPreview, onArchive
             </TableRow>
           </TableHead>
           <TableBody>
-            {items.map((item) => {
+            {paginatedItems.map((item) => {
               const section = getSection(item);
               return (
                 <TableRow key={item.id} hover className={styles.tableRow}>
@@ -153,6 +158,7 @@ export function MediaAssetsTable({ items, onCreate, onEdit, onPreview, onArchive
           </TableBody>
         </Table>
       </TableContainer>
+      <AdminTablePagination {...paginationProps} />
     </>
   );
 }

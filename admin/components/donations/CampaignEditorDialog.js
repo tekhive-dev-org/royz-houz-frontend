@@ -9,6 +9,7 @@ import {
   Divider,
   FormControlLabel,
   IconButton,
+  InputAdornment,
   MenuItem,
   Stack,
   Switch,
@@ -16,8 +17,6 @@ import {
   Typography,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import AutoFixHighOutlinedIcon from "@mui/icons-material/AutoFixHighOutlined";
-import { MediaField } from "@/components/content/MediaField";
 import styles from "./CampaignEditorDialog.module.css";
 
 function generateSlug(text = "") {
@@ -36,10 +35,8 @@ export function CampaignEditorDialog({
   isSaving,
   onClose,
   onSave,
-  onOpenMediaPicker,
 }) {
   const [formData, setFormData] = useState({});
-  const [slugManuallyEdited, setSlugManuallyEdited] = useState(false);
 
   useEffect(() => {
     if (campaign) {
@@ -51,28 +48,20 @@ export function CampaignEditorDialog({
         description: campaign.description || campaign.body?.description || "",
         targetAmount: campaign.targetAmount || campaign.body?.targetAmount || "",
         currency: campaign.currency || campaign.body?.currency || "NGN",
-        image: campaign.image || campaign.body?.image || "",
         featured: Boolean(campaign.featured),
         status: campaign.status || "draft",
       });
-      setSlugManuallyEdited(Boolean(campaign.id));
     }
   }, [campaign]);
 
   const setField = (field, value) => {
     setFormData((prev) => {
       const next = { ...prev, [field]: value };
-      if (field === "title" && !slugManuallyEdited) {
+      if (field === "title" && !prev.id) {
         next.slug = generateSlug(value);
       }
       return next;
     });
-  };
-
-  const handleAutoSlug = () => {
-    const generated = generateSlug(formData.title);
-    setFormData((prev) => ({ ...prev, slug: generated }));
-    setSlugManuallyEdited(false);
   };
 
   const handleSubmit = (e) => {
@@ -84,10 +73,10 @@ export function CampaignEditorDialog({
   if (!open) return null;
 
   return (
-    <Dialog open={open} onClose={onClose} fullWidth maxWidth="md">
+    <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
       <DialogTitle className={styles.dialogTitle}>
         <Typography variant="h6" className={styles.heading}>
-          {formData.id ? `Edit Campaign: ${formData.title}` : "Create Giving Campaign"}
+          {formData.id ? `Edit Campaign: ${formData.title}` : "Create Giving Cause"}
         </Typography>
         <IconButton size="small" onClick={onClose} aria-label="Close dialog">
           <CloseIcon fontSize="small" />
@@ -98,39 +87,16 @@ export function CampaignEditorDialog({
       <form onSubmit={handleSubmit}>
         <DialogContent className={styles.dialogContent}>
           <Stack spacing={2.5}>
-            {/* Title & Slug */}
-            <Box className={styles.row}>
-              <TextField
-                fullWidth
-                size="small"
-                label="Campaign Title"
-                value={formData.title || ""}
-                onChange={(e) => setField("title", e.target.value)}
-                placeholder="e.g. Young Musicians Studio Equipment Fund"
-                required
-              />
-              <Box sx={{ display: "flex", gap: 1, width: "100%" }}>
-                <TextField
-                  fullWidth
-                  size="small"
-                  label="URL Slug"
-                  value={formData.slug || ""}
-                  onChange={(e) => {
-                    setSlugManuallyEdited(true);
-                    setField("slug", e.target.value);
-                  }}
-                  helperText="Unique identifier for donation causes"
-                />
-                <IconButton
-                  size="small"
-                  onClick={handleAutoSlug}
-                  title="Generate slug from title"
-                  sx={{ mt: 0.5, height: 40, width: 40, color: "#B46A2C" }}
-                >
-                  <AutoFixHighOutlinedIcon fontSize="small" />
-                </IconButton>
-              </Box>
-            </Box>
+            {/* Title */}
+            <TextField
+              fullWidth
+              size="small"
+              label="Cause / Campaign Title"
+              value={formData.title || ""}
+              onChange={(e) => setField("title", e.target.value)}
+              placeholder="e.g. Young Musicians Studio Equipment Fund"
+              required
+            />
 
             {/* Summary */}
             <TextField
@@ -146,7 +112,7 @@ export function CampaignEditorDialog({
             <TextField
               fullWidth
               size="small"
-              label="Full Campaign Mission Description"
+              label="Campaign Mission Description"
               value={formData.description || ""}
               onChange={(e) => setField("description", e.target.value)}
               multiline
@@ -160,10 +126,18 @@ export function CampaignEditorDialog({
                 fullWidth
                 size="small"
                 type="number"
-                label="Target Goal Amount (NGN)"
+                label="Target Goal Amount"
                 value={formData.targetAmount || ""}
                 onChange={(e) => setField("targetAmount", e.target.value)}
-                placeholder="e.g. 5000000"
+                placeholder="5000000"
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start" sx={{ fontWeight: 700, color: "text.primary" }}>
+                      ₦
+                    </InputAdornment>
+                  ),
+                }}
+                helperText="Enter goal in Nigerian Naira (₦)"
               />
               <TextField
                 fullWidth
@@ -177,26 +151,6 @@ export function CampaignEditorDialog({
                 <MenuItem value="published">Published (Live on Website)</MenuItem>
                 <MenuItem value="archived">Archived</MenuItem>
               </TextField>
-            </Box>
-
-            {/* Media Upload Pattern for Campaign Banner */}
-            <Box>
-              <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 1, color: "#1E293B" }}>
-                Campaign Cover Banner
-              </Typography>
-              <MediaField
-                label="Cover Image"
-                value={formData.image || ""}
-                mediaType="image"
-                onChange={(url) => setField("image", url)}
-                onBrowseLibrary={
-                  onOpenMediaPicker
-                    ? () => onOpenMediaPicker((url) => setField("image", url))
-                    : undefined
-                }
-                helperText="Upload a high-resolution banner photo for this funding campaign"
-                previewHeight={180}
-              />
             </Box>
 
             {/* Spotlight / Featured Toggle */}

@@ -44,12 +44,26 @@ export function HeroSection({ content }) {
 
           {/* Headline */}
           <h1 className={styles.headline}>
-            {headlineLines[0] ?? ""}<br />
-            {headlineLines[1] ?? ""}<br />
-            <span className={styles.headlineHighlight}>
-              {headlineHighlightLines[0] ?? ""}<br />
-              {headlineHighlightLines[1] ?? ""}
-            </span>
+            {hero.heading || hero.headingHighlight ? (
+              <>
+                {hero.heading && <span>{hero.heading}</span>}
+                {hero.heading && hero.headingHighlight && <br />}
+                {hero.headingHighlight && (
+                  <span className={styles.headlineHighlight}>
+                    {hero.headingHighlight}
+                  </span>
+                )}
+              </>
+            ) : (
+              <>
+                {headlineLines[0] ?? ""}<br />
+                {headlineLines[1] ?? ""}<br />
+                <span className={styles.headlineHighlight}>
+                  {headlineHighlightLines[0] ?? ""}<br />
+                  {headlineHighlightLines[1] ?? ""}
+                </span>
+              </>
+            )}
           </h1>
 
           {/* Subtitle */}

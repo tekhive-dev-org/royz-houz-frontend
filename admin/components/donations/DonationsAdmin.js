@@ -348,14 +348,13 @@ export function DonationsAdmin() {
         />
       )}
 
-      {/* Campaign Create/Edit Modal Dialog with MediaField */}
+      {/* Campaign Create/Edit Modal Dialog */}
       <CampaignEditorDialog
         open={campaignDialogOpen}
         campaign={editingCampaign}
         isSaving={isSavingCampaign}
         onClose={() => setCampaignDialogOpen(false)}
         onSave={handleSaveCampaign}
-        onOpenMediaPicker={(onSelect) => setMediaPicker({ onSelect })}
       />
 
       {/* Staff Internal Notes Modal */}

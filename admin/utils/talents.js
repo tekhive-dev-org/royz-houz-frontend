@@ -43,3 +43,72 @@ export function prepareTalentSavePayload(talent) {
   }
   return payload;
 }
+
+export const SUPPORTED_BOOKING_CURRENCIES = [
+  { value: "₦", label: "₦ (NGN)", symbol: "₦" },
+  { value: "$", label: "$ (USD)", symbol: "$" },
+  { value: "€", label: "€ (EUR)", symbol: "€" },
+  { value: "£", label: "£ (GBP)", symbol: "£" },
+  { value: "custom", label: "Custom", symbol: "" },
+];
+
+export function parseBookingPrice(val) {
+  if (!val || typeof val !== "string") {
+    return { currency: "₦", amount: "" };
+  }
+  const str = val.trim();
+  if (!str) {
+    return { currency: "₦", amount: "" };
+  }
+  if (str.startsWith("₦")) {
+    return { currency: "₦", amount: str.slice(1).trim() };
+  }
+  if (str.startsWith("$")) {
+    return { currency: "$", amount: str.slice(1).trim() };
+  }
+  if (str.startsWith("€")) {
+    return { currency: "€", amount: str.slice(1).trim() };
+  }
+  if (str.startsWith("£")) {
+    return { currency: "£", amount: str.slice(1).trim() };
+  }
+  if (/^NGN\s*/i.test(str)) {
+    return { currency: "₦", amount: str.replace(/^NGN\s*/i, "").trim() };
+  }
+  // If it starts with digits, default to Naira (₦)
+  if (/^\d/.test(str)) {
+    return { currency: "₦", amount: str };
+  }
+  // Otherwise, custom text (e.g. "Contact for quote")
+  return { currency: "custom", amount: str };
+}
+
+export function formatBookingPrice(currency, amount) {
+  const trimmed = (amount || "").trim();
+  if (!trimmed) return "";
+  if (currency === "custom" || !currency) {
+    return trimmed;
+  }
+  // Strip any leading currency symbol or NGN prefix the user may have entered/pasted
+  const stripped = trimmed.replace(/^[₦$€£¥]\s*|^NGN\s*/i, "");
+  if (!stripped) return "";
+
+  // If amount contains numbers (e.g. "250,000" or "500000 / event"), prepend the currency symbol
+  if (/\d/.test(stripped)) {
+    return `${currency}${stripped}`;
+  }
+
+  // Pure text without digits stays as entered
+  return stripped;
+}
+
+export function formatTalentBookingPrice(price) {
+  if (!price) return "";
+  const trimmed = String(price).trim();
+  if (!trimmed) return "";
+  if (/^[₦$€£¥]/.test(trimmed)) return trimmed;
+  if (/^NGN\s*/i.test(trimmed)) return trimmed.replace(/^NGN\s*/i, "₦");
+  if (/^\d/.test(trimmed)) return `₦${trimmed}`;
+  return trimmed;
+}
+

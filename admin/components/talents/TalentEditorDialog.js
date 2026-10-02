@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Avatar,
   Box,
@@ -33,7 +33,13 @@ import EmojiEventsOutlinedIcon from "@mui/icons-material/EmojiEventsOutlined";
 import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import PermMediaOutlinedIcon from "@mui/icons-material/PermMediaOutlined";
 import TabOutlinedIcon from "@mui/icons-material/TabOutlined";
-import { formatMediaDuration, normalizeTalentSlugPreview } from "@/utils/talents";
+import {
+  formatMediaDuration,
+  normalizeTalentSlugPreview,
+  parseBookingPrice,
+  formatBookingPrice,
+  SUPPORTED_BOOKING_CURRENCIES,
+} from "@/utils/talents";
 import { TalentMediaField } from "./TalentMediaField";
 import styles from "./TalentsAdmin.module.css";
 
@@ -52,11 +58,39 @@ export function TalentEditorDialog({
 }) {
   const [activeTab, setActiveTab] = useState(0);
   const [galleryImageUrl, setGalleryImageUrl] = useState("");
+  const [bookingCurrency, setBookingCurrency] = useState(() => {
+    return parseBookingPrice(talent?.bookingPrice).currency;
+  });
+
+  const talentIdentifier = talent?.id || talent?.slug || "";
+  const talentPriceCurrency = parseBookingPrice(talent?.bookingPrice).currency;
+  useEffect(() => {
+    if (open && talent) {
+      setBookingCurrency(talentPriceCurrency);
+    }
+    // Only reset the currency when the editor opens or switches to a different talent
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open, talentIdentifier]);
 
   if (!talent) return null;
 
   const setField = (key, value) => {
     setTalent((prev) => ({ ...prev, [key]: value }));
+  };
+
+  const bookingAmount = parseBookingPrice(talent.bookingPrice).amount;
+
+  const handleBookingCurrencyChange = (e) => {
+    const nextCurrency = e.target.value;
+    setBookingCurrency(nextCurrency);
+    if (bookingAmount) {
+      setField("bookingPrice", formatBookingPrice(nextCurrency, bookingAmount));
+    }
+  };
+
+  const handleBookingAmountChange = (e) => {
+    const nextAmount = e.target.value;
+    setField("bookingPrice", formatBookingPrice(bookingCurrency, nextAmount));
   };
 
   const setPrimaryCategory = (categoryId) => {
@@ -491,14 +525,42 @@ export function TalentEditorDialog({
                   <MenuItem value="Studio Production">Studio Production</MenuItem>
                   <MenuItem value="Fully Booked">Fully Booked</MenuItem>
                 </TextField>
-                <TextField
-                  label="Starting Booking Rate"
-                  value={talent.bookingPrice || ""}
-                  onChange={(e) => setField("bookingPrice", e.target.value)}
-                  placeholder="e.g. $2,500 / event or Contact for Quote"
-                  fullWidth
-                  size="small"
-                />
+                <Box sx={{ display: "flex", gap: 1.5, alignItems: "flex-start" }}>
+                  <TextField
+                    select
+                    label="Currency"
+                    value={bookingCurrency}
+                    onChange={handleBookingCurrencyChange}
+                    size="small"
+                    sx={{ width: { xs: 105, sm: 125 }, flexShrink: 0 }}
+                  >
+                    {SUPPORTED_BOOKING_CURRENCIES.map((cur) => (
+                      <MenuItem key={cur.value} value={cur.value}>
+                        {cur.label}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                  <TextField
+                    label="Starting Booking Rate"
+                    value={bookingAmount}
+                    onChange={handleBookingAmountChange}
+                    placeholder={bookingCurrency === "custom" ? "e.g. Contact for Quote" : "e.g. 250,000"}
+                    fullWidth
+                    size="small"
+                    helperText="Default currency is Naira (₦). Automatically displayed on web cards."
+                    InputProps={
+                      bookingCurrency !== "custom"
+                        ? {
+                            startAdornment: (
+                              <InputAdornment position="start" sx={{ fontWeight: 700, color: "text.primary" }}>
+                                {bookingCurrency}
+                              </InputAdornment>
+                            ),
+                          }
+                        : undefined
+                    }
+                  />
+                </Box>
               </Box>
             </Box>
 

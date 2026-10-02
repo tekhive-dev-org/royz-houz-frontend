@@ -37,6 +37,7 @@ import StarIcon from "@mui/icons-material/Star";
 import ViewListIcon from "@mui/icons-material/ViewList";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import { StatusChip } from "@/components/settings/StatusChip";
+import { AdminTablePagination } from "@/components/pagination";
 import styles from "./EventsTable.module.css";
 
 function formatEventDateBadge(dateString) {
@@ -116,7 +117,7 @@ export function EventsTable({
   const [sortBy, setSortBy] = useState("default");
   const [featuredOnly, setFeaturedOnly] = useState(false);
   const [page, setPage] = useState(1);
-  const pageSize = 12;
+  const [pageSize, setPageSize] = useState(12);
 
   const categoryMap = useMemo(() => {
     const map = new Map();
@@ -482,36 +483,18 @@ export function EventsTable({
             />
           )}
 
-          {/* Pagination */}
-          {totalPages > 1 && (
-            <Box className={styles.paginationBar}>
-              <span className={styles.paginationInfo}>
-                Showing {(currentPage - 1) * pageSize + 1}–
-                {Math.min(currentPage * pageSize, processedItems.length)} of {processedItems.length} events
-              </span>
-              <Box className={styles.paginationControls}>
-                <Button
-                  size="small"
-                  className={styles.pageBtn}
-                  disabled={currentPage <= 1}
-                  onClick={() => setPage((p) => Math.max(1, p - 1))}
-                >
-                  Previous
-                </Button>
-                <span style={{ fontSize: "0.8125rem", color: "#4B5563", fontWeight: 600, padding: "0 6px" }}>
-                  Page {currentPage} of {totalPages}
-                </span>
-                <Button
-                  size="small"
-                  className={styles.pageBtn}
-                  disabled={currentPage >= totalPages}
-                  onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-                >
-                  Next
-                </Button>
-              </Box>
-            </Box>
-          )}
+          {/* SaaS Pagination */}
+          <AdminTablePagination
+            page={currentPage}
+            pageSize={pageSize}
+            totalItems={processedItems.length}
+            onPageChange={setPage}
+            onPageSizeChange={(newSize) => {
+              setPageSize(newSize);
+              setPage(1);
+            }}
+            itemLabel="events"
+          />
         </>
       )}
     </Paper>
@@ -737,7 +720,25 @@ function EventsMobileCardGrid({ items, getCategoryLabel, onEditClick, onDuplicat
         const venueInfo = parseVenueAndLocation(event, body);
         const isPopular = Boolean(body.isPopular || event.isPopular);
         const description = body.description || body.excerpt || body.summary || event.description || "";
-        const price = body.price || body.ticketPrice || (body.isFree ? "Free Entry" : "");
+        const rawPrice = body.price || body.ticketPrice || (body.isFree ? "Free Entry" : "");
+        let price = rawPrice;
+        if (price && price !== "Free Entry") {
+          const str = String(price).trim();
+          if (!str.startsWith("₦")) {
+            const num = Number(str.replace(/[^0-9.]/g, ""));
+            if (!isNaN(num) && num > 0) {
+              price = `₦${num.toLocaleString("en-NG")}`;
+            }
+          }
+        } else if (!price && Array.isArray(body.ticketTiers) && body.ticketTiers.length > 0) {
+          const tierPrices = body.ticketTiers
+            .map((t) => Number(t.price))
+            .filter((p) => !isNaN(p) && p >= 0);
+          if (tierPrices.length > 0) {
+            const minPrice = Math.min(...tierPrices);
+            price = minPrice === 0 ? "Free Entry" : `From ₦${minPrice.toLocaleString("en-NG")}`;
+          }
+        }
 
         return (
           <Box key={event.id} className={styles.eventCard}>

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Button, Paper, Typography } from "@mui/material";
+import EventAvailableOutlinedIcon from "@mui/icons-material/EventAvailableOutlined";
 import AssignmentIndOutlinedIcon from "@mui/icons-material/AssignmentIndOutlined";
 import MailOutlineOutlinedIcon from "@mui/icons-material/MailOutlineOutlined";
 import CommentOutlinedIcon from "@mui/icons-material/CommentOutlined";
@@ -26,6 +27,10 @@ function formatRelativeTime(dateString) {
 }
 
 const TYPE_CONFIG = {
+  booking: {
+    icon: EventAvailableOutlinedIcon,
+    pillClass: styles.typeBooking,
+  },
   application: {
     icon: AssignmentIndOutlinedIcon,
     pillClass: styles.typeApplication,
@@ -43,6 +48,7 @@ const TYPE_CONFIG = {
 export function AttentionQueueCard({ items = [] }) {
   const [filter, setFilter] = useState("all");
 
+  const bookingCount = items.filter((i) => i.type === "booking").length;
   const appCount = items.filter((i) => i.type === "application").length;
   const contactCount = items.filter((i) => i.type === "contact").length;
   const commentCount = items.filter((i) => i.type === "comment").length;
@@ -77,13 +83,13 @@ export function AttentionQueueCard({ items = [] }) {
           >
             All ({items.length})
           </button>
-          {appCount > 0 && (
+          {bookingCount > 0 && (
             <button
               type="button"
-              className={`${styles.filterBtn} ${filter === "application" ? styles.filterBtnActive : ""}`}
-              onClick={() => setFilter("application")}
+              className={`${styles.filterBtn} ${filter === "booking" ? styles.filterBtnActive : ""}`}
+              onClick={() => setFilter("booking")}
             >
-              Applications ({appCount})
+              Bookings ({bookingCount})
             </button>
           )}
           {contactCount > 0 && (
@@ -93,6 +99,15 @@ export function AttentionQueueCard({ items = [] }) {
               onClick={() => setFilter("contact")}
             >
               Inquiries ({contactCount})
+            </button>
+          )}
+          {appCount > 0 && (
+            <button
+              type="button"
+              className={`${styles.filterBtn} ${filter === "application" ? styles.filterBtnActive : ""}`}
+              onClick={() => setFilter("application")}
+            >
+              Applications ({appCount})
             </button>
           )}
           {commentCount > 0 && (

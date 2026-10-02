@@ -28,7 +28,9 @@ export function BookingCard({ talent, onBookClick }) {
 
   return (
     <div className={styles.bookingCard} aria-label="Booking Information">
-      <span className={styles.bookingSubtitle}>{price ? "Booking starts from" : "Booking rate"}</span>
+      <span className={styles.bookingSubtitle}>
+        {price && /^[₦$€£¥\d]/.test(price) ? "Booking starts from" : "Booking rate"}
+      </span>
       <span className={styles.bookingPrice}>{price || "Contact for pricing"}</span>
 
       <button

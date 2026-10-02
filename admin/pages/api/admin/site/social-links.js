@@ -30,17 +30,35 @@ export default createAdminCrudHandler("/api/admin/site/social-links", {
       });
       if (!input) return null;
 
+      // Check if a link for this placement and platform already exists
+      const { data: existing } = await listRows(null, "social_links", {
+        filters: [
+          { column: "platform", value: input.platform },
+          { column: "placement", value: input.placement },
+        ],
+        limit: 1,
+      });
+      if (existing && existing.length > 0) {
+        return sendError(
+          res,
+          "CONFLICT",
+          `A social link for "${input.platform}" in the "${input.placement}" zone already exists. Please edit or reorder the existing link instead.`,
+          { status: 409, requestId: context.requestId }
+        );
+      }
+
       const { data: maxRows } = await listRows(null, "social_links", {
         order: { column: "sort_order", ascending: false },
         filters: [{ column: "placement", value: input.placement }],
         limit: 1,
       });
       const sortOrder = maxRows && maxRows.length > 0 ? (maxRows[0].sort_order + 1) : 0;
+      const displayLabel = input.label?.trim() || input.platform.charAt(0).toUpperCase() + input.platform.slice(1);
 
       const result = await upsertContentRow(null, {
         table: "social_links",
         actorUserId: context.actor.user.id,
-        row: { platform: input.platform, url: input.url, placement: input.placement, label: input.label || null, sort_order: sortOrder },
+        row: { platform: input.platform, url: input.url, placement: input.placement, label: displayLabel, sort_order: sortOrder },
         status: input.status,
       });
       if (!result.success) return sendError(res, result.error.code, result.error.message, { status: 400, requestId: context.requestId });
@@ -59,10 +77,29 @@ export default createAdminCrudHandler("/api/admin/site/social-links", {
       });
       if (!input) return null;
 
+      // Check if another entry already has this platform and placement
+      const { data: existing } = await listRows(null, "social_links", {
+        filters: [
+          { column: "platform", value: input.platform },
+          { column: "placement", value: input.placement },
+        ],
+      });
+      const duplicate = existing?.find((item) => item.id !== input.id);
+      if (duplicate) {
+        return sendError(
+          res,
+          "CONFLICT",
+          `Another social link for "${input.platform}" in the "${input.placement}" zone already exists.`,
+          { status: 409, requestId: context.requestId }
+        );
+      }
+
+      const displayLabel = input.label?.trim() || input.platform.charAt(0).toUpperCase() + input.platform.slice(1);
+
       const result = await upsertContentRow(null, {
         table: "social_links",
         actorUserId: context.actor.user.id,
-        row: { id: input.id, platform: input.platform, url: input.url, placement: input.placement, label: input.label || null },
+        row: { id: input.id, platform: input.platform, url: input.url, placement: input.placement, label: displayLabel },
         status: input.status,
       });
       if (!result.success) return sendError(res, result.error.code, result.error.message, { status: 400, requestId: context.requestId });

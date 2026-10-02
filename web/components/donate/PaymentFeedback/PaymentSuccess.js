@@ -21,16 +21,24 @@ export function PaymentSuccess({
 }) {
   const [copied, setCopied] = useState(false);
 
-  const badge = confirmation?.badge || "Donation Request Received";
+  const isApproved =
+    donationData?.status === "approved" ||
+    (typeof donationData?.recordId === "string" && donationData.recordId.startsWith("RH-DON"));
+
+  const badge = isApproved
+    ? "Donation Payment Confirmed"
+    : confirmation?.badge || "Donation Request Received";
   const title = confirmation?.title || "Thank You for Your Generosity!";
-  const subtitle =
-    confirmation?.subtitle ||
-    "Your donation request is pending payment verification. We'll contact you with next steps.";
+  const subtitle = isApproved
+    ? "Your donation has been successfully processed and verified via Paystack. Thank you for empowering African creatives!"
+    : confirmation?.subtitle ||
+      "Your donation request is pending payment verification. We'll contact you with next steps.";
   const impactText =
     confirmation?.impactText ||
     "100% of your contribution goes directly towards equipment, training programs, and mentorship for emerging creative talents across Africa.";
-  const disclaimer =
-    confirmation?.disclaimer || "Payment is not confirmed until it has been verified by Royz House.";
+  const disclaimer = isApproved
+    ? "Your payment is protected and processed securely via Paystack."
+    : confirmation?.disclaimer || "Payment is not confirmed until it has been verified by Royz House.";
 
   const amountNumber = donationData?.amount || 25000;
   const formattedAmount = `₦${amountNumber.toLocaleString()}`;
@@ -140,7 +148,9 @@ export function PaymentSuccess({
 
             <div className={styles.detailRow}>
               <span className={styles.detailLabel}>Payment Status</span>
-              <span className={styles.detailValue}>Awaiting verification</span>
+              <span className={styles.detailValue}>
+                {isApproved ? "Verified via Paystack" : "Awaiting verification"}
+              </span>
             </div>
 
             <div className={styles.detailRow}>
@@ -151,7 +161,15 @@ export function PaymentSuccess({
             <div className={styles.detailRow}>
               <span className={styles.detailLabel}>Status</span>
               <span className={styles.statusPaid}>
-                <span className={styles.statusDot} /> Pending
+                <span
+                  className={styles.statusDot}
+                  style={
+                    isApproved
+                      ? { backgroundColor: "#10B981", boxShadow: "0 0 8px rgba(16, 185, 129, 0.4)" }
+                      : {}
+                  }
+                />{" "}
+                {isApproved ? "Paid & Confirmed" : "Pending"}
               </span>
             </div>
           </div>

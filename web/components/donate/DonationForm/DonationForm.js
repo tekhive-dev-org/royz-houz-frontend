@@ -60,6 +60,20 @@ export function DonationForm({ initialData, campaigns, giving = {}, onProceedToR
   const [customAmount, setCustomAmount] = useState(initialData?.customAmount || "");
   const [cause, setCause] = useState(initialData?.cause || causeList[0]);
 
+  const selectedCampaign = campaigns?.find(
+    (c) => c.title === cause || c.slug === cause || c.id === cause
+  );
+  const targetAmount = Number(
+    selectedCampaign?.targetAmount || selectedCampaign?.body?.targetAmount || 0
+  );
+  const raisedAmount = Number(
+    selectedCampaign?.raisedAmount || selectedCampaign?.raised_amount || 0
+  );
+  const percentFunded =
+    targetAmount > 0
+      ? Math.min(100, Math.round((raisedAmount / targetAmount) * 100))
+      : 0;
+
   // Donor Information (Right Column)
   const [fullName, setFullName] = useState(initialData?.fullName || "Donald Lawrence");
   const [email, setEmail] = useState(initialData?.email || "donaldlawrence9@gmail.com");
@@ -220,6 +234,44 @@ export function DonationForm({ initialData, campaigns, giving = {}, onProceedToR
                 </select>
                 <ChevronDown className={styles.selectChevron} />
               </div>
+
+              {/* Cause Progress Bar */}
+              {selectedCampaign && (
+                <div className={styles.causeProgressBox} aria-live="polite">
+                  <div className={styles.causeProgressHeader}>
+                    <span className={styles.causeRaisedText}>
+                      ₦{raisedAmount.toLocaleString()}{" "}
+                      <span className={styles.causeGoalText}>raised</span>
+                    </span>
+                    <span className={styles.causeGoalText}>
+                      {targetAmount > 0
+                        ? `Goal: ₦${targetAmount.toLocaleString()}`
+                        : "Open Community Goal"}
+                    </span>
+                  </div>
+
+                  <div className={styles.causeProgressTrack}>
+                    <div
+                      className={styles.causeProgressFill}
+                      style={{
+                        width:
+                          targetAmount > 0
+                            ? `${percentFunded}%`
+                            : raisedAmount > 0
+                            ? "100%"
+                            : "0%",
+                      }}
+                    />
+                  </div>
+
+                  <div className={styles.causeProgressFooter}>
+                    <span className={styles.causePercentBadge}>
+                      {targetAmount > 0 ? `${percentFunded}% funded` : "Community Support"}
+                    </span>
+                    <span>100% directly powers this initiative</span>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
 

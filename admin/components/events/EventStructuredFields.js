@@ -5,6 +5,7 @@ import {
   Divider,
   FormControlLabel,
   IconButton,
+  InputAdornment,
   MenuItem,
   Paper,
   Stack,
@@ -238,7 +239,23 @@ function StructuredSection({ field, event, updateField, setMediaPicker, talents 
                   <TextField fullWidth label="Ticket name" size="small" value={fieldValue(item, "name")} onChange={(e) => updateRow(index, "name", e.target.value)} required placeholder="e.g. Early Bird" />
                   <Typography variant="body2" color="text.secondary">Availability is controlled by Paystack payments. The public label is generated automatically from the quantity below.</Typography>
                   <TextField label="Available quantity (number)" type="number" size="small" value={item?.available ?? ""} onChange={(e) => updateRow(index, "available", e.target.value === "" ? "" : Math.max(0, Math.floor(Number(e.target.value) || 0)))} onKeyDown={(e) => ["e", "E", "+", "-", "."].includes(e.key) && e.preventDefault()} inputProps={{ min: 0, step: 1, inputMode: "numeric" }} helperText="Set the starting inventory. Successful Paystack payments reduce this value automatically." />
-                  <TextField label="Price (₦)" type="number" size="small" value={item?.price ?? ""} onChange={(e) => updateRow(index, "price", Number(e.target.value) || 0)} inputProps={{ min: 0, step: 100 }} helperText="Enter numbers only; the ₦ symbol is added automatically." required />
+                  <TextField
+                    label="Price"
+                    type="number"
+                    size="small"
+                    value={item?.price ?? ""}
+                    onChange={(e) => updateRow(index, "price", Number(e.target.value) || 0)}
+                    inputProps={{ min: 0, step: 100 }}
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start" sx={{ fontWeight: 700, color: "text.primary" }}>
+                          ₦
+                        </InputAdornment>
+                      ),
+                    }}
+                    helperText="Admission price in Nigerian Naira (₦). Free entry if set to 0."
+                    required
+                  />
                   <TextField fullWidth multiline minRows={3} label="Included features (one per line)" size="small" value={Array.isArray(item?.features) ? item.features.join("\n") : ""} onChange={(e) => updateRow(index, "features", e.target.value.split("\n").map((feature) => feature.trim()).filter(Boolean))} placeholder={"General access\nWelcome drink\nEvent programme"} />
                   <TextField fullWidth multiline label="Description" size="small" value={fieldValue(item, "description")} onChange={(e) => updateRow(index, "description", e.target.value)} />
                   <FormControlLabel control={<Checkbox checked={Boolean(item?.isDefault)} onChange={(e) => updateRow(index, "isDefault", e.target.checked)} />} label="Default tier" />

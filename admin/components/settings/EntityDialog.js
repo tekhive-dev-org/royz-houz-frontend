@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import {
+  Alert,
   Box,
   Button,
   Dialog,
@@ -17,6 +18,7 @@ import EditNoteOutlinedIcon from "@mui/icons-material/EditNoteOutlined";
 
 export function EntityDialog({ open, onClose, onSubmit, title, fields = [], selectFields = [], initial = {}, resetKey }) {
   const [form, setForm] = useState({});
+  const [error, setError] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
@@ -27,18 +29,23 @@ export function EntityDialog({ open, onClose, onSubmit, title, fields = [], sele
     for (const field of selectFields) initialValues[field.name] = initial[field.name] ?? field.default ?? "";
     initialValues.status = initial.status ?? "draft";
     setForm(initialValues);
+    setError(null);
     setIsSubmitting(false);
   }, [open, resetKey]);
 
   function updateField(name, value) {
     setForm((current) => ({ ...current, [name]: value }));
+    if (error) setError(null);
   }
 
   async function handleSubmit(event) {
     event.preventDefault();
     setIsSubmitting(true);
+    setError(null);
     try {
       await onSubmit(form);
+    } catch (err) {
+      setError(err?.message || "Failed to save the record.");
     } finally {
       setIsSubmitting(false);
     }
@@ -89,6 +96,11 @@ export function EntityDialog({ open, onClose, onSubmit, title, fields = [], sele
       <Divider />
 
       <DialogContent sx={{ px: { xs: 2, sm: 3 }, py: { xs: 2, sm: 2.5 } }}>
+        {error ? (
+          <Alert severity="error" sx={{ mb: 2 }} onClose={() => setError(null)}>
+            {error}
+          </Alert>
+        ) : null}
         <form id="entity-dialog-form" onSubmit={handleSubmit}>
           <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
             {fields.map((field) => (

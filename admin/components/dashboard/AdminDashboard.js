@@ -8,7 +8,6 @@ import { AttentionQueueCard } from "./AttentionQueueCard";
 import { UpcomingEventsWidget } from "./UpcomingEventsWidget";
 import { SpotlightTalentsWidget } from "./SpotlightTalentsWidget";
 import { RecentActivityTable } from "./RecentActivityTable";
-import { PlatformHealthBar } from "./PlatformHealthBar";
 import styles from "./AdminDashboard.module.css";
 
 const DATE_RANGES = [
@@ -27,9 +26,7 @@ export function AdminDashboard() {
       <Box className={styles.header}>
         <Box>
           <div className={styles.headerEyebrow}>Royz House Executive Studio</div>
-          <Typography component="h1" variant="h4" className={styles.title}>
-            Operational Command Center
-          </Typography>
+          
           <Typography variant="body1" className={styles.description}>
             Live platform metrics, talent roster management, production schedules, and administrative queues.
           </Typography>
@@ -84,11 +81,27 @@ export function AdminDashboard() {
 
       {isLoading ? (
         <Box className={styles.skeletonGrid}>
-          {[1, 2, 3, 4].map((i) => (
+          {[1, 2].map((i) => (
             <Skeleton
               key={i}
               variant="rectangular"
               height={140}
+              className={styles.spanPrimary}
+              sx={{ borderRadius: "12px" }}
+            />
+          ))}
+          <Skeleton
+            variant="rectangular"
+            height={140}
+            className={`${styles.spanPrimary} ${styles.skeletonBoxOffice}`}
+            sx={{ borderRadius: "12px" }}
+          />
+          {[4, 5].map((i) => (
+            <Skeleton
+              key={i}
+              variant="rectangular"
+              height={140}
+              className={styles.spanWorkflow}
               sx={{ borderRadius: "12px" }}
             />
           ))}
@@ -137,9 +150,6 @@ export function AdminDashboard() {
               hidden={data.recentActivity?.hidden}
             />
           </Box>
-
-          {/* Platform Infrastructure Health Bar */}
-          <PlatformHealthBar />
         </>
       ) : null}
     </Box>

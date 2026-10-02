@@ -6,7 +6,6 @@ import {
   CircularProgress,
   MenuItem,
   Paper,
-  Stack,
   Table,
   TableBody,
   TableCell,
@@ -21,6 +20,7 @@ import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import { AdminLoadingState } from "@/components/feedback/AdminLoadingState";
 import { contentReportsApi } from "@/services/contentReportsApi";
 import { ContentReportDialog } from "./ContentReportDialog";
+import { AdminTablePagination } from "@/components/pagination";
 import styles from "./ContentReportsAdmin.module.css";
 
 const STATUS_OPTIONS = ["", "new", "reviewing", "actioned", "dismissed", "duplicate", "archived"];
@@ -36,6 +36,7 @@ export function ContentReportsAdmin({ canModerate = false }) {
   const [assignees, setAssignees] = useState([]);
   const [pagination, setPagination] = useState(null);
   const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(12);
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState("");
   const [reason, setReason] = useState("");
@@ -52,7 +53,7 @@ export function ContentReportsAdmin({ canModerate = false }) {
     else setUpdating(true);
     setError("");
     try {
-      const result = await contentReportsApi.list({ page, limit: 12, search, status, reason });
+      const result = await contentReportsApi.list({ page, limit, search, status, reason });
       if (requestId === requestRef.current) {
         setItems(result.items);
         setPagination(result.pagination);
@@ -85,7 +86,7 @@ export function ContentReportsAdmin({ canModerate = false }) {
     const timer = setTimeout(() => void loadReports(), 250);
     return () => clearTimeout(timer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page, search, status, reason]);
+  }, [page, limit, search, status, reason]);
 
   const openReport = (item) => {
     setError("");
@@ -166,13 +167,18 @@ export function ContentReportsAdmin({ canModerate = false }) {
         </Table>
       </TableContainer>
 
-      {pagination?.totalPages > 1 ? (
-        <Stack direction="row" justifyContent="flex-end" alignItems="center" spacing={2}>
-          <Button disabled={page <= 1 || updating} onClick={() => setPage((value) => value - 1)}>Previous</Button>
-          <Typography variant="body2">Page {page} of {pagination.totalPages}</Typography>
-          <Button disabled={page >= pagination.totalPages || updating} onClick={() => setPage((value) => value + 1)}>Next</Button>
-        </Stack>
-      ) : null}
+      <AdminTablePagination
+        page={page}
+        pageSize={limit}
+        totalItems={pagination?.total ?? items.length}
+        onPageChange={setPage}
+        onPageSizeChange={(newLimit) => {
+          setLimit(newLimit);
+          setPage(1);
+        }}
+        disabled={updating}
+        itemLabel="reports"
+      />
 
       <ContentReportDialog report={selected} assignees={assignees} open={Boolean(selected)} saving={saving} canModerate={canModerate} onClose={() => setSelected(null)} onSave={saveReport} />
     </Box>

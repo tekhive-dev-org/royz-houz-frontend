@@ -104,6 +104,44 @@ function parseStructuredValues(event) {
   return parsed;
 }
 
+function calculateCapacityInfo(ticketTiers, ticketsSold = 0) {
+  let tiers = [];
+  if (Array.isArray(ticketTiers)) {
+    tiers = ticketTiers;
+  } else if (typeof ticketTiers === "string" && ticketTiers.trim()) {
+    try {
+      const parsed = JSON.parse(ticketTiers);
+      if (Array.isArray(parsed)) tiers = parsed;
+    } catch {
+      tiers = [];
+    }
+  }
+
+  const validTiers = tiers.filter(
+    (t) => t && t.available !== null && t.available !== undefined && t.available !== ""
+  );
+
+  const soldCount = Math.max(0, Math.floor(Number(ticketsSold) || 0));
+
+  if (validTiers.length === 0) {
+    return {
+      totalCapacity: soldCount > 0 ? soldCount : null,
+      remainingCapacity: 0,
+      tierCount: 0,
+      ticketsSold: soldCount,
+    };
+  }
+
+  const remainingCapacity = validTiers.reduce(
+    (sum, t) => sum + Math.max(0, Math.floor(Number(t.available) || 0)),
+    0
+  );
+
+  const totalCapacity = remainingCapacity + soldCount;
+
+  return { totalCapacity, remainingCapacity, tierCount: validTiers.length, ticketsSold: soldCount };
+}
+
 const EMPTY = {
   slug: "",
   title: "",
@@ -138,6 +176,8 @@ const EMPTY = {
   schedule: [],
   faqs: [],
   ticketTiers: [],
+  totalSpots: "",
+  spotsRemaining: "",
   attendees: "",
   recapLink: "",
   venue: "",
@@ -171,6 +211,8 @@ export function EventsAdmin() {
   const requestIdRef = useRef(0);
   const filterDebounceTimerRef = useRef(null);
   const isMountedRef = useRef(false);
+
+  const capacityInfo = calculateCapacityInfo(editing?.ticketTiers, editing?.ticketsPurchased);
 
   async function initialLoad() {
     setIsInitialLoading(true);
@@ -304,6 +346,9 @@ export function EventsAdmin() {
       schedule: formatStructuredValue(body.schedule),
       faqs: formatStructuredValue(body.faqs),
       ticketTiers: formatStructuredValue(body.ticketTiers),
+      ticketsPurchased: item.ticketsPurchased ?? (body.ticketsSold ? Number(body.ticketsSold) : 0),
+      totalSpots: body.totalSpots ?? "",
+      spotsRemaining: body.spotsRemaining ?? "",
       gallery: formatStructuredValue(body.gallery),
       attendees: body.attendees || "",
       recapLink: body.recapLink || "",
@@ -350,6 +395,8 @@ export function EventsAdmin() {
       schedule: formatStructuredValue(body.schedule),
       faqs: formatStructuredValue(body.faqs),
       ticketTiers: formatStructuredValue(body.ticketTiers),
+      totalSpots: body.totalSpots ?? "",
+      spotsRemaining: body.spotsRemaining ?? "",
       gallery: formatStructuredValue(body.gallery),
       attendees: body.attendees || "",
       recapLink: body.recapLink || "",
@@ -421,6 +468,13 @@ export function EventsAdmin() {
     try {
       const payload = parseStructuredValues(editing);
       payload.slug = payload.slug?.trim() || undefined;
+
+      // Automatically calculate totalSpots from ticket tiers available inventory and purchased tickets
+      const capInfo = calculateCapacityInfo(payload.ticketTiers, Number(editing?.ticketsPurchased || payload.ticketsPurchased || 0));
+      if (capInfo.totalCapacity !== null) {
+        payload.totalSpots = capInfo.totalCapacity;
+        payload.spotsRemaining = capInfo.remainingCapacity;
+      }
 
       payload.startsAt = formatDateTimeForStorage(payload.startsAt, payload.timezone);
       payload.endsAt = formatDateTimeForStorage(payload.endsAt, payload.timezone);
@@ -815,10 +869,25 @@ export function EventsAdmin() {
                 <TextField
                   fullWidth
                   size="small"
+                  label="Total Event Capacity"
+                  value={
+                    capacityInfo.totalCapacity !== null
+                      ? `${capacityInfo.totalCapacity} spots (${capacityInfo.remainingCapacity} remaining${capacityInfo.ticketsSold > 0 ? `, ${capacityInfo.ticketsSold} sold` : ""})`
+                      : "0 spots (Set available quantities in ticket tiers above)"
+                  }
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                  helperText="The previous total remains fixed when tickets are purchased; remaining spots deduct automatically."
+                />
+                <TextField
+                  fullWidth
+                  size="small"
                   label="Attendee Count / Label"
                   value={editing.attendees}
                   onChange={(e) => setField("attendees", e.target.value)}
-                  helperText="Optional label shown with event attendance information."
+                  placeholder="e.g. 800+ Attendees"
+                  helperText="Optional descriptive label shown with event attendance information."
                 />
               </Box>
 
@@ -865,23 +934,6 @@ export function EventsAdmin() {
               </Box>
 
 
-              <Box hidden={activeEventTab !== 4} className={styles.row}>
-                <TextField
-                  fullWidth
-                  size="small"
-                  label="Starting Price (e.g. ₦15,000 / Free)"
-                  value={editing.startingPrice}
-                  onChange={(e) => setField("startingPrice", e.target.value)}
-                />
-                <TextField
-                  fullWidth
-                  size="small"
-                  label="Ticket Purchase URL"
-                  value={editing.ticketLink}
-                  onChange={(e) => setField("ticketLink", e.target.value)}
-                  placeholder="https://..."
-                />
-              </Box>
 
               <Box hidden={activeEventTab !== 4} sx={{ display: "flex", gap: 3, alignItems: "center", pt: 1 }}>
                 <FormControlLabel

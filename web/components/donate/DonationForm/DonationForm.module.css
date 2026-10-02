@@ -172,3 +172,37 @@
 .securityNote {
   @apply flex items-center justify-center gap-2 text-xs text-[#868C98] select-none text-center;
 }
+
+/* ── Selected Cause Progress Bar ─────────────────────── */
+.causeProgressBox {
+  @apply mt-3 p-3.5 sm:p-4 rounded-xl border border-[#F2E4D6] bg-[#FCF8F4] flex flex-col gap-2 transition-all;
+}
+
+.causeProgressHeader {
+  @apply flex items-center justify-between text-xs sm:text-sm font-medium;
+}
+
+.causeRaisedText {
+  @apply font-bold text-[#0A0D14] flex items-center gap-1;
+}
+
+.causeGoalText {
+  @apply text-[#64748B] text-xs font-normal;
+}
+
+.causeProgressTrack {
+  @apply w-full h-2.5 bg-[#E8DDD2] rounded-full overflow-hidden relative;
+}
+
+.causeProgressFill {
+  @apply h-full bg-gradient-to-r from-[#DCA43E] to-[#B46A2C] rounded-full transition-all duration-500 ease-out;
+}
+
+.causeProgressFooter {
+  @apply flex items-center justify-between text-[11px] sm:text-xs text-[#868C98];
+}
+
+.causePercentBadge {
+  @apply font-semibold text-[#B46A2C];
+}
+

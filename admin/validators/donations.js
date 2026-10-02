@@ -29,7 +29,10 @@ export const campaignListQuerySchema = z.object({
 
 export const recordListQuerySchema = z.object({
   search: z.string().trim().max(160).optional(),
-  status: z.enum(["pending", "approved", "rejected", "spam", "hidden"]).optional(),
+  status: z
+    .enum(["pending", "approved", "rejected", "completed", "cancelled", "spam", "hidden"])
+    .optional()
+    .transform((val) => (val === "completed" ? "approved" : val === "cancelled" ? "rejected" : val)),
   campaignId: z.string().uuid().optional(),
 });
 

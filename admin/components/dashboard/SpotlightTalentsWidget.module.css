@@ -250,42 +250,58 @@
 
 @media (max-width: 640px) {
   .card {
-    padding: 16px 14px;
-    min-height: 230px;
+    padding: 14px 14px;
+    min-height: auto;
+    border-radius: 11px;
   }
 
   .header {
-    margin-bottom: 12px;
-    padding-bottom: 12px;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    gap: 8px;
+  }
+
+  .title {
+    font-size: 0.95rem !important;
+  }
+
+  .subtitle {
+    font-size: 0.725rem !important;
+  }
+
+  .talentList {
     gap: 8px;
   }
 
   .talentItem {
     padding: 8px 10px;
     gap: 10px;
-    min-height: 58px;
+    min-height: 52px;
+    border-radius: 8px;
   }
 
   .avatarWrap {
-    width: 38px;
-    height: 38px;
+    width: 34px;
+    height: 34px;
     flex-shrink: 0;
   }
 
   .talentName {
-    font-size: 0.8125rem;
+    font-size: 0.8rem;
   }
 
   .categoryBadge {
-    font-size: 0.725rem;
+    font-size: 0.7rem;
   }
 
   .profileLink {
-    padding: 4px 8px;
-    min-height: 28px;
+    padding: 3px 6px;
+    font-size: 0.7rem;
+    min-height: 26px;
     display: inline-flex;
     align-items: center;
   }
 }
+
 
 

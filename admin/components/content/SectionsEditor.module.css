@@ -10,7 +10,7 @@
   align-items: flex-start;
   display: flex;
   justify-content: space-between;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
   gap: 16px;
 }
 
@@ -34,11 +34,47 @@
   display: flex;
   gap: 10px;
   flex-shrink: 0;
+  align-items: center;
 }
 
 .actionBtn {
   min-height: 38px;
   font-weight: 600 !important;
+  border-radius: 8px !important;
+  text-transform: none !important;
+}
+
+.guidanceCard {
+  background: linear-gradient(135deg, #eff6ff 0%, #f0fdf4 100%);
+  border: 1px solid #bfdbfe;
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin-bottom: 24px;
+}
+
+.presetBadge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 6px;
+  background: #fef3c7;
+  color: #92400e;
+  border: 1px solid #fde68a;
+  letter-spacing: 0.02em;
+}
+
+.orderBadge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 6px;
+  background: #f3f4f6;
+  color: #374151;
+  border: 1px solid #e5e7eb;
 }
 
 .empty {
@@ -53,10 +89,41 @@
 
 .chips {
   display: flex;
-  gap: 6px;
-  margin-top: 6px;
+  gap: 8px;
+  margin-top: 8px;
   flex-wrap: wrap;
   align-items: center;
+}
+
+.presetBanner {
+  background: #fffbeb;
+  border: 1px solid #fef3c7;
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-bottom: 4px;
+}
+
+.presetTag {
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: #fde68a;
+  color: #78350f;
+  margin-left: auto;
+}
+
+.menuSlug {
+  font-size: 0.75rem;
+  color: #6b7280;
+  font-family: monospace;
+}
+
+.visibilityCard {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 10px 14px;
 }
 
 .form {
@@ -76,11 +143,50 @@
   align-items: flex-start;
 }
 
+.subSectionBox {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.subSectionTitle {
+  font-weight: 700;
+  font-size: 0.875rem;
+  color: #1e293b;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.subSectionDescription {
+  font-size: 0.8125rem;
+  color: #64748b;
+  margin-top: -6px;
+  margin-bottom: 4px;
+}
+
+.statGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+@media (max-width: 600px) {
+  .statGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .mediaButton {
   flex-shrink: 0;
   margin-top: 8px;
   min-height: 40px;
   white-space: nowrap;
+  text-transform: none !important;
 }
 
 .preview {
@@ -102,24 +208,37 @@
     flex-direction: column;
     align-items: stretch;
     gap: 14px;
-    margin-bottom: 18px;
+    margin-bottom: 16px;
   }
 
   .headerActions {
     width: 100%;
     display: flex;
+    flex-wrap: wrap;
     gap: 8px;
   }
 
   .headerActions > button,
+  .headerActions > a,
   .actionBtn {
-    flex: 1;
+    flex: 1 1 calc(50% - 6px);
     min-height: 40px;
+    font-size: 0.8125rem !important;
+    padding: 6px 10px !important;
   }
 
   .row {
     flex-direction: column;
     gap: 12px;
+  }
+
+  .guidanceCard {
+    padding: 12px 14px;
+    margin-bottom: 16px;
+  }
+
+  .subSectionBox {
+    padding: 12px;
   }
 
   .mediaButton {
@@ -128,7 +247,22 @@
   }
 
   .empty {
-    padding: 28px 16px;
+    padding: 24px 14px;
   }
 }
 
+@media (max-width: 440px) {
+  .headerActions > button,
+  .headerActions > a,
+  .actionBtn {
+    flex: 1 1 100%;
+  }
+
+  .pageTitle {
+    font-size: 1.35rem !important;
+  }
+
+  .subSectionBox {
+    padding: 10px;
+  }
+}

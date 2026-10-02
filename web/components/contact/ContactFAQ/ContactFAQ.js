@@ -39,8 +39,10 @@ const CONTACT_FAQS = [
  * ContactFAQ component matching the 1440x362 SVG specification.
  * Enclosed in a 1275px wide white card with #DCA43E gold accent bar and 2-column accordion grid.
  */
-export function ContactFAQ() {
+export function ContactFAQ({ faq = {} }) {
   const [openIndices, setOpenIndices] = useState([]);
+  const title = faq?.title || "Frequently Asked Questions";
+  const items = Array.isArray(faq?.items) && faq.items.length > 0 ? faq.items : CONTACT_FAQS;
 
   const toggleIndex = (idx) => {
     setOpenIndices((prev) =>
@@ -56,12 +58,12 @@ export function ContactFAQ() {
           {/* Header with #DCA43E Accent Bar */}
           <div className={styles.header}>
             <span className={styles.accentBar} aria-hidden="true" />
-            <h2 className={styles.title}>Frequently Asked Questions</h2>
+            <h2 className={styles.title}>{title}</h2>
           </div>
 
           {/* 2-Column Accordion Grid */}
           <div className={styles.grid}>
-            {CONTACT_FAQS.map((faq, idx) => {
+            {items.map((faqItem, idx) => {
               const isOpen = openIndices.includes(idx);
 
               return (
@@ -77,7 +79,7 @@ export function ContactFAQ() {
                     className={styles.questionBtn}
                     aria-expanded={isOpen}
                   >
-                    <span className={styles.questionText}>{faq.question}</span>
+                    <span className={styles.questionText}>{faqItem.question}</span>
                     <ChevronDown
                       className={`${styles.chevron} ${
                         isOpen ? styles.chevronOpen : ""
@@ -87,7 +89,7 @@ export function ContactFAQ() {
 
                   {isOpen && (
                     <div className={styles.answerContent}>
-                      <p className={styles.answerText}>{faq.answer}</p>
+                      <p className={styles.answerText}>{faqItem.answer}</p>
                     </div>
                   )}
                 </div>

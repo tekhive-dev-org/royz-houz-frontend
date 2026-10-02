@@ -5,12 +5,9 @@ import PeopleOutlineIcon from "@mui/icons-material/PeopleOutline";
 import TrendingUpOutlinedIcon from "@mui/icons-material/TrendingUpOutlined";
 import styles from "./DonationsStatsBanner.module.css";
 
-function formatCurrency(amount, currency = "USD") {
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: currency || "USD",
-    maximumFractionDigits: 0,
-  }).format(amount || 0);
+function formatCurrency(amount) {
+  const num = Math.round(Number(amount) || 0);
+  return `₦${num.toLocaleString("en-NG")}`;
 }
 
 export function DonationsStatsBanner({ campaigns = [], records = [], totals = {} }) {

@@ -20,12 +20,15 @@ import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import StorefrontOutlinedIcon from "@mui/icons-material/StorefrontOutlined";
 import VolunteerActivismOutlinedIcon from "@mui/icons-material/VolunteerActivismOutlined";
+import FormatQuoteOutlinedIcon from "@mui/icons-material/FormatQuoteOutlined";
+import MenuBookOutlinedIcon from "@mui/icons-material/MenuBookOutlined";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import { Box, Divider, Drawer, IconButton, List, ListItemButton, ListItemIcon, ListItemText, Typography } from "@mui/material";
 import { ADMIN_NAVIGATION_GROUPS } from "@/constants/admin";
 import { useAdminNavigation } from "@/hooks/useAdminNavigation";
+import { getPublicSiteUrl } from "@/lib/publicSite";
 import styles from "./AdminSidebar.module.css";
 
 const ICONS = {
@@ -35,6 +38,7 @@ const ICONS = {
   comment: CommentOutlinedIcon,
   contacts: NotificationsActiveOutlinedIcon,
   dashboard: DashboardOutlinedIcon,
+  docs: MenuBookOutlinedIcon,
   donations: VolunteerActivismOutlinedIcon,
   event: EventOutlinedIcon,
   home: HomeOutlinedIcon,
@@ -50,6 +54,7 @@ const ICONS = {
   security: SecurityOutlinedIcon,
   settings: SettingsOutlinedIcon,
   store: StorefrontOutlinedIcon,
+  testimonials: FormatQuoteOutlinedIcon,
 };
 
 function SidebarContent({ onNavigate, onClose }) {
@@ -140,7 +145,7 @@ function SidebarContent({ onNavigate, onClose }) {
           <span className={styles.statusText}>Enterprise Production</span>
         </div>
         <a
-          href="http://localhost:3000"
+          href={getPublicSiteUrl()}
           target="_blank"
           rel="noreferrer"
           className={styles.viewSiteBtn}

@@ -23,5 +23,27 @@ export function isTalentAvailableForBooking(talent) {
 }
 
 export function getTalentBookingPrice(talent) {
-  return talent?.bookingPrice || talent?.startingRate || "";
+  const raw = talent?.bookingPrice || talent?.startingRate || "";
+  if (!raw) return "";
+  const trimmed = String(raw).trim();
+  if (!trimmed) return "";
+
+  // If already starts with a recognized currency symbol (₦, $, €, £, ¥)
+  if (/^[₦$€£¥]/.test(trimmed)) {
+    return trimmed;
+  }
+
+  // If prefixed with NGN (e.g. "NGN 250,000" or "NGN250,000")
+  if (/^NGN\s*/i.test(trimmed)) {
+    return trimmed.replace(/^NGN\s*/i, "₦");
+  }
+
+  // If it starts with digits (e.g. "250,000", "250000", "250,000 / event")
+  // default currency to Naira (₦) so the symbol automatically displays on the web
+  if (/^\d/.test(trimmed)) {
+    return `₦${trimmed}`;
+  }
+
+  return trimmed;
 }
+

@@ -84,48 +84,64 @@
 
 @media (max-width: 768px) {
   .bar {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 12px 14px;
-    gap: 12px;
+    padding: 8px 12px;
+    margin-bottom: 16px;
+    gap: 10px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 10px;
+  }
+
+  .bar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .actionGroup {
+    flex-wrap: nowrap;
+    gap: 8px;
+    width: auto;
+  }
+
+  .barLabel {
+    font-size: 0.725rem;
+    margin-right: 2px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .primaryBtn,
+  .actionBtn {
+    flex-shrink: 0;
+    white-space: nowrap;
+    padding: 5px 11px !important;
+    font-size: 0.75rem !important;
+    min-height: 32px !important;
+    border-radius: 6px !important;
   }
 
   .secondaryGroup {
-    width: 100%;
-    justify-content: flex-end;
+    display: none;
   }
 }
 
 @media (max-width: 640px) {
   .bar {
-    padding: 12px;
-    margin-bottom: 18px;
-  }
-
-  .actionGroup {
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
+    padding: 6px 10px;
+    margin-bottom: 14px;
+    background: #FFFFFF;
   }
 
   .barLabel {
-    grid-column: 1 / -1;
-    margin-bottom: 2px;
-    font-size: 0.725rem;
+    display: none;
   }
 
   .primaryBtn,
   .actionBtn {
-    width: 100% !important;
-    justify-content: center !important;
-    padding: 8px 6px !important;
-    font-size: 0.775rem !important;
-    min-height: 38px !important;
-  }
-
-  .secondaryGroup {
-    display: none;
+    padding: 4px 10px !important;
+    font-size: 0.725rem !important;
+    min-height: 30px !important;
   }
 }
 

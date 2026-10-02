@@ -40,7 +40,7 @@ function toGalleryColumns(columns) {
  * shapes. Icon keys remain data in Supabase and are resolved only in the UI
  * adapter; React components are never persisted.
  */
-export function toAboutContent(sections = []) {
+export function toAboutContent(sections = [], testimonials = null) {
   const mappedSections = sections.map(toAboutSection);
   const bySlug = new Map(mappedSections.map((section) => [section.slug, section]));
   const content = {};
@@ -80,6 +80,31 @@ export function toAboutContent(sections = []) {
     content.gallery = {
       ...(content.gallery || {}),
       columns: toGalleryColumns(gallery.columns),
+    };
+  }
+
+  if (testimonials) {
+    const rawItems = Array.isArray(testimonials.items)
+      ? testimonials.items
+      : Array.isArray(testimonials)
+      ? testimonials
+      : [];
+    const activeItems = rawItems
+      .filter((t) => t && t.isActive !== false && (t.name || t.quote))
+      .map((t) => ({
+        id: t.id,
+        name: t.name,
+        role: t.role,
+        quote: t.quote,
+        avatar: t.avatar,
+      }));
+
+    content.testimonials = {
+      ...(content.testimonials || {}),
+      ...(testimonials.badge ? { badge: testimonials.badge, eyebrow: testimonials.badge } : {}),
+      ...(testimonials.title ? { title: testimonials.title, heading: testimonials.title } : {}),
+      ...(testimonials.description ? { description: testimonials.description } : {}),
+      ...(activeItems.length > 0 ? { testimonials: activeItems } : {}),
     };
   }
 

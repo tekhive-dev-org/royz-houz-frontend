@@ -15,6 +15,7 @@ import ViewListIcon from "@mui/icons-material/ViewList";
 import { TalentFiltersBar } from "./TalentFiltersBar";
 import { TalentDesktopTable } from "./TalentDesktopTable";
 import { TalentMobileCardGrid } from "./TalentMobileCardGrid";
+import { AdminTablePagination } from "@/components/pagination";
 import styles from "./TalentsTable.module.css";
 
 function parseFollowerCount(val) {
@@ -47,7 +48,7 @@ export function TalentsTable({
   const [sortBy, setSortBy] = useState("default");
   const [featuredOnly, setFeaturedOnly] = useState(false);
   const [page, setPage] = useState(1);
-  const pageSize = 12;
+  const [pageSize, setPageSize] = useState(12);
 
   // Category mapping
   const categoryMap = useMemo(() => {
@@ -331,37 +332,18 @@ export function TalentsTable({
             />
           )}
 
-          {/* Pagination Controls */}
-          {totalPages > 1 && (
-            <Box className={styles.paginationBar}>
-              <span className={styles.paginationInfo}>
-                Showing {(currentPage - 1) * pageSize + 1}–
-                {Math.min(currentPage * pageSize, processedItems.length)} of {processedItems.length} artists
-              </span>
-
-              <Box className={styles.paginationControls}>
-                <Button
-                  size="small"
-                  className={styles.pageBtn}
-                  disabled={currentPage <= 1}
-                  onClick={() => setPage((p) => Math.max(1, p - 1))}
-                >
-                  Previous
-                </Button>
-                <span style={{ fontSize: "0.8125rem", color: "#4B5563", fontWeight: 600, padding: "0 6px" }}>
-                  Page {currentPage} of {totalPages}
-                </span>
-                <Button
-                  size="small"
-                  className={styles.pageBtn}
-                  disabled={currentPage >= totalPages}
-                  onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-                >
-                  Next
-                </Button>
-              </Box>
-            </Box>
-          )}
+          {/* SaaS Pagination */}
+          <AdminTablePagination
+            page={currentPage}
+            pageSize={pageSize}
+            totalItems={processedItems.length}
+            onPageChange={setPage}
+            onPageSizeChange={(newSize) => {
+              setPageSize(newSize);
+              setPage(1);
+            }}
+            itemLabel="artists"
+          />
         </>
       )}
     </Paper>

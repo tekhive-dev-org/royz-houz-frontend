@@ -61,8 +61,20 @@
 .skeletonGrid {
   display: grid;
   gap: 16px;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(6, minmax(0, 1fr));
   margin-bottom: 24px;
+}
+
+.spanPrimary {
+  grid-column: span 2;
+}
+
+.spanWorkflow {
+  grid-column: span 3;
+}
+
+.skeletonBoxOffice {
+  grid-column: span 2;
 }
 
 .splitGrid,
@@ -88,28 +100,45 @@
     gap: 16px;
   }
 
-
   .skeletonGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-}
 
+  .spanPrimary,
+  .spanWorkflow {
+    grid-column: span 1;
+  }
+}
 
 @media (max-width: 768px) {
   .header {
     flex-direction: column;
-    gap: 14px;
-    margin-bottom: 16px;
+    gap: 10px;
+    margin-bottom: 14px;
+    margin-top: 20px;
+  }
+
+  .headerEyebrow {
+    font-size: 16px;
+    margin-bottom: 2px;
+  }
+
+  .title {
+    font-size: 1.25rem !important;
+    line-height: 1.2 !important;
   }
 
   .description {
-    font-size: 0.84rem;
+    font-size: 14px !important;
+    margin-top: 2px;
+    line-height: 1.35;
+    margin-bottom: 20px !important;
   }
 
   .headerActions {
     width: 100%;
     display: flex;
-    align-items: stretch;
+    align-items: center;
     gap: 8px;
   }
 
@@ -118,9 +147,39 @@
     min-width: 0;
   }
 
-  .skeletonGrid {
-    grid-template-columns: 1fr;
+  .rangeControl :global(.MuiInputBase-root) {
+    min-height: 36px;
+    font-size: 0.8rem;
+  }
+
+  .refreshBtn {
+    min-height: 36px !important;
+    padding: 4px 10px !important;
+    font-size: 0.775rem !important;
+  }
+
+  .splitGrid,
+  .skeletonSplitGrid {
     gap: 12px;
+    margin-bottom: 16px;
   }
 }
+
+@media (max-width: 640px) {
+  .skeletonGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .spanPrimary,
+  .spanWorkflow {
+    grid-column: span 1;
+  }
+
+  .skeletonBoxOffice {
+    grid-column: 1 / -1;
+  }
+}
+
 

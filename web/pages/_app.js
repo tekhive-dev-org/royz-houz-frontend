@@ -2,6 +2,7 @@ import "@splidejs/react-splide/css";
 import "@/styles/globals.css";
 import { Lato } from "next/font/google";
 import { Layout } from "@/components/layout/Layout";
+import { DefaultSeo } from "@/components/seo";
 import { usePublicContentRealtime } from "@/hooks/usePublicContentRealtime";
 
 const lato = Lato({
@@ -19,6 +20,7 @@ export default function App({ Component, pageProps }) {
 
   return (
     <div className={`${lato.className} ${lato.variable} font-sans`}>
+      <DefaultSeo initialData={pageProps.defaultSeo} />
       {getLayout(<Component {...pageProps} />)}
     </div>
   );

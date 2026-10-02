@@ -6,7 +6,22 @@ import styles from "./ContactMap.module.css";
  * Left: Warm beige panel (#F9F7F4) with "COME VISIT US" tag, headline, description, and "Get directions" button.
  * Right: Full interactive map with floating HQ address overlay card.
  */
-export function ContactMap() {
+export function ContactMap({ map = {} }) {
+  const eyebrow = map?.eyebrow || "COME VISIT US";
+  const heading = map?.heading || "Our Headquarters";
+  const description =
+    map?.description ||
+    "We welcome you to visit our office and experience the Royz Houz culture firsthand.";
+  const directionsUrl =
+    map?.directionsUrl ||
+    "https://maps.google.com/?q=14+Coste+Avenue,+Lekki+Phase+2,+Lagos,+Nigeria";
+  const mapEmbedUrl =
+    map?.mapEmbedUrl ||
+    "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3964.7279!2d3.4738!3d6.4316!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNsKwMjUnNTQuMCJOIDPCsDI4JzI1LjciRQ!5e0!3m2!1sen!2sng!4v1000000000000";
+  const hqTitle = map?.hqTitle || "Royz Houz Headquarters";
+  const address = map?.address || "14 Coste Avenue, Lekki Phase 2, Lagos, Nigeria";
+  const hours = map?.hours || "Mon – Fri, 8:00 AM – 5:00 PM";
+
   return (
     <section className={styles.section} id="contact-map" aria-label="Our Headquarters">
       <div className={styles.container}>
@@ -14,17 +29,14 @@ export function ContactMap() {
           {/* ── Left Content Panel (#F9F7F4) ─────────── */}
           <div className={styles.leftPanel}>
             <div className={styles.panelTop}>
-              <span className={styles.eyebrow}>COME VISIT US</span>
-              <h2 className={styles.heading}>Our Headquarters</h2>
-              <p className={styles.description}>
-                We welcome you to visit our office and experience the Royz Houz
-                culture firsthand.
-              </p>
+              <span className={styles.eyebrow}>{eyebrow}</span>
+              <h2 className={styles.heading}>{heading}</h2>
+              <p className={styles.description}>{description}</p>
             </div>
 
             <div className={styles.panelBottom}>
               <a
-                href="https://maps.google.com/?q=14+Coste+Avenue,+Lekki+Phase+2,+Lagos,+Nigeria"
+                href={directionsUrl}
                 target="_blank"
                 rel="noreferrer"
                 className={styles.directionsBtn}
@@ -39,7 +51,7 @@ export function ContactMap() {
           <div className={styles.rightPanel}>
             <iframe
               title="Royz Houz Headquarters Location"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3964.7279!2d3.4738!3d6.4316!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNsKwMjUnNTQuMCJOIDPCsDI4JzI1LjciRQ!5e0!3m2!1sen!2sng!4v1000000000000"
+              src={mapEmbedUrl}
               className={styles.mapIframe}
               loading="lazy"
               allowFullScreen
@@ -52,16 +64,14 @@ export function ContactMap() {
                 <div className={styles.redPinCircle}>
                   <MapPin className="w-4 h-4 text-white" />
                 </div>
-                <h3 className={styles.infoTitle}>Royz Houz Headquarters</h3>
+                <h3 className={styles.infoTitle}>{hqTitle}</h3>
               </div>
 
-              <p className={styles.infoAddress}>
-                14 Coste Avenue, Lekki Phase 2, Lagos, Nigeria
-              </p>
+              <p className={styles.infoAddress}>{address}</p>
 
               <div className={styles.infoHoursRow}>
                 <Clock className="w-3.5 h-3.5 text-[#868C98]" />
-                <span className={styles.infoHours}>Mon – Fri, 8:00 AM – 5:00 PM</span>
+                <span className={styles.infoHours}>{hours}</span>
               </div>
             </div>
           </div>

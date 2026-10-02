@@ -1,4 +1,4 @@
-import { listPublicRecords } from "@/repositories/publicContentRepository";
+import { listPublicRecords, getPublicRecordBySlug } from "@/repositories/publicContentRepository";
 import { toHomepageContent } from "@/adapters/homepageAdapter";
 import { getContentClient, serviceFailure, serviceSuccess } from "./serviceUtils";
 
@@ -12,7 +12,7 @@ const FEATURED_CONTENT_LIMIT = 8;
 export async function getHomepageContent({ client } = {}) {
   const contentClient = getContentClient(client);
   const featured = [{ column: "featured", value: true }];
-  const [sections, talents, events, posts, media] = await Promise.all([
+  const [sections, talents, events, posts, media, testimonialsSetting] = await Promise.all([
     listPublicRecords(contentClient, {
       source: "homepage_sections",
       order: { column: "sort_order" },
@@ -41,6 +41,10 @@ export async function getHomepageContent({ client } = {}) {
       order: { column: "sort_order" },
       pagination: { page: 1, limit: 4, from: 0, to: 3 },
     }),
+    getPublicRecordBySlug(contentClient, {
+      source: "site_settings",
+      slug: "testimonials",
+    }).catch(() => ({ success: false, data: null })),
   ]);
 
   const failedResult = [sections, talents, events, posts, media].find((result) => !result.success);
@@ -91,6 +95,7 @@ export async function getHomepageContent({ client } = {}) {
       events: events.data,
       posts: blogPostItems,
       media: mediaItems,
+      testimonials: testimonialsSetting?.data?.content || null,
     }),
     "Homepage content loaded successfully"
   );
