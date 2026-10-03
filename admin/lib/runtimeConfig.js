@@ -4,6 +4,6 @@
  */
 export function getAdminRuntimeConfig() {
   return {
-    appUrl: process.env.NEXT_PUBLIC_ADMIN_APP_URL || "http://localhost:3001",
+    appUrl: process.env.NEXT_PUBLIC_ADMIN_APP_URL || process.env.NEXT_PUBLIC_ADMIN_URL || "https://admin.royzhouz.com",
   };
 }

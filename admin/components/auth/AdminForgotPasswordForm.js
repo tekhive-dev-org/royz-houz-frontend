@@ -17,6 +17,7 @@ import MarkEmailReadOutlinedIcon from "@mui/icons-material/MarkEmailReadOutlined
 import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
 import ShieldOutlinedIcon from "@mui/icons-material/ShieldOutlined";
 import { getAdminBrowserClient } from "@/lib/supabase/browser";
+import { getAdminSiteUrl, getPublicSiteUrl } from "@/lib/publicSite";
 import styles from "./AdminForgotPasswordForm.module.css";
 
 export function AdminForgotPasswordForm() {
@@ -34,9 +35,7 @@ export function AdminForgotPasswordForm() {
 
     try {
       const supabase = getAdminBrowserClient();
-      const redirectUrl = typeof window !== "undefined"
-        ? `${window.location.origin}/reset-password`
-        : "/reset-password";
+      const redirectUrl = getAdminSiteUrl("/reset-password");
 
       const { error: resetError } = await supabase.auth.resetPasswordForEmail(email.trim(), {
         redirectTo: redirectUrl,
@@ -169,9 +168,9 @@ export function AdminForgotPasswordForm() {
               <span>Protected by enterprise session authentication &amp; RLS policies.</span>
             </div>
 
-            <Link href="http://localhost:3000" className={styles.backLink}>
+            <a href={getPublicSiteUrl()} className={styles.backLink} target="_blank" rel="noreferrer">
               <span>Return to Public Website</span>
-            </Link>
+            </a>
           </Box>
         </Stack>
       </Paper>

@@ -5,6 +5,7 @@ import PersonAddOutlinedIcon from "@mui/icons-material/PersonAddOutlined";
 import EditNoteOutlinedIcon from "@mui/icons-material/EditNoteOutlined";
 import CloudUploadOutlinedIcon from "@mui/icons-material/CloudUploadOutlined";
 import OpenInNewOutlinedIcon from "@mui/icons-material/OpenInNewOutlined";
+import { getPublicSiteUrl } from "@/lib/publicSite";
 import styles from "./QuickLaunchBar.module.css";
 
 const ACTIONS = [
@@ -65,7 +66,7 @@ export function QuickLaunchBar() {
       <div className={styles.secondaryGroup}>
         <Button
           component="a"
-          href="http://localhost:3000"
+          href={getPublicSiteUrl()}
           target="_blank"
           rel="noreferrer"
           size="small"

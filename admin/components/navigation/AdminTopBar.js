@@ -24,6 +24,7 @@ import {
 } from "@mui/material";
 import { useAdminAuth } from "@/components/auth/AdminAuthProvider";
 import { useAdminNavigation } from "@/hooks/useAdminNavigation";
+import { getPublicSiteUrl } from "@/lib/publicSite";
 import { AdminBreadcrumbs } from "./AdminBreadcrumbs";
 import styles from "./AdminTopBar.module.css";
 
@@ -115,7 +116,7 @@ export function AdminTopBar({ onOpenNavigation }) {
           {/* Quick Link to Public Site (Desktop Button + Mobile Icon Button) */}
           <Button
             component="a"
-            href="http://localhost:3000"
+            href={getPublicSiteUrl()}
             target="_blank"
             rel="noreferrer"
             size="small"
@@ -128,7 +129,7 @@ export function AdminTopBar({ onOpenNavigation }) {
           <Tooltip title="Open Public Site (New Tab)">
             <IconButton
               component="a"
-              href="http://localhost:3000"
+              href={getPublicSiteUrl()}
               target="_blank"
               rel="noreferrer"
               aria-label="Open Public Site"

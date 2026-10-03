@@ -25,6 +25,7 @@ import { MediaField } from "./MediaField";
 import { MediaPicker } from "./MediaPicker";
 import { contentApi } from "@/services/contentApi";
 import { useAdminCollection } from "@/hooks/useAdminCollection";
+import { getPublicSiteUrl } from "@/lib/publicSite";
 import styles from "./SectionsEditor.module.css";
 
 export const DEFAULT_TESTIMONIALS = [
@@ -782,7 +783,7 @@ export function SectionsEditor({ type = "homepage", title = "Homepage Sections",
               variant="outlined"
               size="small"
               startIcon={<OpenInNew />}
-              href="http://localhost:3002/"
+              href={getPublicSiteUrl()}
               target="_blank"
               rel="noopener noreferrer"
               className={styles.actionBtn}

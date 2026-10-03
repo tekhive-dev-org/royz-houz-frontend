@@ -5,6 +5,7 @@ import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import GppBadOutlinedIcon from "@mui/icons-material/GppBadOutlined";
 import { useAdminAuth } from "./AdminAuthProvider";
+import { getPublicSiteUrl } from "@/lib/publicSite";
 import styles from "./UnauthorizedState.module.css";
 
 export function UnauthorizedState() {
@@ -61,10 +62,10 @@ export function UnauthorizedState() {
           </div>
 
           <Box className={styles.footerBox}>
-            <Link href="http://localhost:3000" className={styles.backLink}>
+            <a href={getPublicSiteUrl()} className={styles.backLink} target="_blank" rel="noreferrer">
               <ArrowBackOutlinedIcon fontSize="inherit" />
               <span>Return to Public Website</span>
-            </Link>
+            </a>
           </Box>
         </Stack>
       </Paper>

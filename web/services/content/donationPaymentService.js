@@ -12,7 +12,7 @@ function getCallbackUrl() {
   if (process.env.PAYSTACK_DONATION_CALLBACK_URL) {
     return process.env.PAYSTACK_DONATION_CALLBACK_URL;
   }
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_APP_URL || "https://royzhouz.com";
   return `${siteUrl}/payment/paystack/callback`;
 }
 

@@ -15,6 +15,7 @@ import { CampaignEditorDialog } from "./CampaignEditorDialog";
 import { DonationRecordsTable } from "./DonationRecordsTable";
 import { DonationNotesDialog } from "./DonationNotesDialog";
 import { DonationPageSettingsEditor } from "./DonationPageSettingsEditor";
+import { getPublicSiteUrl } from "@/lib/publicSite";
 import styles from "./DonationsAdmin.module.css";
 
 const EMPTY_CAMPAIGN = {
@@ -248,7 +249,7 @@ export function DonationsAdmin() {
           {tab === 2 && (
             <Button
               component="a"
-              href="http://localhost:3000/donate"
+              href={getPublicSiteUrl("/donate")}
               target="_blank"
               rel="noopener noreferrer"
               endIcon={<OpenInNewIcon fontSize="inherit" />}

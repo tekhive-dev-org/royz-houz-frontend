@@ -22,6 +22,7 @@ import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined
 import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
 import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
 import ShieldOutlinedIcon from "@mui/icons-material/ShieldOutlined";
+import { getPublicSiteUrl } from "@/lib/publicSite";
 import { useAdminAuth } from "./AdminAuthProvider";
 import styles from "./AdminAcceptInviteForm.module.css";
 
@@ -353,9 +354,9 @@ export function AdminAcceptInviteForm() {
               <span>Protected by enterprise session authentication &amp; RLS policies.</span>
             </div>
 
-            <Link href="http://localhost:3000" className={styles.backLink}>
+            <a href={getPublicSiteUrl()} className={styles.backLink} target="_blank" rel="noreferrer">
               <span>Return to Public Website</span>
-            </Link>
+            </a>
           </Box>
         </Stack>
       </Paper>

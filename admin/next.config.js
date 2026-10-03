@@ -14,7 +14,7 @@ const nextConfig = {
     return [
       {
         source: "/assets/:path*",
-        destination: `${process.env.NEXT_PUBLIC_WEB_URL || "http://localhost:3000"}/assets/:path*`,
+        destination: `${process.env.NEXT_PUBLIC_WEB_URL || "https://royzhouz.com"}/assets/:path*`,
       },
     ];
   },

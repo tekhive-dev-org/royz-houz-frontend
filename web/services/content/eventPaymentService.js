@@ -33,7 +33,7 @@ export async function initializeEventPayment(input, { client } = {}) {
   const reference = `RH-TKT-${randomUUID().replaceAll("-", "").slice(0, 20).toUpperCase()}`;
   const { error: insertError } = await supabase.from("event_ticket_orders").insert({ reference, event_id: event.id, tier_id: values.tierId, tier_name: String(tier.name || "Ticket"), quantity: values.quantity, amount_kobo: amountKobo, customer: values.customer });
   if (insertError) return serviceFailure({ code: "PERSIST_FAILED", message: "Unable to create the ticket order." });
-  const callbackUrl = process.env.PAYSTACK_CALLBACK_URL || `${process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"}/payment/paystack/callback`;
+  const callbackUrl = process.env.PAYSTACK_CALLBACK_URL || `${process.env.NEXT_PUBLIC_SITE_URL || "https://royzhouz.com"}/payment/paystack/callback`;
   const result = await paystackRequest("/transaction/initialize", { method: "POST", body: JSON.stringify({ amount: amountKobo, email: values.customer.email, reference, callback_url: callbackUrl, metadata: { eventId: event.id, eventSlug: event.slug, tierId: values.tierId, quantity: values.quantity } }) });
   if (!result.success) {
     await supabase.from("event_ticket_orders").update({ status: "failed" }).eq("reference", reference);

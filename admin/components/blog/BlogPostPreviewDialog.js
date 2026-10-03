@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
+import { getPublicSiteUrl } from "@/lib/publicSite";
 
 export function BlogPostPreviewDialog({ preview, onClose }) {
   if (!preview) return null;
@@ -171,7 +172,7 @@ export function BlogPostPreviewDialog({ preview, onClose }) {
         {preview.slug ? (
           <Button
             component="a"
-            href={`http://localhost:3000/blog/${preview.slug}`}
+            href={getPublicSiteUrl(`/blog/${preview.slug}`)}
             target="_blank"
             rel="noopener noreferrer"
             startIcon={<OpenInNewIcon fontSize="small" />}

@@ -27,8 +27,8 @@ port = 54324
 
 [auth]
 enabled = true
-site_url = "http://localhost:3000"
-additional_redirect_urls = ["http://localhost:3000/**"]
+site_url = "https://royzhouz.com"
+additional_redirect_urls = ["https://royzhouz.com/**"]
 
 [storage]
 enabled = true

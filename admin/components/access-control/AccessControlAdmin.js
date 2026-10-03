@@ -43,6 +43,7 @@ import { ConfirmationDialog } from "@/components/feedback/ConfirmationDialog";
 import { accessControlApi } from "@/services/accessControlApi";
 import { AdminTablePagination, useTablePagination } from "@/components/pagination";
 import { AccessControlStatsBanner } from "./AccessControlStatsBanner";
+import { getAdminSiteUrl } from "@/lib/publicSite";
 import styles from "./AccessControlAdmin.module.css";
 
 function requireConfirm(data) {
@@ -668,16 +669,14 @@ export function AccessControlAdmin({ actorUserId }) {
 
                 <Box className={styles.inviteLinkBox}>
                   <span className={styles.inviteLinkText}>
-                    {typeof window !== "undefined"
-                      ? `${window.location.origin}/accept-invite?token=${inviteToken}`
-                      : `/accept-invite?token=${inviteToken}`}
+                    {getAdminSiteUrl(`/accept-invite?token=${inviteToken}`)}
                   </span>
                   <Button
                     size="small"
                     startIcon={copiedLink ? <CheckIcon fontSize="small" /> : <ContentCopyIcon fontSize="small" />}
                     onClick={() => {
                       if (typeof window !== "undefined" && navigator.clipboard) {
-                        navigator.clipboard.writeText(`${window.location.origin}/accept-invite?token=${inviteToken}`);
+                        navigator.clipboard.writeText(getAdminSiteUrl(`/accept-invite?token=${inviteToken}`));
                         setCopiedLink(true);
                         setTimeout(() => setCopiedLink(false), 2000);
                       }
